@@ -21,8 +21,19 @@ class $CurrentUserTable extends CurrentUser
   );
   static const VerificationMeta _userIdMeta = const VerificationMeta('userId');
   @override
-  late final GeneratedColumn<String> userId = GeneratedColumn<String>(
+  late final GeneratedColumn<int> userId = GeneratedColumn<int>(
     'user_id',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _usernameMeta = const VerificationMeta(
+    'username',
+  );
+  @override
+  late final GeneratedColumn<String> username = GeneratedColumn<String>(
+    'username',
     aliasedName,
     false,
     type: DriftSqlType.string,
@@ -37,23 +48,12 @@ class $CurrentUserTable extends CurrentUser
     type: DriftSqlType.string,
     requiredDuringInsert: true,
   );
-  static const VerificationMeta _usernameMeta = const VerificationMeta(
-    'username',
+  static const VerificationMeta _displayNameMeta = const VerificationMeta(
+    'displayName',
   );
   @override
-  late final GeneratedColumn<String> username = GeneratedColumn<String>(
-    'username',
-    aliasedName,
-    false,
-    type: DriftSqlType.string,
-    requiredDuringInsert: true,
-  );
-  static const VerificationMeta _fullNameMeta = const VerificationMeta(
-    'fullName',
-  );
-  @override
-  late final GeneratedColumn<String> fullName = GeneratedColumn<String>(
-    'full_name',
+  late final GeneratedColumn<String> displayName = GeneratedColumn<String>(
+    'display_name',
     aliasedName,
     true,
     type: DriftSqlType.string,
@@ -70,15 +70,67 @@ class $CurrentUserTable extends CurrentUser
     type: DriftSqlType.string,
     requiredDuringInsert: false,
   );
-  static const VerificationMeta _bioMeta = const VerificationMeta('bio');
+  static const VerificationMeta _frameUrlMeta = const VerificationMeta(
+    'frameUrl',
+  );
   @override
-  late final GeneratedColumn<String> bio = GeneratedColumn<String>(
-    'bio',
+  late final GeneratedColumn<String> frameUrl = GeneratedColumn<String>(
+    'frame_url',
     aliasedName,
     true,
     type: DriftSqlType.string,
     requiredDuringInsert: false,
   );
+  static const VerificationMeta _bioMeta = const VerificationMeta('bio');
+  @override
+  late final GeneratedColumn<String> bio = GeneratedColumn<String>(
+    'bio',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _roleMeta = const VerificationMeta('role');
+  @override
+  late final GeneratedColumn<String> role = GeneratedColumn<String>(
+    'role',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _pointsMeta = const VerificationMeta('points');
+  @override
+  late final GeneratedColumn<int> points = GeneratedColumn<int>(
+    'points',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _paidPointsMeta = const VerificationMeta(
+    'paidPoints',
+  );
+  @override
+  late final GeneratedColumn<int> paidPoints = GeneratedColumn<int>(
+    'paid_points',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _translateLanguageMeta = const VerificationMeta(
+    'translateLanguage',
+  );
+  @override
+  late final GeneratedColumn<String> translateLanguage =
+      GeneratedColumn<String>(
+        'translate_language',
+        aliasedName,
+        true,
+        type: DriftSqlType.string,
+        requiredDuringInsert: false,
+      );
   static const VerificationMeta _createdAtMeta = const VerificationMeta(
     'createdAt',
   );
@@ -101,6 +153,74 @@ class $CurrentUserTable extends CurrentUser
     type: DriftSqlType.dateTime,
     requiredDuringInsert: true,
   );
+  static const VerificationMeta _isActiveMeta = const VerificationMeta(
+    'isActive',
+  );
+  @override
+  late final GeneratedColumn<bool> isActive = GeneratedColumn<bool>(
+    'is_active',
+    aliasedName,
+    false,
+    type: DriftSqlType.bool,
+    requiredDuringInsert: true,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'CHECK ("is_active" IN (0, 1))',
+    ),
+  );
+  static const VerificationMeta _totalBadgesMeta = const VerificationMeta(
+    'totalBadges',
+  );
+  @override
+  late final GeneratedColumn<int> totalBadges = GeneratedColumn<int>(
+    'total_badges',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _totalFanHubsMeta = const VerificationMeta(
+    'totalFanHubs',
+  );
+  @override
+  late final GeneratedColumn<int> totalFanHubs = GeneratedColumn<int>(
+    'total_fan_hubs',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _totalReceivedGiftsMeta =
+      const VerificationMeta('totalReceivedGifts');
+  @override
+  late final GeneratedColumn<int> totalReceivedGifts = GeneratedColumn<int>(
+    'total_received_gifts',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _displayBadgesMeta = const VerificationMeta(
+    'displayBadges',
+  );
+  @override
+  late final GeneratedColumn<String> displayBadges = GeneratedColumn<String>(
+    'display_badges',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _allBadgesMeta = const VerificationMeta(
+    'allBadges',
+  );
+  @override
+  late final GeneratedColumn<String> allBadges = GeneratedColumn<String>(
+    'all_badges',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
   static const VerificationMeta _cachedAtMeta = const VerificationMeta(
     'cachedAt',
   );
@@ -117,13 +237,24 @@ class $CurrentUserTable extends CurrentUser
   List<GeneratedColumn> get $columns => [
     id,
     userId,
-    email,
     username,
-    fullName,
+    email,
+    displayName,
     avatarUrl,
+    frameUrl,
     bio,
+    role,
+    points,
+    paidPoints,
+    translateLanguage,
     createdAt,
     updatedAt,
+    isActive,
+    totalBadges,
+    totalFanHubs,
+    totalReceivedGifts,
+    displayBadges,
+    allBadges,
     cachedAt,
   ];
   @override
@@ -149,14 +280,6 @@ class $CurrentUserTable extends CurrentUser
     } else if (isInserting) {
       context.missing(_userIdMeta);
     }
-    if (data.containsKey('email')) {
-      context.handle(
-        _emailMeta,
-        email.isAcceptableOrUnknown(data['email']!, _emailMeta),
-      );
-    } else if (isInserting) {
-      context.missing(_emailMeta);
-    }
     if (data.containsKey('username')) {
       context.handle(
         _usernameMeta,
@@ -165,10 +288,21 @@ class $CurrentUserTable extends CurrentUser
     } else if (isInserting) {
       context.missing(_usernameMeta);
     }
-    if (data.containsKey('full_name')) {
+    if (data.containsKey('email')) {
       context.handle(
-        _fullNameMeta,
-        fullName.isAcceptableOrUnknown(data['full_name']!, _fullNameMeta),
+        _emailMeta,
+        email.isAcceptableOrUnknown(data['email']!, _emailMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_emailMeta);
+    }
+    if (data.containsKey('display_name')) {
+      context.handle(
+        _displayNameMeta,
+        displayName.isAcceptableOrUnknown(
+          data['display_name']!,
+          _displayNameMeta,
+        ),
       );
     }
     if (data.containsKey('avatar_url')) {
@@ -177,10 +311,51 @@ class $CurrentUserTable extends CurrentUser
         avatarUrl.isAcceptableOrUnknown(data['avatar_url']!, _avatarUrlMeta),
       );
     }
+    if (data.containsKey('frame_url')) {
+      context.handle(
+        _frameUrlMeta,
+        frameUrl.isAcceptableOrUnknown(data['frame_url']!, _frameUrlMeta),
+      );
+    }
     if (data.containsKey('bio')) {
       context.handle(
         _bioMeta,
         bio.isAcceptableOrUnknown(data['bio']!, _bioMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_bioMeta);
+    }
+    if (data.containsKey('role')) {
+      context.handle(
+        _roleMeta,
+        role.isAcceptableOrUnknown(data['role']!, _roleMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_roleMeta);
+    }
+    if (data.containsKey('points')) {
+      context.handle(
+        _pointsMeta,
+        points.isAcceptableOrUnknown(data['points']!, _pointsMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_pointsMeta);
+    }
+    if (data.containsKey('paid_points')) {
+      context.handle(
+        _paidPointsMeta,
+        paidPoints.isAcceptableOrUnknown(data['paid_points']!, _paidPointsMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_paidPointsMeta);
+    }
+    if (data.containsKey('translate_language')) {
+      context.handle(
+        _translateLanguageMeta,
+        translateLanguage.isAcceptableOrUnknown(
+          data['translate_language']!,
+          _translateLanguageMeta,
+        ),
       );
     }
     if (data.containsKey('created_at')) {
@@ -198,6 +373,62 @@ class $CurrentUserTable extends CurrentUser
       );
     } else if (isInserting) {
       context.missing(_updatedAtMeta);
+    }
+    if (data.containsKey('is_active')) {
+      context.handle(
+        _isActiveMeta,
+        isActive.isAcceptableOrUnknown(data['is_active']!, _isActiveMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_isActiveMeta);
+    }
+    if (data.containsKey('total_badges')) {
+      context.handle(
+        _totalBadgesMeta,
+        totalBadges.isAcceptableOrUnknown(
+          data['total_badges']!,
+          _totalBadgesMeta,
+        ),
+      );
+    } else if (isInserting) {
+      context.missing(_totalBadgesMeta);
+    }
+    if (data.containsKey('total_fan_hubs')) {
+      context.handle(
+        _totalFanHubsMeta,
+        totalFanHubs.isAcceptableOrUnknown(
+          data['total_fan_hubs']!,
+          _totalFanHubsMeta,
+        ),
+      );
+    } else if (isInserting) {
+      context.missing(_totalFanHubsMeta);
+    }
+    if (data.containsKey('total_received_gifts')) {
+      context.handle(
+        _totalReceivedGiftsMeta,
+        totalReceivedGifts.isAcceptableOrUnknown(
+          data['total_received_gifts']!,
+          _totalReceivedGiftsMeta,
+        ),
+      );
+    } else if (isInserting) {
+      context.missing(_totalReceivedGiftsMeta);
+    }
+    if (data.containsKey('display_badges')) {
+      context.handle(
+        _displayBadgesMeta,
+        displayBadges.isAcceptableOrUnknown(
+          data['display_badges']!,
+          _displayBadgesMeta,
+        ),
+      );
+    }
+    if (data.containsKey('all_badges')) {
+      context.handle(
+        _allBadgesMeta,
+        allBadges.isAcceptableOrUnknown(data['all_badges']!, _allBadgesMeta),
+      );
     }
     if (data.containsKey('cached_at')) {
       context.handle(
@@ -219,28 +450,48 @@ class $CurrentUserTable extends CurrentUser
         data['${effectivePrefix}id'],
       )!,
       userId: attachedDatabase.typeMapping.read(
-        DriftSqlType.string,
+        DriftSqlType.int,
         data['${effectivePrefix}user_id'],
-      )!,
-      email: attachedDatabase.typeMapping.read(
-        DriftSqlType.string,
-        data['${effectivePrefix}email'],
       )!,
       username: attachedDatabase.typeMapping.read(
         DriftSqlType.string,
         data['${effectivePrefix}username'],
       )!,
-      fullName: attachedDatabase.typeMapping.read(
+      email: attachedDatabase.typeMapping.read(
         DriftSqlType.string,
-        data['${effectivePrefix}full_name'],
+        data['${effectivePrefix}email'],
+      )!,
+      displayName: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}display_name'],
       ),
       avatarUrl: attachedDatabase.typeMapping.read(
         DriftSqlType.string,
         data['${effectivePrefix}avatar_url'],
       ),
+      frameUrl: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}frame_url'],
+      ),
       bio: attachedDatabase.typeMapping.read(
         DriftSqlType.string,
         data['${effectivePrefix}bio'],
+      )!,
+      role: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}role'],
+      )!,
+      points: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}points'],
+      )!,
+      paidPoints: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}paid_points'],
+      )!,
+      translateLanguage: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}translate_language'],
       ),
       createdAt: attachedDatabase.typeMapping.read(
         DriftSqlType.dateTime,
@@ -250,6 +501,30 @@ class $CurrentUserTable extends CurrentUser
         DriftSqlType.dateTime,
         data['${effectivePrefix}updated_at'],
       )!,
+      isActive: attachedDatabase.typeMapping.read(
+        DriftSqlType.bool,
+        data['${effectivePrefix}is_active'],
+      )!,
+      totalBadges: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}total_badges'],
+      )!,
+      totalFanHubs: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}total_fan_hubs'],
+      )!,
+      totalReceivedGifts: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}total_received_gifts'],
+      )!,
+      displayBadges: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}display_badges'],
+      ),
+      allBadges: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}all_badges'],
+      ),
       cachedAt: attachedDatabase.typeMapping.read(
         DriftSqlType.dateTime,
         data['${effectivePrefix}cached_at'],
@@ -266,45 +541,84 @@ class $CurrentUserTable extends CurrentUser
 class CurrentUserEntity extends DataClass
     implements Insertable<CurrentUserEntity> {
   final int id;
-  final String userId;
-  final String email;
+  final int userId;
   final String username;
-  final String? fullName;
+  final String email;
+  final String? displayName;
   final String? avatarUrl;
-  final String? bio;
+  final String? frameUrl;
+  final String bio;
+  final String role;
+  final int points;
+  final int paidPoints;
+  final String? translateLanguage;
   final DateTime createdAt;
   final DateTime updatedAt;
+  final bool isActive;
+  final int totalBadges;
+  final int totalFanHubs;
+  final int totalReceivedGifts;
+  final String? displayBadges;
+  final String? allBadges;
   final DateTime cachedAt;
   const CurrentUserEntity({
     required this.id,
     required this.userId,
-    required this.email,
     required this.username,
-    this.fullName,
+    required this.email,
+    this.displayName,
     this.avatarUrl,
-    this.bio,
+    this.frameUrl,
+    required this.bio,
+    required this.role,
+    required this.points,
+    required this.paidPoints,
+    this.translateLanguage,
     required this.createdAt,
     required this.updatedAt,
+    required this.isActive,
+    required this.totalBadges,
+    required this.totalFanHubs,
+    required this.totalReceivedGifts,
+    this.displayBadges,
+    this.allBadges,
     required this.cachedAt,
   });
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
     final map = <String, Expression>{};
     map['id'] = Variable<int>(id);
-    map['user_id'] = Variable<String>(userId);
-    map['email'] = Variable<String>(email);
+    map['user_id'] = Variable<int>(userId);
     map['username'] = Variable<String>(username);
-    if (!nullToAbsent || fullName != null) {
-      map['full_name'] = Variable<String>(fullName);
+    map['email'] = Variable<String>(email);
+    if (!nullToAbsent || displayName != null) {
+      map['display_name'] = Variable<String>(displayName);
     }
     if (!nullToAbsent || avatarUrl != null) {
       map['avatar_url'] = Variable<String>(avatarUrl);
     }
-    if (!nullToAbsent || bio != null) {
-      map['bio'] = Variable<String>(bio);
+    if (!nullToAbsent || frameUrl != null) {
+      map['frame_url'] = Variable<String>(frameUrl);
+    }
+    map['bio'] = Variable<String>(bio);
+    map['role'] = Variable<String>(role);
+    map['points'] = Variable<int>(points);
+    map['paid_points'] = Variable<int>(paidPoints);
+    if (!nullToAbsent || translateLanguage != null) {
+      map['translate_language'] = Variable<String>(translateLanguage);
     }
     map['created_at'] = Variable<DateTime>(createdAt);
     map['updated_at'] = Variable<DateTime>(updatedAt);
+    map['is_active'] = Variable<bool>(isActive);
+    map['total_badges'] = Variable<int>(totalBadges);
+    map['total_fan_hubs'] = Variable<int>(totalFanHubs);
+    map['total_received_gifts'] = Variable<int>(totalReceivedGifts);
+    if (!nullToAbsent || displayBadges != null) {
+      map['display_badges'] = Variable<String>(displayBadges);
+    }
+    if (!nullToAbsent || allBadges != null) {
+      map['all_badges'] = Variable<String>(allBadges);
+    }
     map['cached_at'] = Variable<DateTime>(cachedAt);
     return map;
   }
@@ -313,17 +627,36 @@ class CurrentUserEntity extends DataClass
     return CurrentUserCompanion(
       id: Value(id),
       userId: Value(userId),
-      email: Value(email),
       username: Value(username),
-      fullName: fullName == null && nullToAbsent
+      email: Value(email),
+      displayName: displayName == null && nullToAbsent
           ? const Value.absent()
-          : Value(fullName),
+          : Value(displayName),
       avatarUrl: avatarUrl == null && nullToAbsent
           ? const Value.absent()
           : Value(avatarUrl),
-      bio: bio == null && nullToAbsent ? const Value.absent() : Value(bio),
+      frameUrl: frameUrl == null && nullToAbsent
+          ? const Value.absent()
+          : Value(frameUrl),
+      bio: Value(bio),
+      role: Value(role),
+      points: Value(points),
+      paidPoints: Value(paidPoints),
+      translateLanguage: translateLanguage == null && nullToAbsent
+          ? const Value.absent()
+          : Value(translateLanguage),
       createdAt: Value(createdAt),
       updatedAt: Value(updatedAt),
+      isActive: Value(isActive),
+      totalBadges: Value(totalBadges),
+      totalFanHubs: Value(totalFanHubs),
+      totalReceivedGifts: Value(totalReceivedGifts),
+      displayBadges: displayBadges == null && nullToAbsent
+          ? const Value.absent()
+          : Value(displayBadges),
+      allBadges: allBadges == null && nullToAbsent
+          ? const Value.absent()
+          : Value(allBadges),
       cachedAt: Value(cachedAt),
     );
   }
@@ -335,14 +668,27 @@ class CurrentUserEntity extends DataClass
     serializer ??= driftRuntimeOptions.defaultSerializer;
     return CurrentUserEntity(
       id: serializer.fromJson<int>(json['id']),
-      userId: serializer.fromJson<String>(json['userId']),
-      email: serializer.fromJson<String>(json['email']),
+      userId: serializer.fromJson<int>(json['userId']),
       username: serializer.fromJson<String>(json['username']),
-      fullName: serializer.fromJson<String?>(json['fullName']),
+      email: serializer.fromJson<String>(json['email']),
+      displayName: serializer.fromJson<String?>(json['displayName']),
       avatarUrl: serializer.fromJson<String?>(json['avatarUrl']),
-      bio: serializer.fromJson<String?>(json['bio']),
+      frameUrl: serializer.fromJson<String?>(json['frameUrl']),
+      bio: serializer.fromJson<String>(json['bio']),
+      role: serializer.fromJson<String>(json['role']),
+      points: serializer.fromJson<int>(json['points']),
+      paidPoints: serializer.fromJson<int>(json['paidPoints']),
+      translateLanguage: serializer.fromJson<String?>(
+        json['translateLanguage'],
+      ),
       createdAt: serializer.fromJson<DateTime>(json['createdAt']),
       updatedAt: serializer.fromJson<DateTime>(json['updatedAt']),
+      isActive: serializer.fromJson<bool>(json['isActive']),
+      totalBadges: serializer.fromJson<int>(json['totalBadges']),
+      totalFanHubs: serializer.fromJson<int>(json['totalFanHubs']),
+      totalReceivedGifts: serializer.fromJson<int>(json['totalReceivedGifts']),
+      displayBadges: serializer.fromJson<String?>(json['displayBadges']),
+      allBadges: serializer.fromJson<String?>(json['allBadges']),
       cachedAt: serializer.fromJson<DateTime>(json['cachedAt']),
     );
   }
@@ -351,52 +697,114 @@ class CurrentUserEntity extends DataClass
     serializer ??= driftRuntimeOptions.defaultSerializer;
     return <String, dynamic>{
       'id': serializer.toJson<int>(id),
-      'userId': serializer.toJson<String>(userId),
-      'email': serializer.toJson<String>(email),
+      'userId': serializer.toJson<int>(userId),
       'username': serializer.toJson<String>(username),
-      'fullName': serializer.toJson<String?>(fullName),
+      'email': serializer.toJson<String>(email),
+      'displayName': serializer.toJson<String?>(displayName),
       'avatarUrl': serializer.toJson<String?>(avatarUrl),
-      'bio': serializer.toJson<String?>(bio),
+      'frameUrl': serializer.toJson<String?>(frameUrl),
+      'bio': serializer.toJson<String>(bio),
+      'role': serializer.toJson<String>(role),
+      'points': serializer.toJson<int>(points),
+      'paidPoints': serializer.toJson<int>(paidPoints),
+      'translateLanguage': serializer.toJson<String?>(translateLanguage),
       'createdAt': serializer.toJson<DateTime>(createdAt),
       'updatedAt': serializer.toJson<DateTime>(updatedAt),
+      'isActive': serializer.toJson<bool>(isActive),
+      'totalBadges': serializer.toJson<int>(totalBadges),
+      'totalFanHubs': serializer.toJson<int>(totalFanHubs),
+      'totalReceivedGifts': serializer.toJson<int>(totalReceivedGifts),
+      'displayBadges': serializer.toJson<String?>(displayBadges),
+      'allBadges': serializer.toJson<String?>(allBadges),
       'cachedAt': serializer.toJson<DateTime>(cachedAt),
     };
   }
 
   CurrentUserEntity copyWith({
     int? id,
-    String? userId,
-    String? email,
+    int? userId,
     String? username,
-    Value<String?> fullName = const Value.absent(),
+    String? email,
+    Value<String?> displayName = const Value.absent(),
     Value<String?> avatarUrl = const Value.absent(),
-    Value<String?> bio = const Value.absent(),
+    Value<String?> frameUrl = const Value.absent(),
+    String? bio,
+    String? role,
+    int? points,
+    int? paidPoints,
+    Value<String?> translateLanguage = const Value.absent(),
     DateTime? createdAt,
     DateTime? updatedAt,
+    bool? isActive,
+    int? totalBadges,
+    int? totalFanHubs,
+    int? totalReceivedGifts,
+    Value<String?> displayBadges = const Value.absent(),
+    Value<String?> allBadges = const Value.absent(),
     DateTime? cachedAt,
   }) => CurrentUserEntity(
     id: id ?? this.id,
     userId: userId ?? this.userId,
-    email: email ?? this.email,
     username: username ?? this.username,
-    fullName: fullName.present ? fullName.value : this.fullName,
+    email: email ?? this.email,
+    displayName: displayName.present ? displayName.value : this.displayName,
     avatarUrl: avatarUrl.present ? avatarUrl.value : this.avatarUrl,
-    bio: bio.present ? bio.value : this.bio,
+    frameUrl: frameUrl.present ? frameUrl.value : this.frameUrl,
+    bio: bio ?? this.bio,
+    role: role ?? this.role,
+    points: points ?? this.points,
+    paidPoints: paidPoints ?? this.paidPoints,
+    translateLanguage: translateLanguage.present
+        ? translateLanguage.value
+        : this.translateLanguage,
     createdAt: createdAt ?? this.createdAt,
     updatedAt: updatedAt ?? this.updatedAt,
+    isActive: isActive ?? this.isActive,
+    totalBadges: totalBadges ?? this.totalBadges,
+    totalFanHubs: totalFanHubs ?? this.totalFanHubs,
+    totalReceivedGifts: totalReceivedGifts ?? this.totalReceivedGifts,
+    displayBadges: displayBadges.present
+        ? displayBadges.value
+        : this.displayBadges,
+    allBadges: allBadges.present ? allBadges.value : this.allBadges,
     cachedAt: cachedAt ?? this.cachedAt,
   );
   CurrentUserEntity copyWithCompanion(CurrentUserCompanion data) {
     return CurrentUserEntity(
       id: data.id.present ? data.id.value : this.id,
       userId: data.userId.present ? data.userId.value : this.userId,
-      email: data.email.present ? data.email.value : this.email,
       username: data.username.present ? data.username.value : this.username,
-      fullName: data.fullName.present ? data.fullName.value : this.fullName,
+      email: data.email.present ? data.email.value : this.email,
+      displayName: data.displayName.present
+          ? data.displayName.value
+          : this.displayName,
       avatarUrl: data.avatarUrl.present ? data.avatarUrl.value : this.avatarUrl,
+      frameUrl: data.frameUrl.present ? data.frameUrl.value : this.frameUrl,
       bio: data.bio.present ? data.bio.value : this.bio,
+      role: data.role.present ? data.role.value : this.role,
+      points: data.points.present ? data.points.value : this.points,
+      paidPoints: data.paidPoints.present
+          ? data.paidPoints.value
+          : this.paidPoints,
+      translateLanguage: data.translateLanguage.present
+          ? data.translateLanguage.value
+          : this.translateLanguage,
       createdAt: data.createdAt.present ? data.createdAt.value : this.createdAt,
       updatedAt: data.updatedAt.present ? data.updatedAt.value : this.updatedAt,
+      isActive: data.isActive.present ? data.isActive.value : this.isActive,
+      totalBadges: data.totalBadges.present
+          ? data.totalBadges.value
+          : this.totalBadges,
+      totalFanHubs: data.totalFanHubs.present
+          ? data.totalFanHubs.value
+          : this.totalFanHubs,
+      totalReceivedGifts: data.totalReceivedGifts.present
+          ? data.totalReceivedGifts.value
+          : this.totalReceivedGifts,
+      displayBadges: data.displayBadges.present
+          ? data.displayBadges.value
+          : this.displayBadges,
+      allBadges: data.allBadges.present ? data.allBadges.value : this.allBadges,
       cachedAt: data.cachedAt.present ? data.cachedAt.value : this.cachedAt,
     );
   }
@@ -406,134 +814,253 @@ class CurrentUserEntity extends DataClass
     return (StringBuffer('CurrentUserEntity(')
           ..write('id: $id, ')
           ..write('userId: $userId, ')
-          ..write('email: $email, ')
           ..write('username: $username, ')
-          ..write('fullName: $fullName, ')
+          ..write('email: $email, ')
+          ..write('displayName: $displayName, ')
           ..write('avatarUrl: $avatarUrl, ')
+          ..write('frameUrl: $frameUrl, ')
           ..write('bio: $bio, ')
+          ..write('role: $role, ')
+          ..write('points: $points, ')
+          ..write('paidPoints: $paidPoints, ')
+          ..write('translateLanguage: $translateLanguage, ')
           ..write('createdAt: $createdAt, ')
           ..write('updatedAt: $updatedAt, ')
+          ..write('isActive: $isActive, ')
+          ..write('totalBadges: $totalBadges, ')
+          ..write('totalFanHubs: $totalFanHubs, ')
+          ..write('totalReceivedGifts: $totalReceivedGifts, ')
+          ..write('displayBadges: $displayBadges, ')
+          ..write('allBadges: $allBadges, ')
           ..write('cachedAt: $cachedAt')
           ..write(')'))
         .toString();
   }
 
   @override
-  int get hashCode => Object.hash(
+  int get hashCode => Object.hashAll([
     id,
     userId,
-    email,
     username,
-    fullName,
+    email,
+    displayName,
     avatarUrl,
+    frameUrl,
     bio,
+    role,
+    points,
+    paidPoints,
+    translateLanguage,
     createdAt,
     updatedAt,
+    isActive,
+    totalBadges,
+    totalFanHubs,
+    totalReceivedGifts,
+    displayBadges,
+    allBadges,
     cachedAt,
-  );
+  ]);
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
       (other is CurrentUserEntity &&
           other.id == this.id &&
           other.userId == this.userId &&
-          other.email == this.email &&
           other.username == this.username &&
-          other.fullName == this.fullName &&
+          other.email == this.email &&
+          other.displayName == this.displayName &&
           other.avatarUrl == this.avatarUrl &&
+          other.frameUrl == this.frameUrl &&
           other.bio == this.bio &&
+          other.role == this.role &&
+          other.points == this.points &&
+          other.paidPoints == this.paidPoints &&
+          other.translateLanguage == this.translateLanguage &&
           other.createdAt == this.createdAt &&
           other.updatedAt == this.updatedAt &&
+          other.isActive == this.isActive &&
+          other.totalBadges == this.totalBadges &&
+          other.totalFanHubs == this.totalFanHubs &&
+          other.totalReceivedGifts == this.totalReceivedGifts &&
+          other.displayBadges == this.displayBadges &&
+          other.allBadges == this.allBadges &&
           other.cachedAt == this.cachedAt);
 }
 
 class CurrentUserCompanion extends UpdateCompanion<CurrentUserEntity> {
   final Value<int> id;
-  final Value<String> userId;
-  final Value<String> email;
+  final Value<int> userId;
   final Value<String> username;
-  final Value<String?> fullName;
+  final Value<String> email;
+  final Value<String?> displayName;
   final Value<String?> avatarUrl;
-  final Value<String?> bio;
+  final Value<String?> frameUrl;
+  final Value<String> bio;
+  final Value<String> role;
+  final Value<int> points;
+  final Value<int> paidPoints;
+  final Value<String?> translateLanguage;
   final Value<DateTime> createdAt;
   final Value<DateTime> updatedAt;
+  final Value<bool> isActive;
+  final Value<int> totalBadges;
+  final Value<int> totalFanHubs;
+  final Value<int> totalReceivedGifts;
+  final Value<String?> displayBadges;
+  final Value<String?> allBadges;
   final Value<DateTime> cachedAt;
   const CurrentUserCompanion({
     this.id = const Value.absent(),
     this.userId = const Value.absent(),
-    this.email = const Value.absent(),
     this.username = const Value.absent(),
-    this.fullName = const Value.absent(),
+    this.email = const Value.absent(),
+    this.displayName = const Value.absent(),
     this.avatarUrl = const Value.absent(),
+    this.frameUrl = const Value.absent(),
     this.bio = const Value.absent(),
+    this.role = const Value.absent(),
+    this.points = const Value.absent(),
+    this.paidPoints = const Value.absent(),
+    this.translateLanguage = const Value.absent(),
     this.createdAt = const Value.absent(),
     this.updatedAt = const Value.absent(),
+    this.isActive = const Value.absent(),
+    this.totalBadges = const Value.absent(),
+    this.totalFanHubs = const Value.absent(),
+    this.totalReceivedGifts = const Value.absent(),
+    this.displayBadges = const Value.absent(),
+    this.allBadges = const Value.absent(),
     this.cachedAt = const Value.absent(),
   });
   CurrentUserCompanion.insert({
     this.id = const Value.absent(),
-    required String userId,
-    required String email,
+    required int userId,
     required String username,
-    this.fullName = const Value.absent(),
+    required String email,
+    this.displayName = const Value.absent(),
     this.avatarUrl = const Value.absent(),
-    this.bio = const Value.absent(),
+    this.frameUrl = const Value.absent(),
+    required String bio,
+    required String role,
+    required int points,
+    required int paidPoints,
+    this.translateLanguage = const Value.absent(),
     required DateTime createdAt,
     required DateTime updatedAt,
+    required bool isActive,
+    required int totalBadges,
+    required int totalFanHubs,
+    required int totalReceivedGifts,
+    this.displayBadges = const Value.absent(),
+    this.allBadges = const Value.absent(),
     this.cachedAt = const Value.absent(),
   }) : userId = Value(userId),
-       email = Value(email),
        username = Value(username),
+       email = Value(email),
+       bio = Value(bio),
+       role = Value(role),
+       points = Value(points),
+       paidPoints = Value(paidPoints),
        createdAt = Value(createdAt),
-       updatedAt = Value(updatedAt);
+       updatedAt = Value(updatedAt),
+       isActive = Value(isActive),
+       totalBadges = Value(totalBadges),
+       totalFanHubs = Value(totalFanHubs),
+       totalReceivedGifts = Value(totalReceivedGifts);
   static Insertable<CurrentUserEntity> custom({
     Expression<int>? id,
-    Expression<String>? userId,
-    Expression<String>? email,
+    Expression<int>? userId,
     Expression<String>? username,
-    Expression<String>? fullName,
+    Expression<String>? email,
+    Expression<String>? displayName,
     Expression<String>? avatarUrl,
+    Expression<String>? frameUrl,
     Expression<String>? bio,
+    Expression<String>? role,
+    Expression<int>? points,
+    Expression<int>? paidPoints,
+    Expression<String>? translateLanguage,
     Expression<DateTime>? createdAt,
     Expression<DateTime>? updatedAt,
+    Expression<bool>? isActive,
+    Expression<int>? totalBadges,
+    Expression<int>? totalFanHubs,
+    Expression<int>? totalReceivedGifts,
+    Expression<String>? displayBadges,
+    Expression<String>? allBadges,
     Expression<DateTime>? cachedAt,
   }) {
     return RawValuesInsertable({
       if (id != null) 'id': id,
       if (userId != null) 'user_id': userId,
-      if (email != null) 'email': email,
       if (username != null) 'username': username,
-      if (fullName != null) 'full_name': fullName,
+      if (email != null) 'email': email,
+      if (displayName != null) 'display_name': displayName,
       if (avatarUrl != null) 'avatar_url': avatarUrl,
+      if (frameUrl != null) 'frame_url': frameUrl,
       if (bio != null) 'bio': bio,
+      if (role != null) 'role': role,
+      if (points != null) 'points': points,
+      if (paidPoints != null) 'paid_points': paidPoints,
+      if (translateLanguage != null) 'translate_language': translateLanguage,
       if (createdAt != null) 'created_at': createdAt,
       if (updatedAt != null) 'updated_at': updatedAt,
+      if (isActive != null) 'is_active': isActive,
+      if (totalBadges != null) 'total_badges': totalBadges,
+      if (totalFanHubs != null) 'total_fan_hubs': totalFanHubs,
+      if (totalReceivedGifts != null)
+        'total_received_gifts': totalReceivedGifts,
+      if (displayBadges != null) 'display_badges': displayBadges,
+      if (allBadges != null) 'all_badges': allBadges,
       if (cachedAt != null) 'cached_at': cachedAt,
     });
   }
 
   CurrentUserCompanion copyWith({
     Value<int>? id,
-    Value<String>? userId,
-    Value<String>? email,
+    Value<int>? userId,
     Value<String>? username,
-    Value<String?>? fullName,
+    Value<String>? email,
+    Value<String?>? displayName,
     Value<String?>? avatarUrl,
-    Value<String?>? bio,
+    Value<String?>? frameUrl,
+    Value<String>? bio,
+    Value<String>? role,
+    Value<int>? points,
+    Value<int>? paidPoints,
+    Value<String?>? translateLanguage,
     Value<DateTime>? createdAt,
     Value<DateTime>? updatedAt,
+    Value<bool>? isActive,
+    Value<int>? totalBadges,
+    Value<int>? totalFanHubs,
+    Value<int>? totalReceivedGifts,
+    Value<String?>? displayBadges,
+    Value<String?>? allBadges,
     Value<DateTime>? cachedAt,
   }) {
     return CurrentUserCompanion(
       id: id ?? this.id,
       userId: userId ?? this.userId,
-      email: email ?? this.email,
       username: username ?? this.username,
-      fullName: fullName ?? this.fullName,
+      email: email ?? this.email,
+      displayName: displayName ?? this.displayName,
       avatarUrl: avatarUrl ?? this.avatarUrl,
+      frameUrl: frameUrl ?? this.frameUrl,
       bio: bio ?? this.bio,
+      role: role ?? this.role,
+      points: points ?? this.points,
+      paidPoints: paidPoints ?? this.paidPoints,
+      translateLanguage: translateLanguage ?? this.translateLanguage,
       createdAt: createdAt ?? this.createdAt,
       updatedAt: updatedAt ?? this.updatedAt,
+      isActive: isActive ?? this.isActive,
+      totalBadges: totalBadges ?? this.totalBadges,
+      totalFanHubs: totalFanHubs ?? this.totalFanHubs,
+      totalReceivedGifts: totalReceivedGifts ?? this.totalReceivedGifts,
+      displayBadges: displayBadges ?? this.displayBadges,
+      allBadges: allBadges ?? this.allBadges,
       cachedAt: cachedAt ?? this.cachedAt,
     );
   }
@@ -545,28 +1072,61 @@ class CurrentUserCompanion extends UpdateCompanion<CurrentUserEntity> {
       map['id'] = Variable<int>(id.value);
     }
     if (userId.present) {
-      map['user_id'] = Variable<String>(userId.value);
-    }
-    if (email.present) {
-      map['email'] = Variable<String>(email.value);
+      map['user_id'] = Variable<int>(userId.value);
     }
     if (username.present) {
       map['username'] = Variable<String>(username.value);
     }
-    if (fullName.present) {
-      map['full_name'] = Variable<String>(fullName.value);
+    if (email.present) {
+      map['email'] = Variable<String>(email.value);
+    }
+    if (displayName.present) {
+      map['display_name'] = Variable<String>(displayName.value);
     }
     if (avatarUrl.present) {
       map['avatar_url'] = Variable<String>(avatarUrl.value);
     }
+    if (frameUrl.present) {
+      map['frame_url'] = Variable<String>(frameUrl.value);
+    }
     if (bio.present) {
       map['bio'] = Variable<String>(bio.value);
+    }
+    if (role.present) {
+      map['role'] = Variable<String>(role.value);
+    }
+    if (points.present) {
+      map['points'] = Variable<int>(points.value);
+    }
+    if (paidPoints.present) {
+      map['paid_points'] = Variable<int>(paidPoints.value);
+    }
+    if (translateLanguage.present) {
+      map['translate_language'] = Variable<String>(translateLanguage.value);
     }
     if (createdAt.present) {
       map['created_at'] = Variable<DateTime>(createdAt.value);
     }
     if (updatedAt.present) {
       map['updated_at'] = Variable<DateTime>(updatedAt.value);
+    }
+    if (isActive.present) {
+      map['is_active'] = Variable<bool>(isActive.value);
+    }
+    if (totalBadges.present) {
+      map['total_badges'] = Variable<int>(totalBadges.value);
+    }
+    if (totalFanHubs.present) {
+      map['total_fan_hubs'] = Variable<int>(totalFanHubs.value);
+    }
+    if (totalReceivedGifts.present) {
+      map['total_received_gifts'] = Variable<int>(totalReceivedGifts.value);
+    }
+    if (displayBadges.present) {
+      map['display_badges'] = Variable<String>(displayBadges.value);
+    }
+    if (allBadges.present) {
+      map['all_badges'] = Variable<String>(allBadges.value);
     }
     if (cachedAt.present) {
       map['cached_at'] = Variable<DateTime>(cachedAt.value);
@@ -579,485 +1139,25 @@ class CurrentUserCompanion extends UpdateCompanion<CurrentUserEntity> {
     return (StringBuffer('CurrentUserCompanion(')
           ..write('id: $id, ')
           ..write('userId: $userId, ')
-          ..write('email: $email, ')
           ..write('username: $username, ')
-          ..write('fullName: $fullName, ')
+          ..write('email: $email, ')
+          ..write('displayName: $displayName, ')
           ..write('avatarUrl: $avatarUrl, ')
+          ..write('frameUrl: $frameUrl, ')
           ..write('bio: $bio, ')
+          ..write('role: $role, ')
+          ..write('points: $points, ')
+          ..write('paidPoints: $paidPoints, ')
+          ..write('translateLanguage: $translateLanguage, ')
           ..write('createdAt: $createdAt, ')
           ..write('updatedAt: $updatedAt, ')
+          ..write('isActive: $isActive, ')
+          ..write('totalBadges: $totalBadges, ')
+          ..write('totalFanHubs: $totalFanHubs, ')
+          ..write('totalReceivedGifts: $totalReceivedGifts, ')
+          ..write('displayBadges: $displayBadges, ')
+          ..write('allBadges: $allBadges, ')
           ..write('cachedAt: $cachedAt')
-          ..write(')'))
-        .toString();
-  }
-}
-
-class $WorkspacesTable extends Workspaces
-    with TableInfo<$WorkspacesTable, WorkspaceEntity> {
-  @override
-  final GeneratedDatabase attachedDatabase;
-  final String? _alias;
-  $WorkspacesTable(this.attachedDatabase, [this._alias]);
-  static const VerificationMeta _idMeta = const VerificationMeta('id');
-  @override
-  late final GeneratedColumn<String> id = GeneratedColumn<String>(
-    'id',
-    aliasedName,
-    false,
-    type: DriftSqlType.string,
-    requiredDuringInsert: true,
-  );
-  static const VerificationMeta _nameMeta = const VerificationMeta('name');
-  @override
-  late final GeneratedColumn<String> name = GeneratedColumn<String>(
-    'name',
-    aliasedName,
-    false,
-    type: DriftSqlType.string,
-    requiredDuringInsert: true,
-  );
-  static const VerificationMeta _descriptionMeta = const VerificationMeta(
-    'description',
-  );
-  @override
-  late final GeneratedColumn<String> description = GeneratedColumn<String>(
-    'description',
-    aliasedName,
-    true,
-    type: DriftSqlType.string,
-    requiredDuringInsert: false,
-  );
-  static const VerificationMeta _ownerIdMeta = const VerificationMeta(
-    'ownerId',
-  );
-  @override
-  late final GeneratedColumn<String> ownerId = GeneratedColumn<String>(
-    'owner_id',
-    aliasedName,
-    false,
-    type: DriftSqlType.string,
-    requiredDuringInsert: true,
-  );
-  static const VerificationMeta _inviteCodeMeta = const VerificationMeta(
-    'inviteCode',
-  );
-  @override
-  late final GeneratedColumn<String> inviteCode = GeneratedColumn<String>(
-    'invite_code',
-    aliasedName,
-    true,
-    type: DriftSqlType.string,
-    requiredDuringInsert: false,
-  );
-  static const VerificationMeta _createdAtMeta = const VerificationMeta(
-    'createdAt',
-  );
-  @override
-  late final GeneratedColumn<DateTime> createdAt = GeneratedColumn<DateTime>(
-    'created_at',
-    aliasedName,
-    false,
-    type: DriftSqlType.dateTime,
-    requiredDuringInsert: true,
-  );
-  static const VerificationMeta _updatedAtMeta = const VerificationMeta(
-    'updatedAt',
-  );
-  @override
-  late final GeneratedColumn<DateTime> updatedAt = GeneratedColumn<DateTime>(
-    'updated_at',
-    aliasedName,
-    false,
-    type: DriftSqlType.dateTime,
-    requiredDuringInsert: true,
-  );
-  @override
-  List<GeneratedColumn> get $columns => [
-    id,
-    name,
-    description,
-    ownerId,
-    inviteCode,
-    createdAt,
-    updatedAt,
-  ];
-  @override
-  String get aliasedName => _alias ?? actualTableName;
-  @override
-  String get actualTableName => $name;
-  static const String $name = 'workspaces';
-  @override
-  VerificationContext validateIntegrity(
-    Insertable<WorkspaceEntity> instance, {
-    bool isInserting = false,
-  }) {
-    final context = VerificationContext();
-    final data = instance.toColumns(true);
-    if (data.containsKey('id')) {
-      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
-    } else if (isInserting) {
-      context.missing(_idMeta);
-    }
-    if (data.containsKey('name')) {
-      context.handle(
-        _nameMeta,
-        name.isAcceptableOrUnknown(data['name']!, _nameMeta),
-      );
-    } else if (isInserting) {
-      context.missing(_nameMeta);
-    }
-    if (data.containsKey('description')) {
-      context.handle(
-        _descriptionMeta,
-        description.isAcceptableOrUnknown(
-          data['description']!,
-          _descriptionMeta,
-        ),
-      );
-    }
-    if (data.containsKey('owner_id')) {
-      context.handle(
-        _ownerIdMeta,
-        ownerId.isAcceptableOrUnknown(data['owner_id']!, _ownerIdMeta),
-      );
-    } else if (isInserting) {
-      context.missing(_ownerIdMeta);
-    }
-    if (data.containsKey('invite_code')) {
-      context.handle(
-        _inviteCodeMeta,
-        inviteCode.isAcceptableOrUnknown(data['invite_code']!, _inviteCodeMeta),
-      );
-    }
-    if (data.containsKey('created_at')) {
-      context.handle(
-        _createdAtMeta,
-        createdAt.isAcceptableOrUnknown(data['created_at']!, _createdAtMeta),
-      );
-    } else if (isInserting) {
-      context.missing(_createdAtMeta);
-    }
-    if (data.containsKey('updated_at')) {
-      context.handle(
-        _updatedAtMeta,
-        updatedAt.isAcceptableOrUnknown(data['updated_at']!, _updatedAtMeta),
-      );
-    } else if (isInserting) {
-      context.missing(_updatedAtMeta);
-    }
-    return context;
-  }
-
-  @override
-  Set<GeneratedColumn> get $primaryKey => {id};
-  @override
-  WorkspaceEntity map(Map<String, dynamic> data, {String? tablePrefix}) {
-    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
-    return WorkspaceEntity(
-      id: attachedDatabase.typeMapping.read(
-        DriftSqlType.string,
-        data['${effectivePrefix}id'],
-      )!,
-      name: attachedDatabase.typeMapping.read(
-        DriftSqlType.string,
-        data['${effectivePrefix}name'],
-      )!,
-      description: attachedDatabase.typeMapping.read(
-        DriftSqlType.string,
-        data['${effectivePrefix}description'],
-      ),
-      ownerId: attachedDatabase.typeMapping.read(
-        DriftSqlType.string,
-        data['${effectivePrefix}owner_id'],
-      )!,
-      inviteCode: attachedDatabase.typeMapping.read(
-        DriftSqlType.string,
-        data['${effectivePrefix}invite_code'],
-      ),
-      createdAt: attachedDatabase.typeMapping.read(
-        DriftSqlType.dateTime,
-        data['${effectivePrefix}created_at'],
-      )!,
-      updatedAt: attachedDatabase.typeMapping.read(
-        DriftSqlType.dateTime,
-        data['${effectivePrefix}updated_at'],
-      )!,
-    );
-  }
-
-  @override
-  $WorkspacesTable createAlias(String alias) {
-    return $WorkspacesTable(attachedDatabase, alias);
-  }
-}
-
-class WorkspaceEntity extends DataClass implements Insertable<WorkspaceEntity> {
-  final String id;
-  final String name;
-  final String? description;
-  final String ownerId;
-  final String? inviteCode;
-  final DateTime createdAt;
-  final DateTime updatedAt;
-  const WorkspaceEntity({
-    required this.id,
-    required this.name,
-    this.description,
-    required this.ownerId,
-    this.inviteCode,
-    required this.createdAt,
-    required this.updatedAt,
-  });
-  @override
-  Map<String, Expression> toColumns(bool nullToAbsent) {
-    final map = <String, Expression>{};
-    map['id'] = Variable<String>(id);
-    map['name'] = Variable<String>(name);
-    if (!nullToAbsent || description != null) {
-      map['description'] = Variable<String>(description);
-    }
-    map['owner_id'] = Variable<String>(ownerId);
-    if (!nullToAbsent || inviteCode != null) {
-      map['invite_code'] = Variable<String>(inviteCode);
-    }
-    map['created_at'] = Variable<DateTime>(createdAt);
-    map['updated_at'] = Variable<DateTime>(updatedAt);
-    return map;
-  }
-
-  WorkspacesCompanion toCompanion(bool nullToAbsent) {
-    return WorkspacesCompanion(
-      id: Value(id),
-      name: Value(name),
-      description: description == null && nullToAbsent
-          ? const Value.absent()
-          : Value(description),
-      ownerId: Value(ownerId),
-      inviteCode: inviteCode == null && nullToAbsent
-          ? const Value.absent()
-          : Value(inviteCode),
-      createdAt: Value(createdAt),
-      updatedAt: Value(updatedAt),
-    );
-  }
-
-  factory WorkspaceEntity.fromJson(
-    Map<String, dynamic> json, {
-    ValueSerializer? serializer,
-  }) {
-    serializer ??= driftRuntimeOptions.defaultSerializer;
-    return WorkspaceEntity(
-      id: serializer.fromJson<String>(json['id']),
-      name: serializer.fromJson<String>(json['name']),
-      description: serializer.fromJson<String?>(json['description']),
-      ownerId: serializer.fromJson<String>(json['ownerId']),
-      inviteCode: serializer.fromJson<String?>(json['inviteCode']),
-      createdAt: serializer.fromJson<DateTime>(json['createdAt']),
-      updatedAt: serializer.fromJson<DateTime>(json['updatedAt']),
-    );
-  }
-  @override
-  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
-    serializer ??= driftRuntimeOptions.defaultSerializer;
-    return <String, dynamic>{
-      'id': serializer.toJson<String>(id),
-      'name': serializer.toJson<String>(name),
-      'description': serializer.toJson<String?>(description),
-      'ownerId': serializer.toJson<String>(ownerId),
-      'inviteCode': serializer.toJson<String?>(inviteCode),
-      'createdAt': serializer.toJson<DateTime>(createdAt),
-      'updatedAt': serializer.toJson<DateTime>(updatedAt),
-    };
-  }
-
-  WorkspaceEntity copyWith({
-    String? id,
-    String? name,
-    Value<String?> description = const Value.absent(),
-    String? ownerId,
-    Value<String?> inviteCode = const Value.absent(),
-    DateTime? createdAt,
-    DateTime? updatedAt,
-  }) => WorkspaceEntity(
-    id: id ?? this.id,
-    name: name ?? this.name,
-    description: description.present ? description.value : this.description,
-    ownerId: ownerId ?? this.ownerId,
-    inviteCode: inviteCode.present ? inviteCode.value : this.inviteCode,
-    createdAt: createdAt ?? this.createdAt,
-    updatedAt: updatedAt ?? this.updatedAt,
-  );
-  WorkspaceEntity copyWithCompanion(WorkspacesCompanion data) {
-    return WorkspaceEntity(
-      id: data.id.present ? data.id.value : this.id,
-      name: data.name.present ? data.name.value : this.name,
-      description: data.description.present
-          ? data.description.value
-          : this.description,
-      ownerId: data.ownerId.present ? data.ownerId.value : this.ownerId,
-      inviteCode: data.inviteCode.present
-          ? data.inviteCode.value
-          : this.inviteCode,
-      createdAt: data.createdAt.present ? data.createdAt.value : this.createdAt,
-      updatedAt: data.updatedAt.present ? data.updatedAt.value : this.updatedAt,
-    );
-  }
-
-  @override
-  String toString() {
-    return (StringBuffer('WorkspaceEntity(')
-          ..write('id: $id, ')
-          ..write('name: $name, ')
-          ..write('description: $description, ')
-          ..write('ownerId: $ownerId, ')
-          ..write('inviteCode: $inviteCode, ')
-          ..write('createdAt: $createdAt, ')
-          ..write('updatedAt: $updatedAt')
-          ..write(')'))
-        .toString();
-  }
-
-  @override
-  int get hashCode => Object.hash(
-    id,
-    name,
-    description,
-    ownerId,
-    inviteCode,
-    createdAt,
-    updatedAt,
-  );
-  @override
-  bool operator ==(Object other) =>
-      identical(this, other) ||
-      (other is WorkspaceEntity &&
-          other.id == this.id &&
-          other.name == this.name &&
-          other.description == this.description &&
-          other.ownerId == this.ownerId &&
-          other.inviteCode == this.inviteCode &&
-          other.createdAt == this.createdAt &&
-          other.updatedAt == this.updatedAt);
-}
-
-class WorkspacesCompanion extends UpdateCompanion<WorkspaceEntity> {
-  final Value<String> id;
-  final Value<String> name;
-  final Value<String?> description;
-  final Value<String> ownerId;
-  final Value<String?> inviteCode;
-  final Value<DateTime> createdAt;
-  final Value<DateTime> updatedAt;
-  final Value<int> rowid;
-  const WorkspacesCompanion({
-    this.id = const Value.absent(),
-    this.name = const Value.absent(),
-    this.description = const Value.absent(),
-    this.ownerId = const Value.absent(),
-    this.inviteCode = const Value.absent(),
-    this.createdAt = const Value.absent(),
-    this.updatedAt = const Value.absent(),
-    this.rowid = const Value.absent(),
-  });
-  WorkspacesCompanion.insert({
-    required String id,
-    required String name,
-    this.description = const Value.absent(),
-    required String ownerId,
-    this.inviteCode = const Value.absent(),
-    required DateTime createdAt,
-    required DateTime updatedAt,
-    this.rowid = const Value.absent(),
-  }) : id = Value(id),
-       name = Value(name),
-       ownerId = Value(ownerId),
-       createdAt = Value(createdAt),
-       updatedAt = Value(updatedAt);
-  static Insertable<WorkspaceEntity> custom({
-    Expression<String>? id,
-    Expression<String>? name,
-    Expression<String>? description,
-    Expression<String>? ownerId,
-    Expression<String>? inviteCode,
-    Expression<DateTime>? createdAt,
-    Expression<DateTime>? updatedAt,
-    Expression<int>? rowid,
-  }) {
-    return RawValuesInsertable({
-      if (id != null) 'id': id,
-      if (name != null) 'name': name,
-      if (description != null) 'description': description,
-      if (ownerId != null) 'owner_id': ownerId,
-      if (inviteCode != null) 'invite_code': inviteCode,
-      if (createdAt != null) 'created_at': createdAt,
-      if (updatedAt != null) 'updated_at': updatedAt,
-      if (rowid != null) 'rowid': rowid,
-    });
-  }
-
-  WorkspacesCompanion copyWith({
-    Value<String>? id,
-    Value<String>? name,
-    Value<String?>? description,
-    Value<String>? ownerId,
-    Value<String?>? inviteCode,
-    Value<DateTime>? createdAt,
-    Value<DateTime>? updatedAt,
-    Value<int>? rowid,
-  }) {
-    return WorkspacesCompanion(
-      id: id ?? this.id,
-      name: name ?? this.name,
-      description: description ?? this.description,
-      ownerId: ownerId ?? this.ownerId,
-      inviteCode: inviteCode ?? this.inviteCode,
-      createdAt: createdAt ?? this.createdAt,
-      updatedAt: updatedAt ?? this.updatedAt,
-      rowid: rowid ?? this.rowid,
-    );
-  }
-
-  @override
-  Map<String, Expression> toColumns(bool nullToAbsent) {
-    final map = <String, Expression>{};
-    if (id.present) {
-      map['id'] = Variable<String>(id.value);
-    }
-    if (name.present) {
-      map['name'] = Variable<String>(name.value);
-    }
-    if (description.present) {
-      map['description'] = Variable<String>(description.value);
-    }
-    if (ownerId.present) {
-      map['owner_id'] = Variable<String>(ownerId.value);
-    }
-    if (inviteCode.present) {
-      map['invite_code'] = Variable<String>(inviteCode.value);
-    }
-    if (createdAt.present) {
-      map['created_at'] = Variable<DateTime>(createdAt.value);
-    }
-    if (updatedAt.present) {
-      map['updated_at'] = Variable<DateTime>(updatedAt.value);
-    }
-    if (rowid.present) {
-      map['rowid'] = Variable<int>(rowid.value);
-    }
-    return map;
-  }
-
-  @override
-  String toString() {
-    return (StringBuffer('WorkspacesCompanion(')
-          ..write('id: $id, ')
-          ..write('name: $name, ')
-          ..write('description: $description, ')
-          ..write('ownerId: $ownerId, ')
-          ..write('inviteCode: $inviteCode, ')
-          ..write('createdAt: $createdAt, ')
-          ..write('updatedAt: $updatedAt, ')
-          ..write('rowid: $rowid')
           ..write(')'))
         .toString();
   }
@@ -1067,40 +1167,60 @@ abstract class _$AppDatabase extends GeneratedDatabase {
   _$AppDatabase(QueryExecutor e) : super(e);
   $AppDatabaseManager get managers => $AppDatabaseManager(this);
   late final $CurrentUserTable currentUser = $CurrentUserTable(this);
-  late final $WorkspacesTable workspaces = $WorkspacesTable(this);
   late final UserDao userDao = UserDao(this as AppDatabase);
-  late final WorkspaceDao workspaceDao = WorkspaceDao(this as AppDatabase);
   @override
   Iterable<TableInfo<Table, Object?>> get allTables =>
       allSchemaEntities.whereType<TableInfo<Table, Object?>>();
   @override
-  List<DatabaseSchemaEntity> get allSchemaEntities => [currentUser, workspaces];
+  List<DatabaseSchemaEntity> get allSchemaEntities => [currentUser];
 }
 
 typedef $$CurrentUserTableCreateCompanionBuilder =
     CurrentUserCompanion Function({
       Value<int> id,
-      required String userId,
-      required String email,
+      required int userId,
       required String username,
-      Value<String?> fullName,
+      required String email,
+      Value<String?> displayName,
       Value<String?> avatarUrl,
-      Value<String?> bio,
+      Value<String?> frameUrl,
+      required String bio,
+      required String role,
+      required int points,
+      required int paidPoints,
+      Value<String?> translateLanguage,
       required DateTime createdAt,
       required DateTime updatedAt,
+      required bool isActive,
+      required int totalBadges,
+      required int totalFanHubs,
+      required int totalReceivedGifts,
+      Value<String?> displayBadges,
+      Value<String?> allBadges,
       Value<DateTime> cachedAt,
     });
 typedef $$CurrentUserTableUpdateCompanionBuilder =
     CurrentUserCompanion Function({
       Value<int> id,
-      Value<String> userId,
-      Value<String> email,
+      Value<int> userId,
       Value<String> username,
-      Value<String?> fullName,
+      Value<String> email,
+      Value<String?> displayName,
       Value<String?> avatarUrl,
-      Value<String?> bio,
+      Value<String?> frameUrl,
+      Value<String> bio,
+      Value<String> role,
+      Value<int> points,
+      Value<int> paidPoints,
+      Value<String?> translateLanguage,
       Value<DateTime> createdAt,
       Value<DateTime> updatedAt,
+      Value<bool> isActive,
+      Value<int> totalBadges,
+      Value<int> totalFanHubs,
+      Value<int> totalReceivedGifts,
+      Value<String?> displayBadges,
+      Value<String?> allBadges,
       Value<DateTime> cachedAt,
     });
 
@@ -1118,13 +1238,8 @@ class $$CurrentUserTableFilterComposer
     builder: (column) => ColumnFilters(column),
   );
 
-  ColumnFilters<String> get userId => $composableBuilder(
+  ColumnFilters<int> get userId => $composableBuilder(
     column: $table.userId,
-    builder: (column) => ColumnFilters(column),
-  );
-
-  ColumnFilters<String> get email => $composableBuilder(
-    column: $table.email,
     builder: (column) => ColumnFilters(column),
   );
 
@@ -1133,8 +1248,13 @@ class $$CurrentUserTableFilterComposer
     builder: (column) => ColumnFilters(column),
   );
 
-  ColumnFilters<String> get fullName => $composableBuilder(
-    column: $table.fullName,
+  ColumnFilters<String> get email => $composableBuilder(
+    column: $table.email,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get displayName => $composableBuilder(
+    column: $table.displayName,
     builder: (column) => ColumnFilters(column),
   );
 
@@ -1143,8 +1263,33 @@ class $$CurrentUserTableFilterComposer
     builder: (column) => ColumnFilters(column),
   );
 
+  ColumnFilters<String> get frameUrl => $composableBuilder(
+    column: $table.frameUrl,
+    builder: (column) => ColumnFilters(column),
+  );
+
   ColumnFilters<String> get bio => $composableBuilder(
     column: $table.bio,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get role => $composableBuilder(
+    column: $table.role,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get points => $composableBuilder(
+    column: $table.points,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get paidPoints => $composableBuilder(
+    column: $table.paidPoints,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get translateLanguage => $composableBuilder(
+    column: $table.translateLanguage,
     builder: (column) => ColumnFilters(column),
   );
 
@@ -1155,6 +1300,36 @@ class $$CurrentUserTableFilterComposer
 
   ColumnFilters<DateTime> get updatedAt => $composableBuilder(
     column: $table.updatedAt,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<bool> get isActive => $composableBuilder(
+    column: $table.isActive,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get totalBadges => $composableBuilder(
+    column: $table.totalBadges,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get totalFanHubs => $composableBuilder(
+    column: $table.totalFanHubs,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get totalReceivedGifts => $composableBuilder(
+    column: $table.totalReceivedGifts,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get displayBadges => $composableBuilder(
+    column: $table.displayBadges,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get allBadges => $composableBuilder(
+    column: $table.allBadges,
     builder: (column) => ColumnFilters(column),
   );
 
@@ -1178,13 +1353,8 @@ class $$CurrentUserTableOrderingComposer
     builder: (column) => ColumnOrderings(column),
   );
 
-  ColumnOrderings<String> get userId => $composableBuilder(
+  ColumnOrderings<int> get userId => $composableBuilder(
     column: $table.userId,
-    builder: (column) => ColumnOrderings(column),
-  );
-
-  ColumnOrderings<String> get email => $composableBuilder(
-    column: $table.email,
     builder: (column) => ColumnOrderings(column),
   );
 
@@ -1193,8 +1363,13 @@ class $$CurrentUserTableOrderingComposer
     builder: (column) => ColumnOrderings(column),
   );
 
-  ColumnOrderings<String> get fullName => $composableBuilder(
-    column: $table.fullName,
+  ColumnOrderings<String> get email => $composableBuilder(
+    column: $table.email,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get displayName => $composableBuilder(
+    column: $table.displayName,
     builder: (column) => ColumnOrderings(column),
   );
 
@@ -1203,8 +1378,33 @@ class $$CurrentUserTableOrderingComposer
     builder: (column) => ColumnOrderings(column),
   );
 
+  ColumnOrderings<String> get frameUrl => $composableBuilder(
+    column: $table.frameUrl,
+    builder: (column) => ColumnOrderings(column),
+  );
+
   ColumnOrderings<String> get bio => $composableBuilder(
     column: $table.bio,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get role => $composableBuilder(
+    column: $table.role,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get points => $composableBuilder(
+    column: $table.points,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get paidPoints => $composableBuilder(
+    column: $table.paidPoints,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get translateLanguage => $composableBuilder(
+    column: $table.translateLanguage,
     builder: (column) => ColumnOrderings(column),
   );
 
@@ -1215,6 +1415,36 @@ class $$CurrentUserTableOrderingComposer
 
   ColumnOrderings<DateTime> get updatedAt => $composableBuilder(
     column: $table.updatedAt,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<bool> get isActive => $composableBuilder(
+    column: $table.isActive,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get totalBadges => $composableBuilder(
+    column: $table.totalBadges,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get totalFanHubs => $composableBuilder(
+    column: $table.totalFanHubs,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get totalReceivedGifts => $composableBuilder(
+    column: $table.totalReceivedGifts,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get displayBadges => $composableBuilder(
+    column: $table.displayBadges,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get allBadges => $composableBuilder(
+    column: $table.allBadges,
     builder: (column) => ColumnOrderings(column),
   );
 
@@ -1236,29 +1466,76 @@ class $$CurrentUserTableAnnotationComposer
   GeneratedColumn<int> get id =>
       $composableBuilder(column: $table.id, builder: (column) => column);
 
-  GeneratedColumn<String> get userId =>
+  GeneratedColumn<int> get userId =>
       $composableBuilder(column: $table.userId, builder: (column) => column);
-
-  GeneratedColumn<String> get email =>
-      $composableBuilder(column: $table.email, builder: (column) => column);
 
   GeneratedColumn<String> get username =>
       $composableBuilder(column: $table.username, builder: (column) => column);
 
-  GeneratedColumn<String> get fullName =>
-      $composableBuilder(column: $table.fullName, builder: (column) => column);
+  GeneratedColumn<String> get email =>
+      $composableBuilder(column: $table.email, builder: (column) => column);
+
+  GeneratedColumn<String> get displayName => $composableBuilder(
+    column: $table.displayName,
+    builder: (column) => column,
+  );
 
   GeneratedColumn<String> get avatarUrl =>
       $composableBuilder(column: $table.avatarUrl, builder: (column) => column);
 
+  GeneratedColumn<String> get frameUrl =>
+      $composableBuilder(column: $table.frameUrl, builder: (column) => column);
+
   GeneratedColumn<String> get bio =>
       $composableBuilder(column: $table.bio, builder: (column) => column);
+
+  GeneratedColumn<String> get role =>
+      $composableBuilder(column: $table.role, builder: (column) => column);
+
+  GeneratedColumn<int> get points =>
+      $composableBuilder(column: $table.points, builder: (column) => column);
+
+  GeneratedColumn<int> get paidPoints => $composableBuilder(
+    column: $table.paidPoints,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get translateLanguage => $composableBuilder(
+    column: $table.translateLanguage,
+    builder: (column) => column,
+  );
 
   GeneratedColumn<DateTime> get createdAt =>
       $composableBuilder(column: $table.createdAt, builder: (column) => column);
 
   GeneratedColumn<DateTime> get updatedAt =>
       $composableBuilder(column: $table.updatedAt, builder: (column) => column);
+
+  GeneratedColumn<bool> get isActive =>
+      $composableBuilder(column: $table.isActive, builder: (column) => column);
+
+  GeneratedColumn<int> get totalBadges => $composableBuilder(
+    column: $table.totalBadges,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<int> get totalFanHubs => $composableBuilder(
+    column: $table.totalFanHubs,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<int> get totalReceivedGifts => $composableBuilder(
+    column: $table.totalReceivedGifts,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get displayBadges => $composableBuilder(
+    column: $table.displayBadges,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get allBadges =>
+      $composableBuilder(column: $table.allBadges, builder: (column) => column);
 
   GeneratedColumn<DateTime> get cachedAt =>
       $composableBuilder(column: $table.cachedAt, builder: (column) => column);
@@ -1296,49 +1573,93 @@ class $$CurrentUserTableTableManager
           updateCompanionCallback:
               ({
                 Value<int> id = const Value.absent(),
-                Value<String> userId = const Value.absent(),
-                Value<String> email = const Value.absent(),
+                Value<int> userId = const Value.absent(),
                 Value<String> username = const Value.absent(),
-                Value<String?> fullName = const Value.absent(),
+                Value<String> email = const Value.absent(),
+                Value<String?> displayName = const Value.absent(),
                 Value<String?> avatarUrl = const Value.absent(),
-                Value<String?> bio = const Value.absent(),
+                Value<String?> frameUrl = const Value.absent(),
+                Value<String> bio = const Value.absent(),
+                Value<String> role = const Value.absent(),
+                Value<int> points = const Value.absent(),
+                Value<int> paidPoints = const Value.absent(),
+                Value<String?> translateLanguage = const Value.absent(),
                 Value<DateTime> createdAt = const Value.absent(),
                 Value<DateTime> updatedAt = const Value.absent(),
+                Value<bool> isActive = const Value.absent(),
+                Value<int> totalBadges = const Value.absent(),
+                Value<int> totalFanHubs = const Value.absent(),
+                Value<int> totalReceivedGifts = const Value.absent(),
+                Value<String?> displayBadges = const Value.absent(),
+                Value<String?> allBadges = const Value.absent(),
                 Value<DateTime> cachedAt = const Value.absent(),
               }) => CurrentUserCompanion(
                 id: id,
                 userId: userId,
-                email: email,
                 username: username,
-                fullName: fullName,
+                email: email,
+                displayName: displayName,
                 avatarUrl: avatarUrl,
+                frameUrl: frameUrl,
                 bio: bio,
+                role: role,
+                points: points,
+                paidPoints: paidPoints,
+                translateLanguage: translateLanguage,
                 createdAt: createdAt,
                 updatedAt: updatedAt,
+                isActive: isActive,
+                totalBadges: totalBadges,
+                totalFanHubs: totalFanHubs,
+                totalReceivedGifts: totalReceivedGifts,
+                displayBadges: displayBadges,
+                allBadges: allBadges,
                 cachedAt: cachedAt,
               ),
           createCompanionCallback:
               ({
                 Value<int> id = const Value.absent(),
-                required String userId,
-                required String email,
+                required int userId,
                 required String username,
-                Value<String?> fullName = const Value.absent(),
+                required String email,
+                Value<String?> displayName = const Value.absent(),
                 Value<String?> avatarUrl = const Value.absent(),
-                Value<String?> bio = const Value.absent(),
+                Value<String?> frameUrl = const Value.absent(),
+                required String bio,
+                required String role,
+                required int points,
+                required int paidPoints,
+                Value<String?> translateLanguage = const Value.absent(),
                 required DateTime createdAt,
                 required DateTime updatedAt,
+                required bool isActive,
+                required int totalBadges,
+                required int totalFanHubs,
+                required int totalReceivedGifts,
+                Value<String?> displayBadges = const Value.absent(),
+                Value<String?> allBadges = const Value.absent(),
                 Value<DateTime> cachedAt = const Value.absent(),
               }) => CurrentUserCompanion.insert(
                 id: id,
                 userId: userId,
-                email: email,
                 username: username,
-                fullName: fullName,
+                email: email,
+                displayName: displayName,
                 avatarUrl: avatarUrl,
+                frameUrl: frameUrl,
                 bio: bio,
+                role: role,
+                points: points,
+                paidPoints: paidPoints,
+                translateLanguage: translateLanguage,
                 createdAt: createdAt,
                 updatedAt: updatedAt,
+                isActive: isActive,
+                totalBadges: totalBadges,
+                totalFanHubs: totalFanHubs,
+                totalReceivedGifts: totalReceivedGifts,
+                displayBadges: displayBadges,
+                allBadges: allBadges,
                 cachedAt: cachedAt,
               ),
           withReferenceMapper: (p0) => p0
@@ -1366,254 +1687,10 @@ typedef $$CurrentUserTableProcessedTableManager =
       CurrentUserEntity,
       PrefetchHooks Function()
     >;
-typedef $$WorkspacesTableCreateCompanionBuilder =
-    WorkspacesCompanion Function({
-      required String id,
-      required String name,
-      Value<String?> description,
-      required String ownerId,
-      Value<String?> inviteCode,
-      required DateTime createdAt,
-      required DateTime updatedAt,
-      Value<int> rowid,
-    });
-typedef $$WorkspacesTableUpdateCompanionBuilder =
-    WorkspacesCompanion Function({
-      Value<String> id,
-      Value<String> name,
-      Value<String?> description,
-      Value<String> ownerId,
-      Value<String?> inviteCode,
-      Value<DateTime> createdAt,
-      Value<DateTime> updatedAt,
-      Value<int> rowid,
-    });
-
-class $$WorkspacesTableFilterComposer
-    extends Composer<_$AppDatabase, $WorkspacesTable> {
-  $$WorkspacesTableFilterComposer({
-    required super.$db,
-    required super.$table,
-    super.joinBuilder,
-    super.$addJoinBuilderToRootComposer,
-    super.$removeJoinBuilderFromRootComposer,
-  });
-  ColumnFilters<String> get id => $composableBuilder(
-    column: $table.id,
-    builder: (column) => ColumnFilters(column),
-  );
-
-  ColumnFilters<String> get name => $composableBuilder(
-    column: $table.name,
-    builder: (column) => ColumnFilters(column),
-  );
-
-  ColumnFilters<String> get description => $composableBuilder(
-    column: $table.description,
-    builder: (column) => ColumnFilters(column),
-  );
-
-  ColumnFilters<String> get ownerId => $composableBuilder(
-    column: $table.ownerId,
-    builder: (column) => ColumnFilters(column),
-  );
-
-  ColumnFilters<String> get inviteCode => $composableBuilder(
-    column: $table.inviteCode,
-    builder: (column) => ColumnFilters(column),
-  );
-
-  ColumnFilters<DateTime> get createdAt => $composableBuilder(
-    column: $table.createdAt,
-    builder: (column) => ColumnFilters(column),
-  );
-
-  ColumnFilters<DateTime> get updatedAt => $composableBuilder(
-    column: $table.updatedAt,
-    builder: (column) => ColumnFilters(column),
-  );
-}
-
-class $$WorkspacesTableOrderingComposer
-    extends Composer<_$AppDatabase, $WorkspacesTable> {
-  $$WorkspacesTableOrderingComposer({
-    required super.$db,
-    required super.$table,
-    super.joinBuilder,
-    super.$addJoinBuilderToRootComposer,
-    super.$removeJoinBuilderFromRootComposer,
-  });
-  ColumnOrderings<String> get id => $composableBuilder(
-    column: $table.id,
-    builder: (column) => ColumnOrderings(column),
-  );
-
-  ColumnOrderings<String> get name => $composableBuilder(
-    column: $table.name,
-    builder: (column) => ColumnOrderings(column),
-  );
-
-  ColumnOrderings<String> get description => $composableBuilder(
-    column: $table.description,
-    builder: (column) => ColumnOrderings(column),
-  );
-
-  ColumnOrderings<String> get ownerId => $composableBuilder(
-    column: $table.ownerId,
-    builder: (column) => ColumnOrderings(column),
-  );
-
-  ColumnOrderings<String> get inviteCode => $composableBuilder(
-    column: $table.inviteCode,
-    builder: (column) => ColumnOrderings(column),
-  );
-
-  ColumnOrderings<DateTime> get createdAt => $composableBuilder(
-    column: $table.createdAt,
-    builder: (column) => ColumnOrderings(column),
-  );
-
-  ColumnOrderings<DateTime> get updatedAt => $composableBuilder(
-    column: $table.updatedAt,
-    builder: (column) => ColumnOrderings(column),
-  );
-}
-
-class $$WorkspacesTableAnnotationComposer
-    extends Composer<_$AppDatabase, $WorkspacesTable> {
-  $$WorkspacesTableAnnotationComposer({
-    required super.$db,
-    required super.$table,
-    super.joinBuilder,
-    super.$addJoinBuilderToRootComposer,
-    super.$removeJoinBuilderFromRootComposer,
-  });
-  GeneratedColumn<String> get id =>
-      $composableBuilder(column: $table.id, builder: (column) => column);
-
-  GeneratedColumn<String> get name =>
-      $composableBuilder(column: $table.name, builder: (column) => column);
-
-  GeneratedColumn<String> get description => $composableBuilder(
-    column: $table.description,
-    builder: (column) => column,
-  );
-
-  GeneratedColumn<String> get ownerId =>
-      $composableBuilder(column: $table.ownerId, builder: (column) => column);
-
-  GeneratedColumn<String> get inviteCode => $composableBuilder(
-    column: $table.inviteCode,
-    builder: (column) => column,
-  );
-
-  GeneratedColumn<DateTime> get createdAt =>
-      $composableBuilder(column: $table.createdAt, builder: (column) => column);
-
-  GeneratedColumn<DateTime> get updatedAt =>
-      $composableBuilder(column: $table.updatedAt, builder: (column) => column);
-}
-
-class $$WorkspacesTableTableManager
-    extends
-        RootTableManager<
-          _$AppDatabase,
-          $WorkspacesTable,
-          WorkspaceEntity,
-          $$WorkspacesTableFilterComposer,
-          $$WorkspacesTableOrderingComposer,
-          $$WorkspacesTableAnnotationComposer,
-          $$WorkspacesTableCreateCompanionBuilder,
-          $$WorkspacesTableUpdateCompanionBuilder,
-          (
-            WorkspaceEntity,
-            BaseReferences<_$AppDatabase, $WorkspacesTable, WorkspaceEntity>,
-          ),
-          WorkspaceEntity,
-          PrefetchHooks Function()
-        > {
-  $$WorkspacesTableTableManager(_$AppDatabase db, $WorkspacesTable table)
-    : super(
-        TableManagerState(
-          db: db,
-          table: table,
-          createFilteringComposer: () =>
-              $$WorkspacesTableFilterComposer($db: db, $table: table),
-          createOrderingComposer: () =>
-              $$WorkspacesTableOrderingComposer($db: db, $table: table),
-          createComputedFieldComposer: () =>
-              $$WorkspacesTableAnnotationComposer($db: db, $table: table),
-          updateCompanionCallback:
-              ({
-                Value<String> id = const Value.absent(),
-                Value<String> name = const Value.absent(),
-                Value<String?> description = const Value.absent(),
-                Value<String> ownerId = const Value.absent(),
-                Value<String?> inviteCode = const Value.absent(),
-                Value<DateTime> createdAt = const Value.absent(),
-                Value<DateTime> updatedAt = const Value.absent(),
-                Value<int> rowid = const Value.absent(),
-              }) => WorkspacesCompanion(
-                id: id,
-                name: name,
-                description: description,
-                ownerId: ownerId,
-                inviteCode: inviteCode,
-                createdAt: createdAt,
-                updatedAt: updatedAt,
-                rowid: rowid,
-              ),
-          createCompanionCallback:
-              ({
-                required String id,
-                required String name,
-                Value<String?> description = const Value.absent(),
-                required String ownerId,
-                Value<String?> inviteCode = const Value.absent(),
-                required DateTime createdAt,
-                required DateTime updatedAt,
-                Value<int> rowid = const Value.absent(),
-              }) => WorkspacesCompanion.insert(
-                id: id,
-                name: name,
-                description: description,
-                ownerId: ownerId,
-                inviteCode: inviteCode,
-                createdAt: createdAt,
-                updatedAt: updatedAt,
-                rowid: rowid,
-              ),
-          withReferenceMapper: (p0) => p0
-              .map((e) => (e.readTable(table), BaseReferences(db, table, e)))
-              .toList(),
-          prefetchHooksCallback: null,
-        ),
-      );
-}
-
-typedef $$WorkspacesTableProcessedTableManager =
-    ProcessedTableManager<
-      _$AppDatabase,
-      $WorkspacesTable,
-      WorkspaceEntity,
-      $$WorkspacesTableFilterComposer,
-      $$WorkspacesTableOrderingComposer,
-      $$WorkspacesTableAnnotationComposer,
-      $$WorkspacesTableCreateCompanionBuilder,
-      $$WorkspacesTableUpdateCompanionBuilder,
-      (
-        WorkspaceEntity,
-        BaseReferences<_$AppDatabase, $WorkspacesTable, WorkspaceEntity>,
-      ),
-      WorkspaceEntity,
-      PrefetchHooks Function()
-    >;
 
 class $AppDatabaseManager {
   final _$AppDatabase _db;
   $AppDatabaseManager(this._db);
   $$CurrentUserTableTableManager get currentUser =>
       $$CurrentUserTableTableManager(_db, _db.currentUser);
-  $$WorkspacesTableTableManager get workspaces =>
-      $$WorkspacesTableTableManager(_db, _db.workspaces);
 }

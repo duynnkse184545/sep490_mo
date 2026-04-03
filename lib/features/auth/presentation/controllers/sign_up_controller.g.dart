@@ -41,7 +41,7 @@ final class SignUpControllerProvider
   }
 }
 
-String _$signUpControllerHash() => r'24de1087e6cc2a99ac4cd39146beaf3761a68a31';
+String _$signUpControllerHash() => r'e728d7200d5876bfd1bfde941bd3084c289683ed';
 
 abstract class _$SignUpController extends $Notifier<SignUpState> {
   SignUpState build();

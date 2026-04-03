@@ -11,69 +11,33 @@ part of 'api_response_wrapper.dart';
 
 // dart format off
 T _$identity<T>(T value) => value;
-
 /// @nodoc
 mixin _$ApiResponse<T> {
 
- bool get success; String get message; T get data;
-/// Create a copy of ApiResponse
-/// with the given fields replaced by the non-null parameter values.
-@JsonKey(includeFromJson: false, includeToJson: false)
-@pragma('vm:prefer-inline')
-$ApiResponseCopyWith<T, ApiResponse<T>> get copyWith => _$ApiResponseCopyWithImpl<T, ApiResponse<T>>(this as ApiResponse<T>, _$identity);
 
-  /// Serializes this ApiResponse to a JSON map.
-  Map<String, dynamic> toJson(Object? Function(T) toJsonT);
+
 
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is ApiResponse<T>&&(identical(other.success, success) || other.success == success)&&(identical(other.message, message) || other.message == message)&&const DeepCollectionEquality().equals(other.data, data));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is ApiResponse<T>);
 }
 
-@JsonKey(includeFromJson: false, includeToJson: false)
+
 @override
-int get hashCode => Object.hash(runtimeType,success,message,const DeepCollectionEquality().hash(data));
+int get hashCode => runtimeType.hashCode;
 
 @override
 String toString() {
-  return 'ApiResponse<$T>(success: $success, message: $message, data: $data)';
+  return 'ApiResponse<$T>()';
 }
 
 
 }
 
 /// @nodoc
-abstract mixin class $ApiResponseCopyWith<T,$Res>  {
-  factory $ApiResponseCopyWith(ApiResponse<T> value, $Res Function(ApiResponse<T>) _then) = _$ApiResponseCopyWithImpl;
-@useResult
-$Res call({
- bool success, String message, T data
-});
-
-
-
-
-}
-/// @nodoc
-class _$ApiResponseCopyWithImpl<T,$Res>
-    implements $ApiResponseCopyWith<T, $Res> {
-  _$ApiResponseCopyWithImpl(this._self, this._then);
-
-  final ApiResponse<T> _self;
-  final $Res Function(ApiResponse<T>) _then;
-
-/// Create a copy of ApiResponse
-/// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? success = null,Object? message = null,Object? data = freezed,}) {
-  return _then(_self.copyWith(
-success: null == success ? _self.success : success // ignore: cast_nullable_to_non_nullable
-as bool,message: null == message ? _self.message : message // ignore: cast_nullable_to_non_nullable
-as String,data: freezed == data ? _self.data : data // ignore: cast_nullable_to_non_nullable
-as T,
-  ));
-}
-
+class $ApiResponseCopyWith<T,$Res>  {
+$ApiResponseCopyWith(ApiResponse<T> _, $Res Function(ApiResponse<T>) __);
 }
 
 
@@ -91,11 +55,12 @@ extension ApiResponsePatterns<T> on ApiResponse<T> {
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeMap<TResult extends Object?>(TResult Function( _ApiResponse<T> value)?  $default,{required TResult orElse(),}){
+@optionalTypeArgs TResult maybeMap<TResult extends Object?>({TResult Function( ApiResponseSuccess<T> value)?  success,TResult Function( ApiResponseFailure<T> value)?  failure,required TResult orElse(),}){
 final _that = this;
 switch (_that) {
-case _ApiResponse() when $default != null:
-return $default(_that);case _:
+case ApiResponseSuccess() when success != null:
+return success(_that);case ApiResponseFailure() when failure != null:
+return failure(_that);case _:
   return orElse();
 
 }
@@ -113,14 +78,12 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult map<TResult extends Object?>(TResult Function( _ApiResponse<T> value)  $default,){
+@optionalTypeArgs TResult map<TResult extends Object?>({required TResult Function( ApiResponseSuccess<T> value)  success,required TResult Function( ApiResponseFailure<T> value)  failure,}){
 final _that = this;
 switch (_that) {
-case _ApiResponse():
-return $default(_that);case _:
-  throw StateError('Unexpected subclass');
-
-}
+case ApiResponseSuccess():
+return success(_that);case ApiResponseFailure():
+return failure(_that);}
 }
 /// A variant of `map` that fallback to returning `null`.
 ///
@@ -134,11 +97,12 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>(TResult? Function( _ApiResponse<T> value)?  $default,){
+@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>({TResult? Function( ApiResponseSuccess<T> value)?  success,TResult? Function( ApiResponseFailure<T> value)?  failure,}){
 final _that = this;
 switch (_that) {
-case _ApiResponse() when $default != null:
-return $default(_that);case _:
+case ApiResponseSuccess() when success != null:
+return success(_that);case ApiResponseFailure() when failure != null:
+return failure(_that);case _:
   return null;
 
 }
@@ -155,10 +119,11 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( bool success,  String message,  T data)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function( T data)?  success,TResult Function( String message,  int? error)?  failure,required TResult orElse(),}) {final _that = this;
 switch (_that) {
-case _ApiResponse() when $default != null:
-return $default(_that.success,_that.message,_that.data);case _:
+case ApiResponseSuccess() when success != null:
+return success(_that.data);case ApiResponseFailure() when failure != null:
+return failure(_that.message,_that.error);case _:
   return orElse();
 
 }
@@ -176,13 +141,11 @@ return $default(_that.success,_that.message,_that.data);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( bool success,  String message,  T data)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function( T data)  success,required TResult Function( String message,  int? error)  failure,}) {final _that = this;
 switch (_that) {
-case _ApiResponse():
-return $default(_that.success,_that.message,_that.data);case _:
-  throw StateError('Unexpected subclass');
-
-}
+case ApiResponseSuccess():
+return success(_that.data);case ApiResponseFailure():
+return failure(_that.message,_that.error);}
 }
 /// A variant of `when` that fallback to returning `null`
 ///
@@ -196,10 +159,11 @@ return $default(_that.success,_that.message,_that.data);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( bool success,  String message,  T data)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function( T data)?  success,TResult? Function( String message,  int? error)?  failure,}) {final _that = this;
 switch (_that) {
-case _ApiResponse() when $default != null:
-return $default(_that.success,_that.message,_that.data);case _:
+case ApiResponseSuccess() when success != null:
+return success(_that.data);case ApiResponseFailure() when failure != null:
+return failure(_that.message,_that.error);case _:
   return null;
 
 }
@@ -208,50 +172,45 @@ return $default(_that.success,_that.message,_that.data);case _:
 }
 
 /// @nodoc
-@JsonSerializable(genericArgumentFactories: true)
 
-class _ApiResponse<T> implements ApiResponse<T> {
-  const _ApiResponse({required this.success, required this.message, required this.data});
-  factory _ApiResponse.fromJson(Map<String, dynamic> json,T Function(Object?) fromJsonT) => _$ApiResponseFromJson(json,fromJsonT);
 
-@override final  bool success;
-@override final  String message;
-@override final  T data;
+class ApiResponseSuccess<T> implements ApiResponse<T> {
+  const ApiResponseSuccess({required this.data});
+  
+
+ final  T data;
 
 /// Create a copy of ApiResponse
 /// with the given fields replaced by the non-null parameter values.
-@override @JsonKey(includeFromJson: false, includeToJson: false)
+@JsonKey(includeFromJson: false, includeToJson: false)
 @pragma('vm:prefer-inline')
-_$ApiResponseCopyWith<T, _ApiResponse<T>> get copyWith => __$ApiResponseCopyWithImpl<T, _ApiResponse<T>>(this, _$identity);
+$ApiResponseSuccessCopyWith<T, ApiResponseSuccess<T>> get copyWith => _$ApiResponseSuccessCopyWithImpl<T, ApiResponseSuccess<T>>(this, _$identity);
 
-@override
-Map<String, dynamic> toJson(Object? Function(T) toJsonT) {
-  return _$ApiResponseToJson<T>(this, toJsonT);
-}
+
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _ApiResponse<T>&&(identical(other.success, success) || other.success == success)&&(identical(other.message, message) || other.message == message)&&const DeepCollectionEquality().equals(other.data, data));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is ApiResponseSuccess<T>&&const DeepCollectionEquality().equals(other.data, data));
 }
 
-@JsonKey(includeFromJson: false, includeToJson: false)
+
 @override
-int get hashCode => Object.hash(runtimeType,success,message,const DeepCollectionEquality().hash(data));
+int get hashCode => Object.hash(runtimeType,const DeepCollectionEquality().hash(data));
 
 @override
 String toString() {
-  return 'ApiResponse<$T>(success: $success, message: $message, data: $data)';
+  return 'ApiResponse<$T>.success(data: $data)';
 }
 
 
 }
 
 /// @nodoc
-abstract mixin class _$ApiResponseCopyWith<T,$Res> implements $ApiResponseCopyWith<T, $Res> {
-  factory _$ApiResponseCopyWith(_ApiResponse<T> value, $Res Function(_ApiResponse<T>) _then) = __$ApiResponseCopyWithImpl;
-@override @useResult
+abstract mixin class $ApiResponseSuccessCopyWith<T,$Res> implements $ApiResponseCopyWith<T, $Res> {
+  factory $ApiResponseSuccessCopyWith(ApiResponseSuccess<T> value, $Res Function(ApiResponseSuccess<T>) _then) = _$ApiResponseSuccessCopyWithImpl;
+@useResult
 $Res call({
- bool success, String message, T data
+ T data
 });
 
 
@@ -259,21 +218,88 @@ $Res call({
 
 }
 /// @nodoc
-class __$ApiResponseCopyWithImpl<T,$Res>
-    implements _$ApiResponseCopyWith<T, $Res> {
-  __$ApiResponseCopyWithImpl(this._self, this._then);
+class _$ApiResponseSuccessCopyWithImpl<T,$Res>
+    implements $ApiResponseSuccessCopyWith<T, $Res> {
+  _$ApiResponseSuccessCopyWithImpl(this._self, this._then);
 
-  final _ApiResponse<T> _self;
-  final $Res Function(_ApiResponse<T>) _then;
+  final ApiResponseSuccess<T> _self;
+  final $Res Function(ApiResponseSuccess<T>) _then;
 
 /// Create a copy of ApiResponse
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? success = null,Object? message = null,Object? data = freezed,}) {
-  return _then(_ApiResponse<T>(
-success: null == success ? _self.success : success // ignore: cast_nullable_to_non_nullable
-as bool,message: null == message ? _self.message : message // ignore: cast_nullable_to_non_nullable
-as String,data: freezed == data ? _self.data : data // ignore: cast_nullable_to_non_nullable
+@pragma('vm:prefer-inline') $Res call({Object? data = freezed,}) {
+  return _then(ApiResponseSuccess<T>(
+data: freezed == data ? _self.data : data // ignore: cast_nullable_to_non_nullable
 as T,
+  ));
+}
+
+
+}
+
+/// @nodoc
+
+
+class ApiResponseFailure<T> implements ApiResponse<T> {
+  const ApiResponseFailure({required this.message, this.error});
+  
+
+ final  String message;
+// this is actually data field from API
+ final  int? error;
+
+/// Create a copy of ApiResponse
+/// with the given fields replaced by the non-null parameter values.
+@JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+$ApiResponseFailureCopyWith<T, ApiResponseFailure<T>> get copyWith => _$ApiResponseFailureCopyWithImpl<T, ApiResponseFailure<T>>(this, _$identity);
+
+
+
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is ApiResponseFailure<T>&&(identical(other.message, message) || other.message == message)&&(identical(other.error, error) || other.error == error));
+}
+
+
+@override
+int get hashCode => Object.hash(runtimeType,message,error);
+
+@override
+String toString() {
+  return 'ApiResponse<$T>.failure(message: $message, error: $error)';
+}
+
+
+}
+
+/// @nodoc
+abstract mixin class $ApiResponseFailureCopyWith<T,$Res> implements $ApiResponseCopyWith<T, $Res> {
+  factory $ApiResponseFailureCopyWith(ApiResponseFailure<T> value, $Res Function(ApiResponseFailure<T>) _then) = _$ApiResponseFailureCopyWithImpl;
+@useResult
+$Res call({
+ String message, int? error
+});
+
+
+
+
+}
+/// @nodoc
+class _$ApiResponseFailureCopyWithImpl<T,$Res>
+    implements $ApiResponseFailureCopyWith<T, $Res> {
+  _$ApiResponseFailureCopyWithImpl(this._self, this._then);
+
+  final ApiResponseFailure<T> _self;
+  final $Res Function(ApiResponseFailure<T>) _then;
+
+/// Create a copy of ApiResponse
+/// with the given fields replaced by the non-null parameter values.
+@pragma('vm:prefer-inline') $Res call({Object? message = null,Object? error = freezed,}) {
+  return _then(ApiResponseFailure<T>(
+message: null == message ? _self.message : message // ignore: cast_nullable_to_non_nullable
+as String,error: freezed == error ? _self.error : error // ignore: cast_nullable_to_non_nullable
+as int?,
   ));
 }
 

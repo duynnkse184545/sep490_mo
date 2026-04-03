@@ -11,15 +11,19 @@ abstract class AuthApiService {
 
   // --- Auth Endpoints ---
 
-  @POST('/auth/signup')
-  Future<AuthResponse> signUp(@Body() SignUpRequest request);
+  @POST('/user/register')
+  Future<ApiResponse> signUp(@Body() SignUpRequest request);
+
+  @POST('/user/verify')
+  Future<ApiResponse> verify(@Query('email') String email);
 
   @POST('/auth/login')
   Future<ApiResponse<SignInResponse>> signIn(@Body() SignInRequest request);
 
+  // @GET('/auth/system-account-login')
+  // Future<ApiResponse<SignInResponse>> signInSystemAcc(@Body() SignInRequest request);
+
   @POST('/logout')
   Future<void> signOut();
 
-  @GET('/auth/v1/user')
-  Future<AuthUser> getUser();
 }

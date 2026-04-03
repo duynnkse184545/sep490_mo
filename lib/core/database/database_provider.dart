@@ -1,6 +1,6 @@
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
-import 'package:sep490_mo/features/user/data/datasources/local/user_dao.dart';
+import 'package:sep490_mo/core/database/daos/user_dao.dart';
 import 'app_database.dart';
 
 

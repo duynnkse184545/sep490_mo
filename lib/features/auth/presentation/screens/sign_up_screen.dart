@@ -1,276 +1,92 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import '../../../../core/error/failure_handler.dart';
-import '../../../../core/theme/app_colors.dart';
-import '../../../../core/widgets/error_retry_widget.dart';
-import '../../../../core/widgets/loader.dart';
-import '../controllers/sign_up_controller.dart';
-import '../states/sign_up_state.dart';
+import 'package:sep490_mo/features/auth/presentation/controllers/sign_up_controller.dart';
+import 'package:sep490_mo/features/auth/presentation/states/sign_up_state.dart';
+import 'package:sep490_mo/features/auth/presentation/widgets/sign_up_step1_widget.dart';
+import 'package:sep490_mo/features/auth/presentation/widgets/sign_up_step2_widget.dart';
+import 'package:sep490_mo/features/auth/presentation/widgets/sign_up_step3_widget.dart';
+import 'package:sep490_mo/features/auth/presentation/widgets/sign_up_submitting_widget.dart';
+import 'package:sep490_mo/features/auth/presentation/widgets/sign_up_success_widget.dart';
+import 'package:sep490_mo/features/auth/presentation/widgets/sign_up_error_widget.dart';
 
 class SignUpScreen extends HookConsumerWidget {
   const SignUpScreen({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    // Hooks - auto-disposed!
-    final emailController = useTextEditingController();
-    final passwordController = useTextEditingController();
-    final usernameController = useTextEditingController();
-    final fullNameController = useTextEditingController();
-    final obscurePassword = useState(true);
-    
-    final signUpState = ref.watch(signUpControllerProvider);
+    final state = ref.watch(signUpControllerProvider);
+    final controller = ref.read(signUpControllerProvider.notifier);
 
-    // Listen for success to navigate
-    ref.listen<SignUpState>(signUpControllerProvider, (previous, next) {
-      next.maybeWhen(
-        success: () {
-          Navigator.pushReplacementNamed(context, '/home');
-        },
-        orElse: () {},
-      );
-    });
+    // Local UI state (password visibility)
+    final obscurePassword = useState(true);
+
+    // Get current step for app bar indicator (using maybeWhen to avoid generated type references)
+    final currentStep = state.maybeWhen(
+      step1: (_) => 1,
+      step2Otp: (_) => 2,
+      step3Remaining: (_) => 3,
+      orElse: () => 0,
+    );
 
     return Scaffold(
       appBar: AppBar(
         title: const Text('Sign Up'),
-      ),
-      body: SafeArea(
-        child: signUpState.when(
-          // Initial state - show form
-          initial: () => _buildSignUpForm(
-            context,
-            ref,
-            emailController,
-            passwordController,
-            usernameController,
-            fullNameController,
-            obscurePassword,
-          ),
-          
-          // Loading state - show form with loading button
-          loading: () => _buildSignUpForm(
-            context,
-            ref,
-            emailController,
-            passwordController,
-            usernameController,
-            fullNameController,
-            obscurePassword,
-            isLoading: true,
-          ),
-          
-          // Validating username
-          validating: () => _buildSignUpForm(
-            context,
-            ref,
-            emailController,
-            passwordController,
-            usernameController,
-            fullNameController,
-            obscurePassword,
-            isValidating: true,
-          ),
-          
-          // Success state - will navigate via listener
-          success: () => const Center(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Icon(Icons.check_circle, size: 80, color: AppColors.success),
-                SizedBox(height: 16),
-                Text('Account created successfully!'),
-              ],
-            ),
-          ),
-          
-          // Error state - show error with retry option
-          error: (message, failure) => Column(
-            children: [
-              // Error banner at top
-              ErrorBanner(
-                message: message,
-                onRetry: FailureHandler.isRetryable(failure)
-                    ? () => ref.read(signUpControllerProvider.notifier).retry()
-                    : null,
-                onDismiss: () => ref.read(signUpControllerProvider.notifier).resetState(),
-              ),
-              
-              // Form still visible
-              Expanded(
-                child: _buildSignUpForm(
-                  context,
-                  ref,
-                  emailController,
-                  passwordController,
-                  usernameController,
-                  fullNameController,
-                  obscurePassword,
+        actions: [
+          // Show step indicator in app bar
+          if (currentStep > 0)
+            Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Center(
+                child: Text(
+                  'Step $currentStep of 3',
+                  style: Theme.of(context).textTheme.bodyMedium,
                 ),
               ),
-            ],
+            ),
+        ],
+      ),
+      body: SafeArea(
+        child: state.when(
+          // Step 1: Username, Email, Password
+          step1: (form) => SignUpStep1Widget(
+            form: form,
+            controller: controller,
+            obscurePassword: obscurePassword.value,
+            onTogglePassword: () => obscurePassword.value = !obscurePassword.value,
+          ),
+
+          // Step 2: OTP
+          step2Otp: (form) => SignUpStep2Widget(
+            form: form,
+            controller: controller,
+          ),
+
+          // Step 3: Display Name, Confirm Password
+          step3Remaining: (form) => SignUpStep3Widget(
+            form: form,
+            controller: controller,
+            obscurePassword: obscurePassword.value,
+            onTogglePassword: () => obscurePassword.value = !obscurePassword.value,
+          ),
+
+          // Submitting (final API call - show full loader)
+          submitting: (form) => SignUpSubmittingWidget(form: form),
+
+          // Success
+          success: () => const SignUpSuccessWidget(),
+
+          // Error
+          error: (form, message, failure) => SignUpErrorWidget(
+            form: form,
+            message: message,
+            failure: failure,
+            controller: controller,
+            obscurePassword: obscurePassword.value,
+            onTogglePassword: () => obscurePassword.value = !obscurePassword.value,
           ),
         ),
       ),
-    );
-  }
-
-  Widget _buildSignUpForm(
-    BuildContext context,
-    WidgetRef ref,
-    TextEditingController emailController,
-    TextEditingController passwordController,
-    TextEditingController usernameController,
-    TextEditingController fullNameController,
-    ValueNotifier<bool> obscurePassword,
-    {bool isLoading = false, bool isValidating = false}
-  ) {
-    return SingleChildScrollView(
-      padding: const EdgeInsets.all(24.0),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          const SizedBox(height: 32),
-
-          // Logo or title
-          const Icon(Icons.task_alt, size: 80, color: AppColors.primary),
-          const SizedBox(height: 16),
-          Text(
-            'Create Account',
-            style: Theme.of(context).textTheme.headlineMedium,
-            textAlign: TextAlign.center,
-          ),
-          const SizedBox(height: 8),
-          Text(
-            'Sign up to get started',
-            style: Theme.of(context).textTheme.bodyMedium,
-            textAlign: TextAlign.center,
-          ),
-
-          const SizedBox(height: 48),
-
-          // Email field
-          TextField(
-            controller: emailController,
-            enabled: !isLoading && !isValidating,
-            keyboardType: TextInputType.emailAddress,
-            decoration: const InputDecoration(
-              labelText: 'Email',
-              hintText: 'Enter your email',
-              prefixIcon: Icon(Icons.email_outlined),
-              border: OutlineInputBorder(),
-            ),
-          ),
-
-          const SizedBox(height: 16),
-
-          // Username field
-          TextField(
-            controller: usernameController,
-            enabled: !isLoading && !isValidating,
-            decoration: InputDecoration(
-              labelText: 'Username',
-              hintText: 'Choose a username',
-              prefixIcon: const Icon(Icons.person_outline),
-              border: const OutlineInputBorder(),
-              suffixIcon: isValidating 
-                ? const SizedBox(
-                    width: 20,
-                    height: 20,
-                    child: Padding(
-                      padding: EdgeInsets.all(12.0),
-                      child: CircularProgressIndicator(strokeWidth: 2),
-                    ),
-                  )
-                : null,
-            ),
-          ),
-
-          const SizedBox(height: 16),
-
-          // Full name field (optional)
-          TextField(
-            controller: fullNameController,
-            enabled: !isLoading && !isValidating,
-            decoration: const InputDecoration(
-              labelText: 'Full Name (Optional)',
-              hintText: 'Enter your full name',
-              prefixIcon: Icon(Icons.badge_outlined),
-              border: OutlineInputBorder(),
-            ),
-          ),
-
-          const SizedBox(height: 16),
-
-          // Password field
-          TextField(
-            controller: passwordController,
-            enabled: !isLoading && !isValidating,
-            obscureText: obscurePassword.value,
-            decoration: InputDecoration(
-              labelText: 'Password',
-              hintText: 'Create a password',
-              prefixIcon: const Icon(Icons.lock_outline),
-              border: const OutlineInputBorder(),
-              suffixIcon: IconButton(
-                icon: Icon(
-                  obscurePassword.value ? Icons.visibility : Icons.visibility_off,
-                ),
-                onPressed: () {
-                  obscurePassword.value = !obscurePassword.value;
-                },
-              ),
-            ),
-          ),
-
-          const SizedBox(height: 24),
-
-          // Sign up button
-          SizedBox(
-            height: 48,
-            child: ElevatedButton(
-              onPressed: (isLoading || isValidating)
-                  ? null
-                  : () => _handleSignUp(
-                        ref,
-                        emailController,
-                        passwordController,
-                        usernameController,
-                        fullNameController,
-                      ),
-              child: isLoading
-                  ? const SmallLoader()
-                  : const Text('Sign Up'),
-            ),
-          ),
-
-          const SizedBox(height: 16),
-
-          // Sign in link
-          TextButton(
-            onPressed: (isLoading || isValidating) ? null : () {
-              Navigator.pushReplacementNamed(context, '/sign-in');
-            },
-            child: const Text('Already have an account? Sign In'),
-          ),
-        ],
-      ),
-    );
-  }
-
-  Future<void> _handleSignUp(
-    WidgetRef ref,
-    TextEditingController emailController,
-    TextEditingController passwordController,
-    TextEditingController usernameController,
-    TextEditingController fullNameController,
-  ) async {
-    await ref.read(signUpControllerProvider.notifier).signUp(
-      email: emailController.text,
-      password: passwordController.text,
-      username: usernameController.text,
-      fullName: fullNameController.text.isEmpty ? null : fullNameController.text,
     );
   }
 }

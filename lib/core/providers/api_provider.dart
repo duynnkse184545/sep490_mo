@@ -8,6 +8,7 @@ import 'package:sep490_mo/core/network/auth_interceptor.dart';
 import 'package:sep490_mo/core/network/network_interceptor.dart';
 import 'package:sep490_mo/core/network/network_provider.dart';
 import 'package:sep490_mo/core/services/token_service.dart';
+import 'package:sep490_mo/core/services/token_service_impl.dart';
 
 
 part 'api_provider.g.dart';

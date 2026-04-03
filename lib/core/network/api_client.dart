@@ -1,6 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
-import 'auth_interceptor.dart';
+import 'package:sep490_mo/core/network/auth_interceptor.dart';
 import 'network_interceptor.dart';
 
 class ApiClient {

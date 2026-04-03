@@ -22,7 +22,7 @@ class Loader extends StatelessWidget {
             Text(
               message!,
               style: TextStyle(
-                color: AppColors.textSecondary,
+                color: AppColors.primary,
                 fontSize: 14,
               ),
             ),

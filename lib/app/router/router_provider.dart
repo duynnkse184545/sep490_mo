@@ -2,11 +2,10 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
-import 'package:sep490_mo/core/router/routes.dart';
-import 'package:sep490_mo/features/auth/presentation/controllers/auth_controller.dart';
-import 'package:sep490_mo/features/auth/presentation/states/auth_state.dart';
-import '../constants/route_constants.dart';
-
+import 'package:sep490_mo/app/app_notifier.dart';
+import 'package:sep490_mo/app/app_state.dart';
+import 'package:sep490_mo/app/router/routes.dart';
+import 'package:sep490_mo/core/constants/route_constants.dart';
 
 part 'router_provider.g.dart';
 
@@ -14,7 +13,7 @@ final _key = GlobalKey<NavigatorState>();
 
 @riverpod
 GoRouter router(Ref ref) {
-  final authState = ref.watch(authControllerProvider);
+  final appState = ref.watch(appProvider);
 
   return GoRouter(
     navigatorKey: _key,
@@ -25,8 +24,8 @@ GoRouter router(Ref ref) {
       // If auth state is still loading/initial, maybe show splash? 
       // For now, let's handle basic authenticated/unauthenticated logic.
 
-      final isLoggedIn = authState.maybeWhen(
-        authenticated: (_) => true,
+      final isLoggedIn = appState.maybeWhen(
+        ready: (_) => true,
         orElse: () => false,
       );
 

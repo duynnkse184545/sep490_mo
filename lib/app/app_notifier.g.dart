@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'sign_in_controller.dart';
+part of 'app_notifier.dart';
 
 // **************************************************************************
 // RiverpodGenerator
@@ -9,51 +9,51 @@ part of 'sign_in_controller.dart';
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint, type=warning
 
-@ProviderFor(SignInController)
-final signInControllerProvider = SignInControllerProvider._();
+@ProviderFor(AppNotifier)
+final appProvider = AppNotifierProvider._();
 
-final class SignInControllerProvider
-    extends $NotifierProvider<SignInController, SignInState> {
-  SignInControllerProvider._()
+final class AppNotifierProvider
+    extends $NotifierProvider<AppNotifier, AppState> {
+  AppNotifierProvider._()
     : super(
         from: null,
         argument: null,
         retry: null,
-        name: r'signInControllerProvider',
+        name: r'appProvider',
         isAutoDispose: true,
         dependencies: null,
         $allTransitiveDependencies: null,
       );
 
   @override
-  String debugGetCreateSourceHash() => _$signInControllerHash();
+  String debugGetCreateSourceHash() => _$appNotifierHash();
 
   @$internal
   @override
-  SignInController create() => SignInController();
+  AppNotifier create() => AppNotifier();
 
   /// {@macro riverpod.override_with_value}
-  Override overrideWithValue(SignInState value) {
+  Override overrideWithValue(AppState value) {
     return $ProviderOverride(
       origin: this,
-      providerOverride: $SyncValueProvider<SignInState>(value),
+      providerOverride: $SyncValueProvider<AppState>(value),
     );
   }
 }
 
-String _$signInControllerHash() => r'de57c6b3434c82f68e89f1dafbae28c876e82f30';
+String _$appNotifierHash() => r'c1cfe4c1c4672171dd43095e444bf471d0aa8c1e';
 
-abstract class _$SignInController extends $Notifier<SignInState> {
-  SignInState build();
+abstract class _$AppNotifier extends $Notifier<AppState> {
+  AppState build();
   @$mustCallSuper
   @override
   void runBuild() {
-    final ref = this.ref as $Ref<SignInState, SignInState>;
+    final ref = this.ref as $Ref<AppState, AppState>;
     final element =
         ref.element
             as $ClassProviderElement<
-              AnyNotifier<SignInState, SignInState>,
-              SignInState,
+              AnyNotifier<AppState, AppState>,
+              AppState,
               Object?,
               Object?
             >;

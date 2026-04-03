@@ -7,9 +7,10 @@ part 'token_refresh_response.g.dart';
 @freezed
 abstract class TokenRefreshResponse with _$TokenRefreshResponse {
   const factory TokenRefreshResponse({
-    required String accessToken,
-    String? refreshToken,
-    required int expiresIn,
+    required String token,
+    required String refreshToken,
+    required int id,
+    required String username,
     String? tokenType,
   }) = _TokenRefreshResponse;
 

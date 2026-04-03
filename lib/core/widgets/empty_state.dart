@@ -26,14 +26,14 @@ class EmptyState extends StatelessWidget {
             Icon(
               icon,
               size: 64,
-              color: AppColors.grey400,
+              color: AppColors.secondary,
             ),
             const SizedBox(height: 16),
             Text(
               message,
               style: const TextStyle(
                 fontSize: 16,
-                color: AppColors.textSecondary,
+                color: AppColors.primary,
               ),
               textAlign: TextAlign.center,
             ),

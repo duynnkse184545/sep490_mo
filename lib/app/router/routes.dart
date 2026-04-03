@@ -21,4 +21,3 @@ class SignUpRoute extends GoRouteData with $SignUpRoute {
   @override
   Widget build(BuildContext context, GoRouterState state) => const SignUpScreen();
 }
-

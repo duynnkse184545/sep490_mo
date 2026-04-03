@@ -19,10 +19,10 @@ class AuthController extends _$AuthController {
   /// Check authentication status on startup
   /// Uses cache-first strategy: instant if cached, fresh if stale
   Future<void> _checkAuthStatus() async {
-    final result = await _authRepository.getCurrentUser().run();
+    final result = await _authRepository.checkAuthStatus().run();
     state = result.fold(
           (_) => const AuthState.unauthenticated(),
-          AuthState.authenticated,
+          (_) => const AuthState.authenticated(),
     );
   }
 
@@ -34,28 +34,6 @@ class AuthController extends _$AuthController {
     result.fold(
           (failure) => state = AuthState.error(failure.toString()),
           (_) => state = const AuthState.unauthenticated(),
-    );
-  }
-
-  /// Refresh user data (force refresh from server)
-  Future<void> refreshUser() async {
-    final result = await _authRepository.getCurrentUser(forceRefresh: true).run();
-    result.fold(
-          (failure) => state = AuthState.error(failure.toString()),
-          (user) => state = AuthState.authenticated(user),
-    );
-  }
-
-  /// Update authentication state (called after sign in/up)
-  void setAuthenticated(User user) {
-    state = AuthState.authenticated(user);
-  }
-
-  /// Get current user (null if not authenticated)
-  User? get currentUser {
-    return state.maybeWhen(
-      authenticated: (user) => user,
-      orElse: () => null,
     );
   }
 }

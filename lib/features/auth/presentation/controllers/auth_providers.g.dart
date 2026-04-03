@@ -55,7 +55,7 @@ final class AuthRemoteDataSourceProvider
 }
 
 String _$authRemoteDataSourceHash() =>
-    r'b434102defd20bcb9d5c8dd013fa55fd742a7414';
+    r'722d44bf9d2b9c43255f3c86d9697068e0299481';
 
 @ProviderFor(authApiService)
 final authApiServiceProvider = AuthApiServiceProvider._();
@@ -98,95 +98,6 @@ final class AuthApiServiceProvider
 
 String _$authApiServiceHash() => r'dccd87667075491250c41c70ad3a422239891580';
 
-@ProviderFor(userApiService)
-final userApiServiceProvider = UserApiServiceProvider._();
-
-final class UserApiServiceProvider
-    extends $FunctionalProvider<UserApiService, UserApiService, UserApiService>
-    with $Provider<UserApiService> {
-  UserApiServiceProvider._()
-    : super(
-        from: null,
-        argument: null,
-        retry: null,
-        name: r'userApiServiceProvider',
-        isAutoDispose: true,
-        dependencies: null,
-        $allTransitiveDependencies: null,
-      );
-
-  @override
-  String debugGetCreateSourceHash() => _$userApiServiceHash();
-
-  @$internal
-  @override
-  $ProviderElement<UserApiService> $createElement($ProviderPointer pointer) =>
-      $ProviderElement(pointer);
-
-  @override
-  UserApiService create(Ref ref) {
-    return userApiService(ref);
-  }
-
-  /// {@macro riverpod.override_with_value}
-  Override overrideWithValue(UserApiService value) {
-    return $ProviderOverride(
-      origin: this,
-      providerOverride: $SyncValueProvider<UserApiService>(value),
-    );
-  }
-}
-
-String _$userApiServiceHash() => r'cf6cedf087c9ee4ee08d4042aea792a19681d878';
-
-@ProviderFor(authLocalDataSource)
-final authLocalDataSourceProvider = AuthLocalDataSourceProvider._();
-
-final class AuthLocalDataSourceProvider
-    extends
-        $FunctionalProvider<
-          AuthLocalDataSource,
-          AuthLocalDataSource,
-          AuthLocalDataSource
-        >
-    with $Provider<AuthLocalDataSource> {
-  AuthLocalDataSourceProvider._()
-    : super(
-        from: null,
-        argument: null,
-        retry: null,
-        name: r'authLocalDataSourceProvider',
-        isAutoDispose: true,
-        dependencies: null,
-        $allTransitiveDependencies: null,
-      );
-
-  @override
-  String debugGetCreateSourceHash() => _$authLocalDataSourceHash();
-
-  @$internal
-  @override
-  $ProviderElement<AuthLocalDataSource> $createElement(
-    $ProviderPointer pointer,
-  ) => $ProviderElement(pointer);
-
-  @override
-  AuthLocalDataSource create(Ref ref) {
-    return authLocalDataSource(ref);
-  }
-
-  /// {@macro riverpod.override_with_value}
-  Override overrideWithValue(AuthLocalDataSource value) {
-    return $ProviderOverride(
-      origin: this,
-      providerOverride: $SyncValueProvider<AuthLocalDataSource>(value),
-    );
-  }
-}
-
-String _$authLocalDataSourceHash() =>
-    r'7677b421e5697d5997e930097aee26d6d43c9516';
-
 @ProviderFor(authRepository)
 final authRepositoryProvider = AuthRepositoryProvider._();
 
@@ -226,4 +137,4 @@ final class AuthRepositoryProvider
   }
 }
 
-String _$authRepositoryHash() => r'fa2fd05acb3d6936c70f42e23ab3733f7120b9b5';
+String _$authRepositoryHash() => r'6d2d0f09dfe73ac0f480a9abe35a3c6431c6db5b';
