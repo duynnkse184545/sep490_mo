@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:sep490_mo/core/theme/app_colors.dart';
 
 class StepIndicatorWidget extends StatelessWidget {
   final int current;
@@ -13,6 +12,8 @@ class StepIndicatorWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: List.generate(
@@ -23,7 +24,7 @@ class StepIndicatorWidget extends StatelessWidget {
           margin: const EdgeInsets.symmetric(horizontal: 4),
           decoration: BoxDecoration(
             shape: BoxShape.circle,
-            color: index + 1 <= current ? AppColors.primary : Colors.grey.shade300,
+            color: index + 1 <= current ? colorScheme.primary : colorScheme.outline,
           ),
         ),
       ),

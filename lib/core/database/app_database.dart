@@ -3,15 +3,14 @@ import 'package:drift/drift.dart';
 import 'package:drift/native.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:path/path.dart' as p;
+import 'package:sep490_mo/core/database/daos/post_dao.dart';
 import 'package:sep490_mo/core/database/daos/user_dao.dart';
-
-
 
 part 'app_database.g.dart';
 
 /// Current user table for caching (single row)
 @DataClassName('CurrentUserEntity')
-class CurrentUser extends Table {
+class CurrentUserTbl extends Table {
   IntColumn get id => integer().withDefault(const Constant(1))();
   IntColumn get userId => integer()();
   TextColumn get username => text()();
@@ -38,27 +37,28 @@ class CurrentUser extends Table {
   Set<Column> get primaryKey => {id};
 }
 
-/// Workspaces table for caching
-@DataClassName('WorkspaceEntity')
-class Workspaces extends Table {
-  TextColumn get id => text()();
-  TextColumn get name => text()();
-  TextColumn get description => text().nullable()();
-  TextColumn get ownerId => text()();
-  TextColumn get inviteCode => text().nullable()();
+/// Post cache table for storing posts locally
+@DataClassName('PostEntity')
+class PostTbl extends Table {
+  IntColumn get postId => integer()();
+  IntColumn get fanHubId => integer()();
+  ///When would you normalize?
+  ///      * If you need to query inside the cache (e.g., "Get all VIDEO posts").
+  ///      * If the cache grows to thousands of rows and you need to optimize storage.
+  TextColumn get postData => text()(); // Store full post JSON
   DateTimeColumn get createdAt => dateTime()();
-  DateTimeColumn get updatedAt => dateTime()();
+  DateTimeColumn get cachedAt => dateTime().withDefault(currentDateAndTime)();
 
   @override
-  Set<Column> get primaryKey => {id};
+  Set<Column> get primaryKey => {postId};
 }
 
-@DriftDatabase(tables: [CurrentUser], daos: [UserDao])
+@DriftDatabase(tables: [CurrentUserTbl, PostTbl], daos: [UserDao, PostDao])
 class AppDatabase extends _$AppDatabase {
   AppDatabase() : super(_openConnection());
 
   @override
-  int get schemaVersion => 1;
+  int get schemaVersion => 2;
 
   /// Clear all tables
   Future<void> clearAllTables() async {

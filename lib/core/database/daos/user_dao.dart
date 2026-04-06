@@ -5,13 +5,13 @@ import 'dart:convert';
 
 part 'user_dao.g.dart';
 
-@DriftAccessor(tables: [CurrentUser])
+@DriftAccessor(tables: [CurrentUserTbl])
 class UserDao extends DatabaseAccessor<AppDatabase> with _$UserDaoMixin {
   UserDao(super.attachedDatabase);
 
   /// Get the cached current user (single row, no ID needed)
   Future<User?> getCachedUser() async {
-    final entity = await select(currentUser).getSingleOrNull();
+    final entity = await select(currentUserTbl).getSingleOrNull();
     if (entity == null) return null;
 
     return User(
@@ -43,8 +43,8 @@ class UserDao extends DatabaseAccessor<AppDatabase> with _$UserDaoMixin {
 
   /// Cache user (always overwrites the single row)
   Future<void> cacheUser(User user) async {
-    await into(currentUser).insertOnConflictUpdate(
-      CurrentUserCompanion(
+    await into(currentUserTbl).insertOnConflictUpdate(
+      CurrentUserTblCompanion(
         id: const Value(1),
         userId: Value(user.userId),
         username: Value(user.username),
@@ -74,6 +74,6 @@ class UserDao extends DatabaseAccessor<AppDatabase> with _$UserDaoMixin {
 
   /// Clear the cached user
   Future<void> clearCache() async {
-    await delete(currentUser).go();
+    await delete(currentUserTbl).go();
   }
 }

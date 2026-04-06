@@ -4,7 +4,7 @@ class RouteConstants {
   static const signUp = '/signup';
   
   // Workspace (Root)
-  static const workspaceList = '/';
+  static const mainFeed = '/';
   
   // Workspace Sub-routes (Relative paths for sub-routes)
   static const createWorkspace = 'create-workspace';

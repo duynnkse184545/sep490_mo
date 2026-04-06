@@ -2,7 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:sep490_mo/core/error/dio_exception_mapper.dart';
 import 'package:sep490_mo/core/error/exceptions.dart';
 import 'package:sep490_mo/core/models/api_response_wrapper.dart';
-import 'package:sep490_mo/features/user/data/datasources/remote/user_api_service.dart';
+import 'package:sep490_mo/features/user/data/datasources/remote/api/user_api_service.dart';
 import 'package:sep490_mo/features/user/data/models/user_models.dart';
 import 'user_remote_datasource.dart';
 

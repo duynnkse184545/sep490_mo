@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'failures.dart';
+import '../theme/app_colors.dart';
 
 /// Handles failures with appropriate user feedback and actions
 class FailureHandler {
@@ -92,11 +93,11 @@ class FailureHandler {
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
         content: Text(message),
-        backgroundColor: Colors.orange,
+        backgroundColor: AppColors.warning,
         duration: const Duration(seconds: 5),
         action: SnackBarAction(
           label: 'RETRY',
-          textColor: Colors.white,
+          textColor: AppColors.onPrimary,
           onPressed: onRetry,
         ),
       ),
@@ -107,7 +108,7 @@ class FailureHandler {
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
         content: Text(message),
-        backgroundColor: Colors.red,
+        backgroundColor: AppColors.error,
         duration: const Duration(seconds: 4),
       ),
     );

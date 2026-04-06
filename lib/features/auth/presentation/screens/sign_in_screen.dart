@@ -25,7 +25,7 @@ class SignInScreen extends HookConsumerWidget {
       next.maybeWhen(
         success: () {
           // Navigate to home (or wherever your auth flow goes)
-          Navigator.pushReplacementNamed(context, '/home');
+          Navigator.pushReplacementNamed(context, '/');
         },
         orElse: () {},
       );

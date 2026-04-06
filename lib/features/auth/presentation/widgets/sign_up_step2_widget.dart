@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
-import 'package:sep490_mo/core/theme/app_colors.dart';
 import 'package:sep490_mo/core/widgets/loader.dart';
 import 'package:sep490_mo/features/auth/presentation/controllers/sign_up_controller.dart';
 import 'package:sep490_mo/features/auth/presentation/states/sign_up_state.dart';
@@ -23,6 +22,9 @@ class SignUpStep2Widget extends HookWidget {
     // Local loading state for buttons
     final isLoading = useState(false);
 
+    // Get theme colors
+    final colorScheme = Theme.of(context).colorScheme;
+
     // Initialize with existing OTP (for back navigation)
     useEffect(() {
       otpController.text = form.otp;
@@ -42,7 +44,7 @@ class SignUpStep2Widget extends HookWidget {
           const SizedBox(height: 48),
 
           // Icon and title
-          const Icon(Icons.sms_outlined, size: 80, color: AppColors.primary),
+          Icon(Icons.sms_outlined, size: 80, color: colorScheme.primary),
           const SizedBox(height: 16),
           Text(
             'Verify OTP',

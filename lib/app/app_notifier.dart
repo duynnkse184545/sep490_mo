@@ -3,7 +3,7 @@ import 'package:sep490_mo/core/providers/api_provider.dart';
 import 'package:sep490_mo/core/services/token_service.dart';
 import 'package:sep490_mo/features/auth/presentation/controllers/auth_controller.dart';
 import 'package:sep490_mo/features/user/data/repositories/user_repository.dart';
-import 'package:sep490_mo/features/user/presentation/controllers/user_providers.dart';
+import 'package:sep490_mo/features/user/data/providers/user_providers.dart';
 import '../features/auth/presentation/states/auth_state.dart';
 import 'app_state.dart';
 

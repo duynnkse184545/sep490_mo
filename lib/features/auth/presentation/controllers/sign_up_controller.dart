@@ -2,20 +2,17 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:sep490_mo/core/error/failure_handler.dart';
 import 'package:sep490_mo/core/utils/validators.dart';
 import 'package:sep490_mo/features/auth/data/models/auth_models.dart';
-import 'package:sep490_mo/features/auth/data/repositories/auth_repository.dart';
 import 'package:sep490_mo/features/auth/presentation/states/sign_up_state.dart';
 
-import 'auth_providers.dart';
+import '../../data/providers/auth_providers.dart';
 
 part 'sign_up_controller.g.dart';
 
 @riverpod
 class SignUpController extends _$SignUpController {
-  late final AuthRepository _authRepository;
 
   @override
   SignUpState build() {
-    _authRepository = ref.read(authRepositoryProvider);
     return SignUpState.step1(SignUpForm.empty());
   }
 
@@ -49,7 +46,7 @@ class SignUpController extends _$SignUpController {
       return false;
     }
 
-    final result = await _authRepository.verify(email).run();
+    final result = await ref.read(authRepositoryProvider).verify(email).run();
     return result.fold(
       (failure) {
         final errorMessage = FailureHandler.getErrorMessage(failure);
@@ -94,7 +91,7 @@ class SignUpController extends _$SignUpController {
     state = SignUpState.submitting(currentForm.copyWith(otp: otp));
 
     // TODO: Uncomment when OTP verification is ready
-    // final result = await _authRepository.verifyOtp(currentForm.email, otp).run();
+    // final result = await ref.read(authRepositoryProvider).verifyOtp(currentForm.email, otp).run();
     // return result.fold(
     //   (failure) {
     //     state = SignUpState.step2Otp(currentForm.copyWith(
@@ -122,7 +119,7 @@ class SignUpController extends _$SignUpController {
     );
     if (currentForm == null) return false;
 
-    final result = await _authRepository.verify(currentForm.email).run();
+    final result = await ref.read(authRepositoryProvider).verify(currentForm.email).run();
     return result.fold(
       (failure) => false,
       (_) => true,
@@ -173,7 +170,7 @@ class SignUpController extends _$SignUpController {
       otp: finalForm.otp,
     );
 
-    final result = await _authRepository.signUp(request).run();
+    final result = await ref.read(authRepositoryProvider).signUp(request).run();
 
     return result.fold(
           (failure) {

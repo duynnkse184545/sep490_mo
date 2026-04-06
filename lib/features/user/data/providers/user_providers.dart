@@ -3,7 +3,7 @@ import 'package:sep490_mo/core/database/database_provider.dart';
 import 'package:sep490_mo/core/providers/api_provider.dart';
 import 'package:sep490_mo/features/user/data/datasources/local/user_local_datasource.dart';
 import 'package:sep490_mo/features/user/data/datasources/local/user_local_datasource_impl.dart';
-import 'package:sep490_mo/features/user/data/datasources/remote/user_api_service.dart';
+import 'package:sep490_mo/features/user/data/datasources/remote/api/user_api_service.dart';
 import 'package:sep490_mo/features/user/data/datasources/remote/user_remote_datasource.dart';
 import 'package:sep490_mo/features/user/data/datasources/remote/user_remote_datasource_impl.dart';
 import 'package:sep490_mo/features/user/data/repositories/user_repository.dart';

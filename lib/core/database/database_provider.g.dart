@@ -90,3 +90,44 @@ final class UserDaoProvider
 }
 
 String _$userDaoHash() => r'32ffb180aaa702f4c76d9af57a7a2902d97f9d76';
+
+@ProviderFor(postDao)
+final postDaoProvider = PostDaoProvider._();
+
+final class PostDaoProvider
+    extends $FunctionalProvider<PostDao, PostDao, PostDao>
+    with $Provider<PostDao> {
+  PostDaoProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'postDaoProvider',
+        isAutoDispose: true,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$postDaoHash();
+
+  @$internal
+  @override
+  $ProviderElement<PostDao> $createElement($ProviderPointer pointer) =>
+      $ProviderElement(pointer);
+
+  @override
+  PostDao create(Ref ref) {
+    return postDao(ref);
+  }
+
+  /// {@macro riverpod.override_with_value}
+  Override overrideWithValue(PostDao value) {
+    return $ProviderOverride(
+      origin: this,
+      providerOverride: $SyncValueProvider<PostDao>(value),
+    );
+  }
+}
+
+String _$postDaoHash() => r'5319007eb418b32774c450a1723c0c43096902b9';

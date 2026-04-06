@@ -1,7 +1,8 @@
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:sep490_mo/core/providers/api_provider.dart';
-import 'package:sep490_mo/features/auth/data/datasources/remote/auth_api_service.dart';
+import 'package:sep490_mo/features/auth/data/datasources/remote/api/auth_api_service.dart';
 import 'package:sep490_mo/features/auth/data/datasources/remote/auth_remote_datasource.dart';
+import 'package:sep490_mo/features/auth/data/datasources/remote/auth_remote_datasource_impl.dart';
 import 'package:sep490_mo/features/auth/data/repositories/auth_repository.dart';
 import 'package:sep490_mo/features/auth/data/repositories/auth_repository_impl.dart';
 

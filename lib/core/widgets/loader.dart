@@ -54,7 +54,7 @@ class SmallLoader extends StatelessWidget {
       child: CircularProgressIndicator(
         strokeWidth: strokeWidth,
         valueColor: AlwaysStoppedAnimation<Color>(
-          color ?? Colors.white,
+          color ?? AppColors.onPrimary,
         ),
       ),
     );

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
-import 'package:sep490_mo/core/theme/app_colors.dart';
 import 'package:sep490_mo/core/widgets/loader.dart';
 import 'package:sep490_mo/features/auth/presentation/controllers/sign_up_controller.dart';
 import 'package:sep490_mo/features/auth/presentation/states/sign_up_state.dart';
@@ -30,6 +29,9 @@ class SignUpStep1Widget extends HookWidget {
     // Local loading state for button
     final isLoading = useState(false);
 
+    // Get theme colors
+    final colorScheme = Theme.of(context).colorScheme;
+
     // Initialize controllers with form data (for back navigation)
     useEffect(() {
       usernameController.text = form.username;
@@ -51,7 +53,7 @@ class SignUpStep1Widget extends HookWidget {
           const SizedBox(height: 32),
 
           // Icon and title
-          const Icon(Icons.person_add_outlined, size: 80, color: AppColors.primary),
+          Icon(Icons.person_add_outlined, size: 80, color: colorScheme.primary),
           const SizedBox(height: 16),
           Text(
             'Create Account',

@@ -1,18 +1,17 @@
 import 'package:riverpod_annotation/riverpod_annotation.dart';
-import '../../../../core/error/failures.dart';
-import '../../../../core/error/failure_handler.dart';
-import '../../../../core/utils/validators.dart';
-import '../../data/models/auth_models.dart';
-import '../../data/repositories/auth_repository.dart';
-import '../states/sign_in_state.dart';
+import 'package:sep490_mo/core/error/failure_handler.dart';
+import 'package:sep490_mo/core/error/failures.dart';
+import 'package:sep490_mo/core/utils/validators.dart';
+import 'package:sep490_mo/features/auth/data/models/auth_models.dart';
+import 'package:sep490_mo/features/auth/presentation/states/sign_in_state.dart';
 
-import 'auth_providers.dart';
+
+import '../../data/providers/auth_providers.dart';
 
 part 'sign_in_controller.g.dart';
 
 @riverpod
 class SignInController extends _$SignInController {
-  late final AuthRepository _authRepository;
 
   // Store credentials for retry functionality
   String? _lastUsername;
@@ -20,7 +19,6 @@ class SignInController extends _$SignInController {
 
   @override
   SignInState build() {
-    _authRepository = ref.read(authRepositoryProvider);
     return const SignInState.initial();
   }
 
@@ -59,7 +57,7 @@ class SignInController extends _$SignInController {
       password: _lastPassword!,
     );
 
-    final result = await _authRepository.signIn(request).run();
+    final result = await ref.read(authRepositoryProvider).signIn(request).run();
 
     return result.fold(
       (failure) {

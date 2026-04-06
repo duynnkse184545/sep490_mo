@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
-import 'package:sep490_mo/core/theme/app_colors.dart';
 import 'package:sep490_mo/core/widgets/loader.dart';
 
 class SignUpSuccessWidget extends HookWidget {
@@ -8,6 +7,8 @@ class SignUpSuccessWidget extends HookWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+
     // Auto-navigate after success
     useEffect(() {
       Future.delayed(const Duration(seconds: 2), () {
@@ -20,7 +21,7 @@ class SignUpSuccessWidget extends HookWidget {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          const Icon(Icons.check_circle, size: 80, color: AppColors.success),
+          Icon(Icons.check_circle, size: 80, color: colorScheme.tertiary),
           const SizedBox(height: 24),
           Text(
             'Account Created!',

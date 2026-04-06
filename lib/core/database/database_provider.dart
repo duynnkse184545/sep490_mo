@@ -1,5 +1,5 @@
-import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
+import 'package:sep490_mo/core/database/daos/post_dao.dart';
 import 'package:sep490_mo/core/database/daos/user_dao.dart';
 import 'app_database.dart';
 
@@ -17,4 +17,10 @@ AppDatabase appDatabase(Ref ref) {
 UserDao userDao(Ref ref) {
   final db = ref.watch(appDatabaseProvider);
   return db.userDao;
+}
+
+@riverpod
+PostDao postDao(Ref ref) {
+  final db = ref.watch(appDatabaseProvider);
+  return db.postDao;
 }

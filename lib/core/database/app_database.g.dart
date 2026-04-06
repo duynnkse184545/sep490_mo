@@ -3,12 +3,12 @@
 part of 'app_database.dart';
 
 // ignore_for_file: type=lint
-class $CurrentUserTable extends CurrentUser
-    with TableInfo<$CurrentUserTable, CurrentUserEntity> {
+class $CurrentUserTblTable extends CurrentUserTbl
+    with TableInfo<$CurrentUserTblTable, CurrentUserEntity> {
   @override
   final GeneratedDatabase attachedDatabase;
   final String? _alias;
-  $CurrentUserTable(this.attachedDatabase, [this._alias]);
+  $CurrentUserTblTable(this.attachedDatabase, [this._alias]);
   static const VerificationMeta _idMeta = const VerificationMeta('id');
   @override
   late final GeneratedColumn<int> id = GeneratedColumn<int>(
@@ -261,7 +261,7 @@ class $CurrentUserTable extends CurrentUser
   String get aliasedName => _alias ?? actualTableName;
   @override
   String get actualTableName => $name;
-  static const String $name = 'current_user';
+  static const String $name = 'current_user_tbl';
   @override
   VerificationContext validateIntegrity(
     Insertable<CurrentUserEntity> instance, {
@@ -533,8 +533,8 @@ class $CurrentUserTable extends CurrentUser
   }
 
   @override
-  $CurrentUserTable createAlias(String alias) {
-    return $CurrentUserTable(attachedDatabase, alias);
+  $CurrentUserTblTable createAlias(String alias) {
+    return $CurrentUserTblTable(attachedDatabase, alias);
   }
 }
 
@@ -623,8 +623,8 @@ class CurrentUserEntity extends DataClass
     return map;
   }
 
-  CurrentUserCompanion toCompanion(bool nullToAbsent) {
-    return CurrentUserCompanion(
+  CurrentUserTblCompanion toCompanion(bool nullToAbsent) {
+    return CurrentUserTblCompanion(
       id: Value(id),
       userId: Value(userId),
       username: Value(username),
@@ -769,7 +769,7 @@ class CurrentUserEntity extends DataClass
     allBadges: allBadges.present ? allBadges.value : this.allBadges,
     cachedAt: cachedAt ?? this.cachedAt,
   );
-  CurrentUserEntity copyWithCompanion(CurrentUserCompanion data) {
+  CurrentUserEntity copyWithCompanion(CurrentUserTblCompanion data) {
     return CurrentUserEntity(
       id: data.id.present ? data.id.value : this.id,
       userId: data.userId.present ? data.userId.value : this.userId,
@@ -888,7 +888,7 @@ class CurrentUserEntity extends DataClass
           other.cachedAt == this.cachedAt);
 }
 
-class CurrentUserCompanion extends UpdateCompanion<CurrentUserEntity> {
+class CurrentUserTblCompanion extends UpdateCompanion<CurrentUserEntity> {
   final Value<int> id;
   final Value<int> userId;
   final Value<String> username;
@@ -910,7 +910,7 @@ class CurrentUserCompanion extends UpdateCompanion<CurrentUserEntity> {
   final Value<String?> displayBadges;
   final Value<String?> allBadges;
   final Value<DateTime> cachedAt;
-  const CurrentUserCompanion({
+  const CurrentUserTblCompanion({
     this.id = const Value.absent(),
     this.userId = const Value.absent(),
     this.username = const Value.absent(),
@@ -933,7 +933,7 @@ class CurrentUserCompanion extends UpdateCompanion<CurrentUserEntity> {
     this.allBadges = const Value.absent(),
     this.cachedAt = const Value.absent(),
   });
-  CurrentUserCompanion.insert({
+  CurrentUserTblCompanion.insert({
     this.id = const Value.absent(),
     required int userId,
     required String username,
@@ -1017,7 +1017,7 @@ class CurrentUserCompanion extends UpdateCompanion<CurrentUserEntity> {
     });
   }
 
-  CurrentUserCompanion copyWith({
+  CurrentUserTblCompanion copyWith({
     Value<int>? id,
     Value<int>? userId,
     Value<String>? username,
@@ -1040,7 +1040,7 @@ class CurrentUserCompanion extends UpdateCompanion<CurrentUserEntity> {
     Value<String?>? allBadges,
     Value<DateTime>? cachedAt,
   }) {
-    return CurrentUserCompanion(
+    return CurrentUserTblCompanion(
       id: id ?? this.id,
       userId: userId ?? this.userId,
       username: username ?? this.username,
@@ -1136,7 +1136,7 @@ class CurrentUserCompanion extends UpdateCompanion<CurrentUserEntity> {
 
   @override
   String toString() {
-    return (StringBuffer('CurrentUserCompanion(')
+    return (StringBuffer('CurrentUserTblCompanion(')
           ..write('id: $id, ')
           ..write('userId: $userId, ')
           ..write('username: $username, ')
@@ -1163,20 +1163,375 @@ class CurrentUserCompanion extends UpdateCompanion<CurrentUserEntity> {
   }
 }
 
+class $PostTblTable extends PostTbl with TableInfo<$PostTblTable, PostEntity> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $PostTblTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _postIdMeta = const VerificationMeta('postId');
+  @override
+  late final GeneratedColumn<int> postId = GeneratedColumn<int>(
+    'post_id',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _fanHubIdMeta = const VerificationMeta(
+    'fanHubId',
+  );
+  @override
+  late final GeneratedColumn<int> fanHubId = GeneratedColumn<int>(
+    'fan_hub_id',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _postDataMeta = const VerificationMeta(
+    'postData',
+  );
+  @override
+  late final GeneratedColumn<String> postData = GeneratedColumn<String>(
+    'post_data',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _createdAtMeta = const VerificationMeta(
+    'createdAt',
+  );
+  @override
+  late final GeneratedColumn<DateTime> createdAt = GeneratedColumn<DateTime>(
+    'created_at',
+    aliasedName,
+    false,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _cachedAtMeta = const VerificationMeta(
+    'cachedAt',
+  );
+  @override
+  late final GeneratedColumn<DateTime> cachedAt = GeneratedColumn<DateTime>(
+    'cached_at',
+    aliasedName,
+    false,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: false,
+    defaultValue: currentDateAndTime,
+  );
+  @override
+  List<GeneratedColumn> get $columns => [
+    postId,
+    fanHubId,
+    postData,
+    createdAt,
+    cachedAt,
+  ];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'post_tbl';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<PostEntity> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('post_id')) {
+      context.handle(
+        _postIdMeta,
+        postId.isAcceptableOrUnknown(data['post_id']!, _postIdMeta),
+      );
+    }
+    if (data.containsKey('fan_hub_id')) {
+      context.handle(
+        _fanHubIdMeta,
+        fanHubId.isAcceptableOrUnknown(data['fan_hub_id']!, _fanHubIdMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_fanHubIdMeta);
+    }
+    if (data.containsKey('post_data')) {
+      context.handle(
+        _postDataMeta,
+        postData.isAcceptableOrUnknown(data['post_data']!, _postDataMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_postDataMeta);
+    }
+    if (data.containsKey('created_at')) {
+      context.handle(
+        _createdAtMeta,
+        createdAt.isAcceptableOrUnknown(data['created_at']!, _createdAtMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_createdAtMeta);
+    }
+    if (data.containsKey('cached_at')) {
+      context.handle(
+        _cachedAtMeta,
+        cachedAt.isAcceptableOrUnknown(data['cached_at']!, _cachedAtMeta),
+      );
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {postId};
+  @override
+  PostEntity map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return PostEntity(
+      postId: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}post_id'],
+      )!,
+      fanHubId: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}fan_hub_id'],
+      )!,
+      postData: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}post_data'],
+      )!,
+      createdAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}created_at'],
+      )!,
+      cachedAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}cached_at'],
+      )!,
+    );
+  }
+
+  @override
+  $PostTblTable createAlias(String alias) {
+    return $PostTblTable(attachedDatabase, alias);
+  }
+}
+
+class PostEntity extends DataClass implements Insertable<PostEntity> {
+  final int postId;
+  final int fanHubId;
+
+  ///When would you normalize?
+  ///      * If you need to query inside the cache (e.g., "Get all VIDEO posts").
+  ///      * If the cache grows to thousands of rows and you need to optimize storage.
+  final String postData;
+  final DateTime createdAt;
+  final DateTime cachedAt;
+  const PostEntity({
+    required this.postId,
+    required this.fanHubId,
+    required this.postData,
+    required this.createdAt,
+    required this.cachedAt,
+  });
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['post_id'] = Variable<int>(postId);
+    map['fan_hub_id'] = Variable<int>(fanHubId);
+    map['post_data'] = Variable<String>(postData);
+    map['created_at'] = Variable<DateTime>(createdAt);
+    map['cached_at'] = Variable<DateTime>(cachedAt);
+    return map;
+  }
+
+  PostTblCompanion toCompanion(bool nullToAbsent) {
+    return PostTblCompanion(
+      postId: Value(postId),
+      fanHubId: Value(fanHubId),
+      postData: Value(postData),
+      createdAt: Value(createdAt),
+      cachedAt: Value(cachedAt),
+    );
+  }
+
+  factory PostEntity.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return PostEntity(
+      postId: serializer.fromJson<int>(json['postId']),
+      fanHubId: serializer.fromJson<int>(json['fanHubId']),
+      postData: serializer.fromJson<String>(json['postData']),
+      createdAt: serializer.fromJson<DateTime>(json['createdAt']),
+      cachedAt: serializer.fromJson<DateTime>(json['cachedAt']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'postId': serializer.toJson<int>(postId),
+      'fanHubId': serializer.toJson<int>(fanHubId),
+      'postData': serializer.toJson<String>(postData),
+      'createdAt': serializer.toJson<DateTime>(createdAt),
+      'cachedAt': serializer.toJson<DateTime>(cachedAt),
+    };
+  }
+
+  PostEntity copyWith({
+    int? postId,
+    int? fanHubId,
+    String? postData,
+    DateTime? createdAt,
+    DateTime? cachedAt,
+  }) => PostEntity(
+    postId: postId ?? this.postId,
+    fanHubId: fanHubId ?? this.fanHubId,
+    postData: postData ?? this.postData,
+    createdAt: createdAt ?? this.createdAt,
+    cachedAt: cachedAt ?? this.cachedAt,
+  );
+  PostEntity copyWithCompanion(PostTblCompanion data) {
+    return PostEntity(
+      postId: data.postId.present ? data.postId.value : this.postId,
+      fanHubId: data.fanHubId.present ? data.fanHubId.value : this.fanHubId,
+      postData: data.postData.present ? data.postData.value : this.postData,
+      createdAt: data.createdAt.present ? data.createdAt.value : this.createdAt,
+      cachedAt: data.cachedAt.present ? data.cachedAt.value : this.cachedAt,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('PostEntity(')
+          ..write('postId: $postId, ')
+          ..write('fanHubId: $fanHubId, ')
+          ..write('postData: $postData, ')
+          ..write('createdAt: $createdAt, ')
+          ..write('cachedAt: $cachedAt')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode =>
+      Object.hash(postId, fanHubId, postData, createdAt, cachedAt);
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is PostEntity &&
+          other.postId == this.postId &&
+          other.fanHubId == this.fanHubId &&
+          other.postData == this.postData &&
+          other.createdAt == this.createdAt &&
+          other.cachedAt == this.cachedAt);
+}
+
+class PostTblCompanion extends UpdateCompanion<PostEntity> {
+  final Value<int> postId;
+  final Value<int> fanHubId;
+  final Value<String> postData;
+  final Value<DateTime> createdAt;
+  final Value<DateTime> cachedAt;
+  const PostTblCompanion({
+    this.postId = const Value.absent(),
+    this.fanHubId = const Value.absent(),
+    this.postData = const Value.absent(),
+    this.createdAt = const Value.absent(),
+    this.cachedAt = const Value.absent(),
+  });
+  PostTblCompanion.insert({
+    this.postId = const Value.absent(),
+    required int fanHubId,
+    required String postData,
+    required DateTime createdAt,
+    this.cachedAt = const Value.absent(),
+  }) : fanHubId = Value(fanHubId),
+       postData = Value(postData),
+       createdAt = Value(createdAt);
+  static Insertable<PostEntity> custom({
+    Expression<int>? postId,
+    Expression<int>? fanHubId,
+    Expression<String>? postData,
+    Expression<DateTime>? createdAt,
+    Expression<DateTime>? cachedAt,
+  }) {
+    return RawValuesInsertable({
+      if (postId != null) 'post_id': postId,
+      if (fanHubId != null) 'fan_hub_id': fanHubId,
+      if (postData != null) 'post_data': postData,
+      if (createdAt != null) 'created_at': createdAt,
+      if (cachedAt != null) 'cached_at': cachedAt,
+    });
+  }
+
+  PostTblCompanion copyWith({
+    Value<int>? postId,
+    Value<int>? fanHubId,
+    Value<String>? postData,
+    Value<DateTime>? createdAt,
+    Value<DateTime>? cachedAt,
+  }) {
+    return PostTblCompanion(
+      postId: postId ?? this.postId,
+      fanHubId: fanHubId ?? this.fanHubId,
+      postData: postData ?? this.postData,
+      createdAt: createdAt ?? this.createdAt,
+      cachedAt: cachedAt ?? this.cachedAt,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (postId.present) {
+      map['post_id'] = Variable<int>(postId.value);
+    }
+    if (fanHubId.present) {
+      map['fan_hub_id'] = Variable<int>(fanHubId.value);
+    }
+    if (postData.present) {
+      map['post_data'] = Variable<String>(postData.value);
+    }
+    if (createdAt.present) {
+      map['created_at'] = Variable<DateTime>(createdAt.value);
+    }
+    if (cachedAt.present) {
+      map['cached_at'] = Variable<DateTime>(cachedAt.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('PostTblCompanion(')
+          ..write('postId: $postId, ')
+          ..write('fanHubId: $fanHubId, ')
+          ..write('postData: $postData, ')
+          ..write('createdAt: $createdAt, ')
+          ..write('cachedAt: $cachedAt')
+          ..write(')'))
+        .toString();
+  }
+}
+
 abstract class _$AppDatabase extends GeneratedDatabase {
   _$AppDatabase(QueryExecutor e) : super(e);
   $AppDatabaseManager get managers => $AppDatabaseManager(this);
-  late final $CurrentUserTable currentUser = $CurrentUserTable(this);
+  late final $CurrentUserTblTable currentUserTbl = $CurrentUserTblTable(this);
+  late final $PostTblTable postTbl = $PostTblTable(this);
   late final UserDao userDao = UserDao(this as AppDatabase);
+  late final PostDao postDao = PostDao(this as AppDatabase);
   @override
   Iterable<TableInfo<Table, Object?>> get allTables =>
       allSchemaEntities.whereType<TableInfo<Table, Object?>>();
   @override
-  List<DatabaseSchemaEntity> get allSchemaEntities => [currentUser];
+  List<DatabaseSchemaEntity> get allSchemaEntities => [currentUserTbl, postTbl];
 }
 
-typedef $$CurrentUserTableCreateCompanionBuilder =
-    CurrentUserCompanion Function({
+typedef $$CurrentUserTblTableCreateCompanionBuilder =
+    CurrentUserTblCompanion Function({
       Value<int> id,
       required int userId,
       required String username,
@@ -1199,8 +1554,8 @@ typedef $$CurrentUserTableCreateCompanionBuilder =
       Value<String?> allBadges,
       Value<DateTime> cachedAt,
     });
-typedef $$CurrentUserTableUpdateCompanionBuilder =
-    CurrentUserCompanion Function({
+typedef $$CurrentUserTblTableUpdateCompanionBuilder =
+    CurrentUserTblCompanion Function({
       Value<int> id,
       Value<int> userId,
       Value<String> username,
@@ -1224,9 +1579,9 @@ typedef $$CurrentUserTableUpdateCompanionBuilder =
       Value<DateTime> cachedAt,
     });
 
-class $$CurrentUserTableFilterComposer
-    extends Composer<_$AppDatabase, $CurrentUserTable> {
-  $$CurrentUserTableFilterComposer({
+class $$CurrentUserTblTableFilterComposer
+    extends Composer<_$AppDatabase, $CurrentUserTblTable> {
+  $$CurrentUserTblTableFilterComposer({
     required super.$db,
     required super.$table,
     super.joinBuilder,
@@ -1339,9 +1694,9 @@ class $$CurrentUserTableFilterComposer
   );
 }
 
-class $$CurrentUserTableOrderingComposer
-    extends Composer<_$AppDatabase, $CurrentUserTable> {
-  $$CurrentUserTableOrderingComposer({
+class $$CurrentUserTblTableOrderingComposer
+    extends Composer<_$AppDatabase, $CurrentUserTblTable> {
+  $$CurrentUserTblTableOrderingComposer({
     required super.$db,
     required super.$table,
     super.joinBuilder,
@@ -1454,9 +1809,9 @@ class $$CurrentUserTableOrderingComposer
   );
 }
 
-class $$CurrentUserTableAnnotationComposer
-    extends Composer<_$AppDatabase, $CurrentUserTable> {
-  $$CurrentUserTableAnnotationComposer({
+class $$CurrentUserTblTableAnnotationComposer
+    extends Composer<_$AppDatabase, $CurrentUserTblTable> {
+  $$CurrentUserTblTableAnnotationComposer({
     required super.$db,
     required super.$table,
     super.joinBuilder,
@@ -1541,35 +1896,41 @@ class $$CurrentUserTableAnnotationComposer
       $composableBuilder(column: $table.cachedAt, builder: (column) => column);
 }
 
-class $$CurrentUserTableTableManager
+class $$CurrentUserTblTableTableManager
     extends
         RootTableManager<
           _$AppDatabase,
-          $CurrentUserTable,
+          $CurrentUserTblTable,
           CurrentUserEntity,
-          $$CurrentUserTableFilterComposer,
-          $$CurrentUserTableOrderingComposer,
-          $$CurrentUserTableAnnotationComposer,
-          $$CurrentUserTableCreateCompanionBuilder,
-          $$CurrentUserTableUpdateCompanionBuilder,
+          $$CurrentUserTblTableFilterComposer,
+          $$CurrentUserTblTableOrderingComposer,
+          $$CurrentUserTblTableAnnotationComposer,
+          $$CurrentUserTblTableCreateCompanionBuilder,
+          $$CurrentUserTblTableUpdateCompanionBuilder,
           (
             CurrentUserEntity,
-            BaseReferences<_$AppDatabase, $CurrentUserTable, CurrentUserEntity>,
+            BaseReferences<
+              _$AppDatabase,
+              $CurrentUserTblTable,
+              CurrentUserEntity
+            >,
           ),
           CurrentUserEntity,
           PrefetchHooks Function()
         > {
-  $$CurrentUserTableTableManager(_$AppDatabase db, $CurrentUserTable table)
-    : super(
+  $$CurrentUserTblTableTableManager(
+    _$AppDatabase db,
+    $CurrentUserTblTable table,
+  ) : super(
         TableManagerState(
           db: db,
           table: table,
           createFilteringComposer: () =>
-              $$CurrentUserTableFilterComposer($db: db, $table: table),
+              $$CurrentUserTblTableFilterComposer($db: db, $table: table),
           createOrderingComposer: () =>
-              $$CurrentUserTableOrderingComposer($db: db, $table: table),
+              $$CurrentUserTblTableOrderingComposer($db: db, $table: table),
           createComputedFieldComposer: () =>
-              $$CurrentUserTableAnnotationComposer($db: db, $table: table),
+              $$CurrentUserTblTableAnnotationComposer($db: db, $table: table),
           updateCompanionCallback:
               ({
                 Value<int> id = const Value.absent(),
@@ -1593,7 +1954,7 @@ class $$CurrentUserTableTableManager
                 Value<String?> displayBadges = const Value.absent(),
                 Value<String?> allBadges = const Value.absent(),
                 Value<DateTime> cachedAt = const Value.absent(),
-              }) => CurrentUserCompanion(
+              }) => CurrentUserTblCompanion(
                 id: id,
                 userId: userId,
                 username: username,
@@ -1639,7 +2000,7 @@ class $$CurrentUserTableTableManager
                 Value<String?> displayBadges = const Value.absent(),
                 Value<String?> allBadges = const Value.absent(),
                 Value<DateTime> cachedAt = const Value.absent(),
-              }) => CurrentUserCompanion.insert(
+              }) => CurrentUserTblCompanion.insert(
                 id: id,
                 userId: userId,
                 username: username,
@@ -1670,27 +2031,220 @@ class $$CurrentUserTableTableManager
       );
 }
 
-typedef $$CurrentUserTableProcessedTableManager =
+typedef $$CurrentUserTblTableProcessedTableManager =
     ProcessedTableManager<
       _$AppDatabase,
-      $CurrentUserTable,
+      $CurrentUserTblTable,
       CurrentUserEntity,
-      $$CurrentUserTableFilterComposer,
-      $$CurrentUserTableOrderingComposer,
-      $$CurrentUserTableAnnotationComposer,
-      $$CurrentUserTableCreateCompanionBuilder,
-      $$CurrentUserTableUpdateCompanionBuilder,
+      $$CurrentUserTblTableFilterComposer,
+      $$CurrentUserTblTableOrderingComposer,
+      $$CurrentUserTblTableAnnotationComposer,
+      $$CurrentUserTblTableCreateCompanionBuilder,
+      $$CurrentUserTblTableUpdateCompanionBuilder,
       (
         CurrentUserEntity,
-        BaseReferences<_$AppDatabase, $CurrentUserTable, CurrentUserEntity>,
+        BaseReferences<_$AppDatabase, $CurrentUserTblTable, CurrentUserEntity>,
       ),
       CurrentUserEntity,
+      PrefetchHooks Function()
+    >;
+typedef $$PostTblTableCreateCompanionBuilder =
+    PostTblCompanion Function({
+      Value<int> postId,
+      required int fanHubId,
+      required String postData,
+      required DateTime createdAt,
+      Value<DateTime> cachedAt,
+    });
+typedef $$PostTblTableUpdateCompanionBuilder =
+    PostTblCompanion Function({
+      Value<int> postId,
+      Value<int> fanHubId,
+      Value<String> postData,
+      Value<DateTime> createdAt,
+      Value<DateTime> cachedAt,
+    });
+
+class $$PostTblTableFilterComposer
+    extends Composer<_$AppDatabase, $PostTblTable> {
+  $$PostTblTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<int> get postId => $composableBuilder(
+    column: $table.postId,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get fanHubId => $composableBuilder(
+    column: $table.fanHubId,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get postData => $composableBuilder(
+    column: $table.postData,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get createdAt => $composableBuilder(
+    column: $table.createdAt,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get cachedAt => $composableBuilder(
+    column: $table.cachedAt,
+    builder: (column) => ColumnFilters(column),
+  );
+}
+
+class $$PostTblTableOrderingComposer
+    extends Composer<_$AppDatabase, $PostTblTable> {
+  $$PostTblTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<int> get postId => $composableBuilder(
+    column: $table.postId,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get fanHubId => $composableBuilder(
+    column: $table.fanHubId,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get postData => $composableBuilder(
+    column: $table.postData,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get createdAt => $composableBuilder(
+    column: $table.createdAt,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get cachedAt => $composableBuilder(
+    column: $table.cachedAt,
+    builder: (column) => ColumnOrderings(column),
+  );
+}
+
+class $$PostTblTableAnnotationComposer
+    extends Composer<_$AppDatabase, $PostTblTable> {
+  $$PostTblTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<int> get postId =>
+      $composableBuilder(column: $table.postId, builder: (column) => column);
+
+  GeneratedColumn<int> get fanHubId =>
+      $composableBuilder(column: $table.fanHubId, builder: (column) => column);
+
+  GeneratedColumn<String> get postData =>
+      $composableBuilder(column: $table.postData, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get createdAt =>
+      $composableBuilder(column: $table.createdAt, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get cachedAt =>
+      $composableBuilder(column: $table.cachedAt, builder: (column) => column);
+}
+
+class $$PostTblTableTableManager
+    extends
+        RootTableManager<
+          _$AppDatabase,
+          $PostTblTable,
+          PostEntity,
+          $$PostTblTableFilterComposer,
+          $$PostTblTableOrderingComposer,
+          $$PostTblTableAnnotationComposer,
+          $$PostTblTableCreateCompanionBuilder,
+          $$PostTblTableUpdateCompanionBuilder,
+          (
+            PostEntity,
+            BaseReferences<_$AppDatabase, $PostTblTable, PostEntity>,
+          ),
+          PostEntity,
+          PrefetchHooks Function()
+        > {
+  $$PostTblTableTableManager(_$AppDatabase db, $PostTblTable table)
+    : super(
+        TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$PostTblTableFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $$PostTblTableOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () =>
+              $$PostTblTableAnnotationComposer($db: db, $table: table),
+          updateCompanionCallback:
+              ({
+                Value<int> postId = const Value.absent(),
+                Value<int> fanHubId = const Value.absent(),
+                Value<String> postData = const Value.absent(),
+                Value<DateTime> createdAt = const Value.absent(),
+                Value<DateTime> cachedAt = const Value.absent(),
+              }) => PostTblCompanion(
+                postId: postId,
+                fanHubId: fanHubId,
+                postData: postData,
+                createdAt: createdAt,
+                cachedAt: cachedAt,
+              ),
+          createCompanionCallback:
+              ({
+                Value<int> postId = const Value.absent(),
+                required int fanHubId,
+                required String postData,
+                required DateTime createdAt,
+                Value<DateTime> cachedAt = const Value.absent(),
+              }) => PostTblCompanion.insert(
+                postId: postId,
+                fanHubId: fanHubId,
+                postData: postData,
+                createdAt: createdAt,
+                cachedAt: cachedAt,
+              ),
+          withReferenceMapper: (p0) => p0
+              .map((e) => (e.readTable(table), BaseReferences(db, table, e)))
+              .toList(),
+          prefetchHooksCallback: null,
+        ),
+      );
+}
+
+typedef $$PostTblTableProcessedTableManager =
+    ProcessedTableManager<
+      _$AppDatabase,
+      $PostTblTable,
+      PostEntity,
+      $$PostTblTableFilterComposer,
+      $$PostTblTableOrderingComposer,
+      $$PostTblTableAnnotationComposer,
+      $$PostTblTableCreateCompanionBuilder,
+      $$PostTblTableUpdateCompanionBuilder,
+      (PostEntity, BaseReferences<_$AppDatabase, $PostTblTable, PostEntity>),
+      PostEntity,
       PrefetchHooks Function()
     >;
 
 class $AppDatabaseManager {
   final _$AppDatabase _db;
   $AppDatabaseManager(this._db);
-  $$CurrentUserTableTableManager get currentUser =>
-      $$CurrentUserTableTableManager(_db, _db.currentUser);
+  $$CurrentUserTblTableTableManager get currentUserTbl =>
+      $$CurrentUserTblTableTableManager(_db, _db.currentUserTbl);
+  $$PostTblTableTableManager get postTbl =>
+      $$PostTblTableTableManager(_db, _db.postTbl);
 }
