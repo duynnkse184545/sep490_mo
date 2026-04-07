@@ -6,7 +6,7 @@ part of 'routes.dart';
 // GoRouterGenerator
 // **************************************************************************
 
-List<RouteBase> get $appRoutes => [$signInRoute, $signUpRoute, $mainFeedRoute];
+List<RouteBase> get $appRoutes => [$signInRoute, $signUpRoute, $mainShellRoute];
 
 RouteBase get $signInRoute =>
     GoRouteData.$route(path: '/sign-in', factory: $SignInRoute._fromState);
@@ -54,14 +54,52 @@ mixin $SignUpRoute on GoRouteData {
   void replace(BuildContext context) => context.replace(location);
 }
 
-RouteBase get $mainFeedRoute =>
-    GoRouteData.$route(path: '/', factory: $MainFeedRoute._fromState);
+RouteBase get $mainShellRoute => StatefulShellRouteData.$route(
+  factory: $MainShellRouteExtension._fromState,
+  branches: [
+    StatefulShellBranchData.$branch(
+      routes: [
+        GoRouteData.$route(path: '/home', factory: $HomeRoute._fromState),
+      ],
+    ),
+    StatefulShellBranchData.$branch(
+      routes: [
+        GoRouteData.$route(path: '/explore', factory: $ExploreRoute._fromState),
+      ],
+    ),
+  ],
+);
 
-mixin $MainFeedRoute on GoRouteData {
-  static MainFeedRoute _fromState(GoRouterState state) => const MainFeedRoute();
+extension $MainShellRouteExtension on MainShellRoute {
+  static MainShellRoute _fromState(GoRouterState state) =>
+      const MainShellRoute();
+}
+
+mixin $HomeRoute on GoRouteData {
+  static HomeRoute _fromState(GoRouterState state) => const HomeRoute();
 
   @override
-  String get location => GoRouteData.$location('/');
+  String get location => GoRouteData.$location('/home');
+
+  @override
+  void go(BuildContext context) => context.go(location);
+
+  @override
+  Future<T?> push<T>(BuildContext context) => context.push<T>(location);
+
+  @override
+  void pushReplacement(BuildContext context) =>
+      context.pushReplacement(location);
+
+  @override
+  void replace(BuildContext context) => context.replace(location);
+}
+
+mixin $ExploreRoute on GoRouteData {
+  static ExploreRoute _fromState(GoRouterState state) => const ExploreRoute();
+
+  @override
+  String get location => GoRouteData.$location('/explore');
 
   @override
   void go(BuildContext context) => context.go(location);

@@ -117,7 +117,7 @@ class FeedLocalDataSourceImpl implements FeedLocalDataSource {
     return entities.expand<Post>((entity) {
       try {
         return [Post.fromJson(jsonDecode(entity.postData))];
-      } catch (e, stackTrace) {
+      } catch (e) {
       // print('⚠️ Failed to parse post ${entity.postId}: $e');
       // print('   Raw postData: ${entity.postData}');
       // print('   Stack trace: $stackTrace');

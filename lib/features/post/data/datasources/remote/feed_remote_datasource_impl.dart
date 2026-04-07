@@ -27,8 +27,8 @@ class FeedRemoteDatasourceImpl implements FeedRemoteDatasource {
     } on DioException catch (e) {
       throw DioExceptionMapper.mapToException(e, 'Failed to get current user');
     }catch (e, stack) {
-      print('Other error: $e');
-      print('Stack: $stack');
+      debugPrint('Other error: $e');
+      debugPrint('Stack: $stack');
       rethrow;
     }
   }

@@ -53,7 +53,7 @@ class FeedScreen extends HookConsumerWidget {
             loadingMore: (posts) => ListView.separated(
               controller: scrollController,
               padding: const EdgeInsets.all(8),
-              itemCount: posts.length,
+              itemCount: posts.length + 1,
               separatorBuilder: (_, _) => const SizedBox(height: 8),
               itemBuilder: (context, index) {
                 if (index == posts.length) return const CircularProgressIndicator();

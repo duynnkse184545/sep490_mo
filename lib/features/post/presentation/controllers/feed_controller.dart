@@ -15,6 +15,7 @@ class FeedController extends _$FeedController {
 
   @override
   Stream<FeedState> build() async* {
+    // may not need this bc of interceptor
     if(await ref.read(networkInfoProvider).isConnected) _fetchNextPage(); // background remote fetch
 
     yield* ref
@@ -38,6 +39,7 @@ class FeedController extends _$FeedController {
   }
 
   Future<void> loadMore() async {
+    // may not need this bc of interceptor
     final isConnected = await ref.read(networkInfoProvider).isConnected;
 
     if (!isConnected || !_hasMore || _isFetchingMore) return;
