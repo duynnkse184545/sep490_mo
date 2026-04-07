@@ -18,7 +18,7 @@ AuthRemoteDataSource authRemoteDataSource(Ref ref) {
 
 @riverpod
 AuthApiService authApiService(Ref ref) {
-  return AuthApiService(ref.watch(dioProvider));
+  return AuthApiService(ref.watch(apiClientProvider).dio);
 }
 
 

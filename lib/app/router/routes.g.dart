@@ -9,13 +9,13 @@ part of 'routes.dart';
 List<RouteBase> get $appRoutes => [$signInRoute, $signUpRoute, $mainFeedRoute];
 
 RouteBase get $signInRoute =>
-    GoRouteData.$route(path: '/signin', factory: $SignInRoute._fromState);
+    GoRouteData.$route(path: '/sign-in', factory: $SignInRoute._fromState);
 
 mixin $SignInRoute on GoRouteData {
   static SignInRoute _fromState(GoRouterState state) => const SignInRoute();
 
   @override
-  String get location => GoRouteData.$location('/signin');
+  String get location => GoRouteData.$location('/sign-in');
 
   @override
   void go(BuildContext context) => context.go(location);
@@ -32,13 +32,13 @@ mixin $SignInRoute on GoRouteData {
 }
 
 RouteBase get $signUpRoute =>
-    GoRouteData.$route(path: '/signup', factory: $SignUpRoute._fromState);
+    GoRouteData.$route(path: '/sign-up', factory: $SignUpRoute._fromState);
 
 mixin $SignUpRoute on GoRouteData {
   static SignUpRoute _fromState(GoRouterState state) => const SignUpRoute();
 
   @override
-  String get location => GoRouteData.$location('/signup');
+  String get location => GoRouteData.$location('/sign-up');
 
   @override
   void go(BuildContext context) => context.go(location);

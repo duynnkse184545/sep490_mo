@@ -13,7 +13,7 @@ part 'user_providers.g.dart';
 
 @riverpod
 UserApiService userApiService(Ref ref) {
-  return UserApiService(ref.watch(dioProvider));
+  return UserApiService(ref.watch(apiClientProvider).dio);
 }
 
 @riverpod

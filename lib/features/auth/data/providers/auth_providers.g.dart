@@ -96,7 +96,7 @@ final class AuthApiServiceProvider
   }
 }
 
-String _$authApiServiceHash() => r'dccd87667075491250c41c70ad3a422239891580';
+String _$authApiServiceHash() => r'3b3c865aaea572c64be74905b68086b7f5e8c0a1';
 
 @ProviderFor(authRepository)
 final authRepositoryProvider = AuthRepositoryProvider._();

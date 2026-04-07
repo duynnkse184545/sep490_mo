@@ -33,7 +33,7 @@ class ApiClient {
         responseHeader: true,
         error: true,
         logPrint: (obj) {
-          if (kDebugMode) print(obj);
+          if (kDebugMode) print('logInterceptor: $obj');
         },
       ),
     );

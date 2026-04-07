@@ -1,7 +1,7 @@
 class RouteConstants {
   // Auth
-  static const signIn = '/signin';
-  static const signUp = '/signup';
+  static const signIn = '/sign-in';
+  static const signUp = '/sign-up';
   
   // Workspace (Root)
   static const mainFeed = '/';

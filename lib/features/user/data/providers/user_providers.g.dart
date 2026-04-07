@@ -48,7 +48,7 @@ final class UserApiServiceProvider
   }
 }
 
-String _$userApiServiceHash() => r'cf6cedf087c9ee4ee08d4042aea792a19681d878';
+String _$userApiServiceHash() => r'd20719035d99510e8efafa3d56de86d72144b7dc';
 
 @ProviderFor(userRemoteDataSource)
 final userRemoteDataSourceProvider = UserRemoteDataSourceProvider._();
