@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'fanhub_controller.dart';
+part of 'fanhub_list_controller.dart';
 
 // **************************************************************************
 // RiverpodGenerator

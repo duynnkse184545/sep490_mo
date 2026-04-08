@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:sep490_mo/app/router/routes.dart';
 import '../../../../core/error/failure_handler.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/widgets/error_retry_widget.dart';
@@ -25,7 +26,7 @@ class SignInScreen extends HookConsumerWidget {
       next.maybeWhen(
         success: () {
           // Navigate to home (or wherever your auth flow goes)
-          Navigator.pushReplacementNamed(context, '/home');
+          HomeRoute().go(context);
         },
         orElse: () {},
       );

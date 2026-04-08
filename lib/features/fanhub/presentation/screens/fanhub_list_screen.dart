@@ -4,7 +4,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:sep490_mo/core/widgets/empty_state.dart';
 import 'package:sep490_mo/core/widgets/error_retry_widget.dart';
 import 'package:sep490_mo/core/widgets/loader.dart';
-import 'package:sep490_mo/features/fanhub/presentation/controllers/fanhub_controller.dart';
+import 'package:sep490_mo/features/fanhub/presentation/controllers/fanhub_list_controller.dart';
 import 'package:sep490_mo/features/fanhub/presentation/states/fanhub_state.dart';
 import 'package:sep490_mo/features/fanhub/presentation/widgets/fanhub_card.dart';
 

@@ -73,6 +73,28 @@ class FanHubRemoteDatasourceImpl implements FanHubRemoteDatasource {
   }
 
   @override
+  Future<FanHub> getFanHubBySubdomain(String subdomain) async {
+    try {
+      final response = await _fanHubApi.getFanHubBySubdomain(subdomain);
+      debugPrint('FanHubRemoteDatasourceImpl.getFanHubBySubdomain: $response');
+      return switch (response) {
+        ApiResponseSuccess(:final data) => data,
+        ApiResponseFailure(:final message, :final error) =>
+          throw ServerException(message, error),
+      };
+    } on DioException catch (e) {
+      throw DioExceptionMapper.mapToException(
+        e,
+        'Failed to get fan hub by subdomain',
+      );
+    } catch (e, stack) {
+      debugPrint('Other error: $e');
+      debugPrint('Stack: $stack');
+      rethrow;
+    }
+  }
+
+  @override
   Future<void> createFanHub(CreateFanHubRequest request) async {
     try {
       final response = await _fanHubApi.createFanHub(request);

@@ -23,6 +23,11 @@ class AuthController extends _$AuthController {
     );
   }
 
+  Future<void> setAuthenticated() async {
+    state = const AuthState.authenticated();
+  }
+
+
   /// Sign out
   Future<void> signOut() async {
     state = const AuthState.loading();

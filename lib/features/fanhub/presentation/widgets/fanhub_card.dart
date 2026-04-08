@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:sep490_mo/app/router/routes.dart';
 import 'package:sep490_mo/features/fanhub/data/models/fanhub_models.dart';
 
 class FanHubCard extends StatelessWidget {
@@ -9,9 +10,7 @@ class FanHubCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final themeColor = fanHub.themeColor != null
-        ? Color(
-            int.parse(fanHub.themeColor!.replaceFirst('#', '0xff')),
-          )
+        ? Color(int.parse(fanHub.themeColor!.replaceFirst('#', '0xff')))
         : Theme.of(context).colorScheme.primary;
 
     return Card(
@@ -19,7 +18,7 @@ class FanHubCard extends StatelessWidget {
       clipBehavior: Clip.antiAlias,
       child: InkWell(
         onTap: () {
-          // TODO: Navigate to fan hub detail
+          FanHubDetailRoute(subdomain: fanHub.subdomain).go(context);
         },
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -84,8 +83,8 @@ class FanHubCard extends StatelessWidget {
                   Text(
                     fanHub.hubName,
                     style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                          fontWeight: FontWeight.bold,
-                        ),
+                      fontWeight: FontWeight.bold,
+                    ),
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                   ),
@@ -95,13 +94,16 @@ class FanHubCard extends StatelessWidget {
                   Text(
                     'by ${fanHub.ownerDisplayName}',
                     style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                          color: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.7),
-                        ),
+                      color: Theme.of(
+                        context,
+                      ).colorScheme.onSurface.withValues(alpha: 0.7),
+                    ),
                   ),
                   const SizedBox(height: 8),
 
                   // Description
-                  if (fanHub.description != null && fanHub.description!.isNotEmpty) ...[
+                  if (fanHub.description != null &&
+                      fanHub.description!.isNotEmpty) ...[
                     Text(
                       fanHub.description!,
                       style: Theme.of(context).textTheme.bodyMedium,
@@ -140,21 +142,27 @@ class FanHubCard extends StatelessWidget {
                       Icon(
                         Icons.people_outline,
                         size: 16,
-                        color: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.6),
+                        color: Theme.of(
+                          context,
+                        ).colorScheme.onSurface.withValues(alpha: 0.6),
                       ),
                       const SizedBox(width: 4),
                       Text(
                         '${fanHub.memberCount} members',
                         style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                              color: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.6),
-                            ),
+                          color: Theme.of(
+                            context,
+                          ).colorScheme.onSurface.withValues(alpha: 0.6),
+                        ),
                       ),
                       const Spacer(),
                       if (fanHub.isPrivate) ...[
                         Icon(
                           Icons.lock_outline,
                           size: 16,
-                          color: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.6),
+                          color: Theme.of(
+                            context,
+                          ).colorScheme.onSurface.withValues(alpha: 0.6),
                         ),
                       ],
                       if (fanHub.requiresApproval) ...[
@@ -162,7 +170,9 @@ class FanHubCard extends StatelessWidget {
                         Icon(
                           Icons.pending_outlined,
                           size: 16,
-                          color: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.6),
+                          color: Theme.of(
+                            context,
+                          ).colorScheme.onSurface.withValues(alpha: 0.6),
                         ),
                       ],
                     ],

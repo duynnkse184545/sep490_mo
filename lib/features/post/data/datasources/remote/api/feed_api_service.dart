@@ -15,6 +15,16 @@ abstract class FeedApiService {
     @Query('pageSize') int pageSize,
     @Query('sortBy') String sortBy,
   );
+
+  @GET('/posts/fan-hub/subdomain/{subdomain}')
+  Future<ApiResponse<List<Post>>> getFeedByFanHub(
+    @Path('subdomain') String subdomain,
+    @Query('pageNo') int pageNo,
+    @Query('pageSize') int pageSize,
+    @Query('sortBy') String sortBy,
+    @Query('postHashtags') String? postHashtags,
+    @Query('authorUsername') String? authorUsername,
+  );
 }
 
 // FeedRepository

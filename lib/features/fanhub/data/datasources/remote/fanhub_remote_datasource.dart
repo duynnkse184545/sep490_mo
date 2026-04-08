@@ -14,5 +14,7 @@ abstract class FanHubRemoteDatasource {
     required String category,
   });
 
+  Future<FanHub> getFanHubBySubdomain(String subdomain);
+
   Future<void> createFanHub(CreateFanHubRequest request);
 }

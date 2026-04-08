@@ -3,6 +3,7 @@ import 'package:sep490_mo/core/error/failure_handler.dart';
 import 'package:sep490_mo/core/error/failures.dart';
 import 'package:sep490_mo/core/utils/validators.dart';
 import 'package:sep490_mo/features/auth/data/models/auth_models.dart';
+import 'package:sep490_mo/features/auth/presentation/controllers/auth_controller.dart';
 import 'package:sep490_mo/features/auth/presentation/states/sign_in_state.dart';
 
 
@@ -66,8 +67,9 @@ class SignInController extends _$SignInController {
         state = SignInState.error(errorMessage, failure);
         return false;
       },
-      (_) {
+      (_) async {
         state = const SignInState.success();
+        await ref.read(authControllerProvider.notifier).setAuthenticated();
         return true;
       },
     );

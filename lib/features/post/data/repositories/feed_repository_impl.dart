@@ -83,10 +83,36 @@ class FeedRepositoryImpl implements FeedRepository {
 
   /// Refresh cache from remote in the background
   @override
-  TaskResult<List<Post>> refreshFeed({int pageNo = 0, int pageSize = 20, String sortBy = 'createdAt'}) {
+  TaskResult<List<Post>> refreshFeed({
+    int pageNo = 0,
+    int pageSize = 20,
+    String sortBy = 'createdAt',
+  }) {
     return ErrorHandler.execute(() async {
       final posts = await _remoteDataSource.getFeed(pageNo, pageSize, sortBy);
       ErrorHandler.executeOrNull(() => _localDataSource.cacheFeed(posts));
+      return posts;
+    });
+  }
+
+  @override
+  TaskResult<List<Post>> getFeedByFanHub({
+    required String subdomain,
+    int pageNo = 0,
+    int pageSize = 20,
+    String sortBy = 'createdAt',
+    String? postHashtags,
+    String? authorUsername,
+  }) {
+    return ErrorHandler.execute(() async {
+      final posts = await _remoteDataSource.getFeedByFanHub(
+        subdomain,
+        pageNo,
+        pageSize,
+        sortBy,
+        postHashtags,
+        authorUsername,
+      );
       return posts;
     });
   }

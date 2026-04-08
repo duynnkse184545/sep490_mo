@@ -57,7 +57,7 @@ class AuthInterceptor extends Interceptor {
 
         final response = await tokenDio.post(
           '/auth/refresh-token',
-          queryParameters: {'refresh_token': refreshToken},
+          queryParameters: {'refresh-token': refreshToken},
           options: Options(headers: ApiConfig.defaultHeaders),
         );
 

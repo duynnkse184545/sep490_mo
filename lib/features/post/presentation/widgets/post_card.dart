@@ -130,7 +130,7 @@ class PostCard extends StatelessWidget {
               ),
             ),
 
-            // Media placeholder
+            // Media
             if (post.mediaUrls.isNotEmpty) ...[
               const SizedBox(height: 12),
               SizedBox(
@@ -141,20 +141,59 @@ class PostCard extends StatelessWidget {
                     return Container(
                       margin: const EdgeInsets.symmetric(horizontal: 4),
                       decoration: BoxDecoration(
-                        color: colorScheme.surfaceContainer,
                         borderRadius: BorderRadius.circular(8),
+                        color: colorScheme.surfaceContainer,
                       ),
-                      child: Center(
-                        child: Icon(
-                          Icons.image,
-                          size: 48,
-                          color: colorScheme.onSurfaceVariant,
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(8),
+                        child: Image.network(
+                          post.mediaUrls[index],
+                          fit: BoxFit.cover,
+                          width: double.infinity,
+                          loadingBuilder: (context, child, loadingProgress) {
+                            if (loadingProgress == null) return child;
+                            return Center(
+                              child: CircularProgressIndicator(
+                                value: loadingProgress.expectedTotalBytes != null
+                                    ? loadingProgress.cumulativeBytesLoaded /
+                                    loadingProgress.expectedTotalBytes!
+                                    : null,
+                              ),
+                            );
+                          },
+                          errorBuilder: (context, error, stackTrace) {
+                            return Center(
+                              child: Icon(
+                                Icons.broken_image,
+                                size: 48,
+                                color: colorScheme.onSurfaceVariant,
+                              ),
+                            );
+                          },
                         ),
                       ),
                     );
                   },
                 ),
               ),
+              if (post.mediaUrls.length > 1) ...[
+                const SizedBox(height: 4),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: List.generate(
+                    post.mediaUrls.length,
+                        (index) => Container(
+                      width: 6,
+                      height: 6,
+                      margin: const EdgeInsets.symmetric(horizontal: 2),
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        color: colorScheme.primary.withValues(alpha: 0.4),
+                      ),
+                    ),
+                  ),
+                ),
+              ],
             ],
 
             // Hashtags

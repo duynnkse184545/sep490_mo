@@ -43,6 +43,13 @@ class FanHubRepositoryImpl implements FanHubRepository {
   }
 
   @override
+  TaskResult<FanHub> getFanHubBySubdomain(String subdomain) {
+    return ErrorHandler.execute(() async {
+      return await _remoteDataSource.getFanHubBySubdomain(subdomain);
+    });
+  }
+
+  @override
   TaskVoid createFanHub(CreateFanHubRequest request) {
     return ErrorHandler.execute(() async {
       await _remoteDataSource.createFanHub(request);

@@ -15,5 +15,7 @@ abstract class FanHubRepository {
     required String category,
   });
 
+  TaskResult<FanHub> getFanHubBySubdomain(String subdomain);
+
   TaskVoid createFanHub(CreateFanHubRequest request);
 }

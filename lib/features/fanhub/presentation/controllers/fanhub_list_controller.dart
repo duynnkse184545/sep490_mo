@@ -3,7 +3,7 @@ import 'package:sep490_mo/features/fanhub/data/models/fanhub_models.dart';
 import 'package:sep490_mo/features/fanhub/data/providers/fanhub_providers.dart';
 import 'package:sep490_mo/features/fanhub/presentation/states/fanhub_state.dart';
 
-part 'fanhub_controller.g.dart';
+part 'fanhub_list_controller.g.dart';
 
 @riverpod
 class FanHubListController extends _$FanHubListController {

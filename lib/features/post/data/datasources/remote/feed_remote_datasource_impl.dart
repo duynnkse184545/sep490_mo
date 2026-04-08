@@ -7,12 +7,11 @@ import 'package:sep490_mo/features/post/data/datasources/remote/api/feed_api_ser
 import 'package:sep490_mo/features/post/data/datasources/remote/feed_remote_datasource.dart';
 import 'package:sep490_mo/features/post/data/models/post_models.dart';
 
-
 class FeedRemoteDatasourceImpl implements FeedRemoteDatasource {
   final FeedApiService _feedApi;
 
   FeedRemoteDatasourceImpl({required FeedApiService feedApi})
-      : _feedApi = feedApi;
+    : _feedApi = feedApi;
 
   @override
   Future<List<Post>> getFeed(int pageNo, int pageSize, String sortBy) async {
@@ -22,16 +21,47 @@ class FeedRemoteDatasourceImpl implements FeedRemoteDatasource {
       return switch (response) {
         ApiResponseSuccess(:final data) => data,
         ApiResponseFailure(:final message, :final error) =>
-        throw ServerException(message, error)
+          throw ServerException(message, error),
       };
     } on DioException catch (e) {
       throw DioExceptionMapper.mapToException(e, 'Failed to get current user');
-    }catch (e, stack) {
+    } catch (e, stack) {
       debugPrint('Other error: $e');
       debugPrint('Stack: $stack');
       rethrow;
     }
   }
 
-
+  @override
+  Future<List<Post>> getFeedByFanHub(
+    String subdomain,
+    int pageNo,
+    int pageSize,
+    String sortBy,
+    String? postHashtags,
+    String? authorUsername,
+  ) async {
+    try {
+      final response = await _feedApi.getFeedByFanHub(
+        subdomain,
+        pageNo,
+        pageSize,
+        sortBy,
+        postHashtags,
+        authorUsername,
+      );
+      debugPrint('FeedRemoteDatasourceImpl.getFeed: $response');
+      return switch (response) {
+        ApiResponseSuccess(:final data) => data,
+        ApiResponseFailure(:final message, :final error) =>
+          throw ServerException(message, error),
+      };
+    } on DioException catch (e) {
+      throw DioExceptionMapper.mapToException(e, 'Failed to get current user');
+    } catch (e, stack) {
+      debugPrint('Other error: $e');
+      debugPrint('Stack: $stack');
+      rethrow;
+    }
+  }
 }

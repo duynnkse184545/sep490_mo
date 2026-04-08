@@ -64,7 +64,16 @@ RouteBase get $mainShellRoute => StatefulShellRouteData.$route(
     ),
     StatefulShellBranchData.$branch(
       routes: [
-        GoRouteData.$route(path: '/explore', factory: $ExploreRoute._fromState),
+        GoRouteData.$route(
+          path: '/explore',
+          factory: $ExploreRoute._fromState,
+          routes: [
+            GoRouteData.$route(
+              path: ':subdomain',
+              factory: $FanHubDetailRoute._fromState,
+            ),
+          ],
+        ),
       ],
     ),
   ],
@@ -100,6 +109,30 @@ mixin $ExploreRoute on GoRouteData {
 
   @override
   String get location => GoRouteData.$location('/explore');
+
+  @override
+  void go(BuildContext context) => context.go(location);
+
+  @override
+  Future<T?> push<T>(BuildContext context) => context.push<T>(location);
+
+  @override
+  void pushReplacement(BuildContext context) =>
+      context.pushReplacement(location);
+
+  @override
+  void replace(BuildContext context) => context.replace(location);
+}
+
+mixin $FanHubDetailRoute on GoRouteData {
+  static FanHubDetailRoute _fromState(GoRouterState state) =>
+      FanHubDetailRoute(subdomain: state.pathParameters['subdomain']!);
+
+  FanHubDetailRoute get _self => this as FanHubDetailRoute;
+
+  @override
+  String get location =>
+      GoRouteData.$location('/explore/${Uri.encodeComponent(_self.subdomain)}');
 
   @override
   void go(BuildContext context) => context.go(location);

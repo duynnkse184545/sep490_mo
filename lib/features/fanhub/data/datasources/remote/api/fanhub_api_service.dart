@@ -11,30 +11,33 @@ abstract class FanHubApiService {
 
   @GET('/fan-hub/all')
   Future<ApiResponse<List<FanHub>>> getFanHubs(
-      @Query('pageNo') int pageNo,
-      @Query('pageSize') int pageSize,
-      @Query('sortBy') String sortBy,
-      @Query('includePrivate') bool includePrivate,
-      );
+    @Query('pageNo') int pageNo,
+    @Query('pageSize') int pageSize,
+    @Query('sortBy') String sortBy,
+    @Query('includePrivate') bool includePrivate,
+  );
 
   @GET('/fan-hub/top')
   Future<ApiResponse<List<FanHub>>> getFanHubsByCategory(
-      @Query('pageNo') int pageNo,
-      @Query('pageSize') int pageSize,
-      @Query('category') String category
-      );
+    @Query('pageNo') int pageNo,
+    @Query('pageSize') int pageSize,
+    @Query('category') String category,
+  );
+
+  @GET('/fan-hub/subdomain/{subdomain}')
+  Future<ApiResponse<FanHub>> getFanHubBySubdomain(
+    @Path('subdomain') String subdomain,
+  );
 
   @POST('/fan-hub/create')
-  Future<ApiResponse> createFanHub(
-      @Body() CreateFanHubRequest request,
-      );
+  Future<ApiResponse> createFanHub(@Body() CreateFanHubRequest request);
 
   @POST('/fan-hub/upload-images/{fanHubId}')
   Future<ApiResponse> uploadFanHub(
-      @Path('fanHubId') int fanHubId,
-      @Query('backgrounds') List<String> backgrounds,
-      @Body() FanHubUploadRequest request,
-      );
+    @Path('fanHubId') int fanHubId,
+    @Query('backgrounds') List<String> backgrounds,
+    @Body() FanHubUploadRequest request,
+  );
   // @POST('/vhub/api/v1/fan-hub/upload-images/{fanHubId}')
   // @MultiPart()
   // Future<Response> uploadFanHubImages({
