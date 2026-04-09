@@ -113,4 +113,27 @@ class FanHubRemoteDatasourceImpl implements FanHubRemoteDatasource {
       rethrow;
     }
   }
+
+  @override
+  Future<List<FanHub>> getMyHubs({
+    required int pageNo,
+    required int pageSize,
+    required String sortBy,
+  }) async {
+    try {
+      final response = await _fanHubApi.getMyHubs(pageNo, pageSize, sortBy);
+      debugPrint('FanHubRemoteDatasourceImpl.getMyHubs: $response');
+      return switch (response) {
+        ApiResponseSuccess(:final data) => data,
+        ApiResponseFailure(:final message, :final error) =>
+          throw ServerException(message, error),
+      };
+    } on DioException catch (e) {
+      throw DioExceptionMapper.mapToException(e, 'Failed to get my hubs');
+    } catch (e, stack) {
+      debugPrint('Other error: $e');
+      debugPrint('Stack: $stack');
+      rethrow;
+    }
+  }
 }

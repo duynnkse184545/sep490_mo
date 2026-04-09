@@ -912,4 +912,301 @@ as List<Post>,
 
 }
 
+
+/// @nodoc
+mixin _$CreatePostRequest {
+
+ int get fanHubId; PostType get postType; String? get title; String get content; List<String>? get images; List<String>? get hashtags; String? get video;
+/// Create a copy of CreatePostRequest
+/// with the given fields replaced by the non-null parameter values.
+@JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+$CreatePostRequestCopyWith<CreatePostRequest> get copyWith => _$CreatePostRequestCopyWithImpl<CreatePostRequest>(this as CreatePostRequest, _$identity);
+
+  /// Serializes this CreatePostRequest to a JSON map.
+  Map<String, dynamic> toJson();
+
+
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is CreatePostRequest&&(identical(other.fanHubId, fanHubId) || other.fanHubId == fanHubId)&&(identical(other.postType, postType) || other.postType == postType)&&(identical(other.title, title) || other.title == title)&&(identical(other.content, content) || other.content == content)&&const DeepCollectionEquality().equals(other.images, images)&&const DeepCollectionEquality().equals(other.hashtags, hashtags)&&(identical(other.video, video) || other.video == video));
+}
+
+@JsonKey(includeFromJson: false, includeToJson: false)
+@override
+int get hashCode => Object.hash(runtimeType,fanHubId,postType,title,content,const DeepCollectionEquality().hash(images),const DeepCollectionEquality().hash(hashtags),video);
+
+@override
+String toString() {
+  return 'CreatePostRequest(fanHubId: $fanHubId, postType: $postType, title: $title, content: $content, images: $images, hashtags: $hashtags, video: $video)';
+}
+
+
+}
+
+/// @nodoc
+abstract mixin class $CreatePostRequestCopyWith<$Res>  {
+  factory $CreatePostRequestCopyWith(CreatePostRequest value, $Res Function(CreatePostRequest) _then) = _$CreatePostRequestCopyWithImpl;
+@useResult
+$Res call({
+ int fanHubId, PostType postType, String? title, String content, List<String>? images, List<String>? hashtags, String? video
+});
+
+
+
+
+}
+/// @nodoc
+class _$CreatePostRequestCopyWithImpl<$Res>
+    implements $CreatePostRequestCopyWith<$Res> {
+  _$CreatePostRequestCopyWithImpl(this._self, this._then);
+
+  final CreatePostRequest _self;
+  final $Res Function(CreatePostRequest) _then;
+
+/// Create a copy of CreatePostRequest
+/// with the given fields replaced by the non-null parameter values.
+@pragma('vm:prefer-inline') @override $Res call({Object? fanHubId = null,Object? postType = null,Object? title = freezed,Object? content = null,Object? images = freezed,Object? hashtags = freezed,Object? video = freezed,}) {
+  return _then(_self.copyWith(
+fanHubId: null == fanHubId ? _self.fanHubId : fanHubId // ignore: cast_nullable_to_non_nullable
+as int,postType: null == postType ? _self.postType : postType // ignore: cast_nullable_to_non_nullable
+as PostType,title: freezed == title ? _self.title : title // ignore: cast_nullable_to_non_nullable
+as String?,content: null == content ? _self.content : content // ignore: cast_nullable_to_non_nullable
+as String,images: freezed == images ? _self.images : images // ignore: cast_nullable_to_non_nullable
+as List<String>?,hashtags: freezed == hashtags ? _self.hashtags : hashtags // ignore: cast_nullable_to_non_nullable
+as List<String>?,video: freezed == video ? _self.video : video // ignore: cast_nullable_to_non_nullable
+as String?,
+  ));
+}
+
+}
+
+
+/// Adds pattern-matching-related methods to [CreatePostRequest].
+extension CreatePostRequestPatterns on CreatePostRequest {
+/// A variant of `map` that fallback to returning `orElse`.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case _:
+///     return orElse();
+/// }
+/// ```
+
+@optionalTypeArgs TResult maybeMap<TResult extends Object?>(TResult Function( _CreatePostRequest value)?  $default,{required TResult orElse(),}){
+final _that = this;
+switch (_that) {
+case _CreatePostRequest() when $default != null:
+return $default(_that);case _:
+  return orElse();
+
+}
+}
+/// A `switch`-like method, using callbacks.
+///
+/// Callbacks receives the raw object, upcasted.
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case final Subclass2 value:
+///     return ...;
+/// }
+/// ```
+
+@optionalTypeArgs TResult map<TResult extends Object?>(TResult Function( _CreatePostRequest value)  $default,){
+final _that = this;
+switch (_that) {
+case _CreatePostRequest():
+return $default(_that);case _:
+  throw StateError('Unexpected subclass');
+
+}
+}
+/// A variant of `map` that fallback to returning `null`.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case _:
+///     return null;
+/// }
+/// ```
+
+@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>(TResult? Function( _CreatePostRequest value)?  $default,){
+final _that = this;
+switch (_that) {
+case _CreatePostRequest() when $default != null:
+return $default(_that);case _:
+  return null;
+
+}
+}
+/// A variant of `when` that fallback to an `orElse` callback.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case _:
+///     return orElse();
+/// }
+/// ```
+
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( int fanHubId,  PostType postType,  String? title,  String content,  List<String>? images,  List<String>? hashtags,  String? video)?  $default,{required TResult orElse(),}) {final _that = this;
+switch (_that) {
+case _CreatePostRequest() when $default != null:
+return $default(_that.fanHubId,_that.postType,_that.title,_that.content,_that.images,_that.hashtags,_that.video);case _:
+  return orElse();
+
+}
+}
+/// A `switch`-like method, using callbacks.
+///
+/// As opposed to `map`, this offers destructuring.
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case Subclass2(:final field2):
+///     return ...;
+/// }
+/// ```
+
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( int fanHubId,  PostType postType,  String? title,  String content,  List<String>? images,  List<String>? hashtags,  String? video)  $default,) {final _that = this;
+switch (_that) {
+case _CreatePostRequest():
+return $default(_that.fanHubId,_that.postType,_that.title,_that.content,_that.images,_that.hashtags,_that.video);case _:
+  throw StateError('Unexpected subclass');
+
+}
+}
+/// A variant of `when` that fallback to returning `null`
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case _:
+///     return null;
+/// }
+/// ```
+
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( int fanHubId,  PostType postType,  String? title,  String content,  List<String>? images,  List<String>? hashtags,  String? video)?  $default,) {final _that = this;
+switch (_that) {
+case _CreatePostRequest() when $default != null:
+return $default(_that.fanHubId,_that.postType,_that.title,_that.content,_that.images,_that.hashtags,_that.video);case _:
+  return null;
+
+}
+}
+
+}
+
+/// @nodoc
+@JsonSerializable()
+
+class _CreatePostRequest implements CreatePostRequest {
+  const _CreatePostRequest({required this.fanHubId, required this.postType, this.title, required this.content, final  List<String>? images = const [], final  List<String>? hashtags = const [], this.video}): _images = images,_hashtags = hashtags;
+  factory _CreatePostRequest.fromJson(Map<String, dynamic> json) => _$CreatePostRequestFromJson(json);
+
+@override final  int fanHubId;
+@override final  PostType postType;
+@override final  String? title;
+@override final  String content;
+ final  List<String>? _images;
+@override@JsonKey() List<String>? get images {
+  final value = _images;
+  if (value == null) return null;
+  if (_images is EqualUnmodifiableListView) return _images;
+  // ignore: implicit_dynamic_type
+  return EqualUnmodifiableListView(value);
+}
+
+ final  List<String>? _hashtags;
+@override@JsonKey() List<String>? get hashtags {
+  final value = _hashtags;
+  if (value == null) return null;
+  if (_hashtags is EqualUnmodifiableListView) return _hashtags;
+  // ignore: implicit_dynamic_type
+  return EqualUnmodifiableListView(value);
+}
+
+@override final  String? video;
+
+/// Create a copy of CreatePostRequest
+/// with the given fields replaced by the non-null parameter values.
+@override @JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+_$CreatePostRequestCopyWith<_CreatePostRequest> get copyWith => __$CreatePostRequestCopyWithImpl<_CreatePostRequest>(this, _$identity);
+
+@override
+Map<String, dynamic> toJson() {
+  return _$CreatePostRequestToJson(this, );
+}
+
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _CreatePostRequest&&(identical(other.fanHubId, fanHubId) || other.fanHubId == fanHubId)&&(identical(other.postType, postType) || other.postType == postType)&&(identical(other.title, title) || other.title == title)&&(identical(other.content, content) || other.content == content)&&const DeepCollectionEquality().equals(other._images, _images)&&const DeepCollectionEquality().equals(other._hashtags, _hashtags)&&(identical(other.video, video) || other.video == video));
+}
+
+@JsonKey(includeFromJson: false, includeToJson: false)
+@override
+int get hashCode => Object.hash(runtimeType,fanHubId,postType,title,content,const DeepCollectionEquality().hash(_images),const DeepCollectionEquality().hash(_hashtags),video);
+
+@override
+String toString() {
+  return 'CreatePostRequest(fanHubId: $fanHubId, postType: $postType, title: $title, content: $content, images: $images, hashtags: $hashtags, video: $video)';
+}
+
+
+}
+
+/// @nodoc
+abstract mixin class _$CreatePostRequestCopyWith<$Res> implements $CreatePostRequestCopyWith<$Res> {
+  factory _$CreatePostRequestCopyWith(_CreatePostRequest value, $Res Function(_CreatePostRequest) _then) = __$CreatePostRequestCopyWithImpl;
+@override @useResult
+$Res call({
+ int fanHubId, PostType postType, String? title, String content, List<String>? images, List<String>? hashtags, String? video
+});
+
+
+
+
+}
+/// @nodoc
+class __$CreatePostRequestCopyWithImpl<$Res>
+    implements _$CreatePostRequestCopyWith<$Res> {
+  __$CreatePostRequestCopyWithImpl(this._self, this._then);
+
+  final _CreatePostRequest _self;
+  final $Res Function(_CreatePostRequest) _then;
+
+/// Create a copy of CreatePostRequest
+/// with the given fields replaced by the non-null parameter values.
+@override @pragma('vm:prefer-inline') $Res call({Object? fanHubId = null,Object? postType = null,Object? title = freezed,Object? content = null,Object? images = freezed,Object? hashtags = freezed,Object? video = freezed,}) {
+  return _then(_CreatePostRequest(
+fanHubId: null == fanHubId ? _self.fanHubId : fanHubId // ignore: cast_nullable_to_non_nullable
+as int,postType: null == postType ? _self.postType : postType // ignore: cast_nullable_to_non_nullable
+as PostType,title: freezed == title ? _self.title : title // ignore: cast_nullable_to_non_nullable
+as String?,content: null == content ? _self.content : content // ignore: cast_nullable_to_non_nullable
+as String,images: freezed == images ? _self._images : images // ignore: cast_nullable_to_non_nullable
+as List<String>?,hashtags: freezed == hashtags ? _self._hashtags : hashtags // ignore: cast_nullable_to_non_nullable
+as List<String>?,video: freezed == video ? _self.video : video // ignore: cast_nullable_to_non_nullable
+as String?,
+  ));
+}
+
+
+}
+
 // dart format on

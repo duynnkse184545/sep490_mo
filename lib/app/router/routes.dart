@@ -1,19 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:sep490_mo/core/constants/route_constants.dart';
+import 'package:sep490_mo/app/widget/hub_speed_dial.dart';
 import 'package:sep490_mo/core/widgets/bottom_tab_nav.dart';
 import 'package:sep490_mo/features/auth/presentation/screens/sign_in_screen.dart';
 import 'package:sep490_mo/features/auth/presentation/screens/sign_up_screen.dart';
 import 'package:sep490_mo/features/fanhub/presentation/screens/fanhub_detail_screen.dart';
 import 'package:sep490_mo/features/fanhub/presentation/screens/fanhub_list_screen.dart';
+import 'package:sep490_mo/features/post/presentation/screens/create_post_screen.dart';
 import 'package:sep490_mo/features/post/presentation/screens/feed_screen.dart';
 import 'package:sep490_mo/features/post/presentation/widgets/hub_feed_widget.dart';
+import 'package:sep490_mo/features/user/presentation/screens/user_profile_screen.dart';
 
 part 'routes.g.dart';
 
 // ─── Auth Routes (outside shell) ───────────────────────────────────────────
 
-@TypedGoRoute<SignInRoute>(path: RouteConstants.signIn)
+// TypeRoute doesnt need routeConstants
+@TypedGoRoute<SignInRoute>(path: '/sign-in')
 class SignInRoute extends GoRouteData with $SignInRoute {
   const SignInRoute();
 
@@ -22,7 +25,7 @@ class SignInRoute extends GoRouteData with $SignInRoute {
       const SignInScreen();
 }
 
-@TypedGoRoute<SignUpRoute>(path: RouteConstants.signUp)
+@TypedGoRoute<SignUpRoute>(path: '/sign-up')
 class SignUpRoute extends GoRouteData with $SignUpRoute {
   const SignUpRoute();
 
@@ -31,19 +34,36 @@ class SignUpRoute extends GoRouteData with $SignUpRoute {
       const SignUpScreen();
 }
 
+// ─── Profile Route ─────────────────────────────────────────────────────────
+
+@TypedGoRoute<UserProfileRoute>(path: '/profile/:userId')
+class UserProfileRoute extends GoRouteData with $UserProfileRoute {
+  const UserProfileRoute({required this.userId});
+
+  final int userId;
+
+  @override
+  Widget build(BuildContext context, GoRouterState state) =>
+      UserProfileScreen(userId: userId);
+}
+
 // ─── Shell (Bottom Nav wrapper) ────────────────────────────────────────────
 
 @TypedStatefulShellRoute<MainShellRoute>(
   branches: [
     TypedStatefulShellBranch<HomeBranch>(
-      routes: [TypedGoRoute<HomeRoute>(path: RouteConstants.home)],
+      routes: [TypedGoRoute<HomeRoute>(path: '/home')],
     ),
     TypedStatefulShellBranch<ExploreBranch>(
       routes: [
         TypedGoRoute<ExploreRoute>(
-          path: RouteConstants.explore,
+          path: '/explore',
           routes: [
-            TypedGoRoute<FanHubDetailRoute>(path: ':subdomain'), // ← /explore/:subdomain
+            TypedGoRoute<FanHubDetailRoute>(
+              path: ':subdomain', // ← /explore/:subdomain
+              routes: [TypedGoRoute<CreatePostRoute>(path: 'create/:fanHubId')],
+            ),
+
           ],
         ),
       ],
@@ -58,10 +78,10 @@ class MainShellRoute extends StatefulShellRouteData {
 
   @override
   Widget builder(
-      BuildContext context,
-      GoRouterState state,
-      StatefulNavigationShell navigationShell,
-      ) {
+    BuildContext context,
+    GoRouterState state,
+    StatefulNavigationShell navigationShell,
+  ) {
     return MainShell(navigationShell: navigationShell);
   }
 }
@@ -101,13 +121,28 @@ class ExploreRoute extends GoRouteData with $ExploreRoute {
 }
 
 class FanHubDetailRoute extends GoRouteData with $FanHubDetailRoute {
-  const FanHubDetailRoute({required this.subdomain});
+  const FanHubDetailRoute({required this.subdomain, required this.fanHubId});
 
   final String subdomain;
+  final int fanHubId;
+
+  @override
+  Widget build(BuildContext context, GoRouterState state) => FanHubDetailScreen(
+    subdomain: subdomain,
+    feedWidget: HubFeedWidget(subdomain: subdomain),
+    speedDial: HubSpeedDial(subdomain: subdomain, fanHubId: fanHubId,),
+  );
+}
+
+class CreatePostRoute extends GoRouteData with $CreatePostRoute {
+  const CreatePostRoute({required this.subdomain, required this.fanHubId});
+
+  final String subdomain;
+  final int fanHubId;
 
   @override
   Widget build(BuildContext context, GoRouterState state) =>
-      FanHubDetailScreen(subdomain: subdomain, feedWidget: HubFeedWidget(subdomain: subdomain),);
+      CreatePostScreen(fanHubId: fanHubId);
 }
 
 // class ProfileRoute extends GoRouteData with $ProfileRoute {

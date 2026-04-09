@@ -18,7 +18,10 @@ class FanHubCard extends StatelessWidget {
       clipBehavior: Clip.antiAlias,
       child: InkWell(
         onTap: () {
-          FanHubDetailRoute(subdomain: fanHub.subdomain).go(context);
+          FanHubDetailRoute(
+            subdomain: fanHub.subdomain,
+            fanHubId: fanHub.fanHubId,
+          ).go(context);
         },
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,

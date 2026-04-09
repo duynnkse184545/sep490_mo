@@ -135,11 +135,11 @@ class SignInScreen extends HookConsumerWidget {
             controller: emailController,
             enabled: !isLoading,
             keyboardType: TextInputType.emailAddress,
-            decoration: const InputDecoration(
+            style: Theme.of(context).textTheme.bodyLarge,
+            decoration: InputDecoration(
               labelText: 'Email',
               hintText: 'Enter your email',
-              prefixIcon: Icon(Icons.email_outlined),
-              border: OutlineInputBorder(),
+              prefixIcon: const Icon(Icons.email_outlined),
             ),
           ),
 
@@ -150,11 +150,11 @@ class SignInScreen extends HookConsumerWidget {
             controller: passwordController,
             enabled: !isLoading,
             obscureText: obscurePassword.value,
+            style: Theme.of(context).textTheme.bodyLarge,
             decoration: InputDecoration(
               labelText: 'Password',
               hintText: 'Enter your password',
               prefixIcon: const Icon(Icons.lock_outline),
-              border: const OutlineInputBorder(),
               suffixIcon: IconButton(
                 icon: Icon(
                   obscurePassword.value ? Icons.visibility : Icons.visibility_off,
@@ -190,7 +190,7 @@ class SignInScreen extends HookConsumerWidget {
           // Sign up link
           TextButton(
             onPressed: isLoading ? null : () {
-              Navigator.pushReplacementNamed(context, '/sign-up');
+              const SignUpRoute().go(context);
             },
             child: const Text("Don't have an account? Sign Up"),
           ),

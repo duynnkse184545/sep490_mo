@@ -35,52 +35,140 @@ class FanHubListScreen extends HookConsumerWidget {
         title: const Text('Fan Hubs'),
       ),
       body: SafeArea(
-        child: fanHubAsync.when(
-          data: (fanHubState) => fanHubState.when(
-            ready: (fanHubs) => RefreshIndicator(
-              onRefresh: controller.refresh,
-              child: ListView.separated(
-                controller: scrollController,
-                padding: const EdgeInsets.only(top: 8, bottom: 16),
-                itemCount: fanHubs.length + 1,
-                separatorBuilder: (_, _) => const SizedBox.shrink(),
-                itemBuilder: (context, index) {
-                  if (index == fanHubs.length) return const SizedBox.shrink();
-                  return FanHubCard(fanHub: fanHubs[index]);
-                },
+        child: Column(
+          children: [
+            Padding(
+              padding: const EdgeInsets.all(12),
+              child: Row(
+                children: [
+                  Expanded(
+                    child: _TabButton(
+                      label: 'Discover',
+                      icon: Icons.explore_outlined,
+                      isSelected: controller.activeTab == FanHubTab.discover,
+                      onTap: () => controller.switchTab(FanHubTab.discover),
+                    ),
+                  ),
+                  const SizedBox(width: 8),
+                  Expanded(
+                    child: _TabButton(
+                      label: 'My Hubs',
+                      icon: Icons.groups_outlined,
+                      isSelected: controller.activeTab == FanHubTab.myHubs,
+                      onTap: () => controller.switchTab(FanHubTab.myHubs),
+                    ),
+                  ),
+                ],
               ),
             ),
-            loadingMore: (fanHubs) => ListView.separated(
-              controller: scrollController,
-              padding: const EdgeInsets.only(top: 8, bottom: 16),
-              itemCount: fanHubs.length + 1,
-              separatorBuilder: (_, _) => const SizedBox.shrink(),
-              itemBuilder: (context, index) {
-                if (index == fanHubs.length) {
-                  return const Padding(
-                    padding: EdgeInsets.all(16),
-                    child: Center(child: CircularProgressIndicator()),
-                  );
-                }
-                return FanHubCard(fanHub: fanHubs[index]);
-              },
+            Expanded(
+              child: fanHubAsync.when(
+                data: (fanHubState) => fanHubState.when(
+                  ready: (fanHubs, _) => RefreshIndicator(
+                    onRefresh: controller.refresh,
+                    child: ListView.separated(
+                      controller: scrollController,
+                      padding: const EdgeInsets.only(top: 8, bottom: 16),
+                      itemCount: fanHubs.length + 1,
+                      separatorBuilder: (_, _) => const SizedBox.shrink(),
+                      itemBuilder: (context, index) {
+                        if (index == fanHubs.length) {
+                          return const SizedBox.shrink();
+                        }
+                        return FanHubCard(fanHub: fanHubs[index]);
+                      },
+                    ),
+                  ),
+                  loadingMore: (fanHubs, _) => ListView.separated(
+                    controller: scrollController,
+                    padding: const EdgeInsets.only(top: 8, bottom: 16),
+                    itemCount: fanHubs.length + 1,
+                    separatorBuilder: (_, _) => const SizedBox.shrink(),
+                    itemBuilder: (context, index) {
+                      if (index == fanHubs.length) {
+                        return const Padding(
+                          padding: EdgeInsets.all(16),
+                          child: Center(child: CircularProgressIndicator()),
+                        );
+                      }
+                      return FanHubCard(fanHub: fanHubs[index]);
+                    },
+                  ),
+                  refreshing: (fanHubs, _) => ListView.separated(
+                    controller: scrollController,
+                    padding: const EdgeInsets.only(top: 8, bottom: 16),
+                    itemCount: fanHubs.length,
+                    separatorBuilder: (_, _) => const SizedBox.shrink(),
+                    itemBuilder: (context, index) =>
+                        FanHubCard(fanHub: fanHubs[index]),
+                  ),
+                  empty: (_) => EmptyState(
+                    message: controller.activeTab == FanHubTab.myHubs
+                        ? 'You have not joined any Fan Hubs yet'
+                        : 'No Fan Hubs found',
+                    icon: Icons.groups_outlined,
+                  ),
+                ),
+                loading: () => const Loader(),
+                error: (error, stackTrace) => ErrorBanner(
+                  message: error.toString(),
+                  onRetry: controller.refresh,
+                ),
+              ),
             ),
-            refreshing: (fanHubs) => ListView.separated(
-              controller: scrollController,
-              padding: const EdgeInsets.only(top: 8, bottom: 16),
-              itemCount: fanHubs.length,
-              separatorBuilder: (_, _) => const SizedBox.shrink(),
-              itemBuilder: (context, index) => FanHubCard(fanHub: fanHubs[index]),
-            ),
-            empty: () => const EmptyState(
-              message: 'No Fan Hubs found',
-              icon: Icons.groups_outlined,
-            ),
-          ),
-          loading: () => const Loader(),
-          error: (error, stackTrace) => ErrorBanner(
-            message: error.toString(),
-            onRetry: controller.refresh,
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class _TabButton extends StatelessWidget {
+  final String label;
+  final IconData icon;
+  final bool isSelected;
+  final VoidCallback onTap;
+
+  const _TabButton({
+    required this.label,
+    required this.icon,
+    required this.isSelected,
+    required this.onTap,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    return Material(
+      color: isSelected
+          ? theme.colorScheme.primaryContainer
+          : theme.colorScheme.surfaceContainerHighest,
+      borderRadius: BorderRadius.circular(12),
+      child: InkWell(
+        onTap: onTap,
+        borderRadius: BorderRadius.circular(12),
+        child: Container(
+          padding: const EdgeInsets.symmetric(vertical: 14),
+          child: Column(
+            children: [
+              Icon(
+                icon,
+                color: isSelected
+                    ? theme.colorScheme.onPrimaryContainer
+                    : theme.colorScheme.onSurfaceVariant,
+              ),
+              const SizedBox(height: 4),
+              Text(
+                label,
+                style: theme.textTheme.labelLarge?.copyWith(
+                  color: isSelected
+                      ? theme.colorScheme.onPrimaryContainer
+                      : theme.colorScheme.onSurfaceVariant,
+                  fontWeight:
+                      isSelected ? FontWeight.bold : FontWeight.normal,
+                ),
+              ),
+            ],
           ),
         ),
       ),

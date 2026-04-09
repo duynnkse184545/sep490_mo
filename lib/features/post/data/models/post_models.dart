@@ -101,3 +101,20 @@ abstract class PostListResponse with _$PostListResponse {
   factory PostListResponse.fromJson(Map<String, dynamic> json) =>
       _$PostListResponseFromJson(json);
 }
+
+@freezed
+abstract class CreatePostRequest with _$CreatePostRequest {
+  const factory CreatePostRequest({
+    required int fanHubId,
+    required PostType postType,
+    String? title,
+    required String content,
+    @Default([]) List<String>? images,
+    @Default([]) List<String>? hashtags,
+    String? video,
+  }) = _CreatePostRequest;
+
+  factory CreatePostRequest.fromJson(Map<String, dynamic> json) =>
+      _$CreatePostRequestFromJson(json);
+}
+

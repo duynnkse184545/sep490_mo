@@ -29,6 +29,13 @@ abstract class FanHubApiService {
     @Path('subdomain') String subdomain,
   );
 
+  @GET('/fan-hub/my-hubs')
+  Future<ApiResponse<List<FanHub>>> getMyHubs(
+    @Query('pageNo') int pageNo,
+    @Query('pageSize') int pageSize,
+    @Query('sortBy') String sortBy,
+  );
+
   @POST('/fan-hub/create')
   Future<ApiResponse> createFanHub(@Body() CreateFanHubRequest request);
 

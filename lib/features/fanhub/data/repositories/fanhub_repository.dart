@@ -17,5 +17,11 @@ abstract class FanHubRepository {
 
   TaskResult<FanHub> getFanHubBySubdomain(String subdomain);
 
+  TaskResult<List<FanHub>> getMyHubs({
+    required int pageNo,
+    required int pageSize,
+    required String sortBy,
+  });
+
   TaskVoid createFanHub(CreateFanHubRequest request);
 }

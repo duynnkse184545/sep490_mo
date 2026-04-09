@@ -3,10 +3,21 @@ import 'package:sep490_mo/features/fanhub/data/models/fanhub_models.dart';
 
 part 'fanhub_state.freezed.dart';
 
+enum FanHubTab { discover, myHubs }
+
 @freezed
 sealed class FanHubState with _$FanHubState {
-  const factory FanHubState.ready(List<FanHub> fanHubs) = _Ready;
-  const factory FanHubState.refreshing(List<FanHub> fanHubs) = _Refreshing;
-  const factory FanHubState.loadingMore(List<FanHub> fanHubs) = _LoadingMore;
-  const factory FanHubState.empty() = _Empty;
+  const factory FanHubState.ready(
+    List<FanHub> fanHubs,
+    FanHubTab activeTab,
+  ) = _Ready;
+  const factory FanHubState.refreshing(
+    List<FanHub> fanHubs,
+    FanHubTab activeTab,
+  ) = _Refreshing;
+  const factory FanHubState.loadingMore(
+    List<FanHub> fanHubs,
+    FanHubTab activeTab,
+  ) = _LoadingMore;
+  const factory FanHubState.empty(FanHubTab activeTab) = _Empty;
 }

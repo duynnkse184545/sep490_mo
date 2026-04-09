@@ -111,3 +111,30 @@ Map<String, dynamic> _$PostListResponseToJson(_PostListResponse instance) =>
       'message': instance.message,
       'data': instance.data,
     };
+
+_CreatePostRequest _$CreatePostRequestFromJson(
+  Map<String, dynamic> json,
+) => _CreatePostRequest(
+  fanHubId: (json['fanHubId'] as num).toInt(),
+  postType: $enumDecode(_$PostTypeEnumMap, json['postType']),
+  title: json['title'] as String?,
+  content: json['content'] as String,
+  images:
+      (json['images'] as List<dynamic>?)?.map((e) => e as String).toList() ??
+      const [],
+  hashtags:
+      (json['hashtags'] as List<dynamic>?)?.map((e) => e as String).toList() ??
+      const [],
+  video: json['video'] as String?,
+);
+
+Map<String, dynamic> _$CreatePostRequestToJson(_CreatePostRequest instance) =>
+    <String, dynamic>{
+      'fanHubId': instance.fanHubId,
+      'postType': _$PostTypeEnumMap[instance.postType]!,
+      'title': instance.title,
+      'content': instance.content,
+      'images': instance.images,
+      'hashtags': instance.hashtags,
+      'video': instance.video,
+    };

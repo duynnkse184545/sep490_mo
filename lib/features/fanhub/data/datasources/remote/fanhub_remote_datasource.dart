@@ -16,5 +16,11 @@ abstract class FanHubRemoteDatasource {
 
   Future<FanHub> getFanHubBySubdomain(String subdomain);
 
+  Future<List<FanHub>> getMyHubs({
+    required int pageNo,
+    required int pageSize,
+    required String sortBy,
+  });
+
   Future<void> createFanHub(CreateFanHubRequest request);
 }

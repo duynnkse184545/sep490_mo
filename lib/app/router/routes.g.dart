@@ -6,7 +6,12 @@ part of 'routes.dart';
 // GoRouterGenerator
 // **************************************************************************
 
-List<RouteBase> get $appRoutes => [$signInRoute, $signUpRoute, $mainShellRoute];
+List<RouteBase> get $appRoutes => [
+  $signInRoute,
+  $signUpRoute,
+  $userProfileRoute,
+  $mainShellRoute,
+];
 
 RouteBase get $signInRoute =>
     GoRouteData.$route(path: '/sign-in', factory: $SignInRoute._fromState);
@@ -54,6 +59,36 @@ mixin $SignUpRoute on GoRouteData {
   void replace(BuildContext context) => context.replace(location);
 }
 
+RouteBase get $userProfileRoute => GoRouteData.$route(
+  path: '/profile/:userId',
+  factory: $UserProfileRoute._fromState,
+);
+
+mixin $UserProfileRoute on GoRouteData {
+  static UserProfileRoute _fromState(GoRouterState state) =>
+      UserProfileRoute(userId: int.parse(state.pathParameters['userId']!));
+
+  UserProfileRoute get _self => this as UserProfileRoute;
+
+  @override
+  String get location => GoRouteData.$location(
+    '/profile/${Uri.encodeComponent(_self.userId.toString())}',
+  );
+
+  @override
+  void go(BuildContext context) => context.go(location);
+
+  @override
+  Future<T?> push<T>(BuildContext context) => context.push<T>(location);
+
+  @override
+  void pushReplacement(BuildContext context) =>
+      context.pushReplacement(location);
+
+  @override
+  void replace(BuildContext context) => context.replace(location);
+}
+
 RouteBase get $mainShellRoute => StatefulShellRouteData.$route(
   factory: $MainShellRouteExtension._fromState,
   branches: [
@@ -71,6 +106,12 @@ RouteBase get $mainShellRoute => StatefulShellRouteData.$route(
             GoRouteData.$route(
               path: ':subdomain',
               factory: $FanHubDetailRoute._fromState,
+              routes: [
+                GoRouteData.$route(
+                  path: 'create/:fanHubId',
+                  factory: $CreatePostRoute._fromState,
+                ),
+              ],
             ),
           ],
         ),
@@ -125,14 +166,45 @@ mixin $ExploreRoute on GoRouteData {
 }
 
 mixin $FanHubDetailRoute on GoRouteData {
-  static FanHubDetailRoute _fromState(GoRouterState state) =>
-      FanHubDetailRoute(subdomain: state.pathParameters['subdomain']!);
+  static FanHubDetailRoute _fromState(GoRouterState state) => FanHubDetailRoute(
+    subdomain: state.pathParameters['subdomain']!,
+    fanHubId: int.parse(state.uri.queryParameters['fan-hub-id']!),
+  );
 
   FanHubDetailRoute get _self => this as FanHubDetailRoute;
 
   @override
-  String get location =>
-      GoRouteData.$location('/explore/${Uri.encodeComponent(_self.subdomain)}');
+  String get location => GoRouteData.$location(
+    '/explore/${Uri.encodeComponent(_self.subdomain)}',
+    queryParams: {'fan-hub-id': _self.fanHubId.toString()},
+  );
+
+  @override
+  void go(BuildContext context) => context.go(location);
+
+  @override
+  Future<T?> push<T>(BuildContext context) => context.push<T>(location);
+
+  @override
+  void pushReplacement(BuildContext context) =>
+      context.pushReplacement(location);
+
+  @override
+  void replace(BuildContext context) => context.replace(location);
+}
+
+mixin $CreatePostRoute on GoRouteData {
+  static CreatePostRoute _fromState(GoRouterState state) => CreatePostRoute(
+    subdomain: state.pathParameters['subdomain']!,
+    fanHubId: int.parse(state.pathParameters['fanHubId']!),
+  );
+
+  CreatePostRoute get _self => this as CreatePostRoute;
+
+  @override
+  String get location => GoRouteData.$location(
+    '/explore/${Uri.encodeComponent(_self.subdomain)}/create/${Uri.encodeComponent(_self.fanHubId.toString())}',
+  );
 
   @override
   void go(BuildContext context) => context.go(location);

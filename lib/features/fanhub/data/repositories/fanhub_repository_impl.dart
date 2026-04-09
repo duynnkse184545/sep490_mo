@@ -55,4 +55,19 @@ class FanHubRepositoryImpl implements FanHubRepository {
       await _remoteDataSource.createFanHub(request);
     });
   }
+
+  @override
+  TaskResult<List<FanHub>> getMyHubs({
+    required int pageNo,
+    required int pageSize,
+    required String sortBy,
+  }) {
+    return ErrorHandler.execute(() async {
+      return await _remoteDataSource.getMyHubs(
+        pageNo: pageNo,
+        pageSize: pageSize,
+        sortBy: sortBy,
+      );
+    });
+  }
 }

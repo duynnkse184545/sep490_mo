@@ -155,7 +155,7 @@ class AppTheme {
         ),
         bodyLarge: TextStyle(
           fontSize: 16,
-          color: LightColors.text,
+          color: LightColors.onPrimary,
         ),
         bodyMedium: TextStyle(
           fontSize: 14,

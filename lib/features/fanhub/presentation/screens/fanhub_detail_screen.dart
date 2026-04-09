@@ -8,11 +8,13 @@ import 'package:sep490_mo/features/fanhub/presentation/states/fanhub_detail_stat
 class FanHubDetailScreen extends HookConsumerWidget {
   final String subdomain;
   final Widget feedWidget;
+  final Widget speedDial;
 
   const FanHubDetailScreen({
     super.key,
     required this.subdomain,
     required this.feedWidget,
+    required this.speedDial,
   });
 
   @override
@@ -25,6 +27,7 @@ class FanHubDetailScreen extends HookConsumerWidget {
     );
 
     return Scaffold(
+      floatingActionButton: speedDial,
       body: SafeArea(
         child: detailAsync.when(
           data: (state) => state.when(
