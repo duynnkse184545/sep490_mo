@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:sep490_mo/app/widget/hub_speed_dial.dart';
-import 'package:sep490_mo/core/widgets/bottom_tab_nav.dart';
+import 'package:sep490_mo/app/widget/bottom_tab_nav.dart';
 import 'package:sep490_mo/features/auth/presentation/screens/sign_in_screen.dart';
 import 'package:sep490_mo/features/auth/presentation/screens/sign_up_screen.dart';
 import 'package:sep490_mo/features/fanhub/presentation/screens/fanhub_detail_screen.dart';
 import 'package:sep490_mo/features/fanhub/presentation/screens/fanhub_list_screen.dart';
+import 'package:sep490_mo/features/member/presentation/screens/member_list_screen.dart';
 import 'package:sep490_mo/features/post/presentation/screens/create_post_screen.dart';
 import 'package:sep490_mo/features/post/presentation/screens/feed_screen.dart';
 import 'package:sep490_mo/features/post/presentation/widgets/hub_feed_widget.dart';
@@ -34,19 +35,6 @@ class SignUpRoute extends GoRouteData with $SignUpRoute {
       const SignUpScreen();
 }
 
-// ─── Profile Route ─────────────────────────────────────────────────────────
-
-@TypedGoRoute<UserProfileRoute>(path: '/profile/:userId')
-class UserProfileRoute extends GoRouteData with $UserProfileRoute {
-  const UserProfileRoute({required this.userId});
-
-  final int userId;
-
-  @override
-  Widget build(BuildContext context, GoRouterState state) =>
-      UserProfileScreen(userId: userId);
-}
-
 // ─── Shell (Bottom Nav wrapper) ────────────────────────────────────────────
 
 @TypedStatefulShellRoute<MainShellRoute>(
@@ -61,16 +49,18 @@ class UserProfileRoute extends GoRouteData with $UserProfileRoute {
           routes: [
             TypedGoRoute<FanHubDetailRoute>(
               path: ':subdomain', // ← /explore/:subdomain
-              routes: [TypedGoRoute<CreatePostRoute>(path: 'create/:fanHubId')],
+              routes: [
+                TypedGoRoute<CreatePostRoute>(path: 'create'),
+                TypedGoRoute<MemberListRoute>(path: 'members'),
+              ],
             ),
-
           ],
         ),
       ],
     ),
-    // TypedStatefulShellBranch<ProfileBranch>(
-    //   routes: [TypedGoRoute<ProfileRoute>(path: RouteConstants.profile)],
-    // ),
+    TypedStatefulShellBranch<ProfileBranch>(
+      routes: [TypedGoRoute<UserProfileRoute>(path: '/profile')],
+    ),
   ],
 )
 class MainShellRoute extends StatefulShellRouteData {
@@ -130,7 +120,7 @@ class FanHubDetailRoute extends GoRouteData with $FanHubDetailRoute {
   Widget build(BuildContext context, GoRouterState state) => FanHubDetailScreen(
     subdomain: subdomain,
     feedWidget: HubFeedWidget(subdomain: subdomain),
-    speedDial: HubSpeedDial(subdomain: subdomain, fanHubId: fanHubId,),
+    speedDial: HubSpeedDial(subdomain: subdomain, fanHubId: fanHubId),
   );
 }
 
@@ -145,9 +135,23 @@ class CreatePostRoute extends GoRouteData with $CreatePostRoute {
       CreatePostScreen(fanHubId: fanHubId);
 }
 
-// class ProfileRoute extends GoRouteData with $ProfileRoute {
-//   const ProfileRoute();
-//
-//   @override
-//   Widget build(BuildContext context, GoRouterState state) => const ProfileScreen();
-// }
+class MemberListRoute extends GoRouteData with $MemberListRoute {
+  const MemberListRoute({required this.subdomain, required this.fanHubId});
+
+  final String subdomain;
+  final int fanHubId;
+
+  @override
+  Widget build(BuildContext context, GoRouterState state) =>
+      MemberListScreen(fanHubId: fanHubId);
+}
+
+// ─── Profile Route ─────────────────────────────────────────────────────────
+
+class UserProfileRoute extends GoRouteData with $UserProfileRoute {
+  const UserProfileRoute();
+
+  @override
+  Widget build(BuildContext context, GoRouterState state) =>
+      UserProfileScreen();
+}

@@ -16,7 +16,7 @@ abstract class TokenService {
   Future<String?> getRefreshToken();
 
   /// Get user ID
-  Future<int?> getUserId();
+  Future<int> getUserId();
 
   /// Clear all tokens
   Future<void> clearTokens();

@@ -63,3 +63,16 @@ abstract class MemberCheckingResponse with _$MemberCheckingResponse {
   factory MemberCheckingResponse.fromJson(Map<String, dynamic> json) =>
       _$MemberCheckingResponseFromJson(json);
 }
+
+@freezed
+abstract class BanRequest with _$BanRequest {
+  const factory BanRequest({
+    required int fanHubMemberId,
+    required String reason,
+    required String banType,
+    required DateTime bannedUntil,
+  }) = _BanRequest;
+
+  factory BanRequest.fromJson(Map<String, dynamic> json) =>
+      _$BanRequestFromJson(json);
+}

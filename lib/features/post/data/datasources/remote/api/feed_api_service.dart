@@ -55,10 +55,3 @@ abstract class FeedApiService {
 // - /posts/comment/unlike/{commentId}
 // - /posts/comment/gift/{commentId}
 //
-// ModerationRepository
-// - /posts/fan-hub/{fanHubId}/pending
-// - /posts/fan-hub/{fanHubId}/all
-// - /posts/fan-hub/subdomain/{subdomain}/pending
-// - /posts/fan-hub/subdomain/{subdomain}/all
-// - /posts/reports/posts/{fanHubId}
-// - /posts/validate

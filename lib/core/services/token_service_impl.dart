@@ -54,11 +54,13 @@ class TokenServiceImpl implements TokenService {
   }
 
   @override
-  Future<int?> getUserId() async {
+  Future<int> getUserId() async {
     try {
       final value = await _secureStorage.read(key: _userIdKey);
-      return value != null ? int.parse(value) : null;
+      if (value == null) throw UnauthorizedException('User not authenticated');
+      return int.parse(value);
     } catch (e) {
+      if (e is UnauthorizedException) rethrow;
       throw CacheException('Failed to get userId: ${e.toString()}');
     }
   }

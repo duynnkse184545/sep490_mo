@@ -15,7 +15,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$VoteOption {
 
- int get optionId; String get optionText; int get voteCount;
+ int get id; String get optionText;
 /// Create a copy of VoteOption
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -28,16 +28,16 @@ $VoteOptionCopyWith<VoteOption> get copyWith => _$VoteOptionCopyWithImpl<VoteOpt
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is VoteOption&&(identical(other.optionId, optionId) || other.optionId == optionId)&&(identical(other.optionText, optionText) || other.optionText == optionText)&&(identical(other.voteCount, voteCount) || other.voteCount == voteCount));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is VoteOption&&(identical(other.id, id) || other.id == id)&&(identical(other.optionText, optionText) || other.optionText == optionText));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,optionId,optionText,voteCount);
+int get hashCode => Object.hash(runtimeType,id,optionText);
 
 @override
 String toString() {
-  return 'VoteOption(optionId: $optionId, optionText: $optionText, voteCount: $voteCount)';
+  return 'VoteOption(id: $id, optionText: $optionText)';
 }
 
 
@@ -48,7 +48,7 @@ abstract mixin class $VoteOptionCopyWith<$Res>  {
   factory $VoteOptionCopyWith(VoteOption value, $Res Function(VoteOption) _then) = _$VoteOptionCopyWithImpl;
 @useResult
 $Res call({
- int optionId, String optionText, int voteCount
+ int id, String optionText
 });
 
 
@@ -65,12 +65,11 @@ class _$VoteOptionCopyWithImpl<$Res>
 
 /// Create a copy of VoteOption
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? optionId = null,Object? optionText = null,Object? voteCount = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? optionText = null,}) {
   return _then(_self.copyWith(
-optionId: null == optionId ? _self.optionId : optionId // ignore: cast_nullable_to_non_nullable
+id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as int,optionText: null == optionText ? _self.optionText : optionText // ignore: cast_nullable_to_non_nullable
-as String,voteCount: null == voteCount ? _self.voteCount : voteCount // ignore: cast_nullable_to_non_nullable
-as int,
+as String,
   ));
 }
 
@@ -155,10 +154,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( int optionId,  String optionText,  int voteCount)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( int id,  String optionText)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _VoteOption() when $default != null:
-return $default(_that.optionId,_that.optionText,_that.voteCount);case _:
+return $default(_that.id,_that.optionText);case _:
   return orElse();
 
 }
@@ -176,10 +175,10 @@ return $default(_that.optionId,_that.optionText,_that.voteCount);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( int optionId,  String optionText,  int voteCount)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( int id,  String optionText)  $default,) {final _that = this;
 switch (_that) {
 case _VoteOption():
-return $default(_that.optionId,_that.optionText,_that.voteCount);case _:
+return $default(_that.id,_that.optionText);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -196,10 +195,10 @@ return $default(_that.optionId,_that.optionText,_that.voteCount);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( int optionId,  String optionText,  int voteCount)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( int id,  String optionText)?  $default,) {final _that = this;
 switch (_that) {
 case _VoteOption() when $default != null:
-return $default(_that.optionId,_that.optionText,_that.voteCount);case _:
+return $default(_that.id,_that.optionText);case _:
   return null;
 
 }
@@ -211,12 +210,11 @@ return $default(_that.optionId,_that.optionText,_that.voteCount);case _:
 @JsonSerializable()
 
 class _VoteOption implements VoteOption {
-  const _VoteOption({required this.optionId, required this.optionText, this.voteCount = 0});
+  const _VoteOption({required this.id, required this.optionText});
   factory _VoteOption.fromJson(Map<String, dynamic> json) => _$VoteOptionFromJson(json);
 
-@override final  int optionId;
+@override final  int id;
 @override final  String optionText;
-@override@JsonKey() final  int voteCount;
 
 /// Create a copy of VoteOption
 /// with the given fields replaced by the non-null parameter values.
@@ -231,16 +229,16 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _VoteOption&&(identical(other.optionId, optionId) || other.optionId == optionId)&&(identical(other.optionText, optionText) || other.optionText == optionText)&&(identical(other.voteCount, voteCount) || other.voteCount == voteCount));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _VoteOption&&(identical(other.id, id) || other.id == id)&&(identical(other.optionText, optionText) || other.optionText == optionText));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,optionId,optionText,voteCount);
+int get hashCode => Object.hash(runtimeType,id,optionText);
 
 @override
 String toString() {
-  return 'VoteOption(optionId: $optionId, optionText: $optionText, voteCount: $voteCount)';
+  return 'VoteOption(id: $id, optionText: $optionText)';
 }
 
 
@@ -251,7 +249,7 @@ abstract mixin class _$VoteOptionCopyWith<$Res> implements $VoteOptionCopyWith<$
   factory _$VoteOptionCopyWith(_VoteOption value, $Res Function(_VoteOption) _then) = __$VoteOptionCopyWithImpl;
 @override @useResult
 $Res call({
- int optionId, String optionText, int voteCount
+ int id, String optionText
 });
 
 
@@ -268,12 +266,283 @@ class __$VoteOptionCopyWithImpl<$Res>
 
 /// Create a copy of VoteOption
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? optionId = null,Object? optionText = null,Object? voteCount = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? optionText = null,}) {
   return _then(_VoteOption(
-optionId: null == optionId ? _self.optionId : optionId // ignore: cast_nullable_to_non_nullable
+id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as int,optionText: null == optionText ? _self.optionText : optionText // ignore: cast_nullable_to_non_nullable
-as String,voteCount: null == voteCount ? _self.voteCount : voteCount // ignore: cast_nullable_to_non_nullable
-as int,
+as String,
+  ));
+}
+
+
+}
+
+
+/// @nodoc
+mixin _$Media {
+
+ int get mediaId; String get mediaUrl; AiStatus get aiValidationStatus; String? get aiValidationComment;
+/// Create a copy of Media
+/// with the given fields replaced by the non-null parameter values.
+@JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+$MediaCopyWith<Media> get copyWith => _$MediaCopyWithImpl<Media>(this as Media, _$identity);
+
+  /// Serializes this Media to a JSON map.
+  Map<String, dynamic> toJson();
+
+
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is Media&&(identical(other.mediaId, mediaId) || other.mediaId == mediaId)&&(identical(other.mediaUrl, mediaUrl) || other.mediaUrl == mediaUrl)&&(identical(other.aiValidationStatus, aiValidationStatus) || other.aiValidationStatus == aiValidationStatus)&&(identical(other.aiValidationComment, aiValidationComment) || other.aiValidationComment == aiValidationComment));
+}
+
+@JsonKey(includeFromJson: false, includeToJson: false)
+@override
+int get hashCode => Object.hash(runtimeType,mediaId,mediaUrl,aiValidationStatus,aiValidationComment);
+
+@override
+String toString() {
+  return 'Media(mediaId: $mediaId, mediaUrl: $mediaUrl, aiValidationStatus: $aiValidationStatus, aiValidationComment: $aiValidationComment)';
+}
+
+
+}
+
+/// @nodoc
+abstract mixin class $MediaCopyWith<$Res>  {
+  factory $MediaCopyWith(Media value, $Res Function(Media) _then) = _$MediaCopyWithImpl;
+@useResult
+$Res call({
+ int mediaId, String mediaUrl, AiStatus aiValidationStatus, String? aiValidationComment
+});
+
+
+
+
+}
+/// @nodoc
+class _$MediaCopyWithImpl<$Res>
+    implements $MediaCopyWith<$Res> {
+  _$MediaCopyWithImpl(this._self, this._then);
+
+  final Media _self;
+  final $Res Function(Media) _then;
+
+/// Create a copy of Media
+/// with the given fields replaced by the non-null parameter values.
+@pragma('vm:prefer-inline') @override $Res call({Object? mediaId = null,Object? mediaUrl = null,Object? aiValidationStatus = null,Object? aiValidationComment = freezed,}) {
+  return _then(_self.copyWith(
+mediaId: null == mediaId ? _self.mediaId : mediaId // ignore: cast_nullable_to_non_nullable
+as int,mediaUrl: null == mediaUrl ? _self.mediaUrl : mediaUrl // ignore: cast_nullable_to_non_nullable
+as String,aiValidationStatus: null == aiValidationStatus ? _self.aiValidationStatus : aiValidationStatus // ignore: cast_nullable_to_non_nullable
+as AiStatus,aiValidationComment: freezed == aiValidationComment ? _self.aiValidationComment : aiValidationComment // ignore: cast_nullable_to_non_nullable
+as String?,
+  ));
+}
+
+}
+
+
+/// Adds pattern-matching-related methods to [Media].
+extension MediaPatterns on Media {
+/// A variant of `map` that fallback to returning `orElse`.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case _:
+///     return orElse();
+/// }
+/// ```
+
+@optionalTypeArgs TResult maybeMap<TResult extends Object?>(TResult Function( _Media value)?  $default,{required TResult orElse(),}){
+final _that = this;
+switch (_that) {
+case _Media() when $default != null:
+return $default(_that);case _:
+  return orElse();
+
+}
+}
+/// A `switch`-like method, using callbacks.
+///
+/// Callbacks receives the raw object, upcasted.
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case final Subclass2 value:
+///     return ...;
+/// }
+/// ```
+
+@optionalTypeArgs TResult map<TResult extends Object?>(TResult Function( _Media value)  $default,){
+final _that = this;
+switch (_that) {
+case _Media():
+return $default(_that);case _:
+  throw StateError('Unexpected subclass');
+
+}
+}
+/// A variant of `map` that fallback to returning `null`.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case _:
+///     return null;
+/// }
+/// ```
+
+@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>(TResult? Function( _Media value)?  $default,){
+final _that = this;
+switch (_that) {
+case _Media() when $default != null:
+return $default(_that);case _:
+  return null;
+
+}
+}
+/// A variant of `when` that fallback to an `orElse` callback.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case _:
+///     return orElse();
+/// }
+/// ```
+
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( int mediaId,  String mediaUrl,  AiStatus aiValidationStatus,  String? aiValidationComment)?  $default,{required TResult orElse(),}) {final _that = this;
+switch (_that) {
+case _Media() when $default != null:
+return $default(_that.mediaId,_that.mediaUrl,_that.aiValidationStatus,_that.aiValidationComment);case _:
+  return orElse();
+
+}
+}
+/// A `switch`-like method, using callbacks.
+///
+/// As opposed to `map`, this offers destructuring.
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case Subclass2(:final field2):
+///     return ...;
+/// }
+/// ```
+
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( int mediaId,  String mediaUrl,  AiStatus aiValidationStatus,  String? aiValidationComment)  $default,) {final _that = this;
+switch (_that) {
+case _Media():
+return $default(_that.mediaId,_that.mediaUrl,_that.aiValidationStatus,_that.aiValidationComment);case _:
+  throw StateError('Unexpected subclass');
+
+}
+}
+/// A variant of `when` that fallback to returning `null`
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case _:
+///     return null;
+/// }
+/// ```
+
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( int mediaId,  String mediaUrl,  AiStatus aiValidationStatus,  String? aiValidationComment)?  $default,) {final _that = this;
+switch (_that) {
+case _Media() when $default != null:
+return $default(_that.mediaId,_that.mediaUrl,_that.aiValidationStatus,_that.aiValidationComment);case _:
+  return null;
+
+}
+}
+
+}
+
+/// @nodoc
+@JsonSerializable()
+
+class _Media implements Media {
+  const _Media({required this.mediaId, required this.mediaUrl, required this.aiValidationStatus, this.aiValidationComment});
+  factory _Media.fromJson(Map<String, dynamic> json) => _$MediaFromJson(json);
+
+@override final  int mediaId;
+@override final  String mediaUrl;
+@override final  AiStatus aiValidationStatus;
+@override final  String? aiValidationComment;
+
+/// Create a copy of Media
+/// with the given fields replaced by the non-null parameter values.
+@override @JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+_$MediaCopyWith<_Media> get copyWith => __$MediaCopyWithImpl<_Media>(this, _$identity);
+
+@override
+Map<String, dynamic> toJson() {
+  return _$MediaToJson(this, );
+}
+
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _Media&&(identical(other.mediaId, mediaId) || other.mediaId == mediaId)&&(identical(other.mediaUrl, mediaUrl) || other.mediaUrl == mediaUrl)&&(identical(other.aiValidationStatus, aiValidationStatus) || other.aiValidationStatus == aiValidationStatus)&&(identical(other.aiValidationComment, aiValidationComment) || other.aiValidationComment == aiValidationComment));
+}
+
+@JsonKey(includeFromJson: false, includeToJson: false)
+@override
+int get hashCode => Object.hash(runtimeType,mediaId,mediaUrl,aiValidationStatus,aiValidationComment);
+
+@override
+String toString() {
+  return 'Media(mediaId: $mediaId, mediaUrl: $mediaUrl, aiValidationStatus: $aiValidationStatus, aiValidationComment: $aiValidationComment)';
+}
+
+
+}
+
+/// @nodoc
+abstract mixin class _$MediaCopyWith<$Res> implements $MediaCopyWith<$Res> {
+  factory _$MediaCopyWith(_Media value, $Res Function(_Media) _then) = __$MediaCopyWithImpl;
+@override @useResult
+$Res call({
+ int mediaId, String mediaUrl, AiStatus aiValidationStatus, String? aiValidationComment
+});
+
+
+
+
+}
+/// @nodoc
+class __$MediaCopyWithImpl<$Res>
+    implements _$MediaCopyWith<$Res> {
+  __$MediaCopyWithImpl(this._self, this._then);
+
+  final _Media _self;
+  final $Res Function(_Media) _then;
+
+/// Create a copy of Media
+/// with the given fields replaced by the non-null parameter values.
+@override @pragma('vm:prefer-inline') $Res call({Object? mediaId = null,Object? mediaUrl = null,Object? aiValidationStatus = null,Object? aiValidationComment = freezed,}) {
+  return _then(_Media(
+mediaId: null == mediaId ? _self.mediaId : mediaId // ignore: cast_nullable_to_non_nullable
+as int,mediaUrl: null == mediaUrl ? _self.mediaUrl : mediaUrl // ignore: cast_nullable_to_non_nullable
+as String,aiValidationStatus: null == aiValidationStatus ? _self.aiValidationStatus : aiValidationStatus // ignore: cast_nullable_to_non_nullable
+as AiStatus,aiValidationComment: freezed == aiValidationComment ? _self.aiValidationComment : aiValidationComment // ignore: cast_nullable_to_non_nullable
+as String?,
   ));
 }
 
@@ -284,7 +553,7 @@ as int,
 /// @nodoc
 mixin _$Post {
 
- int get postId; int get fanHubId; String get fanHubName; String get fanHubSubdomain; int get authorId; String get authorUsername; String get authorDisplayName; String? get authorAvatarUrl; PostType get postType; String? get title; String get content; PostStatus get status; bool get isPinned; List<String> get mediaUrls; List<String> get hashtags; List<String>? get voteOptions; Map<String, int>? get voteCounts; int? get totalVotes; int? get userVotedOptionId; DateTime get createdAt; DateTime? get updatedAt; int get likeCount; bool get isLikedByCurrentUser;
+ int get postId; int get fanHubId; String get fanHubName; String get fanHubSubdomain; int get authorId; String get authorUsername; String get authorDisplayName; String? get authorAvatarUrl; PostType get postType; String? get title; String get content; PostStatus get status; bool get isPinned; List<String> get mediaUrls; List<String> get hashtags; List<VoteOption>? get voteOptions; Map<String, int>? get voteCounts; int? get totalVotes; int? get userVotedOptionId; DateTime get createdAt; DateTime? get updatedAt; int get likeCount; bool get isLikedByCurrentUser;
 /// Create a copy of Post
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -317,7 +586,7 @@ abstract mixin class $PostCopyWith<$Res>  {
   factory $PostCopyWith(Post value, $Res Function(Post) _then) = _$PostCopyWithImpl;
 @useResult
 $Res call({
- int postId, int fanHubId, String fanHubName, String fanHubSubdomain, int authorId, String authorUsername, String authorDisplayName, String? authorAvatarUrl, PostType postType, String? title, String content, PostStatus status, bool isPinned, List<String> mediaUrls, List<String> hashtags, List<String>? voteOptions, Map<String, int>? voteCounts, int? totalVotes, int? userVotedOptionId, DateTime createdAt, DateTime? updatedAt, int likeCount, bool isLikedByCurrentUser
+ int postId, int fanHubId, String fanHubName, String fanHubSubdomain, int authorId, String authorUsername, String authorDisplayName, String? authorAvatarUrl, PostType postType, String? title, String content, PostStatus status, bool isPinned, List<String> mediaUrls, List<String> hashtags, List<VoteOption>? voteOptions, Map<String, int>? voteCounts, int? totalVotes, int? userVotedOptionId, DateTime createdAt, DateTime? updatedAt, int likeCount, bool isLikedByCurrentUser
 });
 
 
@@ -352,7 +621,7 @@ as PostStatus,isPinned: null == isPinned ? _self.isPinned : isPinned // ignore: 
 as bool,mediaUrls: null == mediaUrls ? _self.mediaUrls : mediaUrls // ignore: cast_nullable_to_non_nullable
 as List<String>,hashtags: null == hashtags ? _self.hashtags : hashtags // ignore: cast_nullable_to_non_nullable
 as List<String>,voteOptions: freezed == voteOptions ? _self.voteOptions : voteOptions // ignore: cast_nullable_to_non_nullable
-as List<String>?,voteCounts: freezed == voteCounts ? _self.voteCounts : voteCounts // ignore: cast_nullable_to_non_nullable
+as List<VoteOption>?,voteCounts: freezed == voteCounts ? _self.voteCounts : voteCounts // ignore: cast_nullable_to_non_nullable
 as Map<String, int>?,totalVotes: freezed == totalVotes ? _self.totalVotes : totalVotes // ignore: cast_nullable_to_non_nullable
 as int?,userVotedOptionId: freezed == userVotedOptionId ? _self.userVotedOptionId : userVotedOptionId // ignore: cast_nullable_to_non_nullable
 as int?,createdAt: null == createdAt ? _self.createdAt : createdAt // ignore: cast_nullable_to_non_nullable
@@ -444,7 +713,7 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( int postId,  int fanHubId,  String fanHubName,  String fanHubSubdomain,  int authorId,  String authorUsername,  String authorDisplayName,  String? authorAvatarUrl,  PostType postType,  String? title,  String content,  PostStatus status,  bool isPinned,  List<String> mediaUrls,  List<String> hashtags,  List<String>? voteOptions,  Map<String, int>? voteCounts,  int? totalVotes,  int? userVotedOptionId,  DateTime createdAt,  DateTime? updatedAt,  int likeCount,  bool isLikedByCurrentUser)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( int postId,  int fanHubId,  String fanHubName,  String fanHubSubdomain,  int authorId,  String authorUsername,  String authorDisplayName,  String? authorAvatarUrl,  PostType postType,  String? title,  String content,  PostStatus status,  bool isPinned,  List<String> mediaUrls,  List<String> hashtags,  List<VoteOption>? voteOptions,  Map<String, int>? voteCounts,  int? totalVotes,  int? userVotedOptionId,  DateTime createdAt,  DateTime? updatedAt,  int likeCount,  bool isLikedByCurrentUser)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _Post() when $default != null:
 return $default(_that.postId,_that.fanHubId,_that.fanHubName,_that.fanHubSubdomain,_that.authorId,_that.authorUsername,_that.authorDisplayName,_that.authorAvatarUrl,_that.postType,_that.title,_that.content,_that.status,_that.isPinned,_that.mediaUrls,_that.hashtags,_that.voteOptions,_that.voteCounts,_that.totalVotes,_that.userVotedOptionId,_that.createdAt,_that.updatedAt,_that.likeCount,_that.isLikedByCurrentUser);case _:
@@ -465,7 +734,7 @@ return $default(_that.postId,_that.fanHubId,_that.fanHubName,_that.fanHubSubdoma
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( int postId,  int fanHubId,  String fanHubName,  String fanHubSubdomain,  int authorId,  String authorUsername,  String authorDisplayName,  String? authorAvatarUrl,  PostType postType,  String? title,  String content,  PostStatus status,  bool isPinned,  List<String> mediaUrls,  List<String> hashtags,  List<String>? voteOptions,  Map<String, int>? voteCounts,  int? totalVotes,  int? userVotedOptionId,  DateTime createdAt,  DateTime? updatedAt,  int likeCount,  bool isLikedByCurrentUser)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( int postId,  int fanHubId,  String fanHubName,  String fanHubSubdomain,  int authorId,  String authorUsername,  String authorDisplayName,  String? authorAvatarUrl,  PostType postType,  String? title,  String content,  PostStatus status,  bool isPinned,  List<String> mediaUrls,  List<String> hashtags,  List<VoteOption>? voteOptions,  Map<String, int>? voteCounts,  int? totalVotes,  int? userVotedOptionId,  DateTime createdAt,  DateTime? updatedAt,  int likeCount,  bool isLikedByCurrentUser)  $default,) {final _that = this;
 switch (_that) {
 case _Post():
 return $default(_that.postId,_that.fanHubId,_that.fanHubName,_that.fanHubSubdomain,_that.authorId,_that.authorUsername,_that.authorDisplayName,_that.authorAvatarUrl,_that.postType,_that.title,_that.content,_that.status,_that.isPinned,_that.mediaUrls,_that.hashtags,_that.voteOptions,_that.voteCounts,_that.totalVotes,_that.userVotedOptionId,_that.createdAt,_that.updatedAt,_that.likeCount,_that.isLikedByCurrentUser);case _:
@@ -485,7 +754,7 @@ return $default(_that.postId,_that.fanHubId,_that.fanHubName,_that.fanHubSubdoma
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( int postId,  int fanHubId,  String fanHubName,  String fanHubSubdomain,  int authorId,  String authorUsername,  String authorDisplayName,  String? authorAvatarUrl,  PostType postType,  String? title,  String content,  PostStatus status,  bool isPinned,  List<String> mediaUrls,  List<String> hashtags,  List<String>? voteOptions,  Map<String, int>? voteCounts,  int? totalVotes,  int? userVotedOptionId,  DateTime createdAt,  DateTime? updatedAt,  int likeCount,  bool isLikedByCurrentUser)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( int postId,  int fanHubId,  String fanHubName,  String fanHubSubdomain,  int authorId,  String authorUsername,  String authorDisplayName,  String? authorAvatarUrl,  PostType postType,  String? title,  String content,  PostStatus status,  bool isPinned,  List<String> mediaUrls,  List<String> hashtags,  List<VoteOption>? voteOptions,  Map<String, int>? voteCounts,  int? totalVotes,  int? userVotedOptionId,  DateTime createdAt,  DateTime? updatedAt,  int likeCount,  bool isLikedByCurrentUser)?  $default,) {final _that = this;
 switch (_that) {
 case _Post() when $default != null:
 return $default(_that.postId,_that.fanHubId,_that.fanHubName,_that.fanHubSubdomain,_that.authorId,_that.authorUsername,_that.authorDisplayName,_that.authorAvatarUrl,_that.postType,_that.title,_that.content,_that.status,_that.isPinned,_that.mediaUrls,_that.hashtags,_that.voteOptions,_that.voteCounts,_that.totalVotes,_that.userVotedOptionId,_that.createdAt,_that.updatedAt,_that.likeCount,_that.isLikedByCurrentUser);case _:
@@ -500,7 +769,7 @@ return $default(_that.postId,_that.fanHubId,_that.fanHubName,_that.fanHubSubdoma
 @JsonSerializable()
 
 class _Post implements Post {
-  const _Post({required this.postId, required this.fanHubId, required this.fanHubName, required this.fanHubSubdomain, required this.authorId, required this.authorUsername, required this.authorDisplayName, this.authorAvatarUrl, required this.postType, this.title, required this.content, required this.status, this.isPinned = false, final  List<String> mediaUrls = const [], final  List<String> hashtags = const [], final  List<String>? voteOptions, final  Map<String, int>? voteCounts, this.totalVotes, this.userVotedOptionId, required this.createdAt, this.updatedAt, this.likeCount = 0, this.isLikedByCurrentUser = false}): _mediaUrls = mediaUrls,_hashtags = hashtags,_voteOptions = voteOptions,_voteCounts = voteCounts;
+  const _Post({required this.postId, required this.fanHubId, required this.fanHubName, required this.fanHubSubdomain, required this.authorId, required this.authorUsername, required this.authorDisplayName, this.authorAvatarUrl, required this.postType, this.title, required this.content, required this.status, this.isPinned = false, final  List<String> mediaUrls = const [], final  List<String> hashtags = const [], final  List<VoteOption>? voteOptions, final  Map<String, int>? voteCounts, this.totalVotes, this.userVotedOptionId, required this.createdAt, this.updatedAt, this.likeCount = 0, this.isLikedByCurrentUser = false}): _mediaUrls = mediaUrls,_hashtags = hashtags,_voteOptions = voteOptions,_voteCounts = voteCounts;
   factory _Post.fromJson(Map<String, dynamic> json) => _$PostFromJson(json);
 
 @override final  int postId;
@@ -530,8 +799,8 @@ class _Post implements Post {
   return EqualUnmodifiableListView(_hashtags);
 }
 
- final  List<String>? _voteOptions;
-@override List<String>? get voteOptions {
+ final  List<VoteOption>? _voteOptions;
+@override List<VoteOption>? get voteOptions {
   final value = _voteOptions;
   if (value == null) return null;
   if (_voteOptions is EqualUnmodifiableListView) return _voteOptions;
@@ -588,7 +857,7 @@ abstract mixin class _$PostCopyWith<$Res> implements $PostCopyWith<$Res> {
   factory _$PostCopyWith(_Post value, $Res Function(_Post) _then) = __$PostCopyWithImpl;
 @override @useResult
 $Res call({
- int postId, int fanHubId, String fanHubName, String fanHubSubdomain, int authorId, String authorUsername, String authorDisplayName, String? authorAvatarUrl, PostType postType, String? title, String content, PostStatus status, bool isPinned, List<String> mediaUrls, List<String> hashtags, List<String>? voteOptions, Map<String, int>? voteCounts, int? totalVotes, int? userVotedOptionId, DateTime createdAt, DateTime? updatedAt, int likeCount, bool isLikedByCurrentUser
+ int postId, int fanHubId, String fanHubName, String fanHubSubdomain, int authorId, String authorUsername, String authorDisplayName, String? authorAvatarUrl, PostType postType, String? title, String content, PostStatus status, bool isPinned, List<String> mediaUrls, List<String> hashtags, List<VoteOption>? voteOptions, Map<String, int>? voteCounts, int? totalVotes, int? userVotedOptionId, DateTime createdAt, DateTime? updatedAt, int likeCount, bool isLikedByCurrentUser
 });
 
 
@@ -623,7 +892,7 @@ as PostStatus,isPinned: null == isPinned ? _self.isPinned : isPinned // ignore: 
 as bool,mediaUrls: null == mediaUrls ? _self._mediaUrls : mediaUrls // ignore: cast_nullable_to_non_nullable
 as List<String>,hashtags: null == hashtags ? _self._hashtags : hashtags // ignore: cast_nullable_to_non_nullable
 as List<String>,voteOptions: freezed == voteOptions ? _self._voteOptions : voteOptions // ignore: cast_nullable_to_non_nullable
-as List<String>?,voteCounts: freezed == voteCounts ? _self._voteCounts : voteCounts // ignore: cast_nullable_to_non_nullable
+as List<VoteOption>?,voteCounts: freezed == voteCounts ? _self._voteCounts : voteCounts // ignore: cast_nullable_to_non_nullable
 as Map<String, int>?,totalVotes: freezed == totalVotes ? _self.totalVotes : totalVotes // ignore: cast_nullable_to_non_nullable
 as int?,userVotedOptionId: freezed == userVotedOptionId ? _self.userVotedOptionId : userVotedOptionId // ignore: cast_nullable_to_non_nullable
 as int?,createdAt: null == createdAt ? _self.createdAt : createdAt // ignore: cast_nullable_to_non_nullable
@@ -639,42 +908,42 @@ as bool,
 
 
 /// @nodoc
-mixin _$PostListResponse {
+mixin _$PostModeration {
 
- bool get success; String get message; List<Post> get data;
-/// Create a copy of PostListResponse
+ int get postId; int get fanHubId; String get fanHubName; String get fanHubSubdomain; int get authorId; String get authorUsername; String get authorDisplayName; String? get authorAvatarUrl; PostType get postType; String? get title; String get content; PostStatus get status; bool get isPinned; List<String> get media; List<String> get hashtags; List<VoteOption>? get voteOptions; Map<String, int>? get voteCounts; int? get totalVotes; int? get userVotedOptionId; DateTime get createdAt; DateTime? get updatedAt; int get likeCount; bool get isLikedByCurrentUser; AiStatus get aiValidationStatus; String? get aiValidationComment;
+/// Create a copy of PostModeration
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
 @pragma('vm:prefer-inline')
-$PostListResponseCopyWith<PostListResponse> get copyWith => _$PostListResponseCopyWithImpl<PostListResponse>(this as PostListResponse, _$identity);
+$PostModerationCopyWith<PostModeration> get copyWith => _$PostModerationCopyWithImpl<PostModeration>(this as PostModeration, _$identity);
 
-  /// Serializes this PostListResponse to a JSON map.
+  /// Serializes this PostModeration to a JSON map.
   Map<String, dynamic> toJson();
 
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is PostListResponse&&(identical(other.success, success) || other.success == success)&&(identical(other.message, message) || other.message == message)&&const DeepCollectionEquality().equals(other.data, data));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is PostModeration&&(identical(other.postId, postId) || other.postId == postId)&&(identical(other.fanHubId, fanHubId) || other.fanHubId == fanHubId)&&(identical(other.fanHubName, fanHubName) || other.fanHubName == fanHubName)&&(identical(other.fanHubSubdomain, fanHubSubdomain) || other.fanHubSubdomain == fanHubSubdomain)&&(identical(other.authorId, authorId) || other.authorId == authorId)&&(identical(other.authorUsername, authorUsername) || other.authorUsername == authorUsername)&&(identical(other.authorDisplayName, authorDisplayName) || other.authorDisplayName == authorDisplayName)&&(identical(other.authorAvatarUrl, authorAvatarUrl) || other.authorAvatarUrl == authorAvatarUrl)&&(identical(other.postType, postType) || other.postType == postType)&&(identical(other.title, title) || other.title == title)&&(identical(other.content, content) || other.content == content)&&(identical(other.status, status) || other.status == status)&&(identical(other.isPinned, isPinned) || other.isPinned == isPinned)&&const DeepCollectionEquality().equals(other.media, media)&&const DeepCollectionEquality().equals(other.hashtags, hashtags)&&const DeepCollectionEquality().equals(other.voteOptions, voteOptions)&&const DeepCollectionEquality().equals(other.voteCounts, voteCounts)&&(identical(other.totalVotes, totalVotes) || other.totalVotes == totalVotes)&&(identical(other.userVotedOptionId, userVotedOptionId) || other.userVotedOptionId == userVotedOptionId)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt)&&(identical(other.updatedAt, updatedAt) || other.updatedAt == updatedAt)&&(identical(other.likeCount, likeCount) || other.likeCount == likeCount)&&(identical(other.isLikedByCurrentUser, isLikedByCurrentUser) || other.isLikedByCurrentUser == isLikedByCurrentUser)&&(identical(other.aiValidationStatus, aiValidationStatus) || other.aiValidationStatus == aiValidationStatus)&&(identical(other.aiValidationComment, aiValidationComment) || other.aiValidationComment == aiValidationComment));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,success,message,const DeepCollectionEquality().hash(data));
+int get hashCode => Object.hashAll([runtimeType,postId,fanHubId,fanHubName,fanHubSubdomain,authorId,authorUsername,authorDisplayName,authorAvatarUrl,postType,title,content,status,isPinned,const DeepCollectionEquality().hash(media),const DeepCollectionEquality().hash(hashtags),const DeepCollectionEquality().hash(voteOptions),const DeepCollectionEquality().hash(voteCounts),totalVotes,userVotedOptionId,createdAt,updatedAt,likeCount,isLikedByCurrentUser,aiValidationStatus,aiValidationComment]);
 
 @override
 String toString() {
-  return 'PostListResponse(success: $success, message: $message, data: $data)';
+  return 'PostModeration(postId: $postId, fanHubId: $fanHubId, fanHubName: $fanHubName, fanHubSubdomain: $fanHubSubdomain, authorId: $authorId, authorUsername: $authorUsername, authorDisplayName: $authorDisplayName, authorAvatarUrl: $authorAvatarUrl, postType: $postType, title: $title, content: $content, status: $status, isPinned: $isPinned, media: $media, hashtags: $hashtags, voteOptions: $voteOptions, voteCounts: $voteCounts, totalVotes: $totalVotes, userVotedOptionId: $userVotedOptionId, createdAt: $createdAt, updatedAt: $updatedAt, likeCount: $likeCount, isLikedByCurrentUser: $isLikedByCurrentUser, aiValidationStatus: $aiValidationStatus, aiValidationComment: $aiValidationComment)';
 }
 
 
 }
 
 /// @nodoc
-abstract mixin class $PostListResponseCopyWith<$Res>  {
-  factory $PostListResponseCopyWith(PostListResponse value, $Res Function(PostListResponse) _then) = _$PostListResponseCopyWithImpl;
+abstract mixin class $PostModerationCopyWith<$Res>  {
+  factory $PostModerationCopyWith(PostModeration value, $Res Function(PostModeration) _then) = _$PostModerationCopyWithImpl;
 @useResult
 $Res call({
- bool success, String message, List<Post> data
+ int postId, int fanHubId, String fanHubName, String fanHubSubdomain, int authorId, String authorUsername, String authorDisplayName, String? authorAvatarUrl, PostType postType, String? title, String content, PostStatus status, bool isPinned, List<String> media, List<String> hashtags, List<VoteOption>? voteOptions, Map<String, int>? voteCounts, int? totalVotes, int? userVotedOptionId, DateTime createdAt, DateTime? updatedAt, int likeCount, bool isLikedByCurrentUser, AiStatus aiValidationStatus, String? aiValidationComment
 });
 
 
@@ -682,29 +951,51 @@ $Res call({
 
 }
 /// @nodoc
-class _$PostListResponseCopyWithImpl<$Res>
-    implements $PostListResponseCopyWith<$Res> {
-  _$PostListResponseCopyWithImpl(this._self, this._then);
+class _$PostModerationCopyWithImpl<$Res>
+    implements $PostModerationCopyWith<$Res> {
+  _$PostModerationCopyWithImpl(this._self, this._then);
 
-  final PostListResponse _self;
-  final $Res Function(PostListResponse) _then;
+  final PostModeration _self;
+  final $Res Function(PostModeration) _then;
 
-/// Create a copy of PostListResponse
+/// Create a copy of PostModeration
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? success = null,Object? message = null,Object? data = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? postId = null,Object? fanHubId = null,Object? fanHubName = null,Object? fanHubSubdomain = null,Object? authorId = null,Object? authorUsername = null,Object? authorDisplayName = null,Object? authorAvatarUrl = freezed,Object? postType = null,Object? title = freezed,Object? content = null,Object? status = null,Object? isPinned = null,Object? media = null,Object? hashtags = null,Object? voteOptions = freezed,Object? voteCounts = freezed,Object? totalVotes = freezed,Object? userVotedOptionId = freezed,Object? createdAt = null,Object? updatedAt = freezed,Object? likeCount = null,Object? isLikedByCurrentUser = null,Object? aiValidationStatus = null,Object? aiValidationComment = freezed,}) {
   return _then(_self.copyWith(
-success: null == success ? _self.success : success // ignore: cast_nullable_to_non_nullable
-as bool,message: null == message ? _self.message : message // ignore: cast_nullable_to_non_nullable
-as String,data: null == data ? _self.data : data // ignore: cast_nullable_to_non_nullable
-as List<Post>,
+postId: null == postId ? _self.postId : postId // ignore: cast_nullable_to_non_nullable
+as int,fanHubId: null == fanHubId ? _self.fanHubId : fanHubId // ignore: cast_nullable_to_non_nullable
+as int,fanHubName: null == fanHubName ? _self.fanHubName : fanHubName // ignore: cast_nullable_to_non_nullable
+as String,fanHubSubdomain: null == fanHubSubdomain ? _self.fanHubSubdomain : fanHubSubdomain // ignore: cast_nullable_to_non_nullable
+as String,authorId: null == authorId ? _self.authorId : authorId // ignore: cast_nullable_to_non_nullable
+as int,authorUsername: null == authorUsername ? _self.authorUsername : authorUsername // ignore: cast_nullable_to_non_nullable
+as String,authorDisplayName: null == authorDisplayName ? _self.authorDisplayName : authorDisplayName // ignore: cast_nullable_to_non_nullable
+as String,authorAvatarUrl: freezed == authorAvatarUrl ? _self.authorAvatarUrl : authorAvatarUrl // ignore: cast_nullable_to_non_nullable
+as String?,postType: null == postType ? _self.postType : postType // ignore: cast_nullable_to_non_nullable
+as PostType,title: freezed == title ? _self.title : title // ignore: cast_nullable_to_non_nullable
+as String?,content: null == content ? _self.content : content // ignore: cast_nullable_to_non_nullable
+as String,status: null == status ? _self.status : status // ignore: cast_nullable_to_non_nullable
+as PostStatus,isPinned: null == isPinned ? _self.isPinned : isPinned // ignore: cast_nullable_to_non_nullable
+as bool,media: null == media ? _self.media : media // ignore: cast_nullable_to_non_nullable
+as List<String>,hashtags: null == hashtags ? _self.hashtags : hashtags // ignore: cast_nullable_to_non_nullable
+as List<String>,voteOptions: freezed == voteOptions ? _self.voteOptions : voteOptions // ignore: cast_nullable_to_non_nullable
+as List<VoteOption>?,voteCounts: freezed == voteCounts ? _self.voteCounts : voteCounts // ignore: cast_nullable_to_non_nullable
+as Map<String, int>?,totalVotes: freezed == totalVotes ? _self.totalVotes : totalVotes // ignore: cast_nullable_to_non_nullable
+as int?,userVotedOptionId: freezed == userVotedOptionId ? _self.userVotedOptionId : userVotedOptionId // ignore: cast_nullable_to_non_nullable
+as int?,createdAt: null == createdAt ? _self.createdAt : createdAt // ignore: cast_nullable_to_non_nullable
+as DateTime,updatedAt: freezed == updatedAt ? _self.updatedAt : updatedAt // ignore: cast_nullable_to_non_nullable
+as DateTime?,likeCount: null == likeCount ? _self.likeCount : likeCount // ignore: cast_nullable_to_non_nullable
+as int,isLikedByCurrentUser: null == isLikedByCurrentUser ? _self.isLikedByCurrentUser : isLikedByCurrentUser // ignore: cast_nullable_to_non_nullable
+as bool,aiValidationStatus: null == aiValidationStatus ? _self.aiValidationStatus : aiValidationStatus // ignore: cast_nullable_to_non_nullable
+as AiStatus,aiValidationComment: freezed == aiValidationComment ? _self.aiValidationComment : aiValidationComment // ignore: cast_nullable_to_non_nullable
+as String?,
   ));
 }
 
 }
 
 
-/// Adds pattern-matching-related methods to [PostListResponse].
-extension PostListResponsePatterns on PostListResponse {
+/// Adds pattern-matching-related methods to [PostModeration].
+extension PostModerationPatterns on PostModeration {
 /// A variant of `map` that fallback to returning `orElse`.
 ///
 /// It is equivalent to doing:
@@ -717,10 +1008,10 @@ extension PostListResponsePatterns on PostListResponse {
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeMap<TResult extends Object?>(TResult Function( _PostListResponse value)?  $default,{required TResult orElse(),}){
+@optionalTypeArgs TResult maybeMap<TResult extends Object?>(TResult Function( _PostModeration value)?  $default,{required TResult orElse(),}){
 final _that = this;
 switch (_that) {
-case _PostListResponse() when $default != null:
+case _PostModeration() when $default != null:
 return $default(_that);case _:
   return orElse();
 
@@ -739,10 +1030,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult map<TResult extends Object?>(TResult Function( _PostListResponse value)  $default,){
+@optionalTypeArgs TResult map<TResult extends Object?>(TResult Function( _PostModeration value)  $default,){
 final _that = this;
 switch (_that) {
-case _PostListResponse():
+case _PostModeration():
 return $default(_that);case _:
   throw StateError('Unexpected subclass');
 
@@ -760,10 +1051,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>(TResult? Function( _PostListResponse value)?  $default,){
+@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>(TResult? Function( _PostModeration value)?  $default,){
 final _that = this;
 switch (_that) {
-case _PostListResponse() when $default != null:
+case _PostModeration() when $default != null:
 return $default(_that);case _:
   return null;
 
@@ -781,10 +1072,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( bool success,  String message,  List<Post> data)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( int postId,  int fanHubId,  String fanHubName,  String fanHubSubdomain,  int authorId,  String authorUsername,  String authorDisplayName,  String? authorAvatarUrl,  PostType postType,  String? title,  String content,  PostStatus status,  bool isPinned,  List<String> media,  List<String> hashtags,  List<VoteOption>? voteOptions,  Map<String, int>? voteCounts,  int? totalVotes,  int? userVotedOptionId,  DateTime createdAt,  DateTime? updatedAt,  int likeCount,  bool isLikedByCurrentUser,  AiStatus aiValidationStatus,  String? aiValidationComment)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
-case _PostListResponse() when $default != null:
-return $default(_that.success,_that.message,_that.data);case _:
+case _PostModeration() when $default != null:
+return $default(_that.postId,_that.fanHubId,_that.fanHubName,_that.fanHubSubdomain,_that.authorId,_that.authorUsername,_that.authorDisplayName,_that.authorAvatarUrl,_that.postType,_that.title,_that.content,_that.status,_that.isPinned,_that.media,_that.hashtags,_that.voteOptions,_that.voteCounts,_that.totalVotes,_that.userVotedOptionId,_that.createdAt,_that.updatedAt,_that.likeCount,_that.isLikedByCurrentUser,_that.aiValidationStatus,_that.aiValidationComment);case _:
   return orElse();
 
 }
@@ -802,10 +1093,10 @@ return $default(_that.success,_that.message,_that.data);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( bool success,  String message,  List<Post> data)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( int postId,  int fanHubId,  String fanHubName,  String fanHubSubdomain,  int authorId,  String authorUsername,  String authorDisplayName,  String? authorAvatarUrl,  PostType postType,  String? title,  String content,  PostStatus status,  bool isPinned,  List<String> media,  List<String> hashtags,  List<VoteOption>? voteOptions,  Map<String, int>? voteCounts,  int? totalVotes,  int? userVotedOptionId,  DateTime createdAt,  DateTime? updatedAt,  int likeCount,  bool isLikedByCurrentUser,  AiStatus aiValidationStatus,  String? aiValidationComment)  $default,) {final _that = this;
 switch (_that) {
-case _PostListResponse():
-return $default(_that.success,_that.message,_that.data);case _:
+case _PostModeration():
+return $default(_that.postId,_that.fanHubId,_that.fanHubName,_that.fanHubSubdomain,_that.authorId,_that.authorUsername,_that.authorDisplayName,_that.authorAvatarUrl,_that.postType,_that.title,_that.content,_that.status,_that.isPinned,_that.media,_that.hashtags,_that.voteOptions,_that.voteCounts,_that.totalVotes,_that.userVotedOptionId,_that.createdAt,_that.updatedAt,_that.likeCount,_that.isLikedByCurrentUser,_that.aiValidationStatus,_that.aiValidationComment);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -822,10 +1113,10 @@ return $default(_that.success,_that.message,_that.data);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( bool success,  String message,  List<Post> data)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( int postId,  int fanHubId,  String fanHubName,  String fanHubSubdomain,  int authorId,  String authorUsername,  String authorDisplayName,  String? authorAvatarUrl,  PostType postType,  String? title,  String content,  PostStatus status,  bool isPinned,  List<String> media,  List<String> hashtags,  List<VoteOption>? voteOptions,  Map<String, int>? voteCounts,  int? totalVotes,  int? userVotedOptionId,  DateTime createdAt,  DateTime? updatedAt,  int likeCount,  bool isLikedByCurrentUser,  AiStatus aiValidationStatus,  String? aiValidationComment)?  $default,) {final _that = this;
 switch (_that) {
-case _PostListResponse() when $default != null:
-return $default(_that.success,_that.message,_that.data);case _:
+case _PostModeration() when $default != null:
+return $default(_that.postId,_that.fanHubId,_that.fanHubName,_that.fanHubSubdomain,_that.authorId,_that.authorUsername,_that.authorDisplayName,_that.authorAvatarUrl,_that.postType,_that.title,_that.content,_that.status,_that.isPinned,_that.media,_that.hashtags,_that.voteOptions,_that.voteCounts,_that.totalVotes,_that.userVotedOptionId,_that.createdAt,_that.updatedAt,_that.likeCount,_that.isLikedByCurrentUser,_that.aiValidationStatus,_that.aiValidationComment);case _:
   return null;
 
 }
@@ -836,54 +1127,98 @@ return $default(_that.success,_that.message,_that.data);case _:
 /// @nodoc
 @JsonSerializable()
 
-class _PostListResponse implements PostListResponse {
-  const _PostListResponse({required this.success, required this.message, required final  List<Post> data}): _data = data;
-  factory _PostListResponse.fromJson(Map<String, dynamic> json) => _$PostListResponseFromJson(json);
+class _PostModeration implements PostModeration {
+  const _PostModeration({required this.postId, required this.fanHubId, required this.fanHubName, required this.fanHubSubdomain, required this.authorId, required this.authorUsername, required this.authorDisplayName, this.authorAvatarUrl, required this.postType, this.title, required this.content, required this.status, this.isPinned = false, final  List<String> media = const [], final  List<String> hashtags = const [], final  List<VoteOption>? voteOptions, final  Map<String, int>? voteCounts, this.totalVotes, this.userVotedOptionId, required this.createdAt, this.updatedAt, this.likeCount = 0, this.isLikedByCurrentUser = false, required this.aiValidationStatus, this.aiValidationComment}): _media = media,_hashtags = hashtags,_voteOptions = voteOptions,_voteCounts = voteCounts;
+  factory _PostModeration.fromJson(Map<String, dynamic> json) => _$PostModerationFromJson(json);
 
-@override final  bool success;
-@override final  String message;
- final  List<Post> _data;
-@override List<Post> get data {
-  if (_data is EqualUnmodifiableListView) return _data;
+@override final  int postId;
+@override final  int fanHubId;
+@override final  String fanHubName;
+@override final  String fanHubSubdomain;
+@override final  int authorId;
+@override final  String authorUsername;
+@override final  String authorDisplayName;
+@override final  String? authorAvatarUrl;
+@override final  PostType postType;
+@override final  String? title;
+@override final  String content;
+@override final  PostStatus status;
+@override@JsonKey() final  bool isPinned;
+ final  List<String> _media;
+@override@JsonKey() List<String> get media {
+  if (_media is EqualUnmodifiableListView) return _media;
   // ignore: implicit_dynamic_type
-  return EqualUnmodifiableListView(_data);
+  return EqualUnmodifiableListView(_media);
 }
 
+ final  List<String> _hashtags;
+@override@JsonKey() List<String> get hashtags {
+  if (_hashtags is EqualUnmodifiableListView) return _hashtags;
+  // ignore: implicit_dynamic_type
+  return EqualUnmodifiableListView(_hashtags);
+}
 
-/// Create a copy of PostListResponse
+ final  List<VoteOption>? _voteOptions;
+@override List<VoteOption>? get voteOptions {
+  final value = _voteOptions;
+  if (value == null) return null;
+  if (_voteOptions is EqualUnmodifiableListView) return _voteOptions;
+  // ignore: implicit_dynamic_type
+  return EqualUnmodifiableListView(value);
+}
+
+ final  Map<String, int>? _voteCounts;
+@override Map<String, int>? get voteCounts {
+  final value = _voteCounts;
+  if (value == null) return null;
+  if (_voteCounts is EqualUnmodifiableMapView) return _voteCounts;
+  // ignore: implicit_dynamic_type
+  return EqualUnmodifiableMapView(value);
+}
+
+@override final  int? totalVotes;
+@override final  int? userVotedOptionId;
+@override final  DateTime createdAt;
+@override final  DateTime? updatedAt;
+@override@JsonKey() final  int likeCount;
+@override@JsonKey() final  bool isLikedByCurrentUser;
+@override final  AiStatus aiValidationStatus;
+@override final  String? aiValidationComment;
+
+/// Create a copy of PostModeration
 /// with the given fields replaced by the non-null parameter values.
 @override @JsonKey(includeFromJson: false, includeToJson: false)
 @pragma('vm:prefer-inline')
-_$PostListResponseCopyWith<_PostListResponse> get copyWith => __$PostListResponseCopyWithImpl<_PostListResponse>(this, _$identity);
+_$PostModerationCopyWith<_PostModeration> get copyWith => __$PostModerationCopyWithImpl<_PostModeration>(this, _$identity);
 
 @override
 Map<String, dynamic> toJson() {
-  return _$PostListResponseToJson(this, );
+  return _$PostModerationToJson(this, );
 }
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _PostListResponse&&(identical(other.success, success) || other.success == success)&&(identical(other.message, message) || other.message == message)&&const DeepCollectionEquality().equals(other._data, _data));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _PostModeration&&(identical(other.postId, postId) || other.postId == postId)&&(identical(other.fanHubId, fanHubId) || other.fanHubId == fanHubId)&&(identical(other.fanHubName, fanHubName) || other.fanHubName == fanHubName)&&(identical(other.fanHubSubdomain, fanHubSubdomain) || other.fanHubSubdomain == fanHubSubdomain)&&(identical(other.authorId, authorId) || other.authorId == authorId)&&(identical(other.authorUsername, authorUsername) || other.authorUsername == authorUsername)&&(identical(other.authorDisplayName, authorDisplayName) || other.authorDisplayName == authorDisplayName)&&(identical(other.authorAvatarUrl, authorAvatarUrl) || other.authorAvatarUrl == authorAvatarUrl)&&(identical(other.postType, postType) || other.postType == postType)&&(identical(other.title, title) || other.title == title)&&(identical(other.content, content) || other.content == content)&&(identical(other.status, status) || other.status == status)&&(identical(other.isPinned, isPinned) || other.isPinned == isPinned)&&const DeepCollectionEquality().equals(other._media, _media)&&const DeepCollectionEquality().equals(other._hashtags, _hashtags)&&const DeepCollectionEquality().equals(other._voteOptions, _voteOptions)&&const DeepCollectionEquality().equals(other._voteCounts, _voteCounts)&&(identical(other.totalVotes, totalVotes) || other.totalVotes == totalVotes)&&(identical(other.userVotedOptionId, userVotedOptionId) || other.userVotedOptionId == userVotedOptionId)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt)&&(identical(other.updatedAt, updatedAt) || other.updatedAt == updatedAt)&&(identical(other.likeCount, likeCount) || other.likeCount == likeCount)&&(identical(other.isLikedByCurrentUser, isLikedByCurrentUser) || other.isLikedByCurrentUser == isLikedByCurrentUser)&&(identical(other.aiValidationStatus, aiValidationStatus) || other.aiValidationStatus == aiValidationStatus)&&(identical(other.aiValidationComment, aiValidationComment) || other.aiValidationComment == aiValidationComment));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,success,message,const DeepCollectionEquality().hash(_data));
+int get hashCode => Object.hashAll([runtimeType,postId,fanHubId,fanHubName,fanHubSubdomain,authorId,authorUsername,authorDisplayName,authorAvatarUrl,postType,title,content,status,isPinned,const DeepCollectionEquality().hash(_media),const DeepCollectionEquality().hash(_hashtags),const DeepCollectionEquality().hash(_voteOptions),const DeepCollectionEquality().hash(_voteCounts),totalVotes,userVotedOptionId,createdAt,updatedAt,likeCount,isLikedByCurrentUser,aiValidationStatus,aiValidationComment]);
 
 @override
 String toString() {
-  return 'PostListResponse(success: $success, message: $message, data: $data)';
+  return 'PostModeration(postId: $postId, fanHubId: $fanHubId, fanHubName: $fanHubName, fanHubSubdomain: $fanHubSubdomain, authorId: $authorId, authorUsername: $authorUsername, authorDisplayName: $authorDisplayName, authorAvatarUrl: $authorAvatarUrl, postType: $postType, title: $title, content: $content, status: $status, isPinned: $isPinned, media: $media, hashtags: $hashtags, voteOptions: $voteOptions, voteCounts: $voteCounts, totalVotes: $totalVotes, userVotedOptionId: $userVotedOptionId, createdAt: $createdAt, updatedAt: $updatedAt, likeCount: $likeCount, isLikedByCurrentUser: $isLikedByCurrentUser, aiValidationStatus: $aiValidationStatus, aiValidationComment: $aiValidationComment)';
 }
 
 
 }
 
 /// @nodoc
-abstract mixin class _$PostListResponseCopyWith<$Res> implements $PostListResponseCopyWith<$Res> {
-  factory _$PostListResponseCopyWith(_PostListResponse value, $Res Function(_PostListResponse) _then) = __$PostListResponseCopyWithImpl;
+abstract mixin class _$PostModerationCopyWith<$Res> implements $PostModerationCopyWith<$Res> {
+  factory _$PostModerationCopyWith(_PostModeration value, $Res Function(_PostModeration) _then) = __$PostModerationCopyWithImpl;
 @override @useResult
 $Res call({
- bool success, String message, List<Post> data
+ int postId, int fanHubId, String fanHubName, String fanHubSubdomain, int authorId, String authorUsername, String authorDisplayName, String? authorAvatarUrl, PostType postType, String? title, String content, PostStatus status, bool isPinned, List<String> media, List<String> hashtags, List<VoteOption>? voteOptions, Map<String, int>? voteCounts, int? totalVotes, int? userVotedOptionId, DateTime createdAt, DateTime? updatedAt, int likeCount, bool isLikedByCurrentUser, AiStatus aiValidationStatus, String? aiValidationComment
 });
 
 
@@ -891,21 +1226,43 @@ $Res call({
 
 }
 /// @nodoc
-class __$PostListResponseCopyWithImpl<$Res>
-    implements _$PostListResponseCopyWith<$Res> {
-  __$PostListResponseCopyWithImpl(this._self, this._then);
+class __$PostModerationCopyWithImpl<$Res>
+    implements _$PostModerationCopyWith<$Res> {
+  __$PostModerationCopyWithImpl(this._self, this._then);
 
-  final _PostListResponse _self;
-  final $Res Function(_PostListResponse) _then;
+  final _PostModeration _self;
+  final $Res Function(_PostModeration) _then;
 
-/// Create a copy of PostListResponse
+/// Create a copy of PostModeration
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? success = null,Object? message = null,Object? data = null,}) {
-  return _then(_PostListResponse(
-success: null == success ? _self.success : success // ignore: cast_nullable_to_non_nullable
-as bool,message: null == message ? _self.message : message // ignore: cast_nullable_to_non_nullable
-as String,data: null == data ? _self._data : data // ignore: cast_nullable_to_non_nullable
-as List<Post>,
+@override @pragma('vm:prefer-inline') $Res call({Object? postId = null,Object? fanHubId = null,Object? fanHubName = null,Object? fanHubSubdomain = null,Object? authorId = null,Object? authorUsername = null,Object? authorDisplayName = null,Object? authorAvatarUrl = freezed,Object? postType = null,Object? title = freezed,Object? content = null,Object? status = null,Object? isPinned = null,Object? media = null,Object? hashtags = null,Object? voteOptions = freezed,Object? voteCounts = freezed,Object? totalVotes = freezed,Object? userVotedOptionId = freezed,Object? createdAt = null,Object? updatedAt = freezed,Object? likeCount = null,Object? isLikedByCurrentUser = null,Object? aiValidationStatus = null,Object? aiValidationComment = freezed,}) {
+  return _then(_PostModeration(
+postId: null == postId ? _self.postId : postId // ignore: cast_nullable_to_non_nullable
+as int,fanHubId: null == fanHubId ? _self.fanHubId : fanHubId // ignore: cast_nullable_to_non_nullable
+as int,fanHubName: null == fanHubName ? _self.fanHubName : fanHubName // ignore: cast_nullable_to_non_nullable
+as String,fanHubSubdomain: null == fanHubSubdomain ? _self.fanHubSubdomain : fanHubSubdomain // ignore: cast_nullable_to_non_nullable
+as String,authorId: null == authorId ? _self.authorId : authorId // ignore: cast_nullable_to_non_nullable
+as int,authorUsername: null == authorUsername ? _self.authorUsername : authorUsername // ignore: cast_nullable_to_non_nullable
+as String,authorDisplayName: null == authorDisplayName ? _self.authorDisplayName : authorDisplayName // ignore: cast_nullable_to_non_nullable
+as String,authorAvatarUrl: freezed == authorAvatarUrl ? _self.authorAvatarUrl : authorAvatarUrl // ignore: cast_nullable_to_non_nullable
+as String?,postType: null == postType ? _self.postType : postType // ignore: cast_nullable_to_non_nullable
+as PostType,title: freezed == title ? _self.title : title // ignore: cast_nullable_to_non_nullable
+as String?,content: null == content ? _self.content : content // ignore: cast_nullable_to_non_nullable
+as String,status: null == status ? _self.status : status // ignore: cast_nullable_to_non_nullable
+as PostStatus,isPinned: null == isPinned ? _self.isPinned : isPinned // ignore: cast_nullable_to_non_nullable
+as bool,media: null == media ? _self._media : media // ignore: cast_nullable_to_non_nullable
+as List<String>,hashtags: null == hashtags ? _self._hashtags : hashtags // ignore: cast_nullable_to_non_nullable
+as List<String>,voteOptions: freezed == voteOptions ? _self._voteOptions : voteOptions // ignore: cast_nullable_to_non_nullable
+as List<VoteOption>?,voteCounts: freezed == voteCounts ? _self._voteCounts : voteCounts // ignore: cast_nullable_to_non_nullable
+as Map<String, int>?,totalVotes: freezed == totalVotes ? _self.totalVotes : totalVotes // ignore: cast_nullable_to_non_nullable
+as int?,userVotedOptionId: freezed == userVotedOptionId ? _self.userVotedOptionId : userVotedOptionId // ignore: cast_nullable_to_non_nullable
+as int?,createdAt: null == createdAt ? _self.createdAt : createdAt // ignore: cast_nullable_to_non_nullable
+as DateTime,updatedAt: freezed == updatedAt ? _self.updatedAt : updatedAt // ignore: cast_nullable_to_non_nullable
+as DateTime?,likeCount: null == likeCount ? _self.likeCount : likeCount // ignore: cast_nullable_to_non_nullable
+as int,isLikedByCurrentUser: null == isLikedByCurrentUser ? _self.isLikedByCurrentUser : isLikedByCurrentUser // ignore: cast_nullable_to_non_nullable
+as bool,aiValidationStatus: null == aiValidationStatus ? _self.aiValidationStatus : aiValidationStatus // ignore: cast_nullable_to_non_nullable
+as AiStatus,aiValidationComment: freezed == aiValidationComment ? _self.aiValidationComment : aiValidationComment // ignore: cast_nullable_to_non_nullable
+as String?,
   ));
 }
 

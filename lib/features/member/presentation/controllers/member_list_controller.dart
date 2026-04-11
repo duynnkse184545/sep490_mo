@@ -54,7 +54,7 @@ class MemberListController extends _$MemberListController {
           fanHubId: fanHubId,
           pageNo: _currentPage,
           pageSize: _pageSize,
-          sortBy: 'joinedAt ',
+          sortBy: 'joinedAt',
           username: _searchUsername,
         )
         .run();

@@ -29,18 +29,41 @@ enum PostStatus {
   rejected,
 }
 
+enum AiStatus{
+  @JsonValue('PENDING')
+  pending,
+  @JsonValue('AI_UNSAFE')
+  aiUnsafe,
+  @JsonValue('AI_SAFE')
+  aiSafe,
+}
+
 /// Vote option for poll posts
 @freezed
 abstract class VoteOption with _$VoteOption {
   const factory VoteOption({
-    required int optionId,
+    required int id,
     required String optionText,
-    @Default(0) int voteCount,
+    // @Default(0) int voteCount,
   }) = _VoteOption;
 
   factory VoteOption.fromJson(Map<String, dynamic> json) =>
       _$VoteOptionFromJson(json);
 }
+
+@freezed
+abstract class Media with _$Media {
+  const factory Media({
+    required int mediaId,
+    required String mediaUrl,
+    required AiStatus aiValidationStatus,
+    String? aiValidationComment
+  }) = _Media;
+
+  factory Media.fromJson(Map<String, dynamic> json) =>
+      _$MediaFromJson(json);
+}
+
 
 /// Post data model
 @freezed
@@ -61,7 +84,7 @@ abstract class Post with _$Post {
     @Default(false) bool isPinned,
     @Default([]) List<String> mediaUrls,
     @Default([]) List<String> hashtags,
-    List<String>? voteOptions,
+    List<VoteOption>? voteOptions,
     Map<String, int>? voteCounts,
     int? totalVotes,
     int? userVotedOptionId,
@@ -74,6 +97,41 @@ abstract class Post with _$Post {
   factory Post.fromJson(Map<String, dynamic> json) =>
       _$PostFromJson(json);
 }
+
+@freezed
+abstract class PostModeration with _$PostModeration {
+  const factory PostModeration({
+    required int postId,
+    required int fanHubId,
+    required String fanHubName,
+    required String fanHubSubdomain,
+    required int authorId,
+    required String authorUsername,
+    required String authorDisplayName,
+    String? authorAvatarUrl,
+    required PostType postType,
+    String? title,
+    required String content,
+    required PostStatus status,
+    @Default(false) bool isPinned,
+    @Default([]) List<String> media,
+    @Default([]) List<String> hashtags,
+    List<VoteOption>? voteOptions,
+    Map<String, int>? voteCounts,
+    int? totalVotes,
+    int? userVotedOptionId,
+    required DateTime createdAt,
+    DateTime? updatedAt,
+    @Default(0) int likeCount,
+    @Default(false) bool isLikedByCurrentUser,
+    required AiStatus aiValidationStatus,
+    String? aiValidationComment
+  }) = _PostModeration;
+
+  factory PostModeration.fromJson(Map<String, dynamic> json) =>
+      _$PostModerationFromJson(json);
+}
+
 
 /// Post list response wrapper
 // @freezed
@@ -89,18 +147,6 @@ abstract class Post with _$Post {
 //   factory PostListResponse.fromJson(Map<String, dynamic> json) =>
 //       _$PostListResponseFromJson(json);
 // }
-
-@freezed
-abstract class PostListResponse with _$PostListResponse {
-  const factory PostListResponse({
-    required bool success,
-    required String message,
-    required List<Post> data,  // ← field name matches JSON exactly
-  }) = _PostListResponse;
-
-  factory PostListResponse.fromJson(Map<String, dynamic> json) =>
-      _$PostListResponseFromJson(json);
-}
 
 @freezed
 abstract class CreatePostRequest with _$CreatePostRequest {

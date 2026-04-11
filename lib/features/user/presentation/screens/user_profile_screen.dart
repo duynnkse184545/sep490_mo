@@ -7,18 +7,12 @@ import 'package:sep490_mo/features/user/presentation/controllers/user_profile_co
 import 'package:sep490_mo/features/user/presentation/states/user_profile_state.dart';
 
 class UserProfileScreen extends HookConsumerWidget {
-  final int userId;
-
-  const UserProfileScreen({super.key, required this.userId});
+  const UserProfileScreen({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final profileAsync = ref.watch(
-      userProfileControllerProvider(userId: userId),
-    );
-    final controller = ref.read(
-      userProfileControllerProvider(userId: userId).notifier,
-    );
+    final profileAsync = ref.watch(userProfileControllerProvider);
+    final controller = ref.read(userProfileControllerProvider.notifier);
 
     return Scaffold(
       appBar: AppBar(
@@ -52,10 +46,9 @@ class UserProfileScreen extends HookConsumerWidget {
                           gradient: LinearGradient(
                             colors: [
                               Theme.of(context).colorScheme.primary,
-                              Theme.of(context)
-                                  .colorScheme
-                                  .primary
-                                  .withValues(alpha: 0.6),
+                              Theme.of(
+                                context,
+                              ).colorScheme.primary.withValues(alpha: 0.6),
                             ],
                             begin: Alignment.topLeft,
                             end: Alignment.bottomRight,
@@ -87,8 +80,9 @@ class UserProfileScreen extends HookConsumerWidget {
                           ),
                           child: CircleAvatar(
                             radius: 50,
-                            backgroundColor:
-                                Theme.of(context).colorScheme.primaryContainer,
+                            backgroundColor: Theme.of(
+                              context,
+                            ).colorScheme.primaryContainer,
                             backgroundImage: user.avatarUrl != null
                                 ? NetworkImage(user.avatarUrl!)
                                 : null,
@@ -119,21 +113,15 @@ class UserProfileScreen extends HookConsumerWidget {
                           // Display Name
                           Text(
                             user.displayName ?? 'Unknown',
-                            style: Theme.of(context)
-                                .textTheme
-                                .headlineMedium
-                                ?.copyWith(
-                                  fontWeight: FontWeight.bold,
-                                ),
+                            style: Theme.of(context).textTheme.headlineMedium
+                                ?.copyWith(fontWeight: FontWeight.bold),
                           ),
                           const SizedBox(height: 4),
 
                           // Username
                           Text(
                             '@${user.username}',
-                            style: Theme.of(context)
-                                .textTheme
-                                .bodyMedium
+                            style: Theme.of(context).textTheme.bodyMedium
                                 ?.copyWith(
                                   color: Theme.of(context).colorScheme.primary,
                                 ),
@@ -143,13 +131,9 @@ class UserProfileScreen extends HookConsumerWidget {
                           // Email
                           Text(
                             user.email,
-                            style: Theme.of(context)
-                                .textTheme
-                                .bodyMedium
+                            style: Theme.of(context).textTheme.bodyMedium
                                 ?.copyWith(
-                                  color: Theme.of(context)
-                                      .colorScheme
-                                      .onSurface
+                                  color: Theme.of(context).colorScheme.onSurface
                                       .withValues(alpha: 0.6),
                                 ),
                           ),
@@ -158,10 +142,7 @@ class UserProfileScreen extends HookConsumerWidget {
                           // Role Badge
                           Row(
                             children: [
-                              _buildRoleChip(
-                                role: user.role,
-                                context: context,
-                              ),
+                              _buildRoleChip(role: user.role, context: context),
                               const SizedBox(width: 12),
                               _buildPointsChip(
                                 points: user.points,
@@ -175,19 +156,13 @@ class UserProfileScreen extends HookConsumerWidget {
                           if (user.bio.isNotEmpty) ...[
                             Text(
                               'Bio',
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .titleMedium
-                                  ?.copyWith(
-                                    fontWeight: FontWeight.bold,
-                                  ),
+                              style: Theme.of(context).textTheme.titleMedium
+                                  ?.copyWith(fontWeight: FontWeight.bold),
                             ),
                             const SizedBox(height: 8),
                             Text(
                               user.bio,
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .bodyMedium
+                              style: Theme.of(context).textTheme.bodyMedium
                                   ?.copyWith(
                                     color: Theme.of(context)
                                         .colorScheme
@@ -201,12 +176,8 @@ class UserProfileScreen extends HookConsumerWidget {
                           // Stats Section
                           Text(
                             'Statistics',
-                            style: Theme.of(context)
-                                .textTheme
-                                .titleMedium
-                                ?.copyWith(
-                                  fontWeight: FontWeight.bold,
-                                ),
+                            style: Theme.of(context).textTheme.titleMedium
+                                ?.copyWith(fontWeight: FontWeight.bold),
                           ),
                           const SizedBox(height: 12),
                           Row(
@@ -257,12 +228,8 @@ class UserProfileScreen extends HookConsumerWidget {
                           // Account Info
                           Text(
                             'Account Information',
-                            style: Theme.of(context)
-                                .textTheme
-                                .titleMedium
-                                ?.copyWith(
-                                  fontWeight: FontWeight.bold,
-                                ),
+                            style: Theme.of(context).textTheme.titleMedium
+                                ?.copyWith(fontWeight: FontWeight.bold),
                           ),
                           const SizedBox(height: 12),
                           _buildInfoRow(
@@ -295,10 +262,8 @@ class UserProfileScreen extends HookConsumerWidget {
                 ],
               ),
             ),
-            error: (message) => ErrorBanner(
-              message: message,
-              onRetry: controller.refresh,
-            ),
+            error: (message) =>
+                ErrorBanner(message: message, onRetry: controller.refresh),
           ),
           loading: () => const Loader(),
           error: (error, stackTrace) => ErrorBanner(
@@ -338,10 +303,7 @@ class UserProfileScreen extends HookConsumerWidget {
         children: [
           const Icon(Icons.star, size: 16, color: Colors.amber),
           const SizedBox(width: 4),
-          Text(
-            '$points pts',
-            style: const TextStyle(fontSize: 12),
-          ),
+          Text('$points pts', style: const TextStyle(fontSize: 12)),
         ],
       ),
       backgroundColor: Theme.of(context).colorScheme.secondaryContainer,
@@ -363,28 +325,23 @@ class UserProfileScreen extends HookConsumerWidget {
       ),
       child: Column(
         children: [
-          Icon(
-            icon,
-            size: 28,
-            color: Theme.of(context).colorScheme.primary,
-          ),
+          Icon(icon, size: 28, color: Theme.of(context).colorScheme.primary),
           const SizedBox(height: 8),
           Text(
             value,
             style: Theme.of(context).textTheme.headlineSmall?.copyWith(
-                  fontWeight: FontWeight.bold,
-                  color: Theme.of(context).colorScheme.onSurface,
-                ),
+              fontWeight: FontWeight.bold,
+              color: Theme.of(context).colorScheme.onSurface,
+            ),
           ),
           const SizedBox(height: 4),
           Text(
             label,
             style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                  color: Theme.of(context)
-                      .colorScheme
-                      .onSurface
-                      .withValues(alpha: 0.6),
-                ),
+              color: Theme.of(
+                context,
+              ).colorScheme.onSurface.withValues(alpha: 0.6),
+            ),
           ),
         ],
       ),
@@ -408,18 +365,17 @@ class UserProfileScreen extends HookConsumerWidget {
         Text(
           label,
           style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                color: Theme.of(context)
-                    .colorScheme
-                    .onSurface
-                    .withValues(alpha: 0.6),
-              ),
+            color: Theme.of(
+              context,
+            ).colorScheme.onSurface.withValues(alpha: 0.6),
+          ),
         ),
         const Spacer(),
         Text(
           value,
-          style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                fontWeight: FontWeight.w500,
-              ),
+          style: Theme.of(
+            context,
+          ).textTheme.bodyMedium?.copyWith(fontWeight: FontWeight.w500),
         ),
       ],
     );

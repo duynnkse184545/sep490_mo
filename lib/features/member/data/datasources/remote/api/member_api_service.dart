@@ -31,6 +31,15 @@ abstract class MemberApiService {
   @POST('/fan-hub-member/join/{fanHubId}')
   Future<ApiResponse> joinFanHub(@Path('fanHubId') int fanHubId);
 
+  @POST('/fan-hub-member/leave/{fanHubId}')
+  Future<ApiResponse> leaveFanHub(@Path('fanHubId') int fanHubId);
+
+  @POST('/fan-hub-member/{fanHubId}/kick/{memberId}')
+  Future<ApiResponse> kickMember(
+    @Path('fanHubId') int fanHubId,
+    @Path('memberId') int memberId,
+  );
+
   @POST('/fan-hub-member/set-moderator/{fanHubId}')
   Future<ApiResponse> setModerator(
     @Path('fanHubId') int fanHubId,

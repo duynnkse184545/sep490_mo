@@ -6,12 +6,7 @@ part of 'routes.dart';
 // GoRouterGenerator
 // **************************************************************************
 
-List<RouteBase> get $appRoutes => [
-  $signInRoute,
-  $signUpRoute,
-  $userProfileRoute,
-  $mainShellRoute,
-];
+List<RouteBase> get $appRoutes => [$signInRoute, $signUpRoute, $mainShellRoute];
 
 RouteBase get $signInRoute =>
     GoRouteData.$route(path: '/sign-in', factory: $SignInRoute._fromState);
@@ -59,36 +54,6 @@ mixin $SignUpRoute on GoRouteData {
   void replace(BuildContext context) => context.replace(location);
 }
 
-RouteBase get $userProfileRoute => GoRouteData.$route(
-  path: '/profile/:userId',
-  factory: $UserProfileRoute._fromState,
-);
-
-mixin $UserProfileRoute on GoRouteData {
-  static UserProfileRoute _fromState(GoRouterState state) =>
-      UserProfileRoute(userId: int.parse(state.pathParameters['userId']!));
-
-  UserProfileRoute get _self => this as UserProfileRoute;
-
-  @override
-  String get location => GoRouteData.$location(
-    '/profile/${Uri.encodeComponent(_self.userId.toString())}',
-  );
-
-  @override
-  void go(BuildContext context) => context.go(location);
-
-  @override
-  Future<T?> push<T>(BuildContext context) => context.push<T>(location);
-
-  @override
-  void pushReplacement(BuildContext context) =>
-      context.pushReplacement(location);
-
-  @override
-  void replace(BuildContext context) => context.replace(location);
-}
-
 RouteBase get $mainShellRoute => StatefulShellRouteData.$route(
   factory: $MainShellRouteExtension._fromState,
   branches: [
@@ -108,12 +73,24 @@ RouteBase get $mainShellRoute => StatefulShellRouteData.$route(
               factory: $FanHubDetailRoute._fromState,
               routes: [
                 GoRouteData.$route(
-                  path: 'create/:fanHubId',
+                  path: 'create',
                   factory: $CreatePostRoute._fromState,
+                ),
+                GoRouteData.$route(
+                  path: 'members',
+                  factory: $MemberListRoute._fromState,
                 ),
               ],
             ),
           ],
+        ),
+      ],
+    ),
+    StatefulShellBranchData.$branch(
+      routes: [
+        GoRouteData.$route(
+          path: '/profile',
+          factory: $UserProfileRoute._fromState,
         ),
       ],
     ),
@@ -196,15 +173,65 @@ mixin $FanHubDetailRoute on GoRouteData {
 mixin $CreatePostRoute on GoRouteData {
   static CreatePostRoute _fromState(GoRouterState state) => CreatePostRoute(
     subdomain: state.pathParameters['subdomain']!,
-    fanHubId: int.parse(state.pathParameters['fanHubId']!),
+    fanHubId: int.parse(state.uri.queryParameters['fan-hub-id']!),
   );
 
   CreatePostRoute get _self => this as CreatePostRoute;
 
   @override
   String get location => GoRouteData.$location(
-    '/explore/${Uri.encodeComponent(_self.subdomain)}/create/${Uri.encodeComponent(_self.fanHubId.toString())}',
+    '/explore/${Uri.encodeComponent(_self.subdomain)}/create',
+    queryParams: {'fan-hub-id': _self.fanHubId.toString()},
   );
+
+  @override
+  void go(BuildContext context) => context.go(location);
+
+  @override
+  Future<T?> push<T>(BuildContext context) => context.push<T>(location);
+
+  @override
+  void pushReplacement(BuildContext context) =>
+      context.pushReplacement(location);
+
+  @override
+  void replace(BuildContext context) => context.replace(location);
+}
+
+mixin $MemberListRoute on GoRouteData {
+  static MemberListRoute _fromState(GoRouterState state) => MemberListRoute(
+    subdomain: state.pathParameters['subdomain']!,
+    fanHubId: int.parse(state.uri.queryParameters['fan-hub-id']!),
+  );
+
+  MemberListRoute get _self => this as MemberListRoute;
+
+  @override
+  String get location => GoRouteData.$location(
+    '/explore/${Uri.encodeComponent(_self.subdomain)}/members',
+    queryParams: {'fan-hub-id': _self.fanHubId.toString()},
+  );
+
+  @override
+  void go(BuildContext context) => context.go(location);
+
+  @override
+  Future<T?> push<T>(BuildContext context) => context.push<T>(location);
+
+  @override
+  void pushReplacement(BuildContext context) =>
+      context.pushReplacement(location);
+
+  @override
+  void replace(BuildContext context) => context.replace(location);
+}
+
+mixin $UserProfileRoute on GoRouteData {
+  static UserProfileRoute _fromState(GoRouterState state) =>
+      const UserProfileRoute();
+
+  @override
+  String get location => GoRouteData.$location('/profile');
 
   @override
   void go(BuildContext context) => context.go(location);

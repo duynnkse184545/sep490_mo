@@ -69,3 +69,18 @@ Map<String, dynamic> _$MemberCheckingResponseToJson(
   'isMember': instance.isMember,
   'roleInHub': _$MemberRoleEnumMap[instance.roleInHub]!,
 };
+
+_BanRequest _$BanRequestFromJson(Map<String, dynamic> json) => _BanRequest(
+  fanHubMemberId: (json['fanHubMemberId'] as num).toInt(),
+  reason: json['reason'] as String,
+  banType: json['banType'] as String,
+  bannedUntil: DateTime.parse(json['bannedUntil'] as String),
+);
+
+Map<String, dynamic> _$BanRequestToJson(_BanRequest instance) =>
+    <String, dynamic>{
+      'fanHubMemberId': instance.fanHubMemberId,
+      'reason': instance.reason,
+      'banType': instance.banType,
+      'bannedUntil': instance.bannedUntil.toIso8601String(),
+    };

@@ -31,5 +31,6 @@ UserRepository userRepository(Ref ref) {
   return UserRepositoryImpl(
     remoteDataSource: ref.watch(userRemoteDataSourceProvider),
     localDataSource: ref.watch(userLocalDataSourceProvider),
+    tokenService: ref.watch(tokenServiceProvider),
   );
 }

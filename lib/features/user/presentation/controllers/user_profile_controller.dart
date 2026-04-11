@@ -7,10 +7,10 @@ part 'user_profile_controller.g.dart';
 @riverpod
 class UserProfileController extends _$UserProfileController {
   @override
-  Future<UserProfileState> build({required int userId}) async {
+  Future<UserProfileState> build() async {
     final result = await ref
         .read(userRepositoryProvider)
-        .getCurrentUser(userId)
+        .getCurrentUser()
         .run();
 
     return result.fold(

@@ -20,7 +20,7 @@ class HubSpeedDial extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final memberAsync = ref.watch(memberCheckingProvider(fanHubId: fanHubId));
 
-    final canCreatePost = memberAsync.when(
+    final isMember = memberAsync.when(
       data: (member) => member.isMember,
       error: (error, stack) => false,
       loading: () => false,
@@ -28,13 +28,7 @@ class HubSpeedDial extends HookConsumerWidget {
 
     final actions = [
       // ── going UP ──────────────────────────────
-      if (canCreatePost)
-        (
-          action: _DialAction.createPost,
-          icon: Icons.edit_outlined,
-          label: 'Create Post',
-          goUp: true,
-        ),
+      if(isMember)
       (
         action: _DialAction.members,
         icon: Icons.people_outline,
@@ -47,6 +41,13 @@ class HubSpeedDial extends HookConsumerWidget {
         label: 'Invite',
         goUp: true,
       ),
+      if (isMember)
+        (
+        action: _DialAction.createPost,
+        icon: Icons.edit_outlined,
+        label: 'Create Post',
+        goUp: true,
+        ),
       // ── going LEFT ────────────────────────────
       (
         action: _DialAction.leaderboard,
@@ -74,9 +75,15 @@ class HubSpeedDial extends HookConsumerWidget {
     void handleTap(_DialAction action) {
       switch (action) {
         case _DialAction.createPost:
-          CreatePostRoute(subdomain: subdomain, fanHubId: fanHubId).push(context);
+          CreatePostRoute(
+            subdomain: subdomain,
+            fanHubId: fanHubId,
+          ).push(context);
         case _DialAction.members:
-          break; // MembersRoute
+          MemberListRoute(
+            subdomain: subdomain,
+            fanHubId: fanHubId,
+          ).push(context);
         case _DialAction.invite:
           break; // InviteRoute
         case _DialAction.leaderboard:
@@ -102,6 +109,7 @@ class HubSpeedDial extends HookConsumerWidget {
       itemBuilder: (context, item, i, animation) {
         final isUp = item.goUp;
 
+        // To reverse item order with animation add "upItems.length - 1 -" or reversed.toList() above
         final groupIndex = isUp
             ? upItems.indexWhere((a) => a.action == item.action)
             : leftItems.indexWhere((a) => a.action == item.action);
@@ -116,11 +124,15 @@ class HubSpeedDial extends HookConsumerWidget {
               : Offset(-(groupIndex + 1) * step, 55),
           child: ScaleTransition(
             scale: animation,
-            child: _DialButton(
-              icon: item.icon,
-              label: item.label,
-              showLabelOnLeft: isUp,
-              onTap: () => handleTap(item.action),
+            // child: _DialButton(
+            //   icon: item.icon,
+            //   label: item.label,
+            //   showLabelOnLeft: isUp,
+            //   onTap: () => handleTap(item.action),
+            child: FloatingActionButton.small(
+              heroTag: '${item.label}_speed_dial',
+              onPressed: () => handleTap(item.action),
+              child: Icon(item.icon),
             ),
           ),
         );
@@ -130,46 +142,47 @@ class HubSpeedDial extends HookConsumerWidget {
   }
 }
 
-class _DialButton extends StatelessWidget {
-  final IconData icon;
-  final String label;
-  final bool showLabelOnLeft;
-  final VoidCallback onTap;
-
-  const _DialButton({
-    required this.icon,
-    required this.label,
-    required this.showLabelOnLeft,
-    required this.onTap,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    final fab = FloatingActionButton.small(
-      heroTag: '${label}_speed_dial',
-      onPressed: onTap,
-      child: Icon(icon),
-    );
-
-    // final labelWidget = Material(
-    //   borderRadius: BorderRadius.circular(4),
-    //   color: Theme.of(context).colorScheme.surfaceContainerHighest,
-    //   child: Padding(
-    //     padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-    //     child: Text(label, style: Theme.of(context).textTheme.labelMedium),
-    //   ),
-    // );
-
-    if (showLabelOnLeft) {
-      return Row(
-        mainAxisSize: MainAxisSize.min,
-        children: [fab],
-      );
-    } else {
-      return Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [fab],
-      );
-    }
-  }
-}
+// If label are needed
+// class _DialButton extends StatelessWidget {
+//   final IconData icon;
+//   final String label;
+//   final bool showLabelOnLeft;
+//   final VoidCallback onTap;
+//
+//   const _DialButton({
+//     required this.icon,
+//     required this.label,
+//     required this.showLabelOnLeft,
+//     required this.onTap,
+//   });
+//
+//   @override
+//   Widget build(BuildContext context) {
+//     final fab = FloatingActionButton.small(
+//       heroTag: '${label}_speed_dial',
+//       onPressed: onTap,
+//       child: Icon(icon),
+//     );
+//
+//     final labelWidget = Material(
+//       borderRadius: BorderRadius.circular(4),
+//       color: Theme.of(context).colorScheme.surfaceContainerHighest,
+//       child: Padding(
+//         padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+//         child: Text(label, style: Theme.of(context).textTheme.labelMedium),
+//       ),
+//     );
+//
+//     if (showLabelOnLeft) {
+//       return Row(
+//         mainAxisSize: MainAxisSize.min,
+//         children: [fab],
+//       );
+//     } else {
+//       return Column(
+//         mainAxisSize: MainAxisSize.min,
+//         children: [fab],
+//       );
+//     }
+//   }
+// }

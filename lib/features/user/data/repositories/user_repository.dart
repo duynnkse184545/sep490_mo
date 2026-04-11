@@ -10,7 +10,7 @@ abstract class UserRepository {
   /// - Falls back to stale cache if remote fails (offline support)
   ///
   /// [forceRefresh] - If true, bypasses cache and fetches from remote
-  TaskResult<User> getCurrentUser(int userId, {bool forceRefresh = false});
+  TaskResult<User> getCurrentUser({bool forceRefresh = false});
 
   /// Update user profile
   ///

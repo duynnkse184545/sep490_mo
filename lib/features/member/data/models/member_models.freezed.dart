@@ -582,4 +582,276 @@ as MemberRole,
 
 }
 
+
+/// @nodoc
+mixin _$BanRequest {
+
+ int get fanHubMemberId; String get reason; String get banType; DateTime get bannedUntil;
+/// Create a copy of BanRequest
+/// with the given fields replaced by the non-null parameter values.
+@JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+$BanRequestCopyWith<BanRequest> get copyWith => _$BanRequestCopyWithImpl<BanRequest>(this as BanRequest, _$identity);
+
+  /// Serializes this BanRequest to a JSON map.
+  Map<String, dynamic> toJson();
+
+
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is BanRequest&&(identical(other.fanHubMemberId, fanHubMemberId) || other.fanHubMemberId == fanHubMemberId)&&(identical(other.reason, reason) || other.reason == reason)&&(identical(other.banType, banType) || other.banType == banType)&&(identical(other.bannedUntil, bannedUntil) || other.bannedUntil == bannedUntil));
+}
+
+@JsonKey(includeFromJson: false, includeToJson: false)
+@override
+int get hashCode => Object.hash(runtimeType,fanHubMemberId,reason,banType,bannedUntil);
+
+@override
+String toString() {
+  return 'BanRequest(fanHubMemberId: $fanHubMemberId, reason: $reason, banType: $banType, bannedUntil: $bannedUntil)';
+}
+
+
+}
+
+/// @nodoc
+abstract mixin class $BanRequestCopyWith<$Res>  {
+  factory $BanRequestCopyWith(BanRequest value, $Res Function(BanRequest) _then) = _$BanRequestCopyWithImpl;
+@useResult
+$Res call({
+ int fanHubMemberId, String reason, String banType, DateTime bannedUntil
+});
+
+
+
+
+}
+/// @nodoc
+class _$BanRequestCopyWithImpl<$Res>
+    implements $BanRequestCopyWith<$Res> {
+  _$BanRequestCopyWithImpl(this._self, this._then);
+
+  final BanRequest _self;
+  final $Res Function(BanRequest) _then;
+
+/// Create a copy of BanRequest
+/// with the given fields replaced by the non-null parameter values.
+@pragma('vm:prefer-inline') @override $Res call({Object? fanHubMemberId = null,Object? reason = null,Object? banType = null,Object? bannedUntil = null,}) {
+  return _then(_self.copyWith(
+fanHubMemberId: null == fanHubMemberId ? _self.fanHubMemberId : fanHubMemberId // ignore: cast_nullable_to_non_nullable
+as int,reason: null == reason ? _self.reason : reason // ignore: cast_nullable_to_non_nullable
+as String,banType: null == banType ? _self.banType : banType // ignore: cast_nullable_to_non_nullable
+as String,bannedUntil: null == bannedUntil ? _self.bannedUntil : bannedUntil // ignore: cast_nullable_to_non_nullable
+as DateTime,
+  ));
+}
+
+}
+
+
+/// Adds pattern-matching-related methods to [BanRequest].
+extension BanRequestPatterns on BanRequest {
+/// A variant of `map` that fallback to returning `orElse`.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case _:
+///     return orElse();
+/// }
+/// ```
+
+@optionalTypeArgs TResult maybeMap<TResult extends Object?>(TResult Function( _BanRequest value)?  $default,{required TResult orElse(),}){
+final _that = this;
+switch (_that) {
+case _BanRequest() when $default != null:
+return $default(_that);case _:
+  return orElse();
+
+}
+}
+/// A `switch`-like method, using callbacks.
+///
+/// Callbacks receives the raw object, upcasted.
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case final Subclass2 value:
+///     return ...;
+/// }
+/// ```
+
+@optionalTypeArgs TResult map<TResult extends Object?>(TResult Function( _BanRequest value)  $default,){
+final _that = this;
+switch (_that) {
+case _BanRequest():
+return $default(_that);case _:
+  throw StateError('Unexpected subclass');
+
+}
+}
+/// A variant of `map` that fallback to returning `null`.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case _:
+///     return null;
+/// }
+/// ```
+
+@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>(TResult? Function( _BanRequest value)?  $default,){
+final _that = this;
+switch (_that) {
+case _BanRequest() when $default != null:
+return $default(_that);case _:
+  return null;
+
+}
+}
+/// A variant of `when` that fallback to an `orElse` callback.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case _:
+///     return orElse();
+/// }
+/// ```
+
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( int fanHubMemberId,  String reason,  String banType,  DateTime bannedUntil)?  $default,{required TResult orElse(),}) {final _that = this;
+switch (_that) {
+case _BanRequest() when $default != null:
+return $default(_that.fanHubMemberId,_that.reason,_that.banType,_that.bannedUntil);case _:
+  return orElse();
+
+}
+}
+/// A `switch`-like method, using callbacks.
+///
+/// As opposed to `map`, this offers destructuring.
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case Subclass2(:final field2):
+///     return ...;
+/// }
+/// ```
+
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( int fanHubMemberId,  String reason,  String banType,  DateTime bannedUntil)  $default,) {final _that = this;
+switch (_that) {
+case _BanRequest():
+return $default(_that.fanHubMemberId,_that.reason,_that.banType,_that.bannedUntil);case _:
+  throw StateError('Unexpected subclass');
+
+}
+}
+/// A variant of `when` that fallback to returning `null`
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case _:
+///     return null;
+/// }
+/// ```
+
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( int fanHubMemberId,  String reason,  String banType,  DateTime bannedUntil)?  $default,) {final _that = this;
+switch (_that) {
+case _BanRequest() when $default != null:
+return $default(_that.fanHubMemberId,_that.reason,_that.banType,_that.bannedUntil);case _:
+  return null;
+
+}
+}
+
+}
+
+/// @nodoc
+@JsonSerializable()
+
+class _BanRequest implements BanRequest {
+  const _BanRequest({required this.fanHubMemberId, required this.reason, required this.banType, required this.bannedUntil});
+  factory _BanRequest.fromJson(Map<String, dynamic> json) => _$BanRequestFromJson(json);
+
+@override final  int fanHubMemberId;
+@override final  String reason;
+@override final  String banType;
+@override final  DateTime bannedUntil;
+
+/// Create a copy of BanRequest
+/// with the given fields replaced by the non-null parameter values.
+@override @JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+_$BanRequestCopyWith<_BanRequest> get copyWith => __$BanRequestCopyWithImpl<_BanRequest>(this, _$identity);
+
+@override
+Map<String, dynamic> toJson() {
+  return _$BanRequestToJson(this, );
+}
+
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _BanRequest&&(identical(other.fanHubMemberId, fanHubMemberId) || other.fanHubMemberId == fanHubMemberId)&&(identical(other.reason, reason) || other.reason == reason)&&(identical(other.banType, banType) || other.banType == banType)&&(identical(other.bannedUntil, bannedUntil) || other.bannedUntil == bannedUntil));
+}
+
+@JsonKey(includeFromJson: false, includeToJson: false)
+@override
+int get hashCode => Object.hash(runtimeType,fanHubMemberId,reason,banType,bannedUntil);
+
+@override
+String toString() {
+  return 'BanRequest(fanHubMemberId: $fanHubMemberId, reason: $reason, banType: $banType, bannedUntil: $bannedUntil)';
+}
+
+
+}
+
+/// @nodoc
+abstract mixin class _$BanRequestCopyWith<$Res> implements $BanRequestCopyWith<$Res> {
+  factory _$BanRequestCopyWith(_BanRequest value, $Res Function(_BanRequest) _then) = __$BanRequestCopyWithImpl;
+@override @useResult
+$Res call({
+ int fanHubMemberId, String reason, String banType, DateTime bannedUntil
+});
+
+
+
+
+}
+/// @nodoc
+class __$BanRequestCopyWithImpl<$Res>
+    implements _$BanRequestCopyWith<$Res> {
+  __$BanRequestCopyWithImpl(this._self, this._then);
+
+  final _BanRequest _self;
+  final $Res Function(_BanRequest) _then;
+
+/// Create a copy of BanRequest
+/// with the given fields replaced by the non-null parameter values.
+@override @pragma('vm:prefer-inline') $Res call({Object? fanHubMemberId = null,Object? reason = null,Object? banType = null,Object? bannedUntil = null,}) {
+  return _then(_BanRequest(
+fanHubMemberId: null == fanHubMemberId ? _self.fanHubMemberId : fanHubMemberId // ignore: cast_nullable_to_non_nullable
+as int,reason: null == reason ? _self.reason : reason // ignore: cast_nullable_to_non_nullable
+as String,banType: null == banType ? _self.banType : banType // ignore: cast_nullable_to_non_nullable
+as String,bannedUntil: null == bannedUntil ? _self.bannedUntil : bannedUntil // ignore: cast_nullable_to_non_nullable
+as DateTime,
+  ));
+}
+
+
+}
+
 // dart format on

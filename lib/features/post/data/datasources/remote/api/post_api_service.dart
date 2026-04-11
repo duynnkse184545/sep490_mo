@@ -9,6 +9,8 @@ part 'post_api_service.g.dart';
 abstract class PostApiService {
   factory PostApiService(Dio dio) = _PostApiService;
 
+
+
   @POST('/posts')
   Future<ApiResponse> createPost(@Body() CreatePostRequest post);
 }
