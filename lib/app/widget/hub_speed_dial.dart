@@ -2,9 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:freestyle_speed_dial/freestyle_speed_dial.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:sep490_mo/app/router/routes.dart';
+import 'package:sep490_mo/features/member/data/models/member_models.dart';
 import 'package:sep490_mo/features/member/data/providers/member_providers.dart';
 
-enum _DialAction { createPost, members, leaderboard, invite, settings, report }
+enum _DialAction { createPost, members, moderation, invite, settings, report }
 
 class HubSpeedDial extends HookConsumerWidget {
   final String subdomain;
@@ -26,15 +27,19 @@ class HubSpeedDial extends HookConsumerWidget {
       loading: () => false,
     );
 
+    final memberRole = memberAsync.whenOrNull(
+      data: (member) => member.roleInHub,
+    );
+
     final actions = [
       // ── going UP ──────────────────────────────
-      if(isMember)
-      (
-        action: _DialAction.members,
-        icon: Icons.people_outline,
-        label: 'Members',
-        goUp: true,
-      ),
+      if (isMember)
+        (
+          action: _DialAction.members,
+          icon: Icons.people_outline,
+          label: 'Members',
+          goUp: true,
+        ),
       (
         action: _DialAction.invite,
         icon: Icons.person_add_outlined,
@@ -43,18 +48,19 @@ class HubSpeedDial extends HookConsumerWidget {
       ),
       if (isMember)
         (
-        action: _DialAction.createPost,
-        icon: Icons.edit_outlined,
-        label: 'Create Post',
-        goUp: true,
+          action: _DialAction.createPost,
+          icon: Icons.edit_outlined,
+          label: 'Create Post',
+          goUp: true,
         ),
       // ── going LEFT ────────────────────────────
-      (
-        action: _DialAction.leaderboard,
-        icon: Icons.leaderboard_outlined,
-        label: 'Leaderboard',
-        goUp: false,
-      ),
+      if (memberRole == MemberRole.moderator)
+        (
+          action: _DialAction.moderation,
+          icon: Icons.shield_outlined,
+          label: 'Moderation',
+          goUp: false,
+        ),
       (
         action: _DialAction.settings,
         icon: Icons.settings_outlined,
@@ -86,8 +92,11 @@ class HubSpeedDial extends HookConsumerWidget {
           ).push(context);
         case _DialAction.invite:
           break; // InviteRoute
-        case _DialAction.leaderboard:
-          break; // LeaderboardRoute
+        case _DialAction.moderation:
+          ModerationRoute(
+            subdomain: subdomain,
+            fanHubId: fanHubId,
+          ).push(context);
         case _DialAction.settings:
           break; // HubSettingsRoute
         case _DialAction.report:

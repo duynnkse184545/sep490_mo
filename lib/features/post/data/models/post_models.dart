@@ -114,7 +114,7 @@ abstract class PostModeration with _$PostModeration {
     required String content,
     required PostStatus status,
     @Default(false) bool isPinned,
-    @Default([]) List<String> media,
+    @Default([]) List<Media> media,
     @Default([]) List<String> hashtags,
     List<VoteOption>? voteOptions,
     Map<String, int>? voteCounts,

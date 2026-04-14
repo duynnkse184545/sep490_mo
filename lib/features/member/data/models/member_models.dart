@@ -6,8 +6,8 @@ part 'member_models.g.dart';
 
 /// Member role enum
 enum MemberRole {
-  @JsonValue('ADMIN')
-  admin,
+  @JsonValue('Vtuber')
+  vtuber,
   @JsonValue('MODERATOR')
   moderator,
   @JsonValue('MEMBER')

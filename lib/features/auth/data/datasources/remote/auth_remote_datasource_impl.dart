@@ -20,11 +20,12 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
       // Step 1: Create auth user
       final response = await _authApi.signUp(request);
 
-      return switch (response) {
-        ApiResponseSuccess() => null,
-        ApiResponseFailure(:final message, :final error) =>
-        throw ServerException(message, error),
-      };
+      switch (response) {
+        case ApiResponseSuccess():
+          return;
+        case ApiResponseFailure(:final message, :final error):
+          throw ServerException(message, error);
+      }
     } on DioException catch (e) {
       throw DioExceptionMapper.mapToException(e, 'Sign up failed');
     }
@@ -58,11 +59,12 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
       // Step 1: Create auth user
       final response = await _authApi.verify(email);
 
-      return switch (response) {
-        ApiResponseSuccess() => null,
-        ApiResponseFailure(:final message, :final error) =>
-        throw ServerException(message, error),
-      };
+      switch (response) {
+        case ApiResponseSuccess():
+          return;
+        case ApiResponseFailure(:final message, :final error):
+          throw ServerException(message, error);
+      }
     } on DioException catch (e) {
       throw DioExceptionMapper.mapToException(e, 'Sign up failed');
     }

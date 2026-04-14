@@ -21,7 +21,7 @@ class FanHubCard extends StatelessWidget {
           FanHubDetailRoute(
             subdomain: fanHub.subdomain,
             fanHubId: fanHub.fanHubId,
-          ).go(context);
+          ).push(context);
         },
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,

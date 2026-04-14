@@ -6,7 +6,12 @@ part of 'routes.dart';
 // GoRouterGenerator
 // **************************************************************************
 
-List<RouteBase> get $appRoutes => [$signInRoute, $signUpRoute, $mainShellRoute];
+List<RouteBase> get $appRoutes => [
+  $signInRoute,
+  $signUpRoute,
+  $mainShellRoute,
+  $fanHubDetailRoute,
+];
 
 RouteBase get $signInRoute =>
     GoRouteData.$route(path: '/sign-in', factory: $SignInRoute._fromState);
@@ -64,26 +69,7 @@ RouteBase get $mainShellRoute => StatefulShellRouteData.$route(
     ),
     StatefulShellBranchData.$branch(
       routes: [
-        GoRouteData.$route(
-          path: '/explore',
-          factory: $ExploreRoute._fromState,
-          routes: [
-            GoRouteData.$route(
-              path: ':subdomain',
-              factory: $FanHubDetailRoute._fromState,
-              routes: [
-                GoRouteData.$route(
-                  path: 'create',
-                  factory: $CreatePostRoute._fromState,
-                ),
-                GoRouteData.$route(
-                  path: 'members',
-                  factory: $MemberListRoute._fromState,
-                ),
-              ],
-            ),
-          ],
-        ),
+        GoRouteData.$route(path: '/explore', factory: $ExploreRoute._fromState),
       ],
     ),
     StatefulShellBranchData.$branch(
@@ -141,6 +127,40 @@ mixin $ExploreRoute on GoRouteData {
   @override
   void replace(BuildContext context) => context.replace(location);
 }
+
+mixin $UserProfileRoute on GoRouteData {
+  static UserProfileRoute _fromState(GoRouterState state) =>
+      const UserProfileRoute();
+
+  @override
+  String get location => GoRouteData.$location('/profile');
+
+  @override
+  void go(BuildContext context) => context.go(location);
+
+  @override
+  Future<T?> push<T>(BuildContext context) => context.push<T>(location);
+
+  @override
+  void pushReplacement(BuildContext context) =>
+      context.pushReplacement(location);
+
+  @override
+  void replace(BuildContext context) => context.replace(location);
+}
+
+RouteBase get $fanHubDetailRoute => GoRouteData.$route(
+  path: '/explore/:subdomain',
+  factory: $FanHubDetailRoute._fromState,
+  routes: [
+    GoRouteData.$route(path: 'create', factory: $CreatePostRoute._fromState),
+    GoRouteData.$route(path: 'members', factory: $MemberListRoute._fromState),
+    GoRouteData.$route(
+      path: 'moderation',
+      factory: $ModerationRoute._fromState,
+    ),
+  ],
+);
 
 mixin $FanHubDetailRoute on GoRouteData {
   static FanHubDetailRoute _fromState(GoRouterState state) => FanHubDetailRoute(
@@ -226,12 +246,29 @@ mixin $MemberListRoute on GoRouteData {
   void replace(BuildContext context) => context.replace(location);
 }
 
-mixin $UserProfileRoute on GoRouteData {
-  static UserProfileRoute _fromState(GoRouterState state) =>
-      const UserProfileRoute();
+mixin $ModerationRoute on GoRouteData {
+  static ModerationRoute _fromState(GoRouterState state) => ModerationRoute(
+    subdomain: state.pathParameters['subdomain']!,
+    fanHubId: int.parse(state.uri.queryParameters['fan-hub-id']!),
+    initialTab:
+        _$convertMapValue(
+          'initial-tab',
+          state.uri.queryParameters,
+          int.parse,
+        ) ??
+        0,
+  );
+
+  ModerationRoute get _self => this as ModerationRoute;
 
   @override
-  String get location => GoRouteData.$location('/profile');
+  String get location => GoRouteData.$location(
+    '/explore/${Uri.encodeComponent(_self.subdomain)}/moderation',
+    queryParams: {
+      'fan-hub-id': _self.fanHubId.toString(),
+      if (_self.initialTab != 0) 'initial-tab': _self.initialTab.toString(),
+    },
+  );
 
   @override
   void go(BuildContext context) => context.go(location);
@@ -245,4 +282,13 @@ mixin $UserProfileRoute on GoRouteData {
 
   @override
   void replace(BuildContext context) => context.replace(location);
+}
+
+T? _$convertMapValue<T>(
+  String key,
+  Map<String, String> map,
+  T? Function(String) converter,
+) {
+  final value = map[key];
+  return value == null ? null : converter(value);
 }

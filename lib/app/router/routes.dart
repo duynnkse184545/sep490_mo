@@ -9,6 +9,7 @@ import 'package:sep490_mo/features/fanhub/presentation/screens/fanhub_list_scree
 import 'package:sep490_mo/features/member/presentation/screens/member_list_screen.dart';
 import 'package:sep490_mo/features/post/presentation/screens/create_post_screen.dart';
 import 'package:sep490_mo/features/post/presentation/screens/feed_screen.dart';
+import 'package:sep490_mo/features/post/presentation/screens/post_moderation_home_screen.dart';
 import 'package:sep490_mo/features/post/presentation/widgets/hub_feed_widget.dart';
 import 'package:sep490_mo/features/user/presentation/screens/user_profile_screen.dart';
 
@@ -43,20 +44,7 @@ class SignUpRoute extends GoRouteData with $SignUpRoute {
       routes: [TypedGoRoute<HomeRoute>(path: '/home')],
     ),
     TypedStatefulShellBranch<ExploreBranch>(
-      routes: [
-        TypedGoRoute<ExploreRoute>(
-          path: '/explore',
-          routes: [
-            TypedGoRoute<FanHubDetailRoute>(
-              path: ':subdomain', // ← /explore/:subdomain
-              routes: [
-                TypedGoRoute<CreatePostRoute>(path: 'create'),
-                TypedGoRoute<MemberListRoute>(path: 'members'),
-              ],
-            ),
-          ],
-        ),
-      ],
+      routes: [TypedGoRoute<ExploreRoute>(path: '/explore')],
     ),
     TypedStatefulShellBranch<ProfileBranch>(
       routes: [TypedGoRoute<UserProfileRoute>(path: '/profile')],
@@ -110,6 +98,14 @@ class ExploreRoute extends GoRouteData with $ExploreRoute {
       const FanHubListScreen();
 }
 
+@TypedGoRoute<FanHubDetailRoute>(
+  path: '/explore/:subdomain', // ← /explore/:subdomain
+  routes: [
+    TypedGoRoute<CreatePostRoute>(path: 'create'),
+    TypedGoRoute<MemberListRoute>(path: 'members'),
+    TypedGoRoute<ModerationRoute>(path: 'moderation'),
+  ],
+)
 class FanHubDetailRoute extends GoRouteData with $FanHubDetailRoute {
   const FanHubDetailRoute({required this.subdomain, required this.fanHubId});
 
@@ -144,6 +140,26 @@ class MemberListRoute extends GoRouteData with $MemberListRoute {
   @override
   Widget build(BuildContext context, GoRouterState state) =>
       MemberListScreen(fanHubId: fanHubId);
+}
+
+class ModerationRoute extends GoRouteData with $ModerationRoute {
+  const ModerationRoute({
+    required this.subdomain,
+    required this.fanHubId,
+    this.initialTab = 0,
+  });
+
+  final String subdomain;
+  final int fanHubId;
+  final int initialTab;
+
+  @override
+  Widget build(BuildContext context, GoRouterState state) =>
+      PostModerationHomeScreen(
+        subdomain: subdomain,
+        fanHubId: fanHubId,
+        initialTab: initialTab,
+      );
 }
 
 // ─── Profile Route ─────────────────────────────────────────────────────────

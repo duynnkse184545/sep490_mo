@@ -910,7 +910,7 @@ as bool,
 /// @nodoc
 mixin _$PostModeration {
 
- int get postId; int get fanHubId; String get fanHubName; String get fanHubSubdomain; int get authorId; String get authorUsername; String get authorDisplayName; String? get authorAvatarUrl; PostType get postType; String? get title; String get content; PostStatus get status; bool get isPinned; List<String> get media; List<String> get hashtags; List<VoteOption>? get voteOptions; Map<String, int>? get voteCounts; int? get totalVotes; int? get userVotedOptionId; DateTime get createdAt; DateTime? get updatedAt; int get likeCount; bool get isLikedByCurrentUser; AiStatus get aiValidationStatus; String? get aiValidationComment;
+ int get postId; int get fanHubId; String get fanHubName; String get fanHubSubdomain; int get authorId; String get authorUsername; String get authorDisplayName; String? get authorAvatarUrl; PostType get postType; String? get title; String get content; PostStatus get status; bool get isPinned; List<Media> get media; List<String> get hashtags; List<VoteOption>? get voteOptions; Map<String, int>? get voteCounts; int? get totalVotes; int? get userVotedOptionId; DateTime get createdAt; DateTime? get updatedAt; int get likeCount; bool get isLikedByCurrentUser; AiStatus get aiValidationStatus; String? get aiValidationComment;
 /// Create a copy of PostModeration
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -943,7 +943,7 @@ abstract mixin class $PostModerationCopyWith<$Res>  {
   factory $PostModerationCopyWith(PostModeration value, $Res Function(PostModeration) _then) = _$PostModerationCopyWithImpl;
 @useResult
 $Res call({
- int postId, int fanHubId, String fanHubName, String fanHubSubdomain, int authorId, String authorUsername, String authorDisplayName, String? authorAvatarUrl, PostType postType, String? title, String content, PostStatus status, bool isPinned, List<String> media, List<String> hashtags, List<VoteOption>? voteOptions, Map<String, int>? voteCounts, int? totalVotes, int? userVotedOptionId, DateTime createdAt, DateTime? updatedAt, int likeCount, bool isLikedByCurrentUser, AiStatus aiValidationStatus, String? aiValidationComment
+ int postId, int fanHubId, String fanHubName, String fanHubSubdomain, int authorId, String authorUsername, String authorDisplayName, String? authorAvatarUrl, PostType postType, String? title, String content, PostStatus status, bool isPinned, List<Media> media, List<String> hashtags, List<VoteOption>? voteOptions, Map<String, int>? voteCounts, int? totalVotes, int? userVotedOptionId, DateTime createdAt, DateTime? updatedAt, int likeCount, bool isLikedByCurrentUser, AiStatus aiValidationStatus, String? aiValidationComment
 });
 
 
@@ -976,7 +976,7 @@ as String?,content: null == content ? _self.content : content // ignore: cast_nu
 as String,status: null == status ? _self.status : status // ignore: cast_nullable_to_non_nullable
 as PostStatus,isPinned: null == isPinned ? _self.isPinned : isPinned // ignore: cast_nullable_to_non_nullable
 as bool,media: null == media ? _self.media : media // ignore: cast_nullable_to_non_nullable
-as List<String>,hashtags: null == hashtags ? _self.hashtags : hashtags // ignore: cast_nullable_to_non_nullable
+as List<Media>,hashtags: null == hashtags ? _self.hashtags : hashtags // ignore: cast_nullable_to_non_nullable
 as List<String>,voteOptions: freezed == voteOptions ? _self.voteOptions : voteOptions // ignore: cast_nullable_to_non_nullable
 as List<VoteOption>?,voteCounts: freezed == voteCounts ? _self.voteCounts : voteCounts // ignore: cast_nullable_to_non_nullable
 as Map<String, int>?,totalVotes: freezed == totalVotes ? _self.totalVotes : totalVotes // ignore: cast_nullable_to_non_nullable
@@ -1072,7 +1072,7 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( int postId,  int fanHubId,  String fanHubName,  String fanHubSubdomain,  int authorId,  String authorUsername,  String authorDisplayName,  String? authorAvatarUrl,  PostType postType,  String? title,  String content,  PostStatus status,  bool isPinned,  List<String> media,  List<String> hashtags,  List<VoteOption>? voteOptions,  Map<String, int>? voteCounts,  int? totalVotes,  int? userVotedOptionId,  DateTime createdAt,  DateTime? updatedAt,  int likeCount,  bool isLikedByCurrentUser,  AiStatus aiValidationStatus,  String? aiValidationComment)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( int postId,  int fanHubId,  String fanHubName,  String fanHubSubdomain,  int authorId,  String authorUsername,  String authorDisplayName,  String? authorAvatarUrl,  PostType postType,  String? title,  String content,  PostStatus status,  bool isPinned,  List<Media> media,  List<String> hashtags,  List<VoteOption>? voteOptions,  Map<String, int>? voteCounts,  int? totalVotes,  int? userVotedOptionId,  DateTime createdAt,  DateTime? updatedAt,  int likeCount,  bool isLikedByCurrentUser,  AiStatus aiValidationStatus,  String? aiValidationComment)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _PostModeration() when $default != null:
 return $default(_that.postId,_that.fanHubId,_that.fanHubName,_that.fanHubSubdomain,_that.authorId,_that.authorUsername,_that.authorDisplayName,_that.authorAvatarUrl,_that.postType,_that.title,_that.content,_that.status,_that.isPinned,_that.media,_that.hashtags,_that.voteOptions,_that.voteCounts,_that.totalVotes,_that.userVotedOptionId,_that.createdAt,_that.updatedAt,_that.likeCount,_that.isLikedByCurrentUser,_that.aiValidationStatus,_that.aiValidationComment);case _:
@@ -1093,7 +1093,7 @@ return $default(_that.postId,_that.fanHubId,_that.fanHubName,_that.fanHubSubdoma
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( int postId,  int fanHubId,  String fanHubName,  String fanHubSubdomain,  int authorId,  String authorUsername,  String authorDisplayName,  String? authorAvatarUrl,  PostType postType,  String? title,  String content,  PostStatus status,  bool isPinned,  List<String> media,  List<String> hashtags,  List<VoteOption>? voteOptions,  Map<String, int>? voteCounts,  int? totalVotes,  int? userVotedOptionId,  DateTime createdAt,  DateTime? updatedAt,  int likeCount,  bool isLikedByCurrentUser,  AiStatus aiValidationStatus,  String? aiValidationComment)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( int postId,  int fanHubId,  String fanHubName,  String fanHubSubdomain,  int authorId,  String authorUsername,  String authorDisplayName,  String? authorAvatarUrl,  PostType postType,  String? title,  String content,  PostStatus status,  bool isPinned,  List<Media> media,  List<String> hashtags,  List<VoteOption>? voteOptions,  Map<String, int>? voteCounts,  int? totalVotes,  int? userVotedOptionId,  DateTime createdAt,  DateTime? updatedAt,  int likeCount,  bool isLikedByCurrentUser,  AiStatus aiValidationStatus,  String? aiValidationComment)  $default,) {final _that = this;
 switch (_that) {
 case _PostModeration():
 return $default(_that.postId,_that.fanHubId,_that.fanHubName,_that.fanHubSubdomain,_that.authorId,_that.authorUsername,_that.authorDisplayName,_that.authorAvatarUrl,_that.postType,_that.title,_that.content,_that.status,_that.isPinned,_that.media,_that.hashtags,_that.voteOptions,_that.voteCounts,_that.totalVotes,_that.userVotedOptionId,_that.createdAt,_that.updatedAt,_that.likeCount,_that.isLikedByCurrentUser,_that.aiValidationStatus,_that.aiValidationComment);case _:
@@ -1113,7 +1113,7 @@ return $default(_that.postId,_that.fanHubId,_that.fanHubName,_that.fanHubSubdoma
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( int postId,  int fanHubId,  String fanHubName,  String fanHubSubdomain,  int authorId,  String authorUsername,  String authorDisplayName,  String? authorAvatarUrl,  PostType postType,  String? title,  String content,  PostStatus status,  bool isPinned,  List<String> media,  List<String> hashtags,  List<VoteOption>? voteOptions,  Map<String, int>? voteCounts,  int? totalVotes,  int? userVotedOptionId,  DateTime createdAt,  DateTime? updatedAt,  int likeCount,  bool isLikedByCurrentUser,  AiStatus aiValidationStatus,  String? aiValidationComment)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( int postId,  int fanHubId,  String fanHubName,  String fanHubSubdomain,  int authorId,  String authorUsername,  String authorDisplayName,  String? authorAvatarUrl,  PostType postType,  String? title,  String content,  PostStatus status,  bool isPinned,  List<Media> media,  List<String> hashtags,  List<VoteOption>? voteOptions,  Map<String, int>? voteCounts,  int? totalVotes,  int? userVotedOptionId,  DateTime createdAt,  DateTime? updatedAt,  int likeCount,  bool isLikedByCurrentUser,  AiStatus aiValidationStatus,  String? aiValidationComment)?  $default,) {final _that = this;
 switch (_that) {
 case _PostModeration() when $default != null:
 return $default(_that.postId,_that.fanHubId,_that.fanHubName,_that.fanHubSubdomain,_that.authorId,_that.authorUsername,_that.authorDisplayName,_that.authorAvatarUrl,_that.postType,_that.title,_that.content,_that.status,_that.isPinned,_that.media,_that.hashtags,_that.voteOptions,_that.voteCounts,_that.totalVotes,_that.userVotedOptionId,_that.createdAt,_that.updatedAt,_that.likeCount,_that.isLikedByCurrentUser,_that.aiValidationStatus,_that.aiValidationComment);case _:
@@ -1128,7 +1128,7 @@ return $default(_that.postId,_that.fanHubId,_that.fanHubName,_that.fanHubSubdoma
 @JsonSerializable()
 
 class _PostModeration implements PostModeration {
-  const _PostModeration({required this.postId, required this.fanHubId, required this.fanHubName, required this.fanHubSubdomain, required this.authorId, required this.authorUsername, required this.authorDisplayName, this.authorAvatarUrl, required this.postType, this.title, required this.content, required this.status, this.isPinned = false, final  List<String> media = const [], final  List<String> hashtags = const [], final  List<VoteOption>? voteOptions, final  Map<String, int>? voteCounts, this.totalVotes, this.userVotedOptionId, required this.createdAt, this.updatedAt, this.likeCount = 0, this.isLikedByCurrentUser = false, required this.aiValidationStatus, this.aiValidationComment}): _media = media,_hashtags = hashtags,_voteOptions = voteOptions,_voteCounts = voteCounts;
+  const _PostModeration({required this.postId, required this.fanHubId, required this.fanHubName, required this.fanHubSubdomain, required this.authorId, required this.authorUsername, required this.authorDisplayName, this.authorAvatarUrl, required this.postType, this.title, required this.content, required this.status, this.isPinned = false, final  List<Media> media = const [], final  List<String> hashtags = const [], final  List<VoteOption>? voteOptions, final  Map<String, int>? voteCounts, this.totalVotes, this.userVotedOptionId, required this.createdAt, this.updatedAt, this.likeCount = 0, this.isLikedByCurrentUser = false, required this.aiValidationStatus, this.aiValidationComment}): _media = media,_hashtags = hashtags,_voteOptions = voteOptions,_voteCounts = voteCounts;
   factory _PostModeration.fromJson(Map<String, dynamic> json) => _$PostModerationFromJson(json);
 
 @override final  int postId;
@@ -1144,8 +1144,8 @@ class _PostModeration implements PostModeration {
 @override final  String content;
 @override final  PostStatus status;
 @override@JsonKey() final  bool isPinned;
- final  List<String> _media;
-@override@JsonKey() List<String> get media {
+ final  List<Media> _media;
+@override@JsonKey() List<Media> get media {
   if (_media is EqualUnmodifiableListView) return _media;
   // ignore: implicit_dynamic_type
   return EqualUnmodifiableListView(_media);
@@ -1218,7 +1218,7 @@ abstract mixin class _$PostModerationCopyWith<$Res> implements $PostModerationCo
   factory _$PostModerationCopyWith(_PostModeration value, $Res Function(_PostModeration) _then) = __$PostModerationCopyWithImpl;
 @override @useResult
 $Res call({
- int postId, int fanHubId, String fanHubName, String fanHubSubdomain, int authorId, String authorUsername, String authorDisplayName, String? authorAvatarUrl, PostType postType, String? title, String content, PostStatus status, bool isPinned, List<String> media, List<String> hashtags, List<VoteOption>? voteOptions, Map<String, int>? voteCounts, int? totalVotes, int? userVotedOptionId, DateTime createdAt, DateTime? updatedAt, int likeCount, bool isLikedByCurrentUser, AiStatus aiValidationStatus, String? aiValidationComment
+ int postId, int fanHubId, String fanHubName, String fanHubSubdomain, int authorId, String authorUsername, String authorDisplayName, String? authorAvatarUrl, PostType postType, String? title, String content, PostStatus status, bool isPinned, List<Media> media, List<String> hashtags, List<VoteOption>? voteOptions, Map<String, int>? voteCounts, int? totalVotes, int? userVotedOptionId, DateTime createdAt, DateTime? updatedAt, int likeCount, bool isLikedByCurrentUser, AiStatus aiValidationStatus, String? aiValidationComment
 });
 
 
@@ -1251,7 +1251,7 @@ as String?,content: null == content ? _self.content : content // ignore: cast_nu
 as String,status: null == status ? _self.status : status // ignore: cast_nullable_to_non_nullable
 as PostStatus,isPinned: null == isPinned ? _self.isPinned : isPinned // ignore: cast_nullable_to_non_nullable
 as bool,media: null == media ? _self._media : media // ignore: cast_nullable_to_non_nullable
-as List<String>,hashtags: null == hashtags ? _self._hashtags : hashtags // ignore: cast_nullable_to_non_nullable
+as List<Media>,hashtags: null == hashtags ? _self._hashtags : hashtags // ignore: cast_nullable_to_non_nullable
 as List<String>,voteOptions: freezed == voteOptions ? _self._voteOptions : voteOptions // ignore: cast_nullable_to_non_nullable
 as List<VoteOption>?,voteCounts: freezed == voteCounts ? _self._voteCounts : voteCounts // ignore: cast_nullable_to_non_nullable
 as Map<String, int>?,totalVotes: freezed == totalVotes ? _self.totalVotes : totalVotes // ignore: cast_nullable_to_non_nullable

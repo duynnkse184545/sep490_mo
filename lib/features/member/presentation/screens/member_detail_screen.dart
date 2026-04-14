@@ -270,7 +270,7 @@ class MemberDetailScreen extends HookConsumerWidget {
     required BuildContext context,
   }) {
     final color = switch (role) {
-      MemberRole.admin => Colors.red,
+      MemberRole.vtuber => Colors.red,
       MemberRole.moderator => Colors.orange,
       MemberRole.member => Theme.of(context).colorScheme.primary,
     };

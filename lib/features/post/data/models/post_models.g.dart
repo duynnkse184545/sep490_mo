@@ -130,7 +130,9 @@ _PostModeration _$PostModerationFromJson(Map<String, dynamic> json) =>
       status: $enumDecode(_$PostStatusEnumMap, json['status']),
       isPinned: json['isPinned'] as bool? ?? false,
       media:
-          (json['media'] as List<dynamic>?)?.map((e) => e as String).toList() ??
+          (json['media'] as List<dynamic>?)
+              ?.map((e) => Media.fromJson(e as Map<String, dynamic>))
+              .toList() ??
           const [],
       hashtags:
           (json['hashtags'] as List<dynamic>?)
