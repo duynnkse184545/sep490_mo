@@ -17,7 +17,8 @@ final class PostModerationControllerProvider
         $AsyncNotifierProvider<PostModerationController, PostModerationState> {
   PostModerationControllerProvider._({
     required PostModerationControllerFamily super.from,
-    required ({String subdomain, bool pendingOnly}) super.argument,
+    required ({String subdomain, int fanHubId, bool pendingOnly})
+    super.argument,
   }) : super(
          retry: null,
          name: r'postModerationControllerProvider',
@@ -53,7 +54,7 @@ final class PostModerationControllerProvider
 }
 
 String _$postModerationControllerHash() =>
-    r'bdd090105fa57d849b291e7356189ffb4caf753c';
+    r'1b632fb3a1b509fabb6ef9dc390febb1b724a607';
 
 final class PostModerationControllerFamily extends $Family
     with
@@ -62,7 +63,7 @@ final class PostModerationControllerFamily extends $Family
           AsyncValue<PostModerationState>,
           PostModerationState,
           FutureOr<PostModerationState>,
-          ({String subdomain, bool pendingOnly})
+          ({String subdomain, int fanHubId, bool pendingOnly})
         > {
   PostModerationControllerFamily._()
     : super(
@@ -75,9 +76,14 @@ final class PostModerationControllerFamily extends $Family
 
   PostModerationControllerProvider call({
     required String subdomain,
+    required int fanHubId,
     bool pendingOnly = true,
   }) => PostModerationControllerProvider._(
-    argument: (subdomain: subdomain, pendingOnly: pendingOnly),
+    argument: (
+      subdomain: subdomain,
+      fanHubId: fanHubId,
+      pendingOnly: pendingOnly,
+    ),
     from: this,
   );
 
@@ -87,12 +93,15 @@ final class PostModerationControllerFamily extends $Family
 
 abstract class _$PostModerationController
     extends $AsyncNotifier<PostModerationState> {
-  late final _$args = ref.$arg as ({String subdomain, bool pendingOnly});
+  late final _$args =
+      ref.$arg as ({String subdomain, int fanHubId, bool pendingOnly});
   String get subdomain => _$args.subdomain;
+  int get fanHubId => _$args.fanHubId;
   bool get pendingOnly => _$args.pendingOnly;
 
   FutureOr<PostModerationState> build({
     required String subdomain,
+    required int fanHubId,
     bool pendingOnly = true,
   });
   @$mustCallSuper
@@ -110,7 +119,11 @@ abstract class _$PostModerationController
             >;
     element.handleCreate(
       ref,
-      () => build(subdomain: _$args.subdomain, pendingOnly: _$args.pendingOnly),
+      () => build(
+        subdomain: _$args.subdomain,
+        fanHubId: _$args.fanHubId,
+        pendingOnly: _$args.pendingOnly,
+      ),
     );
   }
 }

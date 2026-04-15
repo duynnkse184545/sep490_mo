@@ -31,14 +31,14 @@ class PostModerationRepositoryImpl implements PostModerationRepository {
 
   @override
   TaskResult<List<PostModeration>> getAllPosts({
-    required String subdomain,
+    required int fanHubId,
     required int pageNo,
     required int pageSize,
     required String sortBy,
   }) {
     return ErrorHandler.execute(() async {
       return await _remoteDataSource.getAllPosts(
-        subdomain: subdomain,
+        fanHubId: fanHubId,
         pageNo: pageNo,
         pageSize: pageSize,
         sortBy: sortBy,

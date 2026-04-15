@@ -32,6 +32,8 @@ enum PostStatus {
 enum AiStatus{
   @JsonValue('PENDING')
   pending,
+  @JsonValue('PROCESSING')
+  processing,
   @JsonValue('AI_UNSAFE')
   aiUnsafe,
   @JsonValue('AI_SAFE')
@@ -124,7 +126,7 @@ abstract class PostModeration with _$PostModeration {
     DateTime? updatedAt,
     @Default(0) int likeCount,
     @Default(false) bool isLikedByCurrentUser,
-    required AiStatus aiValidationStatus,
+    @Default(AiStatus.pending) AiStatus aiValidationStatus,
     String? aiValidationComment
   }) = _PostModeration;
 

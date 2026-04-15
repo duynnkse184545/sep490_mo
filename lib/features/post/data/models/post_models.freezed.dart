@@ -1128,7 +1128,7 @@ return $default(_that.postId,_that.fanHubId,_that.fanHubName,_that.fanHubSubdoma
 @JsonSerializable()
 
 class _PostModeration implements PostModeration {
-  const _PostModeration({required this.postId, required this.fanHubId, required this.fanHubName, required this.fanHubSubdomain, required this.authorId, required this.authorUsername, required this.authorDisplayName, this.authorAvatarUrl, required this.postType, this.title, required this.content, required this.status, this.isPinned = false, final  List<Media> media = const [], final  List<String> hashtags = const [], final  List<VoteOption>? voteOptions, final  Map<String, int>? voteCounts, this.totalVotes, this.userVotedOptionId, required this.createdAt, this.updatedAt, this.likeCount = 0, this.isLikedByCurrentUser = false, required this.aiValidationStatus, this.aiValidationComment}): _media = media,_hashtags = hashtags,_voteOptions = voteOptions,_voteCounts = voteCounts;
+  const _PostModeration({required this.postId, required this.fanHubId, required this.fanHubName, required this.fanHubSubdomain, required this.authorId, required this.authorUsername, required this.authorDisplayName, this.authorAvatarUrl, required this.postType, this.title, required this.content, required this.status, this.isPinned = false, final  List<Media> media = const [], final  List<String> hashtags = const [], final  List<VoteOption>? voteOptions, final  Map<String, int>? voteCounts, this.totalVotes, this.userVotedOptionId, required this.createdAt, this.updatedAt, this.likeCount = 0, this.isLikedByCurrentUser = false, this.aiValidationStatus = AiStatus.pending, this.aiValidationComment}): _media = media,_hashtags = hashtags,_voteOptions = voteOptions,_voteCounts = voteCounts;
   factory _PostModeration.fromJson(Map<String, dynamic> json) => _$PostModerationFromJson(json);
 
 @override final  int postId;
@@ -1182,7 +1182,7 @@ class _PostModeration implements PostModeration {
 @override final  DateTime? updatedAt;
 @override@JsonKey() final  int likeCount;
 @override@JsonKey() final  bool isLikedByCurrentUser;
-@override final  AiStatus aiValidationStatus;
+@override@JsonKey() final  AiStatus aiValidationStatus;
 @override final  String? aiValidationComment;
 
 /// Create a copy of PostModeration

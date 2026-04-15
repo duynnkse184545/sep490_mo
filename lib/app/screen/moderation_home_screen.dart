@@ -1,14 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:sep490_mo/features/member/presentation/screens/member_moderation_screen.dart';
 import 'package:sep490_mo/features/post/presentation/screens/post_moderation_screen.dart';
 import 'package:sep490_mo/features/post/presentation/screens/post_report_screen.dart';
 
-class PostModerationHomeScreen extends HookWidget {
+class ModerationHomeScreen extends HookWidget {
   final String subdomain;
   final int fanHubId;
   final int initialTab;
 
-  const PostModerationHomeScreen({
+  const ModerationHomeScreen({
     super.key,
     required this.subdomain,
     required this.fanHubId,
@@ -18,7 +19,7 @@ class PostModerationHomeScreen extends HookWidget {
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
-      length: 2,
+      length: 3,
       initialIndex: initialTab,
       child: Scaffold(
         appBar: AppBar(
@@ -27,13 +28,15 @@ class PostModerationHomeScreen extends HookWidget {
             tabs: [
               Tab(text: 'Posts', icon: Icon(Icons.article)),
               Tab(text: 'Reports', icon: Icon(Icons.flag)),
+              Tab(text: 'Member', icon: Icon(Icons.group),)
             ],
           ),
         ),
         body: TabBarView(
           children: [
-            PostModerationScreen(subdomain: subdomain),
+            PostModerationScreen(subdomain: subdomain, fahHubId: fanHubId,),
             PostReportScreen(fanHubId: fanHubId),
+            MemberModerationScreen(fanHubId: fanHubId),
           ],
         ),
       ),

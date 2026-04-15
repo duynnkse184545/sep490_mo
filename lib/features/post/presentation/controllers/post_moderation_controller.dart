@@ -17,6 +17,7 @@ class PostModerationController extends _$PostModerationController {
   @override
   Future<PostModerationState> build({
     required String subdomain,
+    required int fanHubId,
     bool pendingOnly = true,
   }) async {
     _resetPagination();
@@ -61,7 +62,7 @@ class PostModerationController extends _$PostModerationController {
         : await ref
             .read(postModerationRepositoryProvider)
             .getAllPosts(
-              subdomain: subdomain,
+              fanHubId: fanHubId,
               pageNo: _currentPage,
               pageSize: _pageSize,
               sortBy: 'createdAt',

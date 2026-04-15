@@ -10,7 +10,7 @@ abstract class PostModerationRemoteDatasource {
   });
 
   Future<List<PostModeration>> getAllPosts({
-    required String subdomain,
+    required int fanHubId,
     required int pageNo,
     required int pageSize,
     required String sortBy,

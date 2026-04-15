@@ -33,6 +33,7 @@ Map<String, dynamic> _$MediaToJson(_Media instance) => <String, dynamic>{
 
 const _$AiStatusEnumMap = {
   AiStatus.pending: 'PENDING',
+  AiStatus.processing: 'PROCESSING',
   AiStatus.aiUnsafe: 'AI_UNSAFE',
   AiStatus.aiSafe: 'AI_SAFE',
 };
@@ -153,10 +154,9 @@ _PostModeration _$PostModerationFromJson(Map<String, dynamic> json) =>
           : DateTime.parse(json['updatedAt'] as String),
       likeCount: (json['likeCount'] as num?)?.toInt() ?? 0,
       isLikedByCurrentUser: json['isLikedByCurrentUser'] as bool? ?? false,
-      aiValidationStatus: $enumDecode(
-        _$AiStatusEnumMap,
-        json['aiValidationStatus'],
-      ),
+      aiValidationStatus:
+          $enumDecodeNullable(_$AiStatusEnumMap, json['aiValidationStatus']) ??
+          AiStatus.pending,
       aiValidationComment: json['aiValidationComment'] as String?,
     );
 

@@ -45,14 +45,14 @@ class PostModerationRemoteDatasourceImpl implements PostModerationRemoteDatasour
 
   @override
   Future<List<PostModeration>> getAllPosts({
-    required String subdomain,
+    required int fanHubId,
     required int pageNo,
     required int pageSize,
     required String sortBy,
   }) async {
     try {
       final response = await _moderationApi.getAllPosts(
-        subdomain,
+        fanHubId,
         pageNo,
         pageSize,
         sortBy,

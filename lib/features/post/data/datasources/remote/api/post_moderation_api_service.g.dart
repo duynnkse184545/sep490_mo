@@ -66,7 +66,7 @@ class _PostModerationApiService implements PostModerationApiService {
 
   @override
   Future<ApiResponse<List<PostModeration>>> getAllPosts(
-    String subdomain,
+    int fanHubId,
     int pageNo,
     int pageSize,
     String sortBy,
@@ -83,7 +83,7 @@ class _PostModerationApiService implements PostModerationApiService {
       Options(method: 'GET', headers: _headers, extra: _extra)
           .compose(
             _dio.options,
-            '/posts/fan-hub/subdomain/${subdomain}/all',
+            '/posts/fan-hub/${fanHubId}/all',
             queryParameters: queryParameters,
             data: _data,
           )

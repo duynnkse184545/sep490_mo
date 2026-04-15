@@ -18,9 +18,9 @@ abstract class PostModerationApiService {
     @Query('sortBy') String sortBy,
   );
 
-  @GET('/posts/fan-hub/subdomain/{subdomain}/all')
+  @GET('/posts/fan-hub/{fanHubId}/all')
   Future<ApiResponse<List<PostModeration>>> getAllPosts(
-    @Path('subdomain') String subdomain,
+    @Path('fanHubId') int fanHubId,
     @Query('pageNo') int pageNo,
     @Query('pageSize') int pageSize,
     @Query('sortBy') String sortBy,

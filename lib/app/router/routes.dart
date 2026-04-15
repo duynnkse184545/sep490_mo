@@ -9,7 +9,7 @@ import 'package:sep490_mo/features/fanhub/presentation/screens/fanhub_list_scree
 import 'package:sep490_mo/features/member/presentation/screens/member_list_screen.dart';
 import 'package:sep490_mo/features/post/presentation/screens/create_post_screen.dart';
 import 'package:sep490_mo/features/post/presentation/screens/feed_screen.dart';
-import 'package:sep490_mo/features/post/presentation/screens/post_moderation_home_screen.dart';
+import 'package:sep490_mo/app/screen/moderation_home_screen.dart';
 import 'package:sep490_mo/features/post/presentation/widgets/hub_feed_widget.dart';
 import 'package:sep490_mo/features/user/presentation/screens/user_profile_screen.dart';
 
@@ -155,7 +155,7 @@ class ModerationRoute extends GoRouteData with $ModerationRoute {
 
   @override
   Widget build(BuildContext context, GoRouterState state) =>
-      PostModerationHomeScreen(
+      ModerationHomeScreen(
         subdomain: subdomain,
         fanHubId: fanHubId,
         initialTab: initialTab,

@@ -96,10 +96,10 @@ class PostReportController extends _$PostReportController {
     );
   }
 
-  Future<void> resolveReportsBulk(List<int> reportIds) async {
+  Future<void> resolveReportsBulk(List<int> reportIds, String message) async {
     final result = await ref
         .read(postReportRepositoryProvider)
-        .resolveReportBulk(reportIds, 'Reports resolved by moderator')
+        .resolveReportBulk(reportIds, message)
         .run();
 
     result.fold(

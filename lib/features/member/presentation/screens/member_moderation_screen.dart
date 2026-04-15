@@ -1,25 +1,25 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:sep490_mo/features/post/data/models/report_models.dart';
-import 'package:sep490_mo/features/post/presentation/controllers/post_report_controller.dart';
-import 'package:sep490_mo/features/post/presentation/states/post_report_state.dart';
-import 'package:sep490_mo/features/post/presentation/widgets/post_report_card.dart';
+import 'package:sep490_mo/features/member/data/models/member_report_models.dart';
+import 'package:sep490_mo/features/member/presentation/controllers/member_moderation_controller.dart';
+import 'package:sep490_mo/features/member/presentation/states/member_moderation_state.dart';
+import 'package:sep490_mo/features/member/presentation/widgets/member_report_card.dart';
 
-class PostReportScreen extends HookConsumerWidget {
+class MemberModerationScreen extends HookConsumerWidget {
   final int fanHubId;
 
-  const PostReportScreen({super.key, required this.fanHubId});
+  const MemberModerationScreen({super.key, required this.fanHubId});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final scrollController = useScrollController();
 
     final state = ref.watch(
-      postReportControllerProvider(fanHubId: fanHubId),
+      memberModerationControllerProvider(fanHubId: fanHubId),
     );
     final controller = ref.read(
-      postReportControllerProvider(fanHubId: fanHubId).notifier,
+      memberModerationControllerProvider(fanHubId: fanHubId).notifier,
     );
 
     useEffect(() {
@@ -36,26 +36,26 @@ class PostReportScreen extends HookConsumerWidget {
     }, [scrollController]);
 
     return state.when(
-      data: (reportState) {
+      data: (moderationState) {
         Future<void> onRefresh() => controller.refresh();
 
-        return reportState.when(
-          ready: (posts) => RefreshIndicator(
+        return moderationState.when(
+          ready: (members) => RefreshIndicator(
             onRefresh: onRefresh,
-            child: _buildReportList(
+            child: _buildMemberList(
               context,
               controller,
-              posts,
+              members,
               scrollController,
               isLoadingMore: false,
             ),
           ),
-          loadingMore: (posts) => RefreshIndicator(
+          loadingMore: (members) => RefreshIndicator(
             onRefresh: onRefresh,
-            child: _buildReportList(
+            child: _buildMemberList(
               context,
               controller,
-              posts,
+              members,
               scrollController,
               isLoadingMore: true,
             ),
@@ -66,7 +66,7 @@ class PostReportScreen extends HookConsumerWidget {
               child: SizedBox(
                 height: constraints.maxHeight,
                 child: const Center(
-                  child: Text('No reported posts'),
+                  child: Text('No reported members'),
                 ),
               ),
             ),
@@ -91,7 +91,7 @@ class PostReportScreen extends HookConsumerWidget {
             const SizedBox(height: 16),
             ElevatedButton(
               onPressed: () => ref.invalidate(
-                postReportControllerProvider(fanHubId: fanHubId),
+                memberModerationControllerProvider(fanHubId: fanHubId),
               ),
               child: const Text('Retry'),
             ),
@@ -101,10 +101,10 @@ class PostReportScreen extends HookConsumerWidget {
     );
   }
 
-  Widget _buildReportList(
+  Widget _buildMemberList(
     BuildContext context,
-    PostReportController controller,
-    List<PostWithReport> posts,
+    MemberModerationController controller,
+    List<MemberWithReports> members,
     ScrollController scrollController, {
     required bool isLoadingMore,
   }) {
@@ -112,9 +112,9 @@ class PostReportScreen extends HookConsumerWidget {
       controller: scrollController,
       physics: const AlwaysScrollableScrollPhysics(),
       padding: const EdgeInsets.all(8),
-      itemCount: posts.length + (isLoadingMore ? 1 : 0),
+      itemCount: members.length + (isLoadingMore ? 1 : 0),
       itemBuilder: (context, index) {
-        if (index >= posts.length) {
+        if (index >= members.length) {
           return const Center(
             child: Padding(
               padding: EdgeInsets.all(16.0),
@@ -123,12 +123,12 @@ class PostReportScreen extends HookConsumerWidget {
           );
         }
 
-        final post = posts[index];
-        return PostReportCard(
-          post: post,
+        final member = members[index];
+        return MemberReportCard(
+          member: member,
           onResolve: (message) {
-            // Resolve all reports for this post
-            final reportIds = post.reports.map((r) => r.reportId).toList();
+            // Resolve all reports for this member
+            final reportIds = member.reports.map((r) => r.reportId).toList();
             controller.resolveReportsBulk(reportIds, message);
           },
         );

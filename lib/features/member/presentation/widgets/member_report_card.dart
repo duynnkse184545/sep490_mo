@@ -1,47 +1,42 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:intl/intl.dart';
-import 'package:sep490_mo/features/post/data/models/report_models.dart';
+import 'package:sep490_mo/features/member/data/models/member_models.dart';
+import 'package:sep490_mo/features/member/data/models/member_report_models.dart';
 
-class ReportPostCard extends StatefulWidget {
-  final PostWithReport post;
-  final bool isSelected;
-  final VoidCallback onToggleSelect;
-  final VoidCallback onResolve;
+class MemberReportCard extends HookWidget {
+  final MemberWithReports member;
+  final void Function(String message) onResolve;
 
-  const ReportPostCard({
+  const MemberReportCard({
     super.key,
-    required this.post,
-    this.isSelected = false,
-    required this.onToggleSelect,
+    required this.member,
     required this.onResolve,
   });
 
   @override
-  State<ReportPostCard> createState() => _ReportPostCardState();
-}
-
-class _ReportPostCardState extends State<ReportPostCard> {
-  bool _isExpanded = false;
-  int _selectedReportIndex = 0;
-
-  @override
   Widget build(BuildContext context) {
+    final isExpanded = useState(false);
+    final selectedReportIndex = useState(0);
+    final resolveMessageController = useTextEditingController();
+    final resolveMessageError = useState<String?>(null);
+
     final colorScheme = Theme.of(context).colorScheme;
-    final hasReports = widget.post.reports.isNotEmpty;
+    final hasReports = member.reports.isNotEmpty;
 
     return Card(
       margin: const EdgeInsets.only(bottom: 8),
-      elevation: widget.isSelected ? 2 : 0,
+      elevation: 0,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(8),
         side: BorderSide(
-          color: widget.isSelected ? colorScheme.primary : colorScheme.outline,
-          width: widget.isSelected ? 2 : 1,
+          color: colorScheme.outline,
+          width: 1,
         ),
       ),
       child: InkWell(
         borderRadius: BorderRadius.circular(8),
-        onTap: () => setState(() => _isExpanded = !_isExpanded),
+        onTap: () => isExpanded.value = !isExpanded.value,
         child: Padding(
           padding: const EdgeInsets.all(12),
           child: Column(
@@ -50,23 +45,23 @@ class _ReportPostCardState extends State<ReportPostCard> {
               // ── Collapsed header row (always visible) ──
               Row(
                 children: [
-                  Checkbox(
-                    value: widget.isSelected,
-                    onChanged: (_) => widget.onToggleSelect(),
-                  ),
                   CircleAvatar(
                     radius: 16,
                     backgroundColor: colorScheme.primary.withAlpha(51),
-                    child: Text(
-                      widget.post.authorDisplayName.isNotEmpty
-                          ? widget.post.authorDisplayName[0].toUpperCase()
-                          : '?',
-                      style: TextStyle(
-                        color: colorScheme.primary,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 14,
-                      ),
-                    ),
+                    backgroundImage: member.avatarUrl != null
+                        ? NetworkImage(member.avatarUrl!)
+                        : null,
+                    child: member.avatarUrl == null
+                        ? Text(
+                            (member.displayName ?? member.username ?? '?')[0]
+                                .toUpperCase(),
+                            style: TextStyle(
+                              color: colorScheme.primary,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 14,
+                            ),
+                          )
+                        : null,
                   ),
                   const SizedBox(width: 10),
                   Expanded(
@@ -74,15 +69,15 @@ class _ReportPostCardState extends State<ReportPostCard> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          widget.post.authorDisplayName,
+                          member.displayName ?? member.username ?? 'Unknown',
                           style: const TextStyle(
                             fontWeight: FontWeight.w600,
                             fontSize: 14,
                           ),
                         ),
-                        if (!_isExpanded)
+                        if (!isExpanded.value)
                           Text(
-                            widget.post.title ?? widget.post.content,
+                            '@${member.username ?? 'unknown'}',
                             maxLines: 1,
                             overflow: TextOverflow.ellipsis,
                             style: TextStyle(
@@ -96,7 +91,7 @@ class _ReportPostCardState extends State<ReportPostCard> {
                   _buildReportBadge(context),
                   const SizedBox(width: 4),
                   Icon(
-                    _isExpanded ? Icons.expand_less : Icons.expand_more,
+                    isExpanded.value ? Icons.expand_less : Icons.expand_more,
                     size: 20,
                     color: Colors.grey[600],
                   ),
@@ -104,59 +99,55 @@ class _ReportPostCardState extends State<ReportPostCard> {
               ),
 
               // ── Expanded body ──
-              if (_isExpanded) ...[
+              if (isExpanded.value) ...[
                 const SizedBox(height: 12),
 
-                if (widget.post.title != null)
-                  Text(
-                    widget.post.title!,
-                    style: const TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 16,
+                // Member details
+                Row(
+                  children: [
+                    const Icon(Icons.person, size: 16, color: Colors.grey),
+                    const SizedBox(width: 4),
+                    Text(
+                      'FanHub: ${member.fanHubName}',
+                      style: const TextStyle(
+                        fontSize: 13,
+                        fontWeight: FontWeight.w500,
+                      ),
                     ),
-                  ),
-                if (widget.post.title != null) const SizedBox(height: 4),
-                Text(
-                  widget.post.content,
-                  maxLines: 3,
-                  overflow: TextOverflow.ellipsis,
-                  style: const TextStyle(fontSize: 14),
+                  ],
                 ),
-
-                if (widget.post.mediaUrls.isNotEmpty) ...[
-                  const SizedBox(height: 8),
-                  SizedBox(
-                    height: 60,
-                    child: ListView.builder(
-                      scrollDirection: Axis.horizontal,
-                      itemCount: widget.post.mediaUrls.length,
-                      itemBuilder: (context, index) {
-                        return Padding(
-                          padding: const EdgeInsets.only(right: 4),
-                          child: ClipRRect(
-                            borderRadius: BorderRadius.circular(4),
-                            child: Image.network(
-                              widget.post.mediaUrls[index],
-                              width: 60,
-                              height: 60,
-                              fit: BoxFit.cover,
-                              errorBuilder: (_, _, _) => Container(
-                                width: 60,
-                                height: 60,
-                                color: Colors.grey[300],
-                                child: const Icon(Icons.image, size: 24),
-                              ),
-                            ),
-                          ),
-                        );
-                      },
+                const SizedBox(height: 4),
+                Row(
+                  children: [
+                    const Icon(Icons.work, size: 16, color: Colors.grey),
+                    const SizedBox(width: 4),
+                    Text(
+                      'Role: ${member.roleInHub.name}',
+                      style: const TextStyle(fontSize: 13),
                     ),
+                  ],
+                ),
+                if (member.joinedAt != null) ...[
+                  const SizedBox(height: 4),
+                  Row(
+                    children: [
+                      const Icon(
+                        Icons.calendar_today,
+                        size: 16,
+                        color: Colors.grey,
+                      ),
+                      const SizedBox(width: 4),
+                      Text(
+                        'Joined: ${_formatDate(member.joinedAt!)}',
+                        style: TextStyle(fontSize: 13, color: Colors.grey[600]),
+                      ),
+                    ],
                   ),
                 ],
 
                 const SizedBox(height: 12),
                 Text(
-                  'Reports (${widget.post.reports.length})',
+                  'Reports (${member.reports.length})',
                   style: const TextStyle(
                     fontWeight: FontWeight.bold,
                     fontSize: 14,
@@ -166,7 +157,7 @@ class _ReportPostCardState extends State<ReportPostCard> {
 
                 if (hasReports) ...[
                   // Report selector if multiple reports
-                  if (widget.post.reports.length > 1)
+                  if (member.reports.length > 1)
                     Row(
                       children: [
                         const Text('Report: ', style: TextStyle(fontSize: 12)),
@@ -175,7 +166,7 @@ class _ReportPostCardState extends State<ReportPostCard> {
                             scrollDirection: Axis.horizontal,
                             child: Row(
                               children: List.generate(
-                                widget.post.reports.length,
+                                member.reports.length,
                                 (index) => Padding(
                                   padding: const EdgeInsets.only(right: 4),
                                   child: FilterChip(
@@ -183,11 +174,9 @@ class _ReportPostCardState extends State<ReportPostCard> {
                                       '#${index + 1}',
                                       style: const TextStyle(fontSize: 12),
                                     ),
-                                    selected: _selectedReportIndex == index,
+                                    selected: selectedReportIndex.value == index,
                                     onSelected: (_) {
-                                      setState(
-                                        () => _selectedReportIndex = index,
-                                      );
+                                      selectedReportIndex.value = index;
                                     },
                                   ),
                                 ),
@@ -197,11 +186,12 @@ class _ReportPostCardState extends State<ReportPostCard> {
                         ),
                       ],
                     ),
-                  if (widget.post.reports.length > 1)
-                    const SizedBox(height: 8),
+                  if (member.reports.length > 1) const SizedBox(height: 8),
 
                   // Selected report details
-                  _buildReportDetails(widget.post.reports[_selectedReportIndex]),
+                  _buildReportDetails(
+                    member.reports[selectedReportIndex.value],
+                  ),
                 ] else
                   const Text(
                     'No reports',
@@ -217,47 +207,71 @@ class _ReportPostCardState extends State<ReportPostCard> {
                     Icon(Icons.access_time, size: 14, color: Colors.grey[600]),
                     const SizedBox(width: 4),
                     Text(
-                      _formatDate(widget.post.postCreatedAt),
+                      _formatDate(member.memberStatus == MemberStatus.pending
+                          ? DateTime.now()
+                          : member.joinedAt ?? DateTime.now()),
                       style: TextStyle(fontSize: 12, color: Colors.grey[600]),
                     ),
                     const Spacer(),
-                    if (widget.post.isPinned)
-                      Container(
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 6,
-                          vertical: 2,
-                        ),
-                        decoration: BoxDecoration(
-                          color: Colors.orange[100],
-                          borderRadius: BorderRadius.circular(4),
-                        ),
-                        child: const Text(
-                          'Pinned',
-                          style: TextStyle(
-                            fontSize: 10,
-                            color: Colors.orange,
-                            fontWeight: FontWeight.bold,
-                          ),
+                    Container(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 6,
+                        vertical: 2,
+                      ),
+                      decoration: BoxDecoration(
+                        color: _getStatusColor(member.memberStatus)
+                            .withAlpha(51),
+                        borderRadius: BorderRadius.circular(4),
+                      ),
+                      child: Text(
+                        member.memberStatus.name,
+                        style: TextStyle(
+                          fontSize: 10,
+                          color: _getStatusColor(member.memberStatus),
+                          fontWeight: FontWeight.bold,
                         ),
                       ),
-                    if (widget.post.hashtags.isNotEmpty) ...[
-                      const SizedBox(width: 8),
-                      Icon(Icons.tag, size: 14, color: Colors.grey[600]),
-                      const SizedBox(width: 2),
-                      Text(
-                        widget.post.hashtags.take(2).join(', '),
-                        style: TextStyle(fontSize: 12, color: Colors.grey[600]),
-                      ),
-                    ],
+                    ),
                   ],
                 ),
 
                 const SizedBox(height: 12),
+
+                // ── Resolve message (required) ──
+                TextField(
+                  controller: resolveMessageController,
+                  minLines: 3,
+                  maxLines: 5,
+                  keyboardType: TextInputType.multiline,
+                  onChanged: (_) {
+                    if (resolveMessageError.value != null) {
+                      resolveMessageError.value = null;
+                    }
+                  },
+                  decoration: InputDecoration(
+                    hintText: 'Resolve message (required)...',
+                    border: const OutlineInputBorder(),
+                    isDense: true,
+                    contentPadding: const EdgeInsets.all(10),
+                    errorText: resolveMessageError.value,
+                  ),
+                ),
+                const SizedBox(height: 8),
+
+                // ── Resolve button ──
                 Row(
                   children: [
                     Expanded(
                       child: OutlinedButton.icon(
-                        onPressed: widget.onResolve,
+                        onPressed: () {
+                          final message = resolveMessageController.text.trim();
+                          if (message.isEmpty) {
+                            resolveMessageError.value =
+                                'A resolve message is required';
+                            return;
+                          }
+                          onResolve(message);
+                        },
                         icon: const Icon(Icons.check_circle, size: 16),
                         label: const Text('Resolve'),
                         style: OutlinedButton.styleFrom(
@@ -276,7 +290,7 @@ class _ReportPostCardState extends State<ReportPostCard> {
   }
 
   Widget _buildReportBadge(BuildContext context) {
-    final reportCount = widget.post.reports.length;
+    final reportCount = member.reports.length;
     final color = reportCount > 2
         ? Colors.red
         : reportCount > 0
@@ -354,6 +368,14 @@ class _ReportPostCardState extends State<ReportPostCard> {
         ],
       ),
     );
+  }
+
+  Color _getStatusColor(MemberStatus status) {
+    return switch (status) {
+      MemberStatus.pending => Colors.orange,
+      MemberStatus.joined => Colors.green,
+      MemberStatus.rejected => Colors.red,
+    };
   }
 
   String _formatDate(DateTime date) {

@@ -51,7 +51,7 @@ final class PostReportControllerProvider
 }
 
 String _$postReportControllerHash() =>
-    r'232fd4c1d3dcfe6ede0894a0dbdcf5d2f4826d7e';
+    r'939a705cf68dd05fd688cc21d2004ac065d8d7bd';
 
 final class PostReportControllerFamily extends $Family
     with

@@ -8,8 +8,9 @@ import 'package:sep490_mo/features/post/presentation/widgets/moderation_post_car
 
 class PostModerationScreen extends HookConsumerWidget {
   final String subdomain;
+  final int fahHubId;
 
-  const PostModerationScreen({super.key, required this.subdomain});
+  const PostModerationScreen({super.key, required this.subdomain, required this.fahHubId});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -20,12 +21,14 @@ class PostModerationScreen extends HookConsumerWidget {
     final state = ref.watch(
       postModerationControllerProvider(
         subdomain: subdomain,
+        fanHubId: fahHubId,
         pendingOnly: showPendingOnly.value,
       ),
     );
     final controller = ref.read(
       postModerationControllerProvider(
         subdomain: subdomain,
+        fanHubId: fahHubId,
         pendingOnly: showPendingOnly.value,
       ).notifier,
     );
@@ -129,6 +132,7 @@ class PostModerationScreen extends HookConsumerWidget {
                     onPressed: () => ref.invalidate(
                       postModerationControllerProvider(
                         subdomain: subdomain,
+                        fanHubId: fahHubId,
                         pendingOnly: showPendingOnly.value,
                       ),
                     ),

@@ -85,11 +85,13 @@ class HubSpeedDial extends HookConsumerWidget {
             subdomain: subdomain,
             fanHubId: fanHubId,
           ).push(context);
+          break;
         case _DialAction.members:
           MemberListRoute(
             subdomain: subdomain,
             fanHubId: fanHubId,
           ).push(context);
+          break;
         case _DialAction.invite:
           break; // InviteRoute
         case _DialAction.moderation:
@@ -97,6 +99,7 @@ class HubSpeedDial extends HookConsumerWidget {
             subdomain: subdomain,
             fanHubId: fanHubId,
           ).push(context);
+          break;
         case _DialAction.settings:
           break; // HubSettingsRoute
         case _DialAction.report:
@@ -105,20 +108,22 @@ class HubSpeedDial extends HookConsumerWidget {
     }
 
     return SpeedDialBuilder(
-      buttonAnchor: Alignment.topCenter,
-      itemAnchor: Alignment.bottomCenter,
-      buttonBuilder: (context, isActive, toggle) => FloatingActionButton(
-        onPressed: toggle,
-        child: AnimatedRotation(
-          turns: isActive ? 0.125 : 0,
-          duration: const Duration(milliseconds: 200),
-          child: const Icon(Icons.add),
-        ),
-      ),
+      key: ValueKey('speed_dial_$subdomain'),
+      buttonAnchor: Alignment.bottomRight,
+      itemAnchor: Alignment.bottomRight,
+      buttonBuilder: (context, isActive, toggle) {
+        return FloatingActionButton(
+          onPressed: toggle,
+          child: AnimatedRotation(
+            turns: isActive ? 0.125 : 0,
+            duration: const Duration(milliseconds: 200),
+            child: const Icon(Icons.add),
+          ),
+        );
+      },
       itemBuilder: (context, item, i, animation) {
         final isUp = item.goUp;
 
-        // To reverse item order with animation add "upItems.length - 1 -" or reversed.toList() above
         final groupIndex = isUp
             ? upItems.indexWhere((a) => a.action == item.action)
             : leftItems.indexWhere((a) => a.action == item.action);
@@ -129,15 +134,10 @@ class HubSpeedDial extends HookConsumerWidget {
 
         return Transform.translate(
           offset: isUp
-              ? Offset(0, -(groupIndex + 0.15) * step)
-              : Offset(-(groupIndex + 1) * step, 55),
+              ? Offset(0, -(groupIndex + 1.1) * step)
+              : Offset(-(groupIndex + 1.1) * step, 0),
           child: ScaleTransition(
             scale: animation,
-            // child: _DialButton(
-            //   icon: item.icon,
-            //   label: item.label,
-            //   showLabelOnLeft: isUp,
-            //   onTap: () => handleTap(item.action),
             child: FloatingActionButton.small(
               heroTag: '${item.label}_speed_dial',
               onPressed: () => handleTap(item.action),
@@ -150,48 +150,3 @@ class HubSpeedDial extends HookConsumerWidget {
     );
   }
 }
-
-// If label are needed
-// class _DialButton extends StatelessWidget {
-//   final IconData icon;
-//   final String label;
-//   final bool showLabelOnLeft;
-//   final VoidCallback onTap;
-//
-//   const _DialButton({
-//     required this.icon,
-//     required this.label,
-//     required this.showLabelOnLeft,
-//     required this.onTap,
-//   });
-//
-//   @override
-//   Widget build(BuildContext context) {
-//     final fab = FloatingActionButton.small(
-//       heroTag: '${label}_speed_dial',
-//       onPressed: onTap,
-//       child: Icon(icon),
-//     );
-//
-//     final labelWidget = Material(
-//       borderRadius: BorderRadius.circular(4),
-//       color: Theme.of(context).colorScheme.surfaceContainerHighest,
-//       child: Padding(
-//         padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-//         child: Text(label, style: Theme.of(context).textTheme.labelMedium),
-//       ),
-//     );
-//
-//     if (showLabelOnLeft) {
-//       return Row(
-//         mainAxisSize: MainAxisSize.min,
-//         children: [fab],
-//       );
-//     } else {
-//       return Column(
-//         mainAxisSize: MainAxisSize.min,
-//         children: [fab],
-//       );
-//     }
-//   }
-// }
