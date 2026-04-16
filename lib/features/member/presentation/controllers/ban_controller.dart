@@ -1,41 +1,30 @@
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:sep490_mo/features/member/data/models/member_models.dart';
 import 'package:sep490_mo/features/member/data/providers/ban_providers.dart';
-import 'package:sep490_mo/features/member/data/providers/member_providers.dart';
-import 'package:sep490_mo/features/member/presentation/states/member_list_state.dart';
+import 'package:sep490_mo/features/member/presentation/states/ban_state.dart';
 
-part 'member_list_controller.g.dart';
+part 'ban_controller.g.dart';
 
 @riverpod
-class MemberListController extends _$MemberListController {
+class BanController extends _$BanController {
   static const int _pageSize = 20;
 
   int _currentPage = 0;
   bool _hasMore = true;
   bool _isFetchingMore = false;
   List<Member> _members = [];
-  String? _searchUsername;
 
   @override
-  Future<MemberListState> build({required int fanHubId}) async {
+  Future<BanState> build({
+    required int fanHubId,
+  }) async {
+    _resetPagination();
     await _fetchNextPage();
-    return state.value ?? const MemberListState.empty();
+    return state.requireValue;
   }
 
   Future<void> refresh() async {
-    _currentPage = 0;
-    _hasMore = true;
-    _isFetchingMore = false;
-    _members = [];
-    ref.invalidateSelf();
-  }
-
-  void searchByUsername(String? username) {
-    _searchUsername = username?.isEmpty == true ? null : username;
-    _currentPage = 0;
-    _hasMore = true;
-    _isFetchingMore = false;
-    _members = [];
+    _resetPagination();
     ref.invalidateSelf();
   }
 
@@ -43,20 +32,28 @@ class MemberListController extends _$MemberListController {
     if (!_hasMore || _isFetchingMore) return;
 
     _isFetchingMore = true;
-    state = AsyncValue.data(MemberListState.loadingMore(_members));
+    state = AsyncValue.data(
+      BanState.loadingMore(List.from(_members)),
+    );
     await _fetchNextPage();
     _isFetchingMore = false;
   }
 
+  void _resetPagination() {
+    _currentPage = 0;
+    _hasMore = true;
+    _isFetchingMore = false;
+    _members = [];
+  }
+
   Future<void> _fetchNextPage() async {
     final result = await ref
-        .read(memberRepositoryProvider)
-        .getMembers(
+        .read(banRepositoryProvider)
+        .getBannedMembers(
           fanHubId: fanHubId,
           pageNo: _currentPage,
           pageSize: _pageSize,
-          sortBy: 'joinedAt',
-          username: _searchUsername,
+          sortBy: 'id',
         )
         .run();
 
@@ -70,10 +67,13 @@ class MemberListController extends _$MemberListController {
         if (newMembers.length < _pageSize) _hasMore = false;
         _members.addAll(newMembers);
         if (newMembers.isNotEmpty) _currentPage++;
+
         if (_members.isEmpty) {
-          state = AsyncValue.data(const MemberListState.empty());
+          state = const AsyncValue.data(BanState.empty());
         } else {
-          state = AsyncValue.data(MemberListState.ready(List.from(_members)));
+          state = AsyncValue.data(
+            BanState.ready(List.from(_members)),
+          );
         }
       },
     );
@@ -83,6 +83,22 @@ class MemberListController extends _$MemberListController {
     final result = await ref
         .read(banRepositoryProvider)
         .banMember(banRequest)
+        .run();
+
+    result.fold(
+      (failure) {
+        // Handle failure
+      },
+      (_) {
+        refresh();
+      },
+    );
+  }
+
+  Future<void> unbanMember(int banId) async {
+    final result = await ref
+        .read(banRepositoryProvider)
+        .unbanMember(banId)
         .run();
 
     result.fold(

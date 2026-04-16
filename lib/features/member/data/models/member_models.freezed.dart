@@ -586,7 +586,7 @@ as MemberRole,
 /// @nodoc
 mixin _$BanRequest {
 
- int get fanHubMemberId; String get reason; String get banType; DateTime get bannedUntil;
+ int get fanHubMemberId; String get reason; BanType get banType; DateTime get bannedUntil;
 /// Create a copy of BanRequest
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -619,7 +619,7 @@ abstract mixin class $BanRequestCopyWith<$Res>  {
   factory $BanRequestCopyWith(BanRequest value, $Res Function(BanRequest) _then) = _$BanRequestCopyWithImpl;
 @useResult
 $Res call({
- int fanHubMemberId, String reason, String banType, DateTime bannedUntil
+ int fanHubMemberId, String reason, BanType banType, DateTime bannedUntil
 });
 
 
@@ -641,7 +641,7 @@ class _$BanRequestCopyWithImpl<$Res>
 fanHubMemberId: null == fanHubMemberId ? _self.fanHubMemberId : fanHubMemberId // ignore: cast_nullable_to_non_nullable
 as int,reason: null == reason ? _self.reason : reason // ignore: cast_nullable_to_non_nullable
 as String,banType: null == banType ? _self.banType : banType // ignore: cast_nullable_to_non_nullable
-as String,bannedUntil: null == bannedUntil ? _self.bannedUntil : bannedUntil // ignore: cast_nullable_to_non_nullable
+as BanType,bannedUntil: null == bannedUntil ? _self.bannedUntil : bannedUntil // ignore: cast_nullable_to_non_nullable
 as DateTime,
   ));
 }
@@ -727,7 +727,7 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( int fanHubMemberId,  String reason,  String banType,  DateTime bannedUntil)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( int fanHubMemberId,  String reason,  BanType banType,  DateTime bannedUntil)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _BanRequest() when $default != null:
 return $default(_that.fanHubMemberId,_that.reason,_that.banType,_that.bannedUntil);case _:
@@ -748,7 +748,7 @@ return $default(_that.fanHubMemberId,_that.reason,_that.banType,_that.bannedUnti
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( int fanHubMemberId,  String reason,  String banType,  DateTime bannedUntil)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( int fanHubMemberId,  String reason,  BanType banType,  DateTime bannedUntil)  $default,) {final _that = this;
 switch (_that) {
 case _BanRequest():
 return $default(_that.fanHubMemberId,_that.reason,_that.banType,_that.bannedUntil);case _:
@@ -768,7 +768,7 @@ return $default(_that.fanHubMemberId,_that.reason,_that.banType,_that.bannedUnti
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( int fanHubMemberId,  String reason,  String banType,  DateTime bannedUntil)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( int fanHubMemberId,  String reason,  BanType banType,  DateTime bannedUntil)?  $default,) {final _that = this;
 switch (_that) {
 case _BanRequest() when $default != null:
 return $default(_that.fanHubMemberId,_that.reason,_that.banType,_that.bannedUntil);case _:
@@ -788,7 +788,7 @@ class _BanRequest implements BanRequest {
 
 @override final  int fanHubMemberId;
 @override final  String reason;
-@override final  String banType;
+@override final  BanType banType;
 @override final  DateTime bannedUntil;
 
 /// Create a copy of BanRequest
@@ -824,7 +824,7 @@ abstract mixin class _$BanRequestCopyWith<$Res> implements $BanRequestCopyWith<$
   factory _$BanRequestCopyWith(_BanRequest value, $Res Function(_BanRequest) _then) = __$BanRequestCopyWithImpl;
 @override @useResult
 $Res call({
- int fanHubMemberId, String reason, String banType, DateTime bannedUntil
+ int fanHubMemberId, String reason, BanType banType, DateTime bannedUntil
 });
 
 
@@ -846,7 +846,7 @@ class __$BanRequestCopyWithImpl<$Res>
 fanHubMemberId: null == fanHubMemberId ? _self.fanHubMemberId : fanHubMemberId // ignore: cast_nullable_to_non_nullable
 as int,reason: null == reason ? _self.reason : reason // ignore: cast_nullable_to_non_nullable
 as String,banType: null == banType ? _self.banType : banType // ignore: cast_nullable_to_non_nullable
-as String,bannedUntil: null == bannedUntil ? _self.bannedUntil : bannedUntil // ignore: cast_nullable_to_non_nullable
+as BanType,bannedUntil: null == bannedUntil ? _self.bannedUntil : bannedUntil // ignore: cast_nullable_to_non_nullable
 as DateTime,
   ));
 }

@@ -5,6 +5,7 @@ import 'package:sep490_mo/core/widgets/empty_state.dart';
 import 'package:sep490_mo/core/widgets/error_retry_widget.dart';
 import 'package:sep490_mo/core/widgets/loader.dart';
 import 'package:sep490_mo/features/member/data/models/member_models.dart';
+import 'package:sep490_mo/features/member/data/providers/member_providers.dart';
 import 'package:sep490_mo/features/member/presentation/controllers/member_list_controller.dart';
 import 'package:sep490_mo/features/member/presentation/screens/member_detail_screen.dart';
 import 'package:sep490_mo/features/member/presentation/states/member_list_state.dart';
@@ -86,7 +87,10 @@ class MemberListScreen extends HookConsumerWidget {
                         if (index == members.length) {
                           return const SizedBox.shrink();
                         }
-                        return _MemberTile(member: members[index]);
+                        return _MemberTile(
+                          member: members[index],
+                          fanHubId: fanHubId,
+                        );
                       },
                     ),
                   ),
@@ -102,7 +106,10 @@ class MemberListScreen extends HookConsumerWidget {
                           child: Center(child: CircularProgressIndicator()),
                         );
                       }
-                      return _MemberTile(member: members[index]);
+                      return _MemberTile(
+                        member: members[index],
+                        fanHubId: fanHubId,
+                      );
                     },
                   ),
                   empty: () => const EmptyState(
@@ -124,14 +131,29 @@ class MemberListScreen extends HookConsumerWidget {
   }
 }
 
-class _MemberTile extends StatelessWidget {
+class _MemberTile extends HookConsumerWidget {
   final Member member;
+  final int fanHubId;
 
-  const _MemberTile({required this.member});
+  const _MemberTile({required this.member, required this.fanHubId});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final theme = Theme.of(context);
+    final currentUserRoleAsync = ref.watch(memberCheckingProvider(fanHubId: fanHubId));
+    
+    final canBan = currentUserRoleAsync.when(
+      data: (checking) => 
+          checking.roleInHub == MemberRole.vtuber || 
+          checking.roleInHub == MemberRole.moderator,
+      loading: () => false,
+      error: (_, _) => false,
+    );
+
+    // Don't show ban button for own user (simplified check, usually we'd have current user ID)
+    // and don't allow banning vtubers or moderators if not vtuber? 
+    // For now, follow "mod or vtuber can ban" as requested.
+
     return ListTile(
       leading: CircleAvatar(
         backgroundImage: member.avatarUrl != null
@@ -146,13 +168,23 @@ class _MemberTile extends StatelessWidget {
       ),
       title: Text(member.displayName ?? member.username ?? 'Unknown'),
       subtitle: Text(member.title ?? member.roleInHub.name),
-      trailing: member.roleInHub == MemberRole.moderator
-          ? Chip(
+      trailing: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          if (member.roleInHub == MemberRole.moderator)
+            Chip(
               label: const Text('MOD'),
               visualDensity: VisualDensity.compact,
               backgroundColor: theme.colorScheme.primaryContainer,
-            )
-          : null,
+            ),
+          if (canBan && member.roleInHub == MemberRole.member)
+            IconButton(
+              icon: const Icon(Icons.gavel, color: Colors.red),
+              onPressed: () => _showBanDialog(context, ref),
+              tooltip: 'Ban member',
+            ),
+        ],
+      ),
       onTap: () {
         Navigator.of(context).push(
           MaterialPageRoute(
@@ -162,6 +194,98 @@ class _MemberTile extends StatelessWidget {
           ),
         );
       },
+    );
+  }
+
+  Future<void> _showBanDialog(BuildContext context, WidgetRef ref) async {
+    final reasonController = TextEditingController();
+    DateTime bannedUntil = DateTime.now().add(const Duration(days: 7));
+    BanType selectedBanType = BanType.comment;
+
+    return showDialog(
+      context: context,
+      builder: (context) => StatefulBuilder(
+        builder: (context, setState) => AlertDialog(
+          title: Text('Ban ${member.displayName ?? member.username}'),
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              TextField(
+                controller: reasonController,
+                decoration: const InputDecoration(
+                  labelText: 'Reason',
+                  hintText: 'Enter reason for ban',
+                ),
+              ),
+              const SizedBox(height: 16),
+              DropdownButtonFormField<BanType>(
+                initialValue: selectedBanType,
+                decoration: const InputDecoration(
+                  labelText: 'Ban Type',
+                  border: OutlineInputBorder(),
+                ),
+                items: BanType.values.map((type) {
+                  return DropdownMenuItem(
+                    value: type,
+                    child: Text(type.name.toUpperCase()),
+                  );
+                }).toList(),
+                onChanged: (value) {
+                  if (value != null) {
+                    setState(() => selectedBanType = value);
+                  }
+                },
+              ),
+              const SizedBox(height: 16),
+              ListTile(
+                title: const Text('Ban Until'),
+                subtitle: Text(
+                  '${bannedUntil.year}-${bannedUntil.month}-${bannedUntil.day}',
+                ),
+                trailing: const Icon(Icons.calendar_today),
+                onTap: () async {
+                  final picked = await showDatePicker(
+                    context: context,
+                    initialDate: bannedUntil,
+                    firstDate: DateTime.now(),
+                    lastDate: DateTime.now().add(const Duration(days: 365 * 10)),
+                  );
+                  if (picked != null) {
+                    setState(() => bannedUntil = picked);
+                  }
+                },
+              ),
+            ],
+          ),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.of(context).pop(),
+              child: const Text('Cancel'),
+            ),
+            ElevatedButton(
+              style: ElevatedButton.styleFrom(backgroundColor: Colors.red),
+              onPressed: () {
+                final reason = reasonController.text.trim();
+                if (reason.isEmpty) return;
+
+                final request = BanRequest(
+                  fanHubMemberId: member.resolvedId,
+                  reason: reason,
+                  banType: selectedBanType,
+                  bannedUntil: bannedUntil,
+                );
+
+                ref
+                    .read(memberListControllerProvider(fanHubId: fanHubId).notifier)
+                    .banMember(request);
+                
+                Navigator.of(context).pop();
+              },
+              child: const Text('Ban', style: TextStyle(color: Colors.white)),
+            ),
+          ],
+        ),
+      ),
     );
   }
 }

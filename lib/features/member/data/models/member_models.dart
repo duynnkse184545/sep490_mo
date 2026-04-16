@@ -24,6 +24,18 @@ enum MemberStatus {
   rejected,
 }
 
+enum BanType {
+  @JsonValue('COMMENT')
+  comment,
+  @JsonValue('POST')
+  post,
+  @JsonValue('JOIN')
+  join,
+  @JsonValue('INTERACT')
+  interact,
+}
+
+
 /// Member data model
 
 @freezed
@@ -69,7 +81,7 @@ abstract class BanRequest with _$BanRequest {
   const factory BanRequest({
     required int fanHubMemberId,
     required String reason,
-    required String banType,
+    required BanType banType,
     required DateTime bannedUntil,
   }) = _BanRequest;
 

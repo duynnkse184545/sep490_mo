@@ -73,7 +73,7 @@ Map<String, dynamic> _$MemberCheckingResponseToJson(
 _BanRequest _$BanRequestFromJson(Map<String, dynamic> json) => _BanRequest(
   fanHubMemberId: (json['fanHubMemberId'] as num).toInt(),
   reason: json['reason'] as String,
-  banType: json['banType'] as String,
+  banType: $enumDecode(_$BanTypeEnumMap, json['banType']),
   bannedUntil: DateTime.parse(json['bannedUntil'] as String),
 );
 
@@ -81,6 +81,13 @@ Map<String, dynamic> _$BanRequestToJson(_BanRequest instance) =>
     <String, dynamic>{
       'fanHubMemberId': instance.fanHubMemberId,
       'reason': instance.reason,
-      'banType': instance.banType,
+      'banType': _$BanTypeEnumMap[instance.banType]!,
       'bannedUntil': instance.bannedUntil.toIso8601String(),
     };
+
+const _$BanTypeEnumMap = {
+  BanType.comment: 'COMMENT',
+  BanType.post: 'POST',
+  BanType.join: 'JOIN',
+  BanType.interact: 'INTERACT',
+};
