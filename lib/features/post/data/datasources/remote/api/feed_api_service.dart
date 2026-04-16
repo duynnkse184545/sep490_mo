@@ -48,10 +48,4 @@ abstract class FeedApiService {
 // - /posts/summarize
 // - /posts/user
 //
-// CommentRepository
-// - /posts/comment
-// - /posts/{postId}/comments
-// - /posts/comment/like/{commentId}
-// - /posts/comment/unlike/{commentId}
-// - /posts/comment/gift/{commentId}
-//
+

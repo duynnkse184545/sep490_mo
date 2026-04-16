@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:sep490_mo/features/post/data/models/post_models.dart';
+import 'package:sep490_mo/features/post/presentation/widgets/post_comments_widget.dart';
 
 class PostCard extends StatelessWidget {
   final Post post;
@@ -242,7 +243,43 @@ class PostCard extends StatelessWidget {
                 const SizedBox(width: 16),
                 IconButton(
                   onPressed: () {
-                    // TODO: Implement comment
+                    showModalBottomSheet(
+                      context: context,
+                      isScrollControlled: true,
+                      backgroundColor: Colors.white,
+                      shape: const RoundedRectangleBorder(
+                        borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+                      ),
+                      builder: (context) => DraggableScrollableSheet(
+                        initialChildSize: 0.7,
+                        minChildSize: 0.5,
+                        maxChildSize: 0.95,
+                        expand: false,
+                        builder: (context, scrollController) => Column(
+                          children: [
+                            const SizedBox(height: 8),
+                            Container(
+                              width: 40,
+                              height: 4,
+                              decoration: BoxDecoration(
+                                color: Colors.grey[300],
+                                borderRadius: BorderRadius.circular(2),
+                              ),
+                            ),
+                            const SizedBox(height: 16),
+                            const Text(
+                              'Comments',
+                              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+                            ),
+                            const SizedBox(height: 8),
+                            const Divider(height: 1),
+                            Expanded(
+                              child: PostCommentsWidget(postId: post.postId),
+                            ),
+                          ],
+                        ),
+                      ),
+                    );
                   },
                   icon: Icon(
                     Icons.chat_bubble_outline,
