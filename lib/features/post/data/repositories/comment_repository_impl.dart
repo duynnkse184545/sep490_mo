@@ -19,6 +19,13 @@ class CommentRepositoryImpl implements CommentRepository {
   }
 
   @override
+  TaskResult<List<Comment>> getReplies(int parentCommentId) {
+    return ErrorHandler.execute(() async {
+      return await _remoteDataSource.getReplies(parentCommentId);
+    });
+  }
+
+  @override
   TaskVoid createComment(CommentRequest comment) {
     return ErrorHandler.execute(() async {
       await _remoteDataSource.createComment(comment);

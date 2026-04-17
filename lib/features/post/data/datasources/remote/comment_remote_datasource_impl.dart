@@ -32,6 +32,24 @@ class CommentRemoteDataSourceImpl implements CommentRemoteDataSource {
   }
 
   @override
+  Future<List<Comment>> getReplies(int parentCommentId) async {
+    try {
+      final response = await _commentApi.getReplies(parentCommentId);
+      return switch (response) {
+        ApiResponseSuccess(:final data) => data,
+        ApiResponseFailure(:final message, :final error) =>
+          throw ServerException(message, error),
+      };
+    } on DioException catch (e) {
+      throw DioExceptionMapper.mapToException(e, 'Failed to get replies');
+    } catch (e, stack) {
+      debugPrint('CommentRemoteDataSourceImpl.getReplies error: $e');
+      debugPrint('Stack: $stack');
+      rethrow;
+    }
+  }
+
+  @override
   Future<void> createComment(CommentRequest comment) async {
     try {
       final response = await _commentApi.createComment(comment);
