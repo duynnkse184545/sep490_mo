@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'ban_api_service.dart';
+part of 'member_ban_api_service.dart';
 
 // dart format off
 
@@ -10,8 +10,8 @@ part of 'ban_api_service.dart';
 
 // ignore_for_file: unnecessary_brace_in_string_interps,no_leading_underscores_for_local_identifiers,unused_element,unnecessary_string_interpolations,unused_element_parameter,avoid_unused_constructor_parameters,unreachable_from_main
 
-class _BanApiService implements BanApiService {
-  _BanApiService(this._dio, {this.baseUrl, this.errorLogger});
+class _MemberBanApiService implements MemberBanApiService {
+  _MemberBanApiService(this._dio, {this.baseUrl, this.errorLogger});
 
   final Dio _dio;
 
@@ -20,7 +20,7 @@ class _BanApiService implements BanApiService {
   final ParseErrorLogger? errorLogger;
 
   @override
-  Future<ApiResponse<List<Member>>> getBannedMember(
+  Future<ApiResponse<List<MemberWithBans>>> getBannedMember(
     int fanHubId,
     int pageNo,
     int pageSize,
@@ -34,25 +34,25 @@ class _BanApiService implements BanApiService {
     };
     final _headers = <String, dynamic>{};
     const Map<String, dynamic>? _data = null;
-    final _options = _setStreamType<ApiResponse<List<Member>>>(
+    final _options = _setStreamType<ApiResponse<List<MemberWithBans>>>(
       Options(method: 'GET', headers: _headers, extra: _extra)
           .compose(
             _dio.options,
-            '/fan-hub-member/bans/${fanHubId}',
+            '/fan-hub-member/bans/members-with-bans/${fanHubId}',
             queryParameters: queryParameters,
             data: _data,
           )
           .copyWith(baseUrl: _combineBaseUrls(_dio.options.baseUrl, baseUrl)),
     );
     final _result = await _dio.fetch<Map<String, dynamic>>(_options);
-    late ApiResponse<List<Member>> _value;
+    late ApiResponse<List<MemberWithBans>> _value;
     try {
-      _value = ApiResponse<List<Member>>.fromJson(
+      _value = ApiResponse<List<MemberWithBans>>.fromJson(
         _result.data!,
         (json) => json is List<dynamic>
             ? json
-                  .map<Member>(
-                    (i) => Member.fromJson(i as Map<String, dynamic>),
+                  .map<MemberWithBans>(
+                    (i) => MemberWithBans.fromJson(i as Map<String, dynamic>),
                   )
                   .toList()
             : List.empty(),

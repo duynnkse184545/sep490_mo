@@ -2,15 +2,16 @@ import 'package:dio/dio.dart';
 import 'package:retrofit/retrofit.dart';
 import 'package:sep490_mo/core/models/api_response_wrapper.dart';
 import 'package:sep490_mo/features/member/data/models/member_models.dart';
+import 'package:sep490_mo/features/member/data/models/member_report_models.dart';
 
-part 'ban_api_service.g.dart';
+part 'member_ban_api_service.g.dart';
 
 @RestApi()
-abstract class BanApiService {
-  factory BanApiService(Dio dio) = _BanApiService;
+abstract class MemberBanApiService {
+  factory MemberBanApiService(Dio dio) = _MemberBanApiService;
 
-  @GET('/fan-hub-member/bans/{fanHubId}')
-  Future<ApiResponse<List<Member>>> getBannedMember(
+  @GET('/fan-hub-member/bans/members-with-bans/{fanHubId}')
+  Future<ApiResponse<List<MemberWithBans>>> getBannedMember(
     @Path('fanHubId') int fanHubId,
     @Query('pageNo') int pageNo,
     @Query('pageSize') int pageSize,

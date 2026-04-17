@@ -1,21 +1,21 @@
 import 'package:riverpod_annotation/riverpod_annotation.dart';
-import 'package:sep490_mo/features/member/data/models/member_models.dart';
-import 'package:sep490_mo/features/member/data/providers/ban_providers.dart';
-import 'package:sep490_mo/features/member/presentation/states/ban_state.dart';
+import 'package:sep490_mo/features/member/data/models/member_report_models.dart';
+import 'package:sep490_mo/features/member/data/providers/member_ban_providers.dart';
+import 'package:sep490_mo/features/member/presentation/states/member_ban_state.dart';
 
-part 'ban_controller.g.dart';
+part 'member_ban_controller.g.dart';
 
 @riverpod
-class BanController extends _$BanController {
+class MemberBanController extends _$MemberBanController {
   static const int _pageSize = 20;
 
   int _currentPage = 0;
   bool _hasMore = true;
   bool _isFetchingMore = false;
-  List<Member> _members = [];
+  List<MemberWithBans> _members = [];
 
   @override
-  Future<BanState> build({
+  Future<MemberBanState> build({
     required int fanHubId,
   }) async {
     _resetPagination();
@@ -33,7 +33,7 @@ class BanController extends _$BanController {
 
     _isFetchingMore = true;
     state = AsyncValue.data(
-      BanState.loadingMore(List.from(_members)),
+      MemberBanState.loadingMore(List.from(_members)),
     );
     await _fetchNextPage();
     _isFetchingMore = false;
@@ -48,7 +48,7 @@ class BanController extends _$BanController {
 
   Future<void> _fetchNextPage() async {
     final result = await ref
-        .read(banRepositoryProvider)
+        .read(memberBanRepositoryProvider)
         .getBannedMembers(
           fanHubId: fanHubId,
           pageNo: _currentPage,
@@ -69,35 +69,19 @@ class BanController extends _$BanController {
         if (newMembers.isNotEmpty) _currentPage++;
 
         if (_members.isEmpty) {
-          state = const AsyncValue.data(BanState.empty());
+          state = const AsyncValue.data(MemberBanState.empty());
         } else {
           state = AsyncValue.data(
-            BanState.ready(List.from(_members)),
+            MemberBanState.ready(List.from(_members)),
           );
         }
       },
     );
   }
 
-  Future<void> banMember(BanRequest banRequest) async {
-    final result = await ref
-        .read(banRepositoryProvider)
-        .banMember(banRequest)
-        .run();
-
-    result.fold(
-      (failure) {
-        // Handle failure
-      },
-      (_) {
-        refresh();
-      },
-    );
-  }
-
   Future<void> unbanMember(int banId) async {
     final result = await ref
-        .read(banRepositoryProvider)
+        .read(memberBanRepositoryProvider)
         .unbanMember(banId)
         .run();
 

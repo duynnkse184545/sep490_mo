@@ -3,7 +3,7 @@
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
-part of 'ban_state.dart';
+part of 'member_ban_state.dart';
 
 // **************************************************************************
 // FreezedGenerator
@@ -12,7 +12,7 @@ part of 'ban_state.dart';
 // dart format off
 T _$identity<T>(T value) => value;
 /// @nodoc
-mixin _$BanState {
+mixin _$MemberBanState {
 
 
 
@@ -20,7 +20,7 @@ mixin _$BanState {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is BanState);
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is MemberBanState);
 }
 
 
@@ -29,20 +29,20 @@ int get hashCode => runtimeType.hashCode;
 
 @override
 String toString() {
-  return 'BanState()';
+  return 'MemberBanState()';
 }
 
 
 }
 
 /// @nodoc
-class $BanStateCopyWith<$Res>  {
-$BanStateCopyWith(BanState _, $Res Function(BanState) __);
+class $MemberBanStateCopyWith<$Res>  {
+$MemberBanStateCopyWith(MemberBanState _, $Res Function(MemberBanState) __);
 }
 
 
-/// Adds pattern-matching-related methods to [BanState].
-extension BanStatePatterns on BanState {
+/// Adds pattern-matching-related methods to [MemberBanState].
+extension MemberBanStatePatterns on MemberBanState {
 /// A variant of `map` that fallback to returning `orElse`.
 ///
 /// It is equivalent to doing:
@@ -122,7 +122,7 @@ return empty(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function( List<Member> members)?  ready,TResult Function( List<Member> members)?  loadingMore,TResult Function()?  empty,required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function( List<MemberWithBans> members)?  ready,TResult Function( List<MemberWithBans> members)?  loadingMore,TResult Function()?  empty,required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _Ready() when ready != null:
 return ready(_that.members);case _LoadingMore() when loadingMore != null:
@@ -145,7 +145,7 @@ return empty();case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function( List<Member> members)  ready,required TResult Function( List<Member> members)  loadingMore,required TResult Function()  empty,}) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function( List<MemberWithBans> members)  ready,required TResult Function( List<MemberWithBans> members)  loadingMore,required TResult Function()  empty,}) {final _that = this;
 switch (_that) {
 case _Ready():
 return ready(_that.members);case _LoadingMore():
@@ -164,7 +164,7 @@ return empty();}
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function( List<Member> members)?  ready,TResult? Function( List<Member> members)?  loadingMore,TResult? Function()?  empty,}) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function( List<MemberWithBans> members)?  ready,TResult? Function( List<MemberWithBans> members)?  loadingMore,TResult? Function()?  empty,}) {final _that = this;
 switch (_that) {
 case _Ready() when ready != null:
 return ready(_that.members);case _LoadingMore() when loadingMore != null:
@@ -180,19 +180,19 @@ return empty();case _:
 /// @nodoc
 
 
-class _Ready implements BanState {
-  const _Ready(final  List<Member> members): _members = members;
+class _Ready implements MemberBanState {
+  const _Ready(final  List<MemberWithBans> members): _members = members;
   
 
- final  List<Member> _members;
- List<Member> get members {
+ final  List<MemberWithBans> _members;
+ List<MemberWithBans> get members {
   if (_members is EqualUnmodifiableListView) return _members;
   // ignore: implicit_dynamic_type
   return EqualUnmodifiableListView(_members);
 }
 
 
-/// Create a copy of BanState
+/// Create a copy of MemberBanState
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
 @pragma('vm:prefer-inline')
@@ -211,18 +211,18 @@ int get hashCode => Object.hash(runtimeType,const DeepCollectionEquality().hash(
 
 @override
 String toString() {
-  return 'BanState.ready(members: $members)';
+  return 'MemberBanState.ready(members: $members)';
 }
 
 
 }
 
 /// @nodoc
-abstract mixin class _$ReadyCopyWith<$Res> implements $BanStateCopyWith<$Res> {
+abstract mixin class _$ReadyCopyWith<$Res> implements $MemberBanStateCopyWith<$Res> {
   factory _$ReadyCopyWith(_Ready value, $Res Function(_Ready) _then) = __$ReadyCopyWithImpl;
 @useResult
 $Res call({
- List<Member> members
+ List<MemberWithBans> members
 });
 
 
@@ -237,12 +237,12 @@ class __$ReadyCopyWithImpl<$Res>
   final _Ready _self;
   final $Res Function(_Ready) _then;
 
-/// Create a copy of BanState
+/// Create a copy of MemberBanState
 /// with the given fields replaced by the non-null parameter values.
 @pragma('vm:prefer-inline') $Res call({Object? members = null,}) {
   return _then(_Ready(
 null == members ? _self._members : members // ignore: cast_nullable_to_non_nullable
-as List<Member>,
+as List<MemberWithBans>,
   ));
 }
 
@@ -252,19 +252,19 @@ as List<Member>,
 /// @nodoc
 
 
-class _LoadingMore implements BanState {
-  const _LoadingMore(final  List<Member> members): _members = members;
+class _LoadingMore implements MemberBanState {
+  const _LoadingMore(final  List<MemberWithBans> members): _members = members;
   
 
- final  List<Member> _members;
- List<Member> get members {
+ final  List<MemberWithBans> _members;
+ List<MemberWithBans> get members {
   if (_members is EqualUnmodifiableListView) return _members;
   // ignore: implicit_dynamic_type
   return EqualUnmodifiableListView(_members);
 }
 
 
-/// Create a copy of BanState
+/// Create a copy of MemberBanState
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
 @pragma('vm:prefer-inline')
@@ -283,18 +283,18 @@ int get hashCode => Object.hash(runtimeType,const DeepCollectionEquality().hash(
 
 @override
 String toString() {
-  return 'BanState.loadingMore(members: $members)';
+  return 'MemberBanState.loadingMore(members: $members)';
 }
 
 
 }
 
 /// @nodoc
-abstract mixin class _$LoadingMoreCopyWith<$Res> implements $BanStateCopyWith<$Res> {
+abstract mixin class _$LoadingMoreCopyWith<$Res> implements $MemberBanStateCopyWith<$Res> {
   factory _$LoadingMoreCopyWith(_LoadingMore value, $Res Function(_LoadingMore) _then) = __$LoadingMoreCopyWithImpl;
 @useResult
 $Res call({
- List<Member> members
+ List<MemberWithBans> members
 });
 
 
@@ -309,12 +309,12 @@ class __$LoadingMoreCopyWithImpl<$Res>
   final _LoadingMore _self;
   final $Res Function(_LoadingMore) _then;
 
-/// Create a copy of BanState
+/// Create a copy of MemberBanState
 /// with the given fields replaced by the non-null parameter values.
 @pragma('vm:prefer-inline') $Res call({Object? members = null,}) {
   return _then(_LoadingMore(
 null == members ? _self._members : members // ignore: cast_nullable_to_non_nullable
-as List<Member>,
+as List<MemberWithBans>,
   ));
 }
 
@@ -324,7 +324,7 @@ as List<Member>,
 /// @nodoc
 
 
-class _Empty implements BanState {
+class _Empty implements MemberBanState {
   const _Empty();
   
 
@@ -344,7 +344,7 @@ int get hashCode => runtimeType.hashCode;
 
 @override
 String toString() {
-  return 'BanState.empty()';
+  return 'MemberBanState.empty()';
 }
 
 

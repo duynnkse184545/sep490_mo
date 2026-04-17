@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:sep490_mo/features/member/presentation/screens/member_moderation_screen.dart';
+import 'package:sep490_mo/features/member/presentation/screens/banned_member_screen.dart';
 import 'package:sep490_mo/features/post/presentation/screens/post_moderation_screen.dart';
 import 'package:sep490_mo/features/post/presentation/screens/post_report_screen.dart';
 
@@ -19,7 +20,7 @@ class ModerationHomeScreen extends HookWidget {
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
-      length: 3,
+      length: 4,
       initialIndex: initialTab,
       child: Scaffold(
         appBar: AppBar(
@@ -28,7 +29,8 @@ class ModerationHomeScreen extends HookWidget {
             tabs: [
               Tab(text: 'Posts', icon: Icon(Icons.article)),
               Tab(text: 'Reports', icon: Icon(Icons.flag)),
-              Tab(text: 'Member', icon: Icon(Icons.group),)
+              Tab(text: 'Member', icon: Icon(Icons.group)),
+              Tab(text: 'Bans', icon: Icon(Icons.block)),
             ],
           ),
         ),
@@ -37,6 +39,7 @@ class ModerationHomeScreen extends HookWidget {
             PostModerationScreen(subdomain: subdomain, fahHubId: fanHubId,),
             PostReportScreen(fanHubId: fanHubId),
             MemberModerationScreen(fanHubId: fanHubId),
+            BannedMemberScreen(fanHubId: fanHubId),
           ],
         ),
       ),

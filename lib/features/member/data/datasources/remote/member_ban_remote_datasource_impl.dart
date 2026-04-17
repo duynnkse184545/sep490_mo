@@ -3,17 +3,18 @@ import 'package:flutter/material.dart';
 import 'package:sep490_mo/core/error/dio_exception_mapper.dart';
 import 'package:sep490_mo/core/error/exceptions.dart';
 import 'package:sep490_mo/core/models/api_response_wrapper.dart';
-import 'package:sep490_mo/features/member/data/datasources/remote/api/ban_api_service.dart';
-import 'package:sep490_mo/features/member/data/datasources/remote/ban_remote_datasource.dart';
+import 'package:sep490_mo/features/member/data/datasources/remote/api/member_ban_api_service.dart';
+import 'package:sep490_mo/features/member/data/datasources/remote/member_ban_remote_datasource.dart';
 import 'package:sep490_mo/features/member/data/models/member_models.dart';
+import 'package:sep490_mo/features/member/data/models/member_report_models.dart';
 
-class BanRemoteDataSourceImpl implements BanRemoteDataSource {
-  final BanApiService _banApi;
+class MemberBanRemoteDataSourceImpl implements MemberBanRemoteDataSource {
+  final MemberBanApiService _banApi;
 
-  BanRemoteDataSourceImpl({required BanApiService banApi}) : _banApi = banApi;
+  MemberBanRemoteDataSourceImpl({required MemberBanApiService banApi}) : _banApi = banApi;
 
   @override
-  Future<List<Member>> getBannedMembers({
+  Future<List<MemberWithBans>> getBannedMembers({
     required int fanHubId,
     required int pageNo,
     required int pageSize,

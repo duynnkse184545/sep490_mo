@@ -315,9 +315,311 @@ as List<Report>,
 
 
 /// @nodoc
+mixin _$MemberWithBans {
+
+ int get memberId; int? get userId; String? get username; String? get displayName; String? get avatarUrl; int get fanHubId; String get fanHubName; String get fanHubSubdomain; MemberRole get roleInHub; MemberStatus get memberStatus; DateTime? get joinedAt; List<Ban> get bans;
+/// Create a copy of MemberWithBans
+/// with the given fields replaced by the non-null parameter values.
+@JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+$MemberWithBansCopyWith<MemberWithBans> get copyWith => _$MemberWithBansCopyWithImpl<MemberWithBans>(this as MemberWithBans, _$identity);
+
+  /// Serializes this MemberWithBans to a JSON map.
+  Map<String, dynamic> toJson();
+
+
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is MemberWithBans&&(identical(other.memberId, memberId) || other.memberId == memberId)&&(identical(other.userId, userId) || other.userId == userId)&&(identical(other.username, username) || other.username == username)&&(identical(other.displayName, displayName) || other.displayName == displayName)&&(identical(other.avatarUrl, avatarUrl) || other.avatarUrl == avatarUrl)&&(identical(other.fanHubId, fanHubId) || other.fanHubId == fanHubId)&&(identical(other.fanHubName, fanHubName) || other.fanHubName == fanHubName)&&(identical(other.fanHubSubdomain, fanHubSubdomain) || other.fanHubSubdomain == fanHubSubdomain)&&(identical(other.roleInHub, roleInHub) || other.roleInHub == roleInHub)&&(identical(other.memberStatus, memberStatus) || other.memberStatus == memberStatus)&&(identical(other.joinedAt, joinedAt) || other.joinedAt == joinedAt)&&const DeepCollectionEquality().equals(other.bans, bans));
+}
+
+@JsonKey(includeFromJson: false, includeToJson: false)
+@override
+int get hashCode => Object.hash(runtimeType,memberId,userId,username,displayName,avatarUrl,fanHubId,fanHubName,fanHubSubdomain,roleInHub,memberStatus,joinedAt,const DeepCollectionEquality().hash(bans));
+
+@override
+String toString() {
+  return 'MemberWithBans(memberId: $memberId, userId: $userId, username: $username, displayName: $displayName, avatarUrl: $avatarUrl, fanHubId: $fanHubId, fanHubName: $fanHubName, fanHubSubdomain: $fanHubSubdomain, roleInHub: $roleInHub, memberStatus: $memberStatus, joinedAt: $joinedAt, bans: $bans)';
+}
+
+
+}
+
+/// @nodoc
+abstract mixin class $MemberWithBansCopyWith<$Res>  {
+  factory $MemberWithBansCopyWith(MemberWithBans value, $Res Function(MemberWithBans) _then) = _$MemberWithBansCopyWithImpl;
+@useResult
+$Res call({
+ int memberId, int? userId, String? username, String? displayName, String? avatarUrl, int fanHubId, String fanHubName, String fanHubSubdomain, MemberRole roleInHub, MemberStatus memberStatus, DateTime? joinedAt, List<Ban> bans
+});
+
+
+
+
+}
+/// @nodoc
+class _$MemberWithBansCopyWithImpl<$Res>
+    implements $MemberWithBansCopyWith<$Res> {
+  _$MemberWithBansCopyWithImpl(this._self, this._then);
+
+  final MemberWithBans _self;
+  final $Res Function(MemberWithBans) _then;
+
+/// Create a copy of MemberWithBans
+/// with the given fields replaced by the non-null parameter values.
+@pragma('vm:prefer-inline') @override $Res call({Object? memberId = null,Object? userId = freezed,Object? username = freezed,Object? displayName = freezed,Object? avatarUrl = freezed,Object? fanHubId = null,Object? fanHubName = null,Object? fanHubSubdomain = null,Object? roleInHub = null,Object? memberStatus = null,Object? joinedAt = freezed,Object? bans = null,}) {
+  return _then(_self.copyWith(
+memberId: null == memberId ? _self.memberId : memberId // ignore: cast_nullable_to_non_nullable
+as int,userId: freezed == userId ? _self.userId : userId // ignore: cast_nullable_to_non_nullable
+as int?,username: freezed == username ? _self.username : username // ignore: cast_nullable_to_non_nullable
+as String?,displayName: freezed == displayName ? _self.displayName : displayName // ignore: cast_nullable_to_non_nullable
+as String?,avatarUrl: freezed == avatarUrl ? _self.avatarUrl : avatarUrl // ignore: cast_nullable_to_non_nullable
+as String?,fanHubId: null == fanHubId ? _self.fanHubId : fanHubId // ignore: cast_nullable_to_non_nullable
+as int,fanHubName: null == fanHubName ? _self.fanHubName : fanHubName // ignore: cast_nullable_to_non_nullable
+as String,fanHubSubdomain: null == fanHubSubdomain ? _self.fanHubSubdomain : fanHubSubdomain // ignore: cast_nullable_to_non_nullable
+as String,roleInHub: null == roleInHub ? _self.roleInHub : roleInHub // ignore: cast_nullable_to_non_nullable
+as MemberRole,memberStatus: null == memberStatus ? _self.memberStatus : memberStatus // ignore: cast_nullable_to_non_nullable
+as MemberStatus,joinedAt: freezed == joinedAt ? _self.joinedAt : joinedAt // ignore: cast_nullable_to_non_nullable
+as DateTime?,bans: null == bans ? _self.bans : bans // ignore: cast_nullable_to_non_nullable
+as List<Ban>,
+  ));
+}
+
+}
+
+
+/// Adds pattern-matching-related methods to [MemberWithBans].
+extension MemberWithBansPatterns on MemberWithBans {
+/// A variant of `map` that fallback to returning `orElse`.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case _:
+///     return orElse();
+/// }
+/// ```
+
+@optionalTypeArgs TResult maybeMap<TResult extends Object?>(TResult Function( _MemberWithBans value)?  $default,{required TResult orElse(),}){
+final _that = this;
+switch (_that) {
+case _MemberWithBans() when $default != null:
+return $default(_that);case _:
+  return orElse();
+
+}
+}
+/// A `switch`-like method, using callbacks.
+///
+/// Callbacks receives the raw object, upcasted.
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case final Subclass2 value:
+///     return ...;
+/// }
+/// ```
+
+@optionalTypeArgs TResult map<TResult extends Object?>(TResult Function( _MemberWithBans value)  $default,){
+final _that = this;
+switch (_that) {
+case _MemberWithBans():
+return $default(_that);case _:
+  throw StateError('Unexpected subclass');
+
+}
+}
+/// A variant of `map` that fallback to returning `null`.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case _:
+///     return null;
+/// }
+/// ```
+
+@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>(TResult? Function( _MemberWithBans value)?  $default,){
+final _that = this;
+switch (_that) {
+case _MemberWithBans() when $default != null:
+return $default(_that);case _:
+  return null;
+
+}
+}
+/// A variant of `when` that fallback to an `orElse` callback.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case _:
+///     return orElse();
+/// }
+/// ```
+
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( int memberId,  int? userId,  String? username,  String? displayName,  String? avatarUrl,  int fanHubId,  String fanHubName,  String fanHubSubdomain,  MemberRole roleInHub,  MemberStatus memberStatus,  DateTime? joinedAt,  List<Ban> bans)?  $default,{required TResult orElse(),}) {final _that = this;
+switch (_that) {
+case _MemberWithBans() when $default != null:
+return $default(_that.memberId,_that.userId,_that.username,_that.displayName,_that.avatarUrl,_that.fanHubId,_that.fanHubName,_that.fanHubSubdomain,_that.roleInHub,_that.memberStatus,_that.joinedAt,_that.bans);case _:
+  return orElse();
+
+}
+}
+/// A `switch`-like method, using callbacks.
+///
+/// As opposed to `map`, this offers destructuring.
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case Subclass2(:final field2):
+///     return ...;
+/// }
+/// ```
+
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( int memberId,  int? userId,  String? username,  String? displayName,  String? avatarUrl,  int fanHubId,  String fanHubName,  String fanHubSubdomain,  MemberRole roleInHub,  MemberStatus memberStatus,  DateTime? joinedAt,  List<Ban> bans)  $default,) {final _that = this;
+switch (_that) {
+case _MemberWithBans():
+return $default(_that.memberId,_that.userId,_that.username,_that.displayName,_that.avatarUrl,_that.fanHubId,_that.fanHubName,_that.fanHubSubdomain,_that.roleInHub,_that.memberStatus,_that.joinedAt,_that.bans);case _:
+  throw StateError('Unexpected subclass');
+
+}
+}
+/// A variant of `when` that fallback to returning `null`
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case _:
+///     return null;
+/// }
+/// ```
+
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( int memberId,  int? userId,  String? username,  String? displayName,  String? avatarUrl,  int fanHubId,  String fanHubName,  String fanHubSubdomain,  MemberRole roleInHub,  MemberStatus memberStatus,  DateTime? joinedAt,  List<Ban> bans)?  $default,) {final _that = this;
+switch (_that) {
+case _MemberWithBans() when $default != null:
+return $default(_that.memberId,_that.userId,_that.username,_that.displayName,_that.avatarUrl,_that.fanHubId,_that.fanHubName,_that.fanHubSubdomain,_that.roleInHub,_that.memberStatus,_that.joinedAt,_that.bans);case _:
+  return null;
+
+}
+}
+
+}
+
+/// @nodoc
+@JsonSerializable()
+
+class _MemberWithBans implements MemberWithBans {
+  const _MemberWithBans({required this.memberId, this.userId, this.username, this.displayName, this.avatarUrl, required this.fanHubId, required this.fanHubName, required this.fanHubSubdomain, required this.roleInHub, required this.memberStatus, this.joinedAt, required final  List<Ban> bans}): _bans = bans;
+  factory _MemberWithBans.fromJson(Map<String, dynamic> json) => _$MemberWithBansFromJson(json);
+
+@override final  int memberId;
+@override final  int? userId;
+@override final  String? username;
+@override final  String? displayName;
+@override final  String? avatarUrl;
+@override final  int fanHubId;
+@override final  String fanHubName;
+@override final  String fanHubSubdomain;
+@override final  MemberRole roleInHub;
+@override final  MemberStatus memberStatus;
+@override final  DateTime? joinedAt;
+ final  List<Ban> _bans;
+@override List<Ban> get bans {
+  if (_bans is EqualUnmodifiableListView) return _bans;
+  // ignore: implicit_dynamic_type
+  return EqualUnmodifiableListView(_bans);
+}
+
+
+/// Create a copy of MemberWithBans
+/// with the given fields replaced by the non-null parameter values.
+@override @JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+_$MemberWithBansCopyWith<_MemberWithBans> get copyWith => __$MemberWithBansCopyWithImpl<_MemberWithBans>(this, _$identity);
+
+@override
+Map<String, dynamic> toJson() {
+  return _$MemberWithBansToJson(this, );
+}
+
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _MemberWithBans&&(identical(other.memberId, memberId) || other.memberId == memberId)&&(identical(other.userId, userId) || other.userId == userId)&&(identical(other.username, username) || other.username == username)&&(identical(other.displayName, displayName) || other.displayName == displayName)&&(identical(other.avatarUrl, avatarUrl) || other.avatarUrl == avatarUrl)&&(identical(other.fanHubId, fanHubId) || other.fanHubId == fanHubId)&&(identical(other.fanHubName, fanHubName) || other.fanHubName == fanHubName)&&(identical(other.fanHubSubdomain, fanHubSubdomain) || other.fanHubSubdomain == fanHubSubdomain)&&(identical(other.roleInHub, roleInHub) || other.roleInHub == roleInHub)&&(identical(other.memberStatus, memberStatus) || other.memberStatus == memberStatus)&&(identical(other.joinedAt, joinedAt) || other.joinedAt == joinedAt)&&const DeepCollectionEquality().equals(other._bans, _bans));
+}
+
+@JsonKey(includeFromJson: false, includeToJson: false)
+@override
+int get hashCode => Object.hash(runtimeType,memberId,userId,username,displayName,avatarUrl,fanHubId,fanHubName,fanHubSubdomain,roleInHub,memberStatus,joinedAt,const DeepCollectionEquality().hash(_bans));
+
+@override
+String toString() {
+  return 'MemberWithBans(memberId: $memberId, userId: $userId, username: $username, displayName: $displayName, avatarUrl: $avatarUrl, fanHubId: $fanHubId, fanHubName: $fanHubName, fanHubSubdomain: $fanHubSubdomain, roleInHub: $roleInHub, memberStatus: $memberStatus, joinedAt: $joinedAt, bans: $bans)';
+}
+
+
+}
+
+/// @nodoc
+abstract mixin class _$MemberWithBansCopyWith<$Res> implements $MemberWithBansCopyWith<$Res> {
+  factory _$MemberWithBansCopyWith(_MemberWithBans value, $Res Function(_MemberWithBans) _then) = __$MemberWithBansCopyWithImpl;
+@override @useResult
+$Res call({
+ int memberId, int? userId, String? username, String? displayName, String? avatarUrl, int fanHubId, String fanHubName, String fanHubSubdomain, MemberRole roleInHub, MemberStatus memberStatus, DateTime? joinedAt, List<Ban> bans
+});
+
+
+
+
+}
+/// @nodoc
+class __$MemberWithBansCopyWithImpl<$Res>
+    implements _$MemberWithBansCopyWith<$Res> {
+  __$MemberWithBansCopyWithImpl(this._self, this._then);
+
+  final _MemberWithBans _self;
+  final $Res Function(_MemberWithBans) _then;
+
+/// Create a copy of MemberWithBans
+/// with the given fields replaced by the non-null parameter values.
+@override @pragma('vm:prefer-inline') $Res call({Object? memberId = null,Object? userId = freezed,Object? username = freezed,Object? displayName = freezed,Object? avatarUrl = freezed,Object? fanHubId = null,Object? fanHubName = null,Object? fanHubSubdomain = null,Object? roleInHub = null,Object? memberStatus = null,Object? joinedAt = freezed,Object? bans = null,}) {
+  return _then(_MemberWithBans(
+memberId: null == memberId ? _self.memberId : memberId // ignore: cast_nullable_to_non_nullable
+as int,userId: freezed == userId ? _self.userId : userId // ignore: cast_nullable_to_non_nullable
+as int?,username: freezed == username ? _self.username : username // ignore: cast_nullable_to_non_nullable
+as String?,displayName: freezed == displayName ? _self.displayName : displayName // ignore: cast_nullable_to_non_nullable
+as String?,avatarUrl: freezed == avatarUrl ? _self.avatarUrl : avatarUrl // ignore: cast_nullable_to_non_nullable
+as String?,fanHubId: null == fanHubId ? _self.fanHubId : fanHubId // ignore: cast_nullable_to_non_nullable
+as int,fanHubName: null == fanHubName ? _self.fanHubName : fanHubName // ignore: cast_nullable_to_non_nullable
+as String,fanHubSubdomain: null == fanHubSubdomain ? _self.fanHubSubdomain : fanHubSubdomain // ignore: cast_nullable_to_non_nullable
+as String,roleInHub: null == roleInHub ? _self.roleInHub : roleInHub // ignore: cast_nullable_to_non_nullable
+as MemberRole,memberStatus: null == memberStatus ? _self.memberStatus : memberStatus // ignore: cast_nullable_to_non_nullable
+as MemberStatus,joinedAt: freezed == joinedAt ? _self.joinedAt : joinedAt // ignore: cast_nullable_to_non_nullable
+as DateTime?,bans: null == bans ? _self._bans : bans // ignore: cast_nullable_to_non_nullable
+as List<Ban>,
+  ));
+}
+
+
+}
+
+
+/// @nodoc
 mixin _$Report {
 
- int get reportId; int get reportedByUserId; String get reportedByUsername; String get reportedByDisplayName; String get reason; ReportStatus get reportStatus; DateTime get reportCreatedAt; int? get resolvedByUserId; String? get resolvedByUsername; String? get resolvedByDisplayName; String? get resolveMessage;
+ int get reportId; int get reportedByUserId; String get reportedByUsername; String get reportedByDisplayName; String get reason; ReportStatus get reportStatus; DateTime get reportCreatedAt; int? get resolvedByUserId; String? get resolvedByUsername; String? get resolvedByDisplayName; String? get resolveMessage; RelatedComment? get relatedComment;
 /// Create a copy of Report
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -330,16 +632,16 @@ $ReportCopyWith<Report> get copyWith => _$ReportCopyWithImpl<Report>(this as Rep
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is Report&&(identical(other.reportId, reportId) || other.reportId == reportId)&&(identical(other.reportedByUserId, reportedByUserId) || other.reportedByUserId == reportedByUserId)&&(identical(other.reportedByUsername, reportedByUsername) || other.reportedByUsername == reportedByUsername)&&(identical(other.reportedByDisplayName, reportedByDisplayName) || other.reportedByDisplayName == reportedByDisplayName)&&(identical(other.reason, reason) || other.reason == reason)&&(identical(other.reportStatus, reportStatus) || other.reportStatus == reportStatus)&&(identical(other.reportCreatedAt, reportCreatedAt) || other.reportCreatedAt == reportCreatedAt)&&(identical(other.resolvedByUserId, resolvedByUserId) || other.resolvedByUserId == resolvedByUserId)&&(identical(other.resolvedByUsername, resolvedByUsername) || other.resolvedByUsername == resolvedByUsername)&&(identical(other.resolvedByDisplayName, resolvedByDisplayName) || other.resolvedByDisplayName == resolvedByDisplayName)&&(identical(other.resolveMessage, resolveMessage) || other.resolveMessage == resolveMessage));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is Report&&(identical(other.reportId, reportId) || other.reportId == reportId)&&(identical(other.reportedByUserId, reportedByUserId) || other.reportedByUserId == reportedByUserId)&&(identical(other.reportedByUsername, reportedByUsername) || other.reportedByUsername == reportedByUsername)&&(identical(other.reportedByDisplayName, reportedByDisplayName) || other.reportedByDisplayName == reportedByDisplayName)&&(identical(other.reason, reason) || other.reason == reason)&&(identical(other.reportStatus, reportStatus) || other.reportStatus == reportStatus)&&(identical(other.reportCreatedAt, reportCreatedAt) || other.reportCreatedAt == reportCreatedAt)&&(identical(other.resolvedByUserId, resolvedByUserId) || other.resolvedByUserId == resolvedByUserId)&&(identical(other.resolvedByUsername, resolvedByUsername) || other.resolvedByUsername == resolvedByUsername)&&(identical(other.resolvedByDisplayName, resolvedByDisplayName) || other.resolvedByDisplayName == resolvedByDisplayName)&&(identical(other.resolveMessage, resolveMessage) || other.resolveMessage == resolveMessage)&&(identical(other.relatedComment, relatedComment) || other.relatedComment == relatedComment));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,reportId,reportedByUserId,reportedByUsername,reportedByDisplayName,reason,reportStatus,reportCreatedAt,resolvedByUserId,resolvedByUsername,resolvedByDisplayName,resolveMessage);
+int get hashCode => Object.hash(runtimeType,reportId,reportedByUserId,reportedByUsername,reportedByDisplayName,reason,reportStatus,reportCreatedAt,resolvedByUserId,resolvedByUsername,resolvedByDisplayName,resolveMessage,relatedComment);
 
 @override
 String toString() {
-  return 'Report(reportId: $reportId, reportedByUserId: $reportedByUserId, reportedByUsername: $reportedByUsername, reportedByDisplayName: $reportedByDisplayName, reason: $reason, reportStatus: $reportStatus, reportCreatedAt: $reportCreatedAt, resolvedByUserId: $resolvedByUserId, resolvedByUsername: $resolvedByUsername, resolvedByDisplayName: $resolvedByDisplayName, resolveMessage: $resolveMessage)';
+  return 'Report(reportId: $reportId, reportedByUserId: $reportedByUserId, reportedByUsername: $reportedByUsername, reportedByDisplayName: $reportedByDisplayName, reason: $reason, reportStatus: $reportStatus, reportCreatedAt: $reportCreatedAt, resolvedByUserId: $resolvedByUserId, resolvedByUsername: $resolvedByUsername, resolvedByDisplayName: $resolvedByDisplayName, resolveMessage: $resolveMessage, relatedComment: $relatedComment)';
 }
 
 
@@ -350,11 +652,11 @@ abstract mixin class $ReportCopyWith<$Res>  {
   factory $ReportCopyWith(Report value, $Res Function(Report) _then) = _$ReportCopyWithImpl;
 @useResult
 $Res call({
- int reportId, int reportedByUserId, String reportedByUsername, String reportedByDisplayName, String reason, ReportStatus reportStatus, DateTime reportCreatedAt, int? resolvedByUserId, String? resolvedByUsername, String? resolvedByDisplayName, String? resolveMessage
+ int reportId, int reportedByUserId, String reportedByUsername, String reportedByDisplayName, String reason, ReportStatus reportStatus, DateTime reportCreatedAt, int? resolvedByUserId, String? resolvedByUsername, String? resolvedByDisplayName, String? resolveMessage, RelatedComment? relatedComment
 });
 
 
-
+$RelatedCommentCopyWith<$Res>? get relatedComment;
 
 }
 /// @nodoc
@@ -367,7 +669,7 @@ class _$ReportCopyWithImpl<$Res>
 
 /// Create a copy of Report
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? reportId = null,Object? reportedByUserId = null,Object? reportedByUsername = null,Object? reportedByDisplayName = null,Object? reason = null,Object? reportStatus = null,Object? reportCreatedAt = null,Object? resolvedByUserId = freezed,Object? resolvedByUsername = freezed,Object? resolvedByDisplayName = freezed,Object? resolveMessage = freezed,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? reportId = null,Object? reportedByUserId = null,Object? reportedByUsername = null,Object? reportedByDisplayName = null,Object? reason = null,Object? reportStatus = null,Object? reportCreatedAt = null,Object? resolvedByUserId = freezed,Object? resolvedByUsername = freezed,Object? resolvedByDisplayName = freezed,Object? resolveMessage = freezed,Object? relatedComment = freezed,}) {
   return _then(_self.copyWith(
 reportId: null == reportId ? _self.reportId : reportId // ignore: cast_nullable_to_non_nullable
 as int,reportedByUserId: null == reportedByUserId ? _self.reportedByUserId : reportedByUserId // ignore: cast_nullable_to_non_nullable
@@ -380,10 +682,23 @@ as DateTime,resolvedByUserId: freezed == resolvedByUserId ? _self.resolvedByUser
 as int?,resolvedByUsername: freezed == resolvedByUsername ? _self.resolvedByUsername : resolvedByUsername // ignore: cast_nullable_to_non_nullable
 as String?,resolvedByDisplayName: freezed == resolvedByDisplayName ? _self.resolvedByDisplayName : resolvedByDisplayName // ignore: cast_nullable_to_non_nullable
 as String?,resolveMessage: freezed == resolveMessage ? _self.resolveMessage : resolveMessage // ignore: cast_nullable_to_non_nullable
-as String?,
+as String?,relatedComment: freezed == relatedComment ? _self.relatedComment : relatedComment // ignore: cast_nullable_to_non_nullable
+as RelatedComment?,
   ));
 }
+/// Create a copy of Report
+/// with the given fields replaced by the non-null parameter values.
+@override
+@pragma('vm:prefer-inline')
+$RelatedCommentCopyWith<$Res>? get relatedComment {
+    if (_self.relatedComment == null) {
+    return null;
+  }
 
+  return $RelatedCommentCopyWith<$Res>(_self.relatedComment!, (value) {
+    return _then(_self.copyWith(relatedComment: value));
+  });
+}
 }
 
 
@@ -465,10 +780,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( int reportId,  int reportedByUserId,  String reportedByUsername,  String reportedByDisplayName,  String reason,  ReportStatus reportStatus,  DateTime reportCreatedAt,  int? resolvedByUserId,  String? resolvedByUsername,  String? resolvedByDisplayName,  String? resolveMessage)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( int reportId,  int reportedByUserId,  String reportedByUsername,  String reportedByDisplayName,  String reason,  ReportStatus reportStatus,  DateTime reportCreatedAt,  int? resolvedByUserId,  String? resolvedByUsername,  String? resolvedByDisplayName,  String? resolveMessage,  RelatedComment? relatedComment)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _Report() when $default != null:
-return $default(_that.reportId,_that.reportedByUserId,_that.reportedByUsername,_that.reportedByDisplayName,_that.reason,_that.reportStatus,_that.reportCreatedAt,_that.resolvedByUserId,_that.resolvedByUsername,_that.resolvedByDisplayName,_that.resolveMessage);case _:
+return $default(_that.reportId,_that.reportedByUserId,_that.reportedByUsername,_that.reportedByDisplayName,_that.reason,_that.reportStatus,_that.reportCreatedAt,_that.resolvedByUserId,_that.resolvedByUsername,_that.resolvedByDisplayName,_that.resolveMessage,_that.relatedComment);case _:
   return orElse();
 
 }
@@ -486,10 +801,10 @@ return $default(_that.reportId,_that.reportedByUserId,_that.reportedByUsername,_
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( int reportId,  int reportedByUserId,  String reportedByUsername,  String reportedByDisplayName,  String reason,  ReportStatus reportStatus,  DateTime reportCreatedAt,  int? resolvedByUserId,  String? resolvedByUsername,  String? resolvedByDisplayName,  String? resolveMessage)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( int reportId,  int reportedByUserId,  String reportedByUsername,  String reportedByDisplayName,  String reason,  ReportStatus reportStatus,  DateTime reportCreatedAt,  int? resolvedByUserId,  String? resolvedByUsername,  String? resolvedByDisplayName,  String? resolveMessage,  RelatedComment? relatedComment)  $default,) {final _that = this;
 switch (_that) {
 case _Report():
-return $default(_that.reportId,_that.reportedByUserId,_that.reportedByUsername,_that.reportedByDisplayName,_that.reason,_that.reportStatus,_that.reportCreatedAt,_that.resolvedByUserId,_that.resolvedByUsername,_that.resolvedByDisplayName,_that.resolveMessage);case _:
+return $default(_that.reportId,_that.reportedByUserId,_that.reportedByUsername,_that.reportedByDisplayName,_that.reason,_that.reportStatus,_that.reportCreatedAt,_that.resolvedByUserId,_that.resolvedByUsername,_that.resolvedByDisplayName,_that.resolveMessage,_that.relatedComment);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -506,10 +821,10 @@ return $default(_that.reportId,_that.reportedByUserId,_that.reportedByUsername,_
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( int reportId,  int reportedByUserId,  String reportedByUsername,  String reportedByDisplayName,  String reason,  ReportStatus reportStatus,  DateTime reportCreatedAt,  int? resolvedByUserId,  String? resolvedByUsername,  String? resolvedByDisplayName,  String? resolveMessage)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( int reportId,  int reportedByUserId,  String reportedByUsername,  String reportedByDisplayName,  String reason,  ReportStatus reportStatus,  DateTime reportCreatedAt,  int? resolvedByUserId,  String? resolvedByUsername,  String? resolvedByDisplayName,  String? resolveMessage,  RelatedComment? relatedComment)?  $default,) {final _that = this;
 switch (_that) {
 case _Report() when $default != null:
-return $default(_that.reportId,_that.reportedByUserId,_that.reportedByUsername,_that.reportedByDisplayName,_that.reason,_that.reportStatus,_that.reportCreatedAt,_that.resolvedByUserId,_that.resolvedByUsername,_that.resolvedByDisplayName,_that.resolveMessage);case _:
+return $default(_that.reportId,_that.reportedByUserId,_that.reportedByUsername,_that.reportedByDisplayName,_that.reason,_that.reportStatus,_that.reportCreatedAt,_that.resolvedByUserId,_that.resolvedByUsername,_that.resolvedByDisplayName,_that.resolveMessage,_that.relatedComment);case _:
   return null;
 
 }
@@ -521,7 +836,7 @@ return $default(_that.reportId,_that.reportedByUserId,_that.reportedByUsername,_
 @JsonSerializable()
 
 class _Report implements Report {
-  const _Report({required this.reportId, required this.reportedByUserId, required this.reportedByUsername, required this.reportedByDisplayName, required this.reason, required this.reportStatus, required this.reportCreatedAt, this.resolvedByUserId, this.resolvedByUsername, this.resolvedByDisplayName, this.resolveMessage});
+  const _Report({required this.reportId, required this.reportedByUserId, required this.reportedByUsername, required this.reportedByDisplayName, required this.reason, required this.reportStatus, required this.reportCreatedAt, this.resolvedByUserId, this.resolvedByUsername, this.resolvedByDisplayName, this.resolveMessage, this.relatedComment});
   factory _Report.fromJson(Map<String, dynamic> json) => _$ReportFromJson(json);
 
 @override final  int reportId;
@@ -535,6 +850,7 @@ class _Report implements Report {
 @override final  String? resolvedByUsername;
 @override final  String? resolvedByDisplayName;
 @override final  String? resolveMessage;
+@override final  RelatedComment? relatedComment;
 
 /// Create a copy of Report
 /// with the given fields replaced by the non-null parameter values.
@@ -549,16 +865,16 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _Report&&(identical(other.reportId, reportId) || other.reportId == reportId)&&(identical(other.reportedByUserId, reportedByUserId) || other.reportedByUserId == reportedByUserId)&&(identical(other.reportedByUsername, reportedByUsername) || other.reportedByUsername == reportedByUsername)&&(identical(other.reportedByDisplayName, reportedByDisplayName) || other.reportedByDisplayName == reportedByDisplayName)&&(identical(other.reason, reason) || other.reason == reason)&&(identical(other.reportStatus, reportStatus) || other.reportStatus == reportStatus)&&(identical(other.reportCreatedAt, reportCreatedAt) || other.reportCreatedAt == reportCreatedAt)&&(identical(other.resolvedByUserId, resolvedByUserId) || other.resolvedByUserId == resolvedByUserId)&&(identical(other.resolvedByUsername, resolvedByUsername) || other.resolvedByUsername == resolvedByUsername)&&(identical(other.resolvedByDisplayName, resolvedByDisplayName) || other.resolvedByDisplayName == resolvedByDisplayName)&&(identical(other.resolveMessage, resolveMessage) || other.resolveMessage == resolveMessage));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _Report&&(identical(other.reportId, reportId) || other.reportId == reportId)&&(identical(other.reportedByUserId, reportedByUserId) || other.reportedByUserId == reportedByUserId)&&(identical(other.reportedByUsername, reportedByUsername) || other.reportedByUsername == reportedByUsername)&&(identical(other.reportedByDisplayName, reportedByDisplayName) || other.reportedByDisplayName == reportedByDisplayName)&&(identical(other.reason, reason) || other.reason == reason)&&(identical(other.reportStatus, reportStatus) || other.reportStatus == reportStatus)&&(identical(other.reportCreatedAt, reportCreatedAt) || other.reportCreatedAt == reportCreatedAt)&&(identical(other.resolvedByUserId, resolvedByUserId) || other.resolvedByUserId == resolvedByUserId)&&(identical(other.resolvedByUsername, resolvedByUsername) || other.resolvedByUsername == resolvedByUsername)&&(identical(other.resolvedByDisplayName, resolvedByDisplayName) || other.resolvedByDisplayName == resolvedByDisplayName)&&(identical(other.resolveMessage, resolveMessage) || other.resolveMessage == resolveMessage)&&(identical(other.relatedComment, relatedComment) || other.relatedComment == relatedComment));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,reportId,reportedByUserId,reportedByUsername,reportedByDisplayName,reason,reportStatus,reportCreatedAt,resolvedByUserId,resolvedByUsername,resolvedByDisplayName,resolveMessage);
+int get hashCode => Object.hash(runtimeType,reportId,reportedByUserId,reportedByUsername,reportedByDisplayName,reason,reportStatus,reportCreatedAt,resolvedByUserId,resolvedByUsername,resolvedByDisplayName,resolveMessage,relatedComment);
 
 @override
 String toString() {
-  return 'Report(reportId: $reportId, reportedByUserId: $reportedByUserId, reportedByUsername: $reportedByUsername, reportedByDisplayName: $reportedByDisplayName, reason: $reason, reportStatus: $reportStatus, reportCreatedAt: $reportCreatedAt, resolvedByUserId: $resolvedByUserId, resolvedByUsername: $resolvedByUsername, resolvedByDisplayName: $resolvedByDisplayName, resolveMessage: $resolveMessage)';
+  return 'Report(reportId: $reportId, reportedByUserId: $reportedByUserId, reportedByUsername: $reportedByUsername, reportedByDisplayName: $reportedByDisplayName, reason: $reason, reportStatus: $reportStatus, reportCreatedAt: $reportCreatedAt, resolvedByUserId: $resolvedByUserId, resolvedByUsername: $resolvedByUsername, resolvedByDisplayName: $resolvedByDisplayName, resolveMessage: $resolveMessage, relatedComment: $relatedComment)';
 }
 
 
@@ -569,11 +885,11 @@ abstract mixin class _$ReportCopyWith<$Res> implements $ReportCopyWith<$Res> {
   factory _$ReportCopyWith(_Report value, $Res Function(_Report) _then) = __$ReportCopyWithImpl;
 @override @useResult
 $Res call({
- int reportId, int reportedByUserId, String reportedByUsername, String reportedByDisplayName, String reason, ReportStatus reportStatus, DateTime reportCreatedAt, int? resolvedByUserId, String? resolvedByUsername, String? resolvedByDisplayName, String? resolveMessage
+ int reportId, int reportedByUserId, String reportedByUsername, String reportedByDisplayName, String reason, ReportStatus reportStatus, DateTime reportCreatedAt, int? resolvedByUserId, String? resolvedByUsername, String? resolvedByDisplayName, String? resolveMessage, RelatedComment? relatedComment
 });
 
 
-
+@override $RelatedCommentCopyWith<$Res>? get relatedComment;
 
 }
 /// @nodoc
@@ -586,7 +902,7 @@ class __$ReportCopyWithImpl<$Res>
 
 /// Create a copy of Report
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? reportId = null,Object? reportedByUserId = null,Object? reportedByUsername = null,Object? reportedByDisplayName = null,Object? reason = null,Object? reportStatus = null,Object? reportCreatedAt = null,Object? resolvedByUserId = freezed,Object? resolvedByUsername = freezed,Object? resolvedByDisplayName = freezed,Object? resolveMessage = freezed,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? reportId = null,Object? reportedByUserId = null,Object? reportedByUsername = null,Object? reportedByDisplayName = null,Object? reason = null,Object? reportStatus = null,Object? reportCreatedAt = null,Object? resolvedByUserId = freezed,Object? resolvedByUsername = freezed,Object? resolvedByDisplayName = freezed,Object? resolveMessage = freezed,Object? relatedComment = freezed,}) {
   return _then(_Report(
 reportId: null == reportId ? _self.reportId : reportId // ignore: cast_nullable_to_non_nullable
 as int,reportedByUserId: null == reportedByUserId ? _self.reportedByUserId : reportedByUserId // ignore: cast_nullable_to_non_nullable
@@ -599,7 +915,579 @@ as DateTime,resolvedByUserId: freezed == resolvedByUserId ? _self.resolvedByUser
 as int?,resolvedByUsername: freezed == resolvedByUsername ? _self.resolvedByUsername : resolvedByUsername // ignore: cast_nullable_to_non_nullable
 as String?,resolvedByDisplayName: freezed == resolvedByDisplayName ? _self.resolvedByDisplayName : resolvedByDisplayName // ignore: cast_nullable_to_non_nullable
 as String?,resolveMessage: freezed == resolveMessage ? _self.resolveMessage : resolveMessage // ignore: cast_nullable_to_non_nullable
-as String?,
+as String?,relatedComment: freezed == relatedComment ? _self.relatedComment : relatedComment // ignore: cast_nullable_to_non_nullable
+as RelatedComment?,
+  ));
+}
+
+/// Create a copy of Report
+/// with the given fields replaced by the non-null parameter values.
+@override
+@pragma('vm:prefer-inline')
+$RelatedCommentCopyWith<$Res>? get relatedComment {
+    if (_self.relatedComment == null) {
+    return null;
+  }
+
+  return $RelatedCommentCopyWith<$Res>(_self.relatedComment!, (value) {
+    return _then(_self.copyWith(relatedComment: value));
+  });
+}
+}
+
+
+/// @nodoc
+mixin _$RelatedComment {
+
+ int get commentId; int get postId; String get content; DateTime get createdAt;
+/// Create a copy of RelatedComment
+/// with the given fields replaced by the non-null parameter values.
+@JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+$RelatedCommentCopyWith<RelatedComment> get copyWith => _$RelatedCommentCopyWithImpl<RelatedComment>(this as RelatedComment, _$identity);
+
+  /// Serializes this RelatedComment to a JSON map.
+  Map<String, dynamic> toJson();
+
+
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is RelatedComment&&(identical(other.commentId, commentId) || other.commentId == commentId)&&(identical(other.postId, postId) || other.postId == postId)&&(identical(other.content, content) || other.content == content)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt));
+}
+
+@JsonKey(includeFromJson: false, includeToJson: false)
+@override
+int get hashCode => Object.hash(runtimeType,commentId,postId,content,createdAt);
+
+@override
+String toString() {
+  return 'RelatedComment(commentId: $commentId, postId: $postId, content: $content, createdAt: $createdAt)';
+}
+
+
+}
+
+/// @nodoc
+abstract mixin class $RelatedCommentCopyWith<$Res>  {
+  factory $RelatedCommentCopyWith(RelatedComment value, $Res Function(RelatedComment) _then) = _$RelatedCommentCopyWithImpl;
+@useResult
+$Res call({
+ int commentId, int postId, String content, DateTime createdAt
+});
+
+
+
+
+}
+/// @nodoc
+class _$RelatedCommentCopyWithImpl<$Res>
+    implements $RelatedCommentCopyWith<$Res> {
+  _$RelatedCommentCopyWithImpl(this._self, this._then);
+
+  final RelatedComment _self;
+  final $Res Function(RelatedComment) _then;
+
+/// Create a copy of RelatedComment
+/// with the given fields replaced by the non-null parameter values.
+@pragma('vm:prefer-inline') @override $Res call({Object? commentId = null,Object? postId = null,Object? content = null,Object? createdAt = null,}) {
+  return _then(_self.copyWith(
+commentId: null == commentId ? _self.commentId : commentId // ignore: cast_nullable_to_non_nullable
+as int,postId: null == postId ? _self.postId : postId // ignore: cast_nullable_to_non_nullable
+as int,content: null == content ? _self.content : content // ignore: cast_nullable_to_non_nullable
+as String,createdAt: null == createdAt ? _self.createdAt : createdAt // ignore: cast_nullable_to_non_nullable
+as DateTime,
+  ));
+}
+
+}
+
+
+/// Adds pattern-matching-related methods to [RelatedComment].
+extension RelatedCommentPatterns on RelatedComment {
+/// A variant of `map` that fallback to returning `orElse`.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case _:
+///     return orElse();
+/// }
+/// ```
+
+@optionalTypeArgs TResult maybeMap<TResult extends Object?>(TResult Function( _RelatedComment value)?  $default,{required TResult orElse(),}){
+final _that = this;
+switch (_that) {
+case _RelatedComment() when $default != null:
+return $default(_that);case _:
+  return orElse();
+
+}
+}
+/// A `switch`-like method, using callbacks.
+///
+/// Callbacks receives the raw object, upcasted.
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case final Subclass2 value:
+///     return ...;
+/// }
+/// ```
+
+@optionalTypeArgs TResult map<TResult extends Object?>(TResult Function( _RelatedComment value)  $default,){
+final _that = this;
+switch (_that) {
+case _RelatedComment():
+return $default(_that);case _:
+  throw StateError('Unexpected subclass');
+
+}
+}
+/// A variant of `map` that fallback to returning `null`.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case _:
+///     return null;
+/// }
+/// ```
+
+@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>(TResult? Function( _RelatedComment value)?  $default,){
+final _that = this;
+switch (_that) {
+case _RelatedComment() when $default != null:
+return $default(_that);case _:
+  return null;
+
+}
+}
+/// A variant of `when` that fallback to an `orElse` callback.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case _:
+///     return orElse();
+/// }
+/// ```
+
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( int commentId,  int postId,  String content,  DateTime createdAt)?  $default,{required TResult orElse(),}) {final _that = this;
+switch (_that) {
+case _RelatedComment() when $default != null:
+return $default(_that.commentId,_that.postId,_that.content,_that.createdAt);case _:
+  return orElse();
+
+}
+}
+/// A `switch`-like method, using callbacks.
+///
+/// As opposed to `map`, this offers destructuring.
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case Subclass2(:final field2):
+///     return ...;
+/// }
+/// ```
+
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( int commentId,  int postId,  String content,  DateTime createdAt)  $default,) {final _that = this;
+switch (_that) {
+case _RelatedComment():
+return $default(_that.commentId,_that.postId,_that.content,_that.createdAt);case _:
+  throw StateError('Unexpected subclass');
+
+}
+}
+/// A variant of `when` that fallback to returning `null`
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case _:
+///     return null;
+/// }
+/// ```
+
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( int commentId,  int postId,  String content,  DateTime createdAt)?  $default,) {final _that = this;
+switch (_that) {
+case _RelatedComment() when $default != null:
+return $default(_that.commentId,_that.postId,_that.content,_that.createdAt);case _:
+  return null;
+
+}
+}
+
+}
+
+/// @nodoc
+@JsonSerializable()
+
+class _RelatedComment implements RelatedComment {
+  const _RelatedComment({required this.commentId, required this.postId, required this.content, required this.createdAt});
+  factory _RelatedComment.fromJson(Map<String, dynamic> json) => _$RelatedCommentFromJson(json);
+
+@override final  int commentId;
+@override final  int postId;
+@override final  String content;
+@override final  DateTime createdAt;
+
+/// Create a copy of RelatedComment
+/// with the given fields replaced by the non-null parameter values.
+@override @JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+_$RelatedCommentCopyWith<_RelatedComment> get copyWith => __$RelatedCommentCopyWithImpl<_RelatedComment>(this, _$identity);
+
+@override
+Map<String, dynamic> toJson() {
+  return _$RelatedCommentToJson(this, );
+}
+
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _RelatedComment&&(identical(other.commentId, commentId) || other.commentId == commentId)&&(identical(other.postId, postId) || other.postId == postId)&&(identical(other.content, content) || other.content == content)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt));
+}
+
+@JsonKey(includeFromJson: false, includeToJson: false)
+@override
+int get hashCode => Object.hash(runtimeType,commentId,postId,content,createdAt);
+
+@override
+String toString() {
+  return 'RelatedComment(commentId: $commentId, postId: $postId, content: $content, createdAt: $createdAt)';
+}
+
+
+}
+
+/// @nodoc
+abstract mixin class _$RelatedCommentCopyWith<$Res> implements $RelatedCommentCopyWith<$Res> {
+  factory _$RelatedCommentCopyWith(_RelatedComment value, $Res Function(_RelatedComment) _then) = __$RelatedCommentCopyWithImpl;
+@override @useResult
+$Res call({
+ int commentId, int postId, String content, DateTime createdAt
+});
+
+
+
+
+}
+/// @nodoc
+class __$RelatedCommentCopyWithImpl<$Res>
+    implements _$RelatedCommentCopyWith<$Res> {
+  __$RelatedCommentCopyWithImpl(this._self, this._then);
+
+  final _RelatedComment _self;
+  final $Res Function(_RelatedComment) _then;
+
+/// Create a copy of RelatedComment
+/// with the given fields replaced by the non-null parameter values.
+@override @pragma('vm:prefer-inline') $Res call({Object? commentId = null,Object? postId = null,Object? content = null,Object? createdAt = null,}) {
+  return _then(_RelatedComment(
+commentId: null == commentId ? _self.commentId : commentId // ignore: cast_nullable_to_non_nullable
+as int,postId: null == postId ? _self.postId : postId // ignore: cast_nullable_to_non_nullable
+as int,content: null == content ? _self.content : content // ignore: cast_nullable_to_non_nullable
+as String,createdAt: null == createdAt ? _self.createdAt : createdAt // ignore: cast_nullable_to_non_nullable
+as DateTime,
+  ));
+}
+
+
+}
+
+
+/// @nodoc
+mixin _$Ban {
+
+ int get banId; int get bannedByUserId; String get bannedByUsername; String get bannedByDisplayName; String get reason; BanType get banType; DateTime? get bannedUntil; bool get isActive; DateTime get createdAt;
+/// Create a copy of Ban
+/// with the given fields replaced by the non-null parameter values.
+@JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+$BanCopyWith<Ban> get copyWith => _$BanCopyWithImpl<Ban>(this as Ban, _$identity);
+
+  /// Serializes this Ban to a JSON map.
+  Map<String, dynamic> toJson();
+
+
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is Ban&&(identical(other.banId, banId) || other.banId == banId)&&(identical(other.bannedByUserId, bannedByUserId) || other.bannedByUserId == bannedByUserId)&&(identical(other.bannedByUsername, bannedByUsername) || other.bannedByUsername == bannedByUsername)&&(identical(other.bannedByDisplayName, bannedByDisplayName) || other.bannedByDisplayName == bannedByDisplayName)&&(identical(other.reason, reason) || other.reason == reason)&&(identical(other.banType, banType) || other.banType == banType)&&(identical(other.bannedUntil, bannedUntil) || other.bannedUntil == bannedUntil)&&(identical(other.isActive, isActive) || other.isActive == isActive)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt));
+}
+
+@JsonKey(includeFromJson: false, includeToJson: false)
+@override
+int get hashCode => Object.hash(runtimeType,banId,bannedByUserId,bannedByUsername,bannedByDisplayName,reason,banType,bannedUntil,isActive,createdAt);
+
+@override
+String toString() {
+  return 'Ban(banId: $banId, bannedByUserId: $bannedByUserId, bannedByUsername: $bannedByUsername, bannedByDisplayName: $bannedByDisplayName, reason: $reason, banType: $banType, bannedUntil: $bannedUntil, isActive: $isActive, createdAt: $createdAt)';
+}
+
+
+}
+
+/// @nodoc
+abstract mixin class $BanCopyWith<$Res>  {
+  factory $BanCopyWith(Ban value, $Res Function(Ban) _then) = _$BanCopyWithImpl;
+@useResult
+$Res call({
+ int banId, int bannedByUserId, String bannedByUsername, String bannedByDisplayName, String reason, BanType banType, DateTime? bannedUntil, bool isActive, DateTime createdAt
+});
+
+
+
+
+}
+/// @nodoc
+class _$BanCopyWithImpl<$Res>
+    implements $BanCopyWith<$Res> {
+  _$BanCopyWithImpl(this._self, this._then);
+
+  final Ban _self;
+  final $Res Function(Ban) _then;
+
+/// Create a copy of Ban
+/// with the given fields replaced by the non-null parameter values.
+@pragma('vm:prefer-inline') @override $Res call({Object? banId = null,Object? bannedByUserId = null,Object? bannedByUsername = null,Object? bannedByDisplayName = null,Object? reason = null,Object? banType = null,Object? bannedUntil = freezed,Object? isActive = null,Object? createdAt = null,}) {
+  return _then(_self.copyWith(
+banId: null == banId ? _self.banId : banId // ignore: cast_nullable_to_non_nullable
+as int,bannedByUserId: null == bannedByUserId ? _self.bannedByUserId : bannedByUserId // ignore: cast_nullable_to_non_nullable
+as int,bannedByUsername: null == bannedByUsername ? _self.bannedByUsername : bannedByUsername // ignore: cast_nullable_to_non_nullable
+as String,bannedByDisplayName: null == bannedByDisplayName ? _self.bannedByDisplayName : bannedByDisplayName // ignore: cast_nullable_to_non_nullable
+as String,reason: null == reason ? _self.reason : reason // ignore: cast_nullable_to_non_nullable
+as String,banType: null == banType ? _self.banType : banType // ignore: cast_nullable_to_non_nullable
+as BanType,bannedUntil: freezed == bannedUntil ? _self.bannedUntil : bannedUntil // ignore: cast_nullable_to_non_nullable
+as DateTime?,isActive: null == isActive ? _self.isActive : isActive // ignore: cast_nullable_to_non_nullable
+as bool,createdAt: null == createdAt ? _self.createdAt : createdAt // ignore: cast_nullable_to_non_nullable
+as DateTime,
+  ));
+}
+
+}
+
+
+/// Adds pattern-matching-related methods to [Ban].
+extension BanPatterns on Ban {
+/// A variant of `map` that fallback to returning `orElse`.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case _:
+///     return orElse();
+/// }
+/// ```
+
+@optionalTypeArgs TResult maybeMap<TResult extends Object?>(TResult Function( _Ban value)?  $default,{required TResult orElse(),}){
+final _that = this;
+switch (_that) {
+case _Ban() when $default != null:
+return $default(_that);case _:
+  return orElse();
+
+}
+}
+/// A `switch`-like method, using callbacks.
+///
+/// Callbacks receives the raw object, upcasted.
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case final Subclass2 value:
+///     return ...;
+/// }
+/// ```
+
+@optionalTypeArgs TResult map<TResult extends Object?>(TResult Function( _Ban value)  $default,){
+final _that = this;
+switch (_that) {
+case _Ban():
+return $default(_that);case _:
+  throw StateError('Unexpected subclass');
+
+}
+}
+/// A variant of `map` that fallback to returning `null`.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case _:
+///     return null;
+/// }
+/// ```
+
+@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>(TResult? Function( _Ban value)?  $default,){
+final _that = this;
+switch (_that) {
+case _Ban() when $default != null:
+return $default(_that);case _:
+  return null;
+
+}
+}
+/// A variant of `when` that fallback to an `orElse` callback.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case _:
+///     return orElse();
+/// }
+/// ```
+
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( int banId,  int bannedByUserId,  String bannedByUsername,  String bannedByDisplayName,  String reason,  BanType banType,  DateTime? bannedUntil,  bool isActive,  DateTime createdAt)?  $default,{required TResult orElse(),}) {final _that = this;
+switch (_that) {
+case _Ban() when $default != null:
+return $default(_that.banId,_that.bannedByUserId,_that.bannedByUsername,_that.bannedByDisplayName,_that.reason,_that.banType,_that.bannedUntil,_that.isActive,_that.createdAt);case _:
+  return orElse();
+
+}
+}
+/// A `switch`-like method, using callbacks.
+///
+/// As opposed to `map`, this offers destructuring.
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case Subclass2(:final field2):
+///     return ...;
+/// }
+/// ```
+
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( int banId,  int bannedByUserId,  String bannedByUsername,  String bannedByDisplayName,  String reason,  BanType banType,  DateTime? bannedUntil,  bool isActive,  DateTime createdAt)  $default,) {final _that = this;
+switch (_that) {
+case _Ban():
+return $default(_that.banId,_that.bannedByUserId,_that.bannedByUsername,_that.bannedByDisplayName,_that.reason,_that.banType,_that.bannedUntil,_that.isActive,_that.createdAt);case _:
+  throw StateError('Unexpected subclass');
+
+}
+}
+/// A variant of `when` that fallback to returning `null`
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case _:
+///     return null;
+/// }
+/// ```
+
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( int banId,  int bannedByUserId,  String bannedByUsername,  String bannedByDisplayName,  String reason,  BanType banType,  DateTime? bannedUntil,  bool isActive,  DateTime createdAt)?  $default,) {final _that = this;
+switch (_that) {
+case _Ban() when $default != null:
+return $default(_that.banId,_that.bannedByUserId,_that.bannedByUsername,_that.bannedByDisplayName,_that.reason,_that.banType,_that.bannedUntil,_that.isActive,_that.createdAt);case _:
+  return null;
+
+}
+}
+
+}
+
+/// @nodoc
+@JsonSerializable()
+
+class _Ban implements Ban {
+  const _Ban({required this.banId, required this.bannedByUserId, required this.bannedByUsername, required this.bannedByDisplayName, required this.reason, required this.banType, required this.bannedUntil, required this.isActive, required this.createdAt});
+  factory _Ban.fromJson(Map<String, dynamic> json) => _$BanFromJson(json);
+
+@override final  int banId;
+@override final  int bannedByUserId;
+@override final  String bannedByUsername;
+@override final  String bannedByDisplayName;
+@override final  String reason;
+@override final  BanType banType;
+@override final  DateTime? bannedUntil;
+@override final  bool isActive;
+@override final  DateTime createdAt;
+
+/// Create a copy of Ban
+/// with the given fields replaced by the non-null parameter values.
+@override @JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+_$BanCopyWith<_Ban> get copyWith => __$BanCopyWithImpl<_Ban>(this, _$identity);
+
+@override
+Map<String, dynamic> toJson() {
+  return _$BanToJson(this, );
+}
+
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _Ban&&(identical(other.banId, banId) || other.banId == banId)&&(identical(other.bannedByUserId, bannedByUserId) || other.bannedByUserId == bannedByUserId)&&(identical(other.bannedByUsername, bannedByUsername) || other.bannedByUsername == bannedByUsername)&&(identical(other.bannedByDisplayName, bannedByDisplayName) || other.bannedByDisplayName == bannedByDisplayName)&&(identical(other.reason, reason) || other.reason == reason)&&(identical(other.banType, banType) || other.banType == banType)&&(identical(other.bannedUntil, bannedUntil) || other.bannedUntil == bannedUntil)&&(identical(other.isActive, isActive) || other.isActive == isActive)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt));
+}
+
+@JsonKey(includeFromJson: false, includeToJson: false)
+@override
+int get hashCode => Object.hash(runtimeType,banId,bannedByUserId,bannedByUsername,bannedByDisplayName,reason,banType,bannedUntil,isActive,createdAt);
+
+@override
+String toString() {
+  return 'Ban(banId: $banId, bannedByUserId: $bannedByUserId, bannedByUsername: $bannedByUsername, bannedByDisplayName: $bannedByDisplayName, reason: $reason, banType: $banType, bannedUntil: $bannedUntil, isActive: $isActive, createdAt: $createdAt)';
+}
+
+
+}
+
+/// @nodoc
+abstract mixin class _$BanCopyWith<$Res> implements $BanCopyWith<$Res> {
+  factory _$BanCopyWith(_Ban value, $Res Function(_Ban) _then) = __$BanCopyWithImpl;
+@override @useResult
+$Res call({
+ int banId, int bannedByUserId, String bannedByUsername, String bannedByDisplayName, String reason, BanType banType, DateTime? bannedUntil, bool isActive, DateTime createdAt
+});
+
+
+
+
+}
+/// @nodoc
+class __$BanCopyWithImpl<$Res>
+    implements _$BanCopyWith<$Res> {
+  __$BanCopyWithImpl(this._self, this._then);
+
+  final _Ban _self;
+  final $Res Function(_Ban) _then;
+
+/// Create a copy of Ban
+/// with the given fields replaced by the non-null parameter values.
+@override @pragma('vm:prefer-inline') $Res call({Object? banId = null,Object? bannedByUserId = null,Object? bannedByUsername = null,Object? bannedByDisplayName = null,Object? reason = null,Object? banType = null,Object? bannedUntil = freezed,Object? isActive = null,Object? createdAt = null,}) {
+  return _then(_Ban(
+banId: null == banId ? _self.banId : banId // ignore: cast_nullable_to_non_nullable
+as int,bannedByUserId: null == bannedByUserId ? _self.bannedByUserId : bannedByUserId // ignore: cast_nullable_to_non_nullable
+as int,bannedByUsername: null == bannedByUsername ? _self.bannedByUsername : bannedByUsername // ignore: cast_nullable_to_non_nullable
+as String,bannedByDisplayName: null == bannedByDisplayName ? _self.bannedByDisplayName : bannedByDisplayName // ignore: cast_nullable_to_non_nullable
+as String,reason: null == reason ? _self.reason : reason // ignore: cast_nullable_to_non_nullable
+as String,banType: null == banType ? _self.banType : banType // ignore: cast_nullable_to_non_nullable
+as BanType,bannedUntil: freezed == bannedUntil ? _self.bannedUntil : bannedUntil // ignore: cast_nullable_to_non_nullable
+as DateTime?,isActive: null == isActive ? _self.isActive : isActive // ignore: cast_nullable_to_non_nullable
+as bool,createdAt: null == createdAt ? _self.createdAt : createdAt // ignore: cast_nullable_to_non_nullable
+as DateTime,
   ));
 }
 

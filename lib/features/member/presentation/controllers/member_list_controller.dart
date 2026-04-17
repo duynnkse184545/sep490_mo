@@ -1,6 +1,6 @@
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:sep490_mo/features/member/data/models/member_models.dart';
-import 'package:sep490_mo/features/member/data/providers/ban_providers.dart';
+import 'package:sep490_mo/features/member/data/providers/member_ban_providers.dart';
 import 'package:sep490_mo/features/member/data/providers/member_providers.dart';
 import 'package:sep490_mo/features/member/presentation/states/member_list_state.dart';
 
@@ -81,7 +81,7 @@ class MemberListController extends _$MemberListController {
 
   Future<void> banMember(BanRequest banRequest) async {
     final result = await ref
-        .read(banRepositoryProvider)
+        .read(memberBanRepositoryProvider)
         .banMember(banRequest)
         .run();
 

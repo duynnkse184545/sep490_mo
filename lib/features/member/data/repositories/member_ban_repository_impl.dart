@@ -1,18 +1,19 @@
 import 'package:sep490_mo/core/error/error_handler.dart';
 import 'package:sep490_mo/core/utils/type_defs.dart';
-import 'package:sep490_mo/features/member/data/datasources/remote/ban_remote_datasource.dart';
+import 'package:sep490_mo/features/member/data/datasources/remote/member_ban_remote_datasource.dart';
 import 'package:sep490_mo/features/member/data/models/member_models.dart';
-import 'package:sep490_mo/features/member/data/repositories/ban_repository.dart';
+import 'package:sep490_mo/features/member/data/models/member_report_models.dart';
+import 'package:sep490_mo/features/member/data/repositories/member_ban_repository.dart';
 
-class BanRepositoryImpl implements BanRepository {
-  final BanRemoteDataSource _remoteDataSource;
+class MemberBanRepositoryImpl implements MemberBanRepository {
+  final MemberBanRemoteDataSource _remoteDataSource;
 
-  BanRepositoryImpl({
-    required BanRemoteDataSource remoteDataSource,
+  MemberBanRepositoryImpl({
+    required MemberBanRemoteDataSource remoteDataSource,
   }) : _remoteDataSource = remoteDataSource;
 
   @override
-  TaskResult<List<Member>> getBannedMembers({
+  TaskResult<List<MemberWithBans>> getBannedMembers({
     required int fanHubId,
     required int pageNo,
     required int pageSize,
