@@ -166,3 +166,50 @@ abstract class CreatePostRequest with _$CreatePostRequest {
       _$CreatePostRequestFromJson(json);
 }
 
+@freezed
+abstract class ReportRequest with _$ReportRequest {
+  const factory ReportRequest({
+    required int postId,
+    required String reason,
+  }) = _ReportRequest;
+
+  factory ReportRequest.fromJson(Map<String, dynamic> json) =>
+      _$ReportRequestFromJson(json);
+}
+
+@freezed
+abstract class PollRequest with _$PollRequest {
+  const factory PollRequest({
+    required int fanHubId,
+    required String title,
+    required String content,
+    required List<String> options,
+    required List<String> hashtags,
+  }) = _PollRequest;
+
+  factory PollRequest.fromJson(Map<String, dynamic> json) =>
+      _$PollRequestFromJson(json);
+}
+
+@freezed
+abstract class SummaryResponse with _$SummaryResponse {
+  const factory SummaryResponse({
+    required String summarizeResult,
+  }) = _SummaryResponse;
+
+  factory SummaryResponse.fromJson(Map<String, dynamic> json) =>
+      _$SummaryResponseFromJson(json);
+}
+
+@freezed
+abstract class TranslationResponse with _$TranslationResponse {
+  const factory TranslationResponse({
+    required String translatedContent,
+    required String translatedTitle,
+    @JsonKey(name: 'translate_language_set') required String translateLanguageSet,
+    String? extraComment
+  }) = _TranslationResponse;
+
+  factory TranslationResponse.fromJson(Map<String, dynamic> json) =>
+      _$TranslationResponseFromJson(json);
+}

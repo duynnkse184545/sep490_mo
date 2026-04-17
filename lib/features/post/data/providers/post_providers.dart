@@ -14,7 +14,7 @@ PostApiService postApiService(Ref ref) {
 }
 
 @riverpod
-PostRemoteDatasource postRemoteDataSource(Ref ref) {
+PostRemoteDataSource postRemoteDataSource(Ref ref) {
   return PostRemoteDatasourceImpl(postApi: ref.watch(postApiServiceProvider));
 }
 

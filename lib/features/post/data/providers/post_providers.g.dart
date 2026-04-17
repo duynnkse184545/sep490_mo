@@ -56,11 +56,11 @@ final postRemoteDataSourceProvider = PostRemoteDataSourceProvider._();
 final class PostRemoteDataSourceProvider
     extends
         $FunctionalProvider<
-          PostRemoteDatasource,
-          PostRemoteDatasource,
-          PostRemoteDatasource
+          PostRemoteDataSource,
+          PostRemoteDataSource,
+          PostRemoteDataSource
         >
-    with $Provider<PostRemoteDatasource> {
+    with $Provider<PostRemoteDataSource> {
   PostRemoteDataSourceProvider._()
     : super(
         from: null,
@@ -77,26 +77,26 @@ final class PostRemoteDataSourceProvider
 
   @$internal
   @override
-  $ProviderElement<PostRemoteDatasource> $createElement(
+  $ProviderElement<PostRemoteDataSource> $createElement(
     $ProviderPointer pointer,
   ) => $ProviderElement(pointer);
 
   @override
-  PostRemoteDatasource create(Ref ref) {
+  PostRemoteDataSource create(Ref ref) {
     return postRemoteDataSource(ref);
   }
 
   /// {@macro riverpod.override_with_value}
-  Override overrideWithValue(PostRemoteDatasource value) {
+  Override overrideWithValue(PostRemoteDataSource value) {
     return $ProviderOverride(
       origin: this,
-      providerOverride: $SyncValueProvider<PostRemoteDatasource>(value),
+      providerOverride: $SyncValueProvider<PostRemoteDataSource>(value),
     );
   }
 }
 
 String _$postRemoteDataSourceHash() =>
-    r'a6df463fb09083aabee76bcb74a5a24b002117aa';
+    r'6fcce1dde4556cb8c4d1f476501084035c404db2';
 
 @ProviderFor(postRepository)
 final postRepositoryProvider = PostRepositoryProvider._();

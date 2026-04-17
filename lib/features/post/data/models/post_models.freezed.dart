@@ -1566,4 +1566,1092 @@ as String?,
 
 }
 
+
+/// @nodoc
+mixin _$ReportRequest {
+
+ int get postId; String get reason;
+/// Create a copy of ReportRequest
+/// with the given fields replaced by the non-null parameter values.
+@JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+$ReportRequestCopyWith<ReportRequest> get copyWith => _$ReportRequestCopyWithImpl<ReportRequest>(this as ReportRequest, _$identity);
+
+  /// Serializes this ReportRequest to a JSON map.
+  Map<String, dynamic> toJson();
+
+
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is ReportRequest&&(identical(other.postId, postId) || other.postId == postId)&&(identical(other.reason, reason) || other.reason == reason));
+}
+
+@JsonKey(includeFromJson: false, includeToJson: false)
+@override
+int get hashCode => Object.hash(runtimeType,postId,reason);
+
+@override
+String toString() {
+  return 'ReportRequest(postId: $postId, reason: $reason)';
+}
+
+
+}
+
+/// @nodoc
+abstract mixin class $ReportRequestCopyWith<$Res>  {
+  factory $ReportRequestCopyWith(ReportRequest value, $Res Function(ReportRequest) _then) = _$ReportRequestCopyWithImpl;
+@useResult
+$Res call({
+ int postId, String reason
+});
+
+
+
+
+}
+/// @nodoc
+class _$ReportRequestCopyWithImpl<$Res>
+    implements $ReportRequestCopyWith<$Res> {
+  _$ReportRequestCopyWithImpl(this._self, this._then);
+
+  final ReportRequest _self;
+  final $Res Function(ReportRequest) _then;
+
+/// Create a copy of ReportRequest
+/// with the given fields replaced by the non-null parameter values.
+@pragma('vm:prefer-inline') @override $Res call({Object? postId = null,Object? reason = null,}) {
+  return _then(_self.copyWith(
+postId: null == postId ? _self.postId : postId // ignore: cast_nullable_to_non_nullable
+as int,reason: null == reason ? _self.reason : reason // ignore: cast_nullable_to_non_nullable
+as String,
+  ));
+}
+
+}
+
+
+/// Adds pattern-matching-related methods to [ReportRequest].
+extension ReportRequestPatterns on ReportRequest {
+/// A variant of `map` that fallback to returning `orElse`.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case _:
+///     return orElse();
+/// }
+/// ```
+
+@optionalTypeArgs TResult maybeMap<TResult extends Object?>(TResult Function( _ReportRequest value)?  $default,{required TResult orElse(),}){
+final _that = this;
+switch (_that) {
+case _ReportRequest() when $default != null:
+return $default(_that);case _:
+  return orElse();
+
+}
+}
+/// A `switch`-like method, using callbacks.
+///
+/// Callbacks receives the raw object, upcasted.
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case final Subclass2 value:
+///     return ...;
+/// }
+/// ```
+
+@optionalTypeArgs TResult map<TResult extends Object?>(TResult Function( _ReportRequest value)  $default,){
+final _that = this;
+switch (_that) {
+case _ReportRequest():
+return $default(_that);case _:
+  throw StateError('Unexpected subclass');
+
+}
+}
+/// A variant of `map` that fallback to returning `null`.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case _:
+///     return null;
+/// }
+/// ```
+
+@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>(TResult? Function( _ReportRequest value)?  $default,){
+final _that = this;
+switch (_that) {
+case _ReportRequest() when $default != null:
+return $default(_that);case _:
+  return null;
+
+}
+}
+/// A variant of `when` that fallback to an `orElse` callback.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case _:
+///     return orElse();
+/// }
+/// ```
+
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( int postId,  String reason)?  $default,{required TResult orElse(),}) {final _that = this;
+switch (_that) {
+case _ReportRequest() when $default != null:
+return $default(_that.postId,_that.reason);case _:
+  return orElse();
+
+}
+}
+/// A `switch`-like method, using callbacks.
+///
+/// As opposed to `map`, this offers destructuring.
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case Subclass2(:final field2):
+///     return ...;
+/// }
+/// ```
+
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( int postId,  String reason)  $default,) {final _that = this;
+switch (_that) {
+case _ReportRequest():
+return $default(_that.postId,_that.reason);case _:
+  throw StateError('Unexpected subclass');
+
+}
+}
+/// A variant of `when` that fallback to returning `null`
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case _:
+///     return null;
+/// }
+/// ```
+
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( int postId,  String reason)?  $default,) {final _that = this;
+switch (_that) {
+case _ReportRequest() when $default != null:
+return $default(_that.postId,_that.reason);case _:
+  return null;
+
+}
+}
+
+}
+
+/// @nodoc
+@JsonSerializable()
+
+class _ReportRequest implements ReportRequest {
+  const _ReportRequest({required this.postId, required this.reason});
+  factory _ReportRequest.fromJson(Map<String, dynamic> json) => _$ReportRequestFromJson(json);
+
+@override final  int postId;
+@override final  String reason;
+
+/// Create a copy of ReportRequest
+/// with the given fields replaced by the non-null parameter values.
+@override @JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+_$ReportRequestCopyWith<_ReportRequest> get copyWith => __$ReportRequestCopyWithImpl<_ReportRequest>(this, _$identity);
+
+@override
+Map<String, dynamic> toJson() {
+  return _$ReportRequestToJson(this, );
+}
+
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _ReportRequest&&(identical(other.postId, postId) || other.postId == postId)&&(identical(other.reason, reason) || other.reason == reason));
+}
+
+@JsonKey(includeFromJson: false, includeToJson: false)
+@override
+int get hashCode => Object.hash(runtimeType,postId,reason);
+
+@override
+String toString() {
+  return 'ReportRequest(postId: $postId, reason: $reason)';
+}
+
+
+}
+
+/// @nodoc
+abstract mixin class _$ReportRequestCopyWith<$Res> implements $ReportRequestCopyWith<$Res> {
+  factory _$ReportRequestCopyWith(_ReportRequest value, $Res Function(_ReportRequest) _then) = __$ReportRequestCopyWithImpl;
+@override @useResult
+$Res call({
+ int postId, String reason
+});
+
+
+
+
+}
+/// @nodoc
+class __$ReportRequestCopyWithImpl<$Res>
+    implements _$ReportRequestCopyWith<$Res> {
+  __$ReportRequestCopyWithImpl(this._self, this._then);
+
+  final _ReportRequest _self;
+  final $Res Function(_ReportRequest) _then;
+
+/// Create a copy of ReportRequest
+/// with the given fields replaced by the non-null parameter values.
+@override @pragma('vm:prefer-inline') $Res call({Object? postId = null,Object? reason = null,}) {
+  return _then(_ReportRequest(
+postId: null == postId ? _self.postId : postId // ignore: cast_nullable_to_non_nullable
+as int,reason: null == reason ? _self.reason : reason // ignore: cast_nullable_to_non_nullable
+as String,
+  ));
+}
+
+
+}
+
+
+/// @nodoc
+mixin _$PollRequest {
+
+ int get fanHubId; String get title; String get content; List<String> get options; List<String> get hashtags;
+/// Create a copy of PollRequest
+/// with the given fields replaced by the non-null parameter values.
+@JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+$PollRequestCopyWith<PollRequest> get copyWith => _$PollRequestCopyWithImpl<PollRequest>(this as PollRequest, _$identity);
+
+  /// Serializes this PollRequest to a JSON map.
+  Map<String, dynamic> toJson();
+
+
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is PollRequest&&(identical(other.fanHubId, fanHubId) || other.fanHubId == fanHubId)&&(identical(other.title, title) || other.title == title)&&(identical(other.content, content) || other.content == content)&&const DeepCollectionEquality().equals(other.options, options)&&const DeepCollectionEquality().equals(other.hashtags, hashtags));
+}
+
+@JsonKey(includeFromJson: false, includeToJson: false)
+@override
+int get hashCode => Object.hash(runtimeType,fanHubId,title,content,const DeepCollectionEquality().hash(options),const DeepCollectionEquality().hash(hashtags));
+
+@override
+String toString() {
+  return 'PollRequest(fanHubId: $fanHubId, title: $title, content: $content, options: $options, hashtags: $hashtags)';
+}
+
+
+}
+
+/// @nodoc
+abstract mixin class $PollRequestCopyWith<$Res>  {
+  factory $PollRequestCopyWith(PollRequest value, $Res Function(PollRequest) _then) = _$PollRequestCopyWithImpl;
+@useResult
+$Res call({
+ int fanHubId, String title, String content, List<String> options, List<String> hashtags
+});
+
+
+
+
+}
+/// @nodoc
+class _$PollRequestCopyWithImpl<$Res>
+    implements $PollRequestCopyWith<$Res> {
+  _$PollRequestCopyWithImpl(this._self, this._then);
+
+  final PollRequest _self;
+  final $Res Function(PollRequest) _then;
+
+/// Create a copy of PollRequest
+/// with the given fields replaced by the non-null parameter values.
+@pragma('vm:prefer-inline') @override $Res call({Object? fanHubId = null,Object? title = null,Object? content = null,Object? options = null,Object? hashtags = null,}) {
+  return _then(_self.copyWith(
+fanHubId: null == fanHubId ? _self.fanHubId : fanHubId // ignore: cast_nullable_to_non_nullable
+as int,title: null == title ? _self.title : title // ignore: cast_nullable_to_non_nullable
+as String,content: null == content ? _self.content : content // ignore: cast_nullable_to_non_nullable
+as String,options: null == options ? _self.options : options // ignore: cast_nullable_to_non_nullable
+as List<String>,hashtags: null == hashtags ? _self.hashtags : hashtags // ignore: cast_nullable_to_non_nullable
+as List<String>,
+  ));
+}
+
+}
+
+
+/// Adds pattern-matching-related methods to [PollRequest].
+extension PollRequestPatterns on PollRequest {
+/// A variant of `map` that fallback to returning `orElse`.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case _:
+///     return orElse();
+/// }
+/// ```
+
+@optionalTypeArgs TResult maybeMap<TResult extends Object?>(TResult Function( _PollRequest value)?  $default,{required TResult orElse(),}){
+final _that = this;
+switch (_that) {
+case _PollRequest() when $default != null:
+return $default(_that);case _:
+  return orElse();
+
+}
+}
+/// A `switch`-like method, using callbacks.
+///
+/// Callbacks receives the raw object, upcasted.
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case final Subclass2 value:
+///     return ...;
+/// }
+/// ```
+
+@optionalTypeArgs TResult map<TResult extends Object?>(TResult Function( _PollRequest value)  $default,){
+final _that = this;
+switch (_that) {
+case _PollRequest():
+return $default(_that);case _:
+  throw StateError('Unexpected subclass');
+
+}
+}
+/// A variant of `map` that fallback to returning `null`.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case _:
+///     return null;
+/// }
+/// ```
+
+@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>(TResult? Function( _PollRequest value)?  $default,){
+final _that = this;
+switch (_that) {
+case _PollRequest() when $default != null:
+return $default(_that);case _:
+  return null;
+
+}
+}
+/// A variant of `when` that fallback to an `orElse` callback.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case _:
+///     return orElse();
+/// }
+/// ```
+
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( int fanHubId,  String title,  String content,  List<String> options,  List<String> hashtags)?  $default,{required TResult orElse(),}) {final _that = this;
+switch (_that) {
+case _PollRequest() when $default != null:
+return $default(_that.fanHubId,_that.title,_that.content,_that.options,_that.hashtags);case _:
+  return orElse();
+
+}
+}
+/// A `switch`-like method, using callbacks.
+///
+/// As opposed to `map`, this offers destructuring.
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case Subclass2(:final field2):
+///     return ...;
+/// }
+/// ```
+
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( int fanHubId,  String title,  String content,  List<String> options,  List<String> hashtags)  $default,) {final _that = this;
+switch (_that) {
+case _PollRequest():
+return $default(_that.fanHubId,_that.title,_that.content,_that.options,_that.hashtags);case _:
+  throw StateError('Unexpected subclass');
+
+}
+}
+/// A variant of `when` that fallback to returning `null`
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case _:
+///     return null;
+/// }
+/// ```
+
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( int fanHubId,  String title,  String content,  List<String> options,  List<String> hashtags)?  $default,) {final _that = this;
+switch (_that) {
+case _PollRequest() when $default != null:
+return $default(_that.fanHubId,_that.title,_that.content,_that.options,_that.hashtags);case _:
+  return null;
+
+}
+}
+
+}
+
+/// @nodoc
+@JsonSerializable()
+
+class _PollRequest implements PollRequest {
+  const _PollRequest({required this.fanHubId, required this.title, required this.content, required final  List<String> options, required final  List<String> hashtags}): _options = options,_hashtags = hashtags;
+  factory _PollRequest.fromJson(Map<String, dynamic> json) => _$PollRequestFromJson(json);
+
+@override final  int fanHubId;
+@override final  String title;
+@override final  String content;
+ final  List<String> _options;
+@override List<String> get options {
+  if (_options is EqualUnmodifiableListView) return _options;
+  // ignore: implicit_dynamic_type
+  return EqualUnmodifiableListView(_options);
+}
+
+ final  List<String> _hashtags;
+@override List<String> get hashtags {
+  if (_hashtags is EqualUnmodifiableListView) return _hashtags;
+  // ignore: implicit_dynamic_type
+  return EqualUnmodifiableListView(_hashtags);
+}
+
+
+/// Create a copy of PollRequest
+/// with the given fields replaced by the non-null parameter values.
+@override @JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+_$PollRequestCopyWith<_PollRequest> get copyWith => __$PollRequestCopyWithImpl<_PollRequest>(this, _$identity);
+
+@override
+Map<String, dynamic> toJson() {
+  return _$PollRequestToJson(this, );
+}
+
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _PollRequest&&(identical(other.fanHubId, fanHubId) || other.fanHubId == fanHubId)&&(identical(other.title, title) || other.title == title)&&(identical(other.content, content) || other.content == content)&&const DeepCollectionEquality().equals(other._options, _options)&&const DeepCollectionEquality().equals(other._hashtags, _hashtags));
+}
+
+@JsonKey(includeFromJson: false, includeToJson: false)
+@override
+int get hashCode => Object.hash(runtimeType,fanHubId,title,content,const DeepCollectionEquality().hash(_options),const DeepCollectionEquality().hash(_hashtags));
+
+@override
+String toString() {
+  return 'PollRequest(fanHubId: $fanHubId, title: $title, content: $content, options: $options, hashtags: $hashtags)';
+}
+
+
+}
+
+/// @nodoc
+abstract mixin class _$PollRequestCopyWith<$Res> implements $PollRequestCopyWith<$Res> {
+  factory _$PollRequestCopyWith(_PollRequest value, $Res Function(_PollRequest) _then) = __$PollRequestCopyWithImpl;
+@override @useResult
+$Res call({
+ int fanHubId, String title, String content, List<String> options, List<String> hashtags
+});
+
+
+
+
+}
+/// @nodoc
+class __$PollRequestCopyWithImpl<$Res>
+    implements _$PollRequestCopyWith<$Res> {
+  __$PollRequestCopyWithImpl(this._self, this._then);
+
+  final _PollRequest _self;
+  final $Res Function(_PollRequest) _then;
+
+/// Create a copy of PollRequest
+/// with the given fields replaced by the non-null parameter values.
+@override @pragma('vm:prefer-inline') $Res call({Object? fanHubId = null,Object? title = null,Object? content = null,Object? options = null,Object? hashtags = null,}) {
+  return _then(_PollRequest(
+fanHubId: null == fanHubId ? _self.fanHubId : fanHubId // ignore: cast_nullable_to_non_nullable
+as int,title: null == title ? _self.title : title // ignore: cast_nullable_to_non_nullable
+as String,content: null == content ? _self.content : content // ignore: cast_nullable_to_non_nullable
+as String,options: null == options ? _self._options : options // ignore: cast_nullable_to_non_nullable
+as List<String>,hashtags: null == hashtags ? _self._hashtags : hashtags // ignore: cast_nullable_to_non_nullable
+as List<String>,
+  ));
+}
+
+
+}
+
+
+/// @nodoc
+mixin _$SummaryResponse {
+
+ String get summarizeResult;
+/// Create a copy of SummaryResponse
+/// with the given fields replaced by the non-null parameter values.
+@JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+$SummaryResponseCopyWith<SummaryResponse> get copyWith => _$SummaryResponseCopyWithImpl<SummaryResponse>(this as SummaryResponse, _$identity);
+
+  /// Serializes this SummaryResponse to a JSON map.
+  Map<String, dynamic> toJson();
+
+
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is SummaryResponse&&(identical(other.summarizeResult, summarizeResult) || other.summarizeResult == summarizeResult));
+}
+
+@JsonKey(includeFromJson: false, includeToJson: false)
+@override
+int get hashCode => Object.hash(runtimeType,summarizeResult);
+
+@override
+String toString() {
+  return 'SummaryResponse(summarizeResult: $summarizeResult)';
+}
+
+
+}
+
+/// @nodoc
+abstract mixin class $SummaryResponseCopyWith<$Res>  {
+  factory $SummaryResponseCopyWith(SummaryResponse value, $Res Function(SummaryResponse) _then) = _$SummaryResponseCopyWithImpl;
+@useResult
+$Res call({
+ String summarizeResult
+});
+
+
+
+
+}
+/// @nodoc
+class _$SummaryResponseCopyWithImpl<$Res>
+    implements $SummaryResponseCopyWith<$Res> {
+  _$SummaryResponseCopyWithImpl(this._self, this._then);
+
+  final SummaryResponse _self;
+  final $Res Function(SummaryResponse) _then;
+
+/// Create a copy of SummaryResponse
+/// with the given fields replaced by the non-null parameter values.
+@pragma('vm:prefer-inline') @override $Res call({Object? summarizeResult = null,}) {
+  return _then(_self.copyWith(
+summarizeResult: null == summarizeResult ? _self.summarizeResult : summarizeResult // ignore: cast_nullable_to_non_nullable
+as String,
+  ));
+}
+
+}
+
+
+/// Adds pattern-matching-related methods to [SummaryResponse].
+extension SummaryResponsePatterns on SummaryResponse {
+/// A variant of `map` that fallback to returning `orElse`.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case _:
+///     return orElse();
+/// }
+/// ```
+
+@optionalTypeArgs TResult maybeMap<TResult extends Object?>(TResult Function( _SummaryResponse value)?  $default,{required TResult orElse(),}){
+final _that = this;
+switch (_that) {
+case _SummaryResponse() when $default != null:
+return $default(_that);case _:
+  return orElse();
+
+}
+}
+/// A `switch`-like method, using callbacks.
+///
+/// Callbacks receives the raw object, upcasted.
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case final Subclass2 value:
+///     return ...;
+/// }
+/// ```
+
+@optionalTypeArgs TResult map<TResult extends Object?>(TResult Function( _SummaryResponse value)  $default,){
+final _that = this;
+switch (_that) {
+case _SummaryResponse():
+return $default(_that);case _:
+  throw StateError('Unexpected subclass');
+
+}
+}
+/// A variant of `map` that fallback to returning `null`.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case _:
+///     return null;
+/// }
+/// ```
+
+@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>(TResult? Function( _SummaryResponse value)?  $default,){
+final _that = this;
+switch (_that) {
+case _SummaryResponse() when $default != null:
+return $default(_that);case _:
+  return null;
+
+}
+}
+/// A variant of `when` that fallback to an `orElse` callback.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case _:
+///     return orElse();
+/// }
+/// ```
+
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String summarizeResult)?  $default,{required TResult orElse(),}) {final _that = this;
+switch (_that) {
+case _SummaryResponse() when $default != null:
+return $default(_that.summarizeResult);case _:
+  return orElse();
+
+}
+}
+/// A `switch`-like method, using callbacks.
+///
+/// As opposed to `map`, this offers destructuring.
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case Subclass2(:final field2):
+///     return ...;
+/// }
+/// ```
+
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String summarizeResult)  $default,) {final _that = this;
+switch (_that) {
+case _SummaryResponse():
+return $default(_that.summarizeResult);case _:
+  throw StateError('Unexpected subclass');
+
+}
+}
+/// A variant of `when` that fallback to returning `null`
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case _:
+///     return null;
+/// }
+/// ```
+
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String summarizeResult)?  $default,) {final _that = this;
+switch (_that) {
+case _SummaryResponse() when $default != null:
+return $default(_that.summarizeResult);case _:
+  return null;
+
+}
+}
+
+}
+
+/// @nodoc
+@JsonSerializable()
+
+class _SummaryResponse implements SummaryResponse {
+  const _SummaryResponse({required this.summarizeResult});
+  factory _SummaryResponse.fromJson(Map<String, dynamic> json) => _$SummaryResponseFromJson(json);
+
+@override final  String summarizeResult;
+
+/// Create a copy of SummaryResponse
+/// with the given fields replaced by the non-null parameter values.
+@override @JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+_$SummaryResponseCopyWith<_SummaryResponse> get copyWith => __$SummaryResponseCopyWithImpl<_SummaryResponse>(this, _$identity);
+
+@override
+Map<String, dynamic> toJson() {
+  return _$SummaryResponseToJson(this, );
+}
+
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _SummaryResponse&&(identical(other.summarizeResult, summarizeResult) || other.summarizeResult == summarizeResult));
+}
+
+@JsonKey(includeFromJson: false, includeToJson: false)
+@override
+int get hashCode => Object.hash(runtimeType,summarizeResult);
+
+@override
+String toString() {
+  return 'SummaryResponse(summarizeResult: $summarizeResult)';
+}
+
+
+}
+
+/// @nodoc
+abstract mixin class _$SummaryResponseCopyWith<$Res> implements $SummaryResponseCopyWith<$Res> {
+  factory _$SummaryResponseCopyWith(_SummaryResponse value, $Res Function(_SummaryResponse) _then) = __$SummaryResponseCopyWithImpl;
+@override @useResult
+$Res call({
+ String summarizeResult
+});
+
+
+
+
+}
+/// @nodoc
+class __$SummaryResponseCopyWithImpl<$Res>
+    implements _$SummaryResponseCopyWith<$Res> {
+  __$SummaryResponseCopyWithImpl(this._self, this._then);
+
+  final _SummaryResponse _self;
+  final $Res Function(_SummaryResponse) _then;
+
+/// Create a copy of SummaryResponse
+/// with the given fields replaced by the non-null parameter values.
+@override @pragma('vm:prefer-inline') $Res call({Object? summarizeResult = null,}) {
+  return _then(_SummaryResponse(
+summarizeResult: null == summarizeResult ? _self.summarizeResult : summarizeResult // ignore: cast_nullable_to_non_nullable
+as String,
+  ));
+}
+
+
+}
+
+
+/// @nodoc
+mixin _$TranslationResponse {
+
+ String get translatedContent; String get translatedTitle;@JsonKey(name: 'translate_language_set') String get translateLanguageSet; String? get extraComment;
+/// Create a copy of TranslationResponse
+/// with the given fields replaced by the non-null parameter values.
+@JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+$TranslationResponseCopyWith<TranslationResponse> get copyWith => _$TranslationResponseCopyWithImpl<TranslationResponse>(this as TranslationResponse, _$identity);
+
+  /// Serializes this TranslationResponse to a JSON map.
+  Map<String, dynamic> toJson();
+
+
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is TranslationResponse&&(identical(other.translatedContent, translatedContent) || other.translatedContent == translatedContent)&&(identical(other.translatedTitle, translatedTitle) || other.translatedTitle == translatedTitle)&&(identical(other.translateLanguageSet, translateLanguageSet) || other.translateLanguageSet == translateLanguageSet)&&(identical(other.extraComment, extraComment) || other.extraComment == extraComment));
+}
+
+@JsonKey(includeFromJson: false, includeToJson: false)
+@override
+int get hashCode => Object.hash(runtimeType,translatedContent,translatedTitle,translateLanguageSet,extraComment);
+
+@override
+String toString() {
+  return 'TranslationResponse(translatedContent: $translatedContent, translatedTitle: $translatedTitle, translateLanguageSet: $translateLanguageSet, extraComment: $extraComment)';
+}
+
+
+}
+
+/// @nodoc
+abstract mixin class $TranslationResponseCopyWith<$Res>  {
+  factory $TranslationResponseCopyWith(TranslationResponse value, $Res Function(TranslationResponse) _then) = _$TranslationResponseCopyWithImpl;
+@useResult
+$Res call({
+ String translatedContent, String translatedTitle,@JsonKey(name: 'translate_language_set') String translateLanguageSet, String? extraComment
+});
+
+
+
+
+}
+/// @nodoc
+class _$TranslationResponseCopyWithImpl<$Res>
+    implements $TranslationResponseCopyWith<$Res> {
+  _$TranslationResponseCopyWithImpl(this._self, this._then);
+
+  final TranslationResponse _self;
+  final $Res Function(TranslationResponse) _then;
+
+/// Create a copy of TranslationResponse
+/// with the given fields replaced by the non-null parameter values.
+@pragma('vm:prefer-inline') @override $Res call({Object? translatedContent = null,Object? translatedTitle = null,Object? translateLanguageSet = null,Object? extraComment = freezed,}) {
+  return _then(_self.copyWith(
+translatedContent: null == translatedContent ? _self.translatedContent : translatedContent // ignore: cast_nullable_to_non_nullable
+as String,translatedTitle: null == translatedTitle ? _self.translatedTitle : translatedTitle // ignore: cast_nullable_to_non_nullable
+as String,translateLanguageSet: null == translateLanguageSet ? _self.translateLanguageSet : translateLanguageSet // ignore: cast_nullable_to_non_nullable
+as String,extraComment: freezed == extraComment ? _self.extraComment : extraComment // ignore: cast_nullable_to_non_nullable
+as String?,
+  ));
+}
+
+}
+
+
+/// Adds pattern-matching-related methods to [TranslationResponse].
+extension TranslationResponsePatterns on TranslationResponse {
+/// A variant of `map` that fallback to returning `orElse`.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case _:
+///     return orElse();
+/// }
+/// ```
+
+@optionalTypeArgs TResult maybeMap<TResult extends Object?>(TResult Function( _TranslationResponse value)?  $default,{required TResult orElse(),}){
+final _that = this;
+switch (_that) {
+case _TranslationResponse() when $default != null:
+return $default(_that);case _:
+  return orElse();
+
+}
+}
+/// A `switch`-like method, using callbacks.
+///
+/// Callbacks receives the raw object, upcasted.
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case final Subclass2 value:
+///     return ...;
+/// }
+/// ```
+
+@optionalTypeArgs TResult map<TResult extends Object?>(TResult Function( _TranslationResponse value)  $default,){
+final _that = this;
+switch (_that) {
+case _TranslationResponse():
+return $default(_that);case _:
+  throw StateError('Unexpected subclass');
+
+}
+}
+/// A variant of `map` that fallback to returning `null`.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case _:
+///     return null;
+/// }
+/// ```
+
+@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>(TResult? Function( _TranslationResponse value)?  $default,){
+final _that = this;
+switch (_that) {
+case _TranslationResponse() when $default != null:
+return $default(_that);case _:
+  return null;
+
+}
+}
+/// A variant of `when` that fallback to an `orElse` callback.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case _:
+///     return orElse();
+/// }
+/// ```
+
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String translatedContent,  String translatedTitle, @JsonKey(name: 'translate_language_set')  String translateLanguageSet,  String? extraComment)?  $default,{required TResult orElse(),}) {final _that = this;
+switch (_that) {
+case _TranslationResponse() when $default != null:
+return $default(_that.translatedContent,_that.translatedTitle,_that.translateLanguageSet,_that.extraComment);case _:
+  return orElse();
+
+}
+}
+/// A `switch`-like method, using callbacks.
+///
+/// As opposed to `map`, this offers destructuring.
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case Subclass2(:final field2):
+///     return ...;
+/// }
+/// ```
+
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String translatedContent,  String translatedTitle, @JsonKey(name: 'translate_language_set')  String translateLanguageSet,  String? extraComment)  $default,) {final _that = this;
+switch (_that) {
+case _TranslationResponse():
+return $default(_that.translatedContent,_that.translatedTitle,_that.translateLanguageSet,_that.extraComment);case _:
+  throw StateError('Unexpected subclass');
+
+}
+}
+/// A variant of `when` that fallback to returning `null`
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case _:
+///     return null;
+/// }
+/// ```
+
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String translatedContent,  String translatedTitle, @JsonKey(name: 'translate_language_set')  String translateLanguageSet,  String? extraComment)?  $default,) {final _that = this;
+switch (_that) {
+case _TranslationResponse() when $default != null:
+return $default(_that.translatedContent,_that.translatedTitle,_that.translateLanguageSet,_that.extraComment);case _:
+  return null;
+
+}
+}
+
+}
+
+/// @nodoc
+@JsonSerializable()
+
+class _TranslationResponse implements TranslationResponse {
+  const _TranslationResponse({required this.translatedContent, required this.translatedTitle, @JsonKey(name: 'translate_language_set') required this.translateLanguageSet, this.extraComment});
+  factory _TranslationResponse.fromJson(Map<String, dynamic> json) => _$TranslationResponseFromJson(json);
+
+@override final  String translatedContent;
+@override final  String translatedTitle;
+@override@JsonKey(name: 'translate_language_set') final  String translateLanguageSet;
+@override final  String? extraComment;
+
+/// Create a copy of TranslationResponse
+/// with the given fields replaced by the non-null parameter values.
+@override @JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+_$TranslationResponseCopyWith<_TranslationResponse> get copyWith => __$TranslationResponseCopyWithImpl<_TranslationResponse>(this, _$identity);
+
+@override
+Map<String, dynamic> toJson() {
+  return _$TranslationResponseToJson(this, );
+}
+
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _TranslationResponse&&(identical(other.translatedContent, translatedContent) || other.translatedContent == translatedContent)&&(identical(other.translatedTitle, translatedTitle) || other.translatedTitle == translatedTitle)&&(identical(other.translateLanguageSet, translateLanguageSet) || other.translateLanguageSet == translateLanguageSet)&&(identical(other.extraComment, extraComment) || other.extraComment == extraComment));
+}
+
+@JsonKey(includeFromJson: false, includeToJson: false)
+@override
+int get hashCode => Object.hash(runtimeType,translatedContent,translatedTitle,translateLanguageSet,extraComment);
+
+@override
+String toString() {
+  return 'TranslationResponse(translatedContent: $translatedContent, translatedTitle: $translatedTitle, translateLanguageSet: $translateLanguageSet, extraComment: $extraComment)';
+}
+
+
+}
+
+/// @nodoc
+abstract mixin class _$TranslationResponseCopyWith<$Res> implements $TranslationResponseCopyWith<$Res> {
+  factory _$TranslationResponseCopyWith(_TranslationResponse value, $Res Function(_TranslationResponse) _then) = __$TranslationResponseCopyWithImpl;
+@override @useResult
+$Res call({
+ String translatedContent, String translatedTitle,@JsonKey(name: 'translate_language_set') String translateLanguageSet, String? extraComment
+});
+
+
+
+
+}
+/// @nodoc
+class __$TranslationResponseCopyWithImpl<$Res>
+    implements _$TranslationResponseCopyWith<$Res> {
+  __$TranslationResponseCopyWithImpl(this._self, this._then);
+
+  final _TranslationResponse _self;
+  final $Res Function(_TranslationResponse) _then;
+
+/// Create a copy of TranslationResponse
+/// with the given fields replaced by the non-null parameter values.
+@override @pragma('vm:prefer-inline') $Res call({Object? translatedContent = null,Object? translatedTitle = null,Object? translateLanguageSet = null,Object? extraComment = freezed,}) {
+  return _then(_TranslationResponse(
+translatedContent: null == translatedContent ? _self.translatedContent : translatedContent // ignore: cast_nullable_to_non_nullable
+as String,translatedTitle: null == translatedTitle ? _self.translatedTitle : translatedTitle // ignore: cast_nullable_to_non_nullable
+as String,translateLanguageSet: null == translateLanguageSet ? _self.translateLanguageSet : translateLanguageSet // ignore: cast_nullable_to_non_nullable
+as String,extraComment: freezed == extraComment ? _self.extraComment : extraComment // ignore: cast_nullable_to_non_nullable
+as String?,
+  ));
+}
+
+
+}
+
 // dart format on

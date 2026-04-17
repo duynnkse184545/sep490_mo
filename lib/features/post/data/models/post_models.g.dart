@@ -215,3 +215,54 @@ Map<String, dynamic> _$CreatePostRequestToJson(_CreatePostRequest instance) =>
       'hashtags': instance.hashtags,
       'video': instance.video,
     };
+
+_ReportRequest _$ReportRequestFromJson(Map<String, dynamic> json) =>
+    _ReportRequest(
+      postId: (json['postId'] as num).toInt(),
+      reason: json['reason'] as String,
+    );
+
+Map<String, dynamic> _$ReportRequestToJson(_ReportRequest instance) =>
+    <String, dynamic>{'postId': instance.postId, 'reason': instance.reason};
+
+_PollRequest _$PollRequestFromJson(Map<String, dynamic> json) => _PollRequest(
+  fanHubId: (json['fanHubId'] as num).toInt(),
+  title: json['title'] as String,
+  content: json['content'] as String,
+  options: (json['options'] as List<dynamic>).map((e) => e as String).toList(),
+  hashtags: (json['hashtags'] as List<dynamic>)
+      .map((e) => e as String)
+      .toList(),
+);
+
+Map<String, dynamic> _$PollRequestToJson(_PollRequest instance) =>
+    <String, dynamic>{
+      'fanHubId': instance.fanHubId,
+      'title': instance.title,
+      'content': instance.content,
+      'options': instance.options,
+      'hashtags': instance.hashtags,
+    };
+
+_SummaryResponse _$SummaryResponseFromJson(Map<String, dynamic> json) =>
+    _SummaryResponse(summarizeResult: json['summarizeResult'] as String);
+
+Map<String, dynamic> _$SummaryResponseToJson(_SummaryResponse instance) =>
+    <String, dynamic>{'summarizeResult': instance.summarizeResult};
+
+_TranslationResponse _$TranslationResponseFromJson(Map<String, dynamic> json) =>
+    _TranslationResponse(
+      translatedContent: json['translatedContent'] as String,
+      translatedTitle: json['translatedTitle'] as String,
+      translateLanguageSet: json['translate_language_set'] as String,
+      extraComment: json['extraComment'] as String?,
+    );
+
+Map<String, dynamic> _$TranslationResponseToJson(
+  _TranslationResponse instance,
+) => <String, dynamic>{
+  'translatedContent': instance.translatedContent,
+  'translatedTitle': instance.translatedTitle,
+  'translate_language_set': instance.translateLanguageSet,
+  'extraComment': instance.extraComment,
+};

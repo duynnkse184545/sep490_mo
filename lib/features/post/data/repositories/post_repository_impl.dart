@@ -5,15 +5,100 @@ import 'package:sep490_mo/features/post/data/models/post_models.dart';
 import 'package:sep490_mo/features/post/data/repositories/post_repository.dart';
 
 class PostRepositoryImpl implements PostRepository {
-  final PostRemoteDatasource _remoteDataSource;
+  final PostRemoteDataSource _remoteDataSource;
 
-  PostRepositoryImpl({required PostRemoteDatasource remoteDataSource})
+  PostRepositoryImpl({required PostRemoteDataSource remoteDataSource})
     : _remoteDataSource = remoteDataSource;
 
   @override
   TaskVoid createPost(CreatePostRequest request) {
     return ErrorHandler.execute(() async {
       await _remoteDataSource.createPost(request);
+    });
+  }
+
+  @override
+  TaskResult<List<Post>> getBookmarked({
+    required int pageNo,
+    required int pageSize,
+    required String sortBy,
+  }) {
+    return ErrorHandler.execute(() async {
+      return await _remoteDataSource.getBookmarked(
+        pageNo: pageNo,
+        pageSize: pageSize,
+        sortBy: sortBy,
+      );
+    });
+  }
+
+  @override
+  TaskResult<SummaryResponse> getSummary(int postId) {
+    return ErrorHandler.execute(() async {
+      return await _remoteDataSource.getSummary(postId);
+    });
+  }
+
+  @override
+  TaskResult<TranslationResponse> getTranslation(int postId) {
+    return ErrorHandler.execute(() async {
+      return await _remoteDataSource.getTranslation(postId);
+    });
+  }
+
+  @override
+  TaskVoid bookmark(int postId) {
+    return ErrorHandler.execute(() async {
+      await _remoteDataSource.bookmark(postId);
+    });
+  }
+
+  @override
+  TaskVoid like(int postId) {
+    return ErrorHandler.execute(() async {
+      await _remoteDataSource.like(postId);
+    });
+  }
+
+  @override
+  TaskVoid unlike(int postId) {
+    return ErrorHandler.execute(() async {
+      await _remoteDataSource.unlike(postId);
+    });
+  }
+
+  @override
+  TaskVoid vote(int postId, int optionId) {
+    return ErrorHandler.execute(() async {
+      await _remoteDataSource.vote(postId, optionId);
+    });
+  }
+
+  @override
+  TaskVoid unvote(int postId) {
+    return ErrorHandler.execute(() async {
+      await _remoteDataSource.unvote(postId);
+    });
+  }
+
+  @override
+  TaskVoid createPoll(PollRequest poll) {
+    return ErrorHandler.execute(() async {
+      await _remoteDataSource.createPoll(poll);
+    });
+  }
+
+  @override
+  TaskVoid share(int postId) {
+    return ErrorHandler.execute(() async {
+      await _remoteDataSource.share(postId);
+    });
+  }
+
+  @override
+  TaskVoid report(ReportRequest report) {
+    return ErrorHandler.execute(() async {
+      await _remoteDataSource.report(report);
     });
   }
 }
