@@ -254,7 +254,7 @@ _TranslationResponse _$TranslationResponseFromJson(Map<String, dynamic> json) =>
     _TranslationResponse(
       translatedContent: json['translatedContent'] as String,
       translatedTitle: json['translatedTitle'] as String,
-      translateLanguageSet: json['translate_language_set'] as String,
+      translateLanguageSet: json['translateLanguageSet'] as bool,
       extraComment: json['extraComment'] as String?,
     );
 
@@ -263,6 +263,6 @@ Map<String, dynamic> _$TranslationResponseToJson(
 ) => <String, dynamic>{
   'translatedContent': instance.translatedContent,
   'translatedTitle': instance.translatedTitle,
-  'translate_language_set': instance.translateLanguageSet,
+  'translateLanguageSet': instance.translateLanguageSet,
   'extraComment': instance.extraComment,
 };

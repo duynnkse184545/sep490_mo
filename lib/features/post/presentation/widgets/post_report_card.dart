@@ -121,22 +121,36 @@ class PostReportCard extends HookWidget {
                       scrollDirection: Axis.horizontal,
                       itemCount: post.mediaUrls.length,
                       itemBuilder: (context, index) {
+                        final url = post.mediaUrls[index];
+                        final isImage = _isImage(url);
+
                         return Padding(
                           padding: const EdgeInsets.only(right: 4),
                           child: ClipRRect(
                             borderRadius: BorderRadius.circular(4),
-                            child: Image.network(
-                              post.mediaUrls[index],
-                              width: 60,
-                              height: 60,
-                              fit: BoxFit.cover,
-                              errorBuilder: (_, _, _) => Container(
-                                width: 60,
-                                height: 60,
-                                color: Colors.grey[300],
-                                child: const Icon(Icons.image, size: 24),
-                              ),
-                            ),
+                            child: isImage
+                                ? Image.network(
+                                    url,
+                                    width: 60,
+                                    height: 60,
+                                    fit: BoxFit.cover,
+                                    errorBuilder: (_, _, _) => Container(
+                                      width: 60,
+                                      height: 60,
+                                      color: Colors.grey[300],
+                                      child: const Icon(Icons.image, size: 24),
+                                    ),
+                                  )
+                                : Container(
+                                    width: 60,
+                                    height: 60,
+                                    color: Colors.black,
+                                    child: const Icon(
+                                      Icons.play_circle_outline,
+                                      color: Colors.white,
+                                      size: 24,
+                                    ),
+                                  ),
                           ),
                         );
                       },
@@ -384,5 +398,15 @@ class PostReportCard extends HookWidget {
       final formatter = DateFormat('MMM dd, yyyy');
       return formatter.format(date);
     }
+  }
+
+  bool _isImage(String url) {
+    final lowercaseUrl = url.toLowerCase();
+    return lowercaseUrl.endsWith('.jpg') ||
+        lowercaseUrl.endsWith('.jpeg') ||
+        lowercaseUrl.endsWith('.png') ||
+        lowercaseUrl.endsWith('.gif') ||
+        lowercaseUrl.endsWith('.webp') ||
+        lowercaseUrl.endsWith('.bmp');
   }
 }

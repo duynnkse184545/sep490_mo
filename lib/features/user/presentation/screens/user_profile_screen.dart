@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:sep490_mo/app/router/routes.dart';
 import 'package:sep490_mo/core/widgets/error_retry_widget.dart';
 import 'package:sep490_mo/core/widgets/loader.dart';
 import 'package:sep490_mo/features/user/data/models/user_models.dart';
@@ -172,6 +173,21 @@ class UserProfileScreen extends HookConsumerWidget {
                             ),
                             const SizedBox(height: 24),
                           ],
+
+                          // Bookmarks Button
+                          ListTile(
+                            leading: const Icon(Icons.bookmark_outline),
+                            title: const Text('My Bookmarks'),
+                            trailing: const Icon(Icons.chevron_right),
+                            onTap: () => const BookmarkRoute().push(context),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(12),
+                              side: BorderSide(
+                                color: Theme.of(context).colorScheme.outlineVariant,
+                              ),
+                            ),
+                          ),
+                          const SizedBox(height: 24),
 
                           // Stats Section
                           Text(

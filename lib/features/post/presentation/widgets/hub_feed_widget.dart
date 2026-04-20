@@ -24,6 +24,7 @@ class HubFeedWidget extends HookConsumerWidget {
         feedState: feedState,
         onLoadMore: controller.loadMore,
         onRefresh: controller.refresh,
+        isScrollable: false,
       ),
       loading: () => FeedLoaderWidget(),
       error: (error, _) => FeedErrorWidget(

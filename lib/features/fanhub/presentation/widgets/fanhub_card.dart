@@ -9,7 +9,7 @@ class FanHubCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final themeColor = fanHub.themeColor != null
+    final themeColor = fanHub.themeColor != null && fanHub.themeColor != 'string'
         ? Color(int.parse(fanHub.themeColor!.replaceFirst('#', '0xff')))
         : Theme.of(context).colorScheme.primary;
 

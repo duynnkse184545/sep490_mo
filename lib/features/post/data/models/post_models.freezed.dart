@@ -2386,7 +2386,7 @@ as String,
 /// @nodoc
 mixin _$TranslationResponse {
 
- String get translatedContent; String get translatedTitle;@JsonKey(name: 'translate_language_set') String get translateLanguageSet; String? get extraComment;
+ String get translatedContent; String get translatedTitle; bool get translateLanguageSet; String? get extraComment;
 /// Create a copy of TranslationResponse
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -2419,7 +2419,7 @@ abstract mixin class $TranslationResponseCopyWith<$Res>  {
   factory $TranslationResponseCopyWith(TranslationResponse value, $Res Function(TranslationResponse) _then) = _$TranslationResponseCopyWithImpl;
 @useResult
 $Res call({
- String translatedContent, String translatedTitle,@JsonKey(name: 'translate_language_set') String translateLanguageSet, String? extraComment
+ String translatedContent, String translatedTitle, bool translateLanguageSet, String? extraComment
 });
 
 
@@ -2441,7 +2441,7 @@ class _$TranslationResponseCopyWithImpl<$Res>
 translatedContent: null == translatedContent ? _self.translatedContent : translatedContent // ignore: cast_nullable_to_non_nullable
 as String,translatedTitle: null == translatedTitle ? _self.translatedTitle : translatedTitle // ignore: cast_nullable_to_non_nullable
 as String,translateLanguageSet: null == translateLanguageSet ? _self.translateLanguageSet : translateLanguageSet // ignore: cast_nullable_to_non_nullable
-as String,extraComment: freezed == extraComment ? _self.extraComment : extraComment // ignore: cast_nullable_to_non_nullable
+as bool,extraComment: freezed == extraComment ? _self.extraComment : extraComment // ignore: cast_nullable_to_non_nullable
 as String?,
   ));
 }
@@ -2527,7 +2527,7 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String translatedContent,  String translatedTitle, @JsonKey(name: 'translate_language_set')  String translateLanguageSet,  String? extraComment)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String translatedContent,  String translatedTitle,  bool translateLanguageSet,  String? extraComment)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _TranslationResponse() when $default != null:
 return $default(_that.translatedContent,_that.translatedTitle,_that.translateLanguageSet,_that.extraComment);case _:
@@ -2548,7 +2548,7 @@ return $default(_that.translatedContent,_that.translatedTitle,_that.translateLan
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String translatedContent,  String translatedTitle, @JsonKey(name: 'translate_language_set')  String translateLanguageSet,  String? extraComment)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String translatedContent,  String translatedTitle,  bool translateLanguageSet,  String? extraComment)  $default,) {final _that = this;
 switch (_that) {
 case _TranslationResponse():
 return $default(_that.translatedContent,_that.translatedTitle,_that.translateLanguageSet,_that.extraComment);case _:
@@ -2568,7 +2568,7 @@ return $default(_that.translatedContent,_that.translatedTitle,_that.translateLan
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String translatedContent,  String translatedTitle, @JsonKey(name: 'translate_language_set')  String translateLanguageSet,  String? extraComment)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String translatedContent,  String translatedTitle,  bool translateLanguageSet,  String? extraComment)?  $default,) {final _that = this;
 switch (_that) {
 case _TranslationResponse() when $default != null:
 return $default(_that.translatedContent,_that.translatedTitle,_that.translateLanguageSet,_that.extraComment);case _:
@@ -2583,12 +2583,12 @@ return $default(_that.translatedContent,_that.translatedTitle,_that.translateLan
 @JsonSerializable()
 
 class _TranslationResponse implements TranslationResponse {
-  const _TranslationResponse({required this.translatedContent, required this.translatedTitle, @JsonKey(name: 'translate_language_set') required this.translateLanguageSet, this.extraComment});
+  const _TranslationResponse({required this.translatedContent, required this.translatedTitle, required this.translateLanguageSet, this.extraComment});
   factory _TranslationResponse.fromJson(Map<String, dynamic> json) => _$TranslationResponseFromJson(json);
 
 @override final  String translatedContent;
 @override final  String translatedTitle;
-@override@JsonKey(name: 'translate_language_set') final  String translateLanguageSet;
+@override final  bool translateLanguageSet;
 @override final  String? extraComment;
 
 /// Create a copy of TranslationResponse
@@ -2624,7 +2624,7 @@ abstract mixin class _$TranslationResponseCopyWith<$Res> implements $Translation
   factory _$TranslationResponseCopyWith(_TranslationResponse value, $Res Function(_TranslationResponse) _then) = __$TranslationResponseCopyWithImpl;
 @override @useResult
 $Res call({
- String translatedContent, String translatedTitle,@JsonKey(name: 'translate_language_set') String translateLanguageSet, String? extraComment
+ String translatedContent, String translatedTitle, bool translateLanguageSet, String? extraComment
 });
 
 
@@ -2646,7 +2646,7 @@ class __$TranslationResponseCopyWithImpl<$Res>
 translatedContent: null == translatedContent ? _self.translatedContent : translatedContent // ignore: cast_nullable_to_non_nullable
 as String,translatedTitle: null == translatedTitle ? _self.translatedTitle : translatedTitle // ignore: cast_nullable_to_non_nullable
 as String,translateLanguageSet: null == translateLanguageSet ? _self.translateLanguageSet : translateLanguageSet // ignore: cast_nullable_to_non_nullable
-as String,extraComment: freezed == extraComment ? _self.extraComment : extraComment // ignore: cast_nullable_to_non_nullable
+as bool,extraComment: freezed == extraComment ? _self.extraComment : extraComment // ignore: cast_nullable_to_non_nullable
 as String?,
   ));
 }

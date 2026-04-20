@@ -1,6 +1,8 @@
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:sep490_mo/core/network/network_provider.dart';
+import 'package:sep490_mo/features/post/data/models/post_models.dart';
 import 'package:sep490_mo/features/post/data/providers/feed_providers.dart';
+import 'package:sep490_mo/features/post/data/providers/post_providers.dart';
 import 'package:sep490_mo/features/post/presentation/states/feed_state.dart';
 
 part 'feed_controller.g.dart';
@@ -83,5 +85,36 @@ class FeedController extends _$FeedController {
         }
       },
     );
+  }
+
+  Future<void> like(int postId) async {
+    await ref.read(postRepositoryProvider).like(postId).run();
+  }
+
+  Future<void> unlike(int postId) async {
+    await ref.read(postRepositoryProvider).unlike(postId).run();
+  }
+
+  Future<void> bookmark(int postId) async {
+    await ref.read(postRepositoryProvider).bookmark(postId).run();
+  }
+
+  Future<void> vote(int postId, int optionId) async {
+    await ref.read(postRepositoryProvider).vote(postId, optionId).run();
+  }
+
+  Future<void> unvote(int postId) async {
+    await ref.read(postRepositoryProvider).unvote(postId).run();
+  }
+
+  Future<void> share(int postId) async {
+    await ref.read(postRepositoryProvider).share(postId).run();
+  }
+
+  Future<void> report(int postId, String reason) async {
+    await ref.read(postRepositoryProvider).report(
+      ReportRequest(postId: postId, reason: reason),
+    ).run();
+    // Optionally: refresh or remove the post from local state
   }
 }

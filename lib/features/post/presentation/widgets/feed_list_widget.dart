@@ -8,12 +8,14 @@ class FeedListWidget extends HookWidget {
   final FeedState feedState;
   final VoidCallback onLoadMore;
   final VoidCallback onRefresh;
+  final bool isScrollable; // ← new
 
   const FeedListWidget({
     super.key,
     required this.feedState,
     required this.onLoadMore,
     required this.onRefresh,
+    this.isScrollable = true, // ← default true, FeedScreen works as before
   });
 
   @override
@@ -22,6 +24,8 @@ class FeedListWidget extends HookWidget {
     final colorScheme = Theme.of(context).colorScheme;
 
     useEffect(() {
+      if (!isScrollable) return null; // ← skip scroll listener if not scrollable
+
       void onScroll() {
         if (!scrollController.hasClients) return;
         if (scrollController.position.pixels >=
@@ -32,25 +36,29 @@ class FeedListWidget extends HookWidget {
 
       scrollController.addListener(onScroll);
       return () => scrollController.removeListener(onScroll);
-    }, [scrollController]);
+    }, [scrollController, isScrollable]);
+
+    final physics = isScrollable
+        ? const AlwaysScrollableScrollPhysics()
+        : const NeverScrollableScrollPhysics();
 
     return feedState.when(
       ready: (posts) => ListView.separated(
-        controller: scrollController,
-        shrinkWrap: true,
-        physics: const NeverScrollableScrollPhysics(),
+        controller: isScrollable ? scrollController : null,
+        shrinkWrap: !isScrollable,
+        physics: physics,
         padding: const EdgeInsets.all(8),
         itemCount: posts.length,
-        separatorBuilder: (_, _) => const SizedBox(height: 8),
+        separatorBuilder: (_, __) => const SizedBox(height: 8),
         itemBuilder: (context, index) => PostCard(post: posts[index]),
       ),
       loadingMore: (posts) => ListView.separated(
-        controller: scrollController,
-        shrinkWrap: true,
-        physics: const NeverScrollableScrollPhysics(),
+        controller: isScrollable ? scrollController : null,
+        shrinkWrap: !isScrollable,
+        physics: physics,
         padding: const EdgeInsets.all(8),
         itemCount: posts.length + 1,
-        separatorBuilder: (_, _) => const SizedBox(height: 8),
+        separatorBuilder: (_, __) => const SizedBox(height: 8),
         itemBuilder: (context, index) {
           if (index == posts.length) {
             return Center(
@@ -64,12 +72,12 @@ class FeedListWidget extends HookWidget {
         },
       ),
       refreshing: (posts) => ListView.separated(
-        controller: scrollController,
-        shrinkWrap: true,
-        physics: const NeverScrollableScrollPhysics(),
+        controller: isScrollable ? scrollController : null,
+        shrinkWrap: !isScrollable,
+        physics: physics,
         padding: const EdgeInsets.all(8),
         itemCount: posts.length,
-        separatorBuilder: (_, _) => const SizedBox(height: 8),
+        separatorBuilder: (_, __) => const SizedBox(height: 8),
         itemBuilder: (context, index) => PostCard(post: posts[index]),
       ),
       empty: () => const FeedEmptyWidget(),

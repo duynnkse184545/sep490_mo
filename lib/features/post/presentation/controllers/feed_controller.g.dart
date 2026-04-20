@@ -33,7 +33,7 @@ final class FeedControllerProvider
   FeedController create() => FeedController();
 }
 
-String _$feedControllerHash() => r'd392a129ea12a61e440058e27acdc4aada6fc216';
+String _$feedControllerHash() => r'3fe081023d98f017b85cf37d60de51909c82af83';
 
 abstract class _$FeedController extends $StreamNotifier<FeedState> {
   Stream<FeedState> build();

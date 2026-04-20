@@ -6,7 +6,6 @@ import 'package:sep490_mo/features/post/presentation/states/create_post_state.da
 part 'create_post_controller.g.dart';
 
 @riverpod
-@riverpod
 class CreatePostController extends _$CreatePostController {
   @override
   CreatePostState build() {
@@ -40,8 +39,22 @@ class CreatePostController extends _$CreatePostController {
         .run();
 
     result.fold(
-          (failure) => state = CreatePostState.error(failure.message),
-          (_) => state = const CreatePostState.success(),
+      (failure) => state = CreatePostState.error(failure.message),
+      (_) => state = const CreatePostState.success(),
+    );
+  }
+
+  Future<void> createPoll(PollRequest request) async {
+    state = const CreatePostState.loading();
+
+    final result = await ref
+        .read(postRepositoryProvider)
+        .createPoll(request)
+        .run();
+
+    result.fold(
+      (failure) => state = CreatePostState.error(failure.message),
+      (_) => state = const CreatePostState.success(),
     );
   }
 

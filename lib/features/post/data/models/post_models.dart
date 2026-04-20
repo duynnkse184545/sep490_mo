@@ -206,7 +206,7 @@ abstract class TranslationResponse with _$TranslationResponse {
   const factory TranslationResponse({
     required String translatedContent,
     required String translatedTitle,
-    @JsonKey(name: 'translate_language_set') required String translateLanguageSet,
+    required bool translateLanguageSet,
     String? extraComment
   }) = _TranslationResponse;
 

@@ -42,7 +42,7 @@ final class CreatePostControllerProvider
 }
 
 String _$createPostControllerHash() =>
-    r'a50693e7ec73b3a926861ce3777c69bf86fbbb54';
+    r'5789fb78ac63e5f2a2a0ba9ba9b7ebf42087a08f';
 
 abstract class _$CreatePostController extends $Notifier<CreatePostState> {
   CreatePostState build();

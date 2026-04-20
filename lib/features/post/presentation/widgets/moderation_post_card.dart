@@ -144,22 +144,36 @@ class _ModerationPostCardState extends State<ModerationPostCard> {
                       scrollDirection: Axis.horizontal,
                       itemCount: widget.post.media.length,
                       itemBuilder: (context, index) {
+                        final media = widget.post.media[index];
+                        final isImage = _isImage(media.mediaUrl);
+
                         return Padding(
                           padding: const EdgeInsets.only(right: 4),
                           child: ClipRRect(
                             borderRadius: BorderRadius.circular(4),
-                            child: Image.network(
-                              widget.post.media[index].mediaUrl,
-                              width: 60,
-                              height: 60,
-                              fit: BoxFit.cover,
-                              errorBuilder: (_, _, _) => Container(
-                                width: 60,
-                                height: 60,
-                                color: Colors.grey[300],
-                                child: const Icon(Icons.image, size: 24),
-                              ),
-                            ),
+                            child: isImage
+                                ? Image.network(
+                                    media.mediaUrl,
+                                    width: 60,
+                                    height: 60,
+                                    fit: BoxFit.cover,
+                                    errorBuilder: (_, _, _) => Container(
+                                      width: 60,
+                                      height: 60,
+                                      color: Colors.grey[300],
+                                      child: const Icon(Icons.image, size: 24),
+                                    ),
+                                  )
+                                : Container(
+                                    width: 60,
+                                    height: 60,
+                                    color: Colors.black,
+                                    child: const Icon(
+                                      Icons.play_circle_outline,
+                                      color: Colors.white,
+                                      size: 24,
+                                    ),
+                                  ),
                           ),
                         );
                       },
@@ -348,5 +362,15 @@ class _ModerationPostCardState extends State<ModerationPostCard> {
       default:
         return 'Pending AI Validation';
     }
+  }
+
+  bool _isImage(String url) {
+    final lowercaseUrl = url.toLowerCase();
+    return lowercaseUrl.endsWith('.jpg') ||
+        lowercaseUrl.endsWith('.jpeg') ||
+        lowercaseUrl.endsWith('.png') ||
+        lowercaseUrl.endsWith('.gif') ||
+        lowercaseUrl.endsWith('.webp') ||
+        lowercaseUrl.endsWith('.bmp');
   }
 }

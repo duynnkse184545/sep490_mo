@@ -8,6 +8,7 @@ import 'package:sep490_mo/features/fanhub/presentation/screens/fanhub_detail_scr
 import 'package:sep490_mo/features/fanhub/presentation/screens/fanhub_list_screen.dart';
 import 'package:sep490_mo/features/member/presentation/screens/member_list_screen.dart';
 import 'package:sep490_mo/features/post/presentation/screens/create_post_screen.dart';
+import 'package:sep490_mo/features/post/presentation/screens/bookmark_screen.dart';
 import 'package:sep490_mo/features/post/presentation/screens/feed_screen.dart';
 import 'package:sep490_mo/app/screen/moderation_home_screen.dart';
 import 'package:sep490_mo/features/post/presentation/widgets/hub_feed_widget.dart';
@@ -47,7 +48,14 @@ class SignUpRoute extends GoRouteData with $SignUpRoute {
       routes: [TypedGoRoute<ExploreRoute>(path: '/explore')],
     ),
     TypedStatefulShellBranch<ProfileBranch>(
-      routes: [TypedGoRoute<UserProfileRoute>(path: '/profile')],
+      routes: [
+        TypedGoRoute<UserProfileRoute>(
+          path: '/profile',
+          routes: [
+            TypedGoRoute<BookmarkRoute>(path: 'bookmarks'),
+          ],
+        ),
+      ],
     ),
   ],
 )
@@ -170,4 +178,12 @@ class UserProfileRoute extends GoRouteData with $UserProfileRoute {
   @override
   Widget build(BuildContext context, GoRouterState state) =>
       UserProfileScreen();
+}
+
+class BookmarkRoute extends GoRouteData with $BookmarkRoute {
+  const BookmarkRoute();
+
+  @override
+  Widget build(BuildContext context, GoRouterState state) =>
+      const BookmarkScreen();
 }
