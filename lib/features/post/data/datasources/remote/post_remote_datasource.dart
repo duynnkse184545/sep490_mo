@@ -1,7 +1,11 @@
 import 'package:sep490_mo/features/post/data/models/post_models.dart';
 
 abstract class PostRemoteDataSource {
-  Future<void> createPost(CreatePostRequest post);
+  Future<void> createPost(
+    CreatePostRequest post, {
+    List<String>? imagePaths,
+    String? videoPath,
+  });
 
   Future<List<Post>> getBookmarked({
     required int pageNo,

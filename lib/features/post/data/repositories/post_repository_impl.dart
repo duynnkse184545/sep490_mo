@@ -11,9 +11,17 @@ class PostRepositoryImpl implements PostRepository {
     : _remoteDataSource = remoteDataSource;
 
   @override
-  TaskVoid createPost(CreatePostRequest request) {
+  TaskVoid createPost(
+    CreatePostRequest request, {
+    List<String>? imagePaths,
+    String? videoPath,
+  }) {
     return ErrorHandler.execute(() async {
-      await _remoteDataSource.createPost(request);
+      await _remoteDataSource.createPost(
+        request,
+        imagePaths: imagePaths,
+        videoPath: videoPath,
+      );
     });
   }
 

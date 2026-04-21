@@ -31,9 +31,42 @@ class CreatePostScreen extends HookConsumerWidget {
     final postController = ref.read(createPostControllerProvider.notifier);
 
     final selectedType = useState(PostType.text);
+    final isAnnouncement = useState(false);
+    final isSchedule = useState(false);
     final isSubmitting = useState(false);
 
     final picker = useMemoized(() => ImagePicker());
+
+    // Listen to text changes to update the button state
+    useListenable(contentController);
+    useListenable(titleController);
+
+    final isFormValid = useMemoized(() {
+      final hasContent = contentController.text.trim().isNotEmpty;
+
+      switch (selectedType.value) {
+        case PostType.image:
+          return hasContent && selectedImages.value.isNotEmpty;
+        case PostType.video:
+          return hasContent && selectedVideo.value != null;
+        case PostType.poll:
+          final validOptions =
+              pollOptions.value.where((e) => e.trim().isNotEmpty).length;
+          return hasContent &&
+              validOptions >= 2 &&
+              titleController.text.trim().isNotEmpty;
+        case PostType.text:
+        default:
+          return hasContent;
+      }
+    }, [
+      selectedType.value,
+      selectedImages.value,
+      selectedVideo.value,
+      pollOptions.value,
+      contentController.text,
+      titleController.text,
+    ]);
 
     Future<void> pickImages() async {
       final pickedFiles = await picker.pickMultiImage();
@@ -85,6 +118,8 @@ class CreatePostScreen extends HookConsumerWidget {
             hashtags: hashtags.isNotEmpty ? hashtags : null,
             images: selectedImages.value.map((e) => e.path).toList(),
             video: selectedVideo.value?.path,
+            isAnnouncement: isAnnouncement.value,
+            isSchedule: isSchedule.value,
           );
         }
       } finally {
@@ -118,7 +153,15 @@ class CreatePostScreen extends HookConsumerWidget {
               ),
             )
           else
-            TextButton(onPressed: submit, child: const Text('Post')),
+            TextButton(
+              onPressed: isFormValid ? submit : null,
+              child: Text(
+                'Post',
+                style: TextStyle(
+                  color: isFormValid ? null : Colors.grey,
+                ),
+              ),
+            ),
         ],
       ),
       body: Form(
@@ -184,6 +227,23 @@ class CreatePostScreen extends HookConsumerWidget {
               validator: (value) => (value == null || value.isEmpty)
                   ? 'Content is required'
                   : null,
+            ),
+
+            const SizedBox(height: 16),
+
+            CheckboxListTile(
+              title: const Text('Mark as Announcement'),
+              value: isAnnouncement.value,
+              onChanged: (val) => isAnnouncement.value = val ?? false,
+              controlAffinity: ListTileControlAffinity.leading,
+              contentPadding: EdgeInsets.zero,
+            ),
+            CheckboxListTile(
+              title: const Text('Mark as Event Schedule'),
+              value: isSchedule.value,
+              onChanged: (val) => isSchedule.value = val ?? false,
+              controlAffinity: ListTileControlAffinity.leading,
+              contentPadding: EdgeInsets.zero,
             ),
 
             const SizedBox(height: 16),

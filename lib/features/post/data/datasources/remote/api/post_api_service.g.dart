@@ -122,13 +122,23 @@ class _PostApiService implements PostApiService {
   }
 
   @override
-  Future<ApiResponse<dynamic>> createPost(CreatePostRequest post) async {
+  Future<ApiResponse<dynamic>> createPost(
+    CreatePostRequest request,
+    List<MultipartFile>? images,
+    MultipartFile? video,
+  ) async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
+    queryParameters.removeWhere((k, v) => v == null);
     final _headers = <String, dynamic>{};
-    final _data = post;
+    final _data = request;
     final _options = _setStreamType<ApiResponse<dynamic>>(
-      Options(method: 'POST', headers: _headers, extra: _extra)
+      Options(
+            method: 'POST',
+            headers: _headers,
+            extra: _extra,
+            contentType: 'multipart/form-data',
+          )
           .compose(
             _dio.options,
             '/posts',

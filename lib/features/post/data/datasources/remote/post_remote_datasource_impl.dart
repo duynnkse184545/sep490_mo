@@ -1,5 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:http_parser/http_parser.dart';
+import 'package:mime/mime.dart';
 import 'package:sep490_mo/core/error/dio_exception_mapper.dart';
 import 'package:sep490_mo/core/error/exceptions.dart';
 import 'package:sep490_mo/core/models/api_response_wrapper.dart';
@@ -14,9 +16,28 @@ class PostRemoteDatasourceImpl implements PostRemoteDataSource {
     : _postApi = postApi;
 
   @override
-  Future<void> createPost(CreatePostRequest request) async {
+  Future<void> createPost(
+    CreatePostRequest request, {
+    List<String>? imagePaths,
+    String? videoPath,
+  }) async {
     try {
-      final response = await _postApi.createPost(request);
+      final List<MultipartFile>? images = imagePaths?.map((path) {
+        final mimeType = lookupMimeType(path) ?? 'image/jpeg';
+        return MultipartFile.fromFileSync(path, contentType: MediaType.parse(mimeType));
+      }).toList();
+
+      MultipartFile? video;
+      if (videoPath != null) {
+        final mimeType = lookupMimeType(videoPath) ?? 'video/mp4';
+        video = await MultipartFile.fromFile(videoPath, contentType: MediaType.parse(mimeType));
+      }
+
+      final response = await _postApi.createPost(
+        request,
+        images,
+        video,
+      );
       switch (response) {
         case ApiResponseSuccess():
           return;
@@ -43,7 +64,7 @@ class PostRemoteDatasourceImpl implements PostRemoteDataSource {
       return switch (response) {
         // NOTE: ApiResponse<Post> in API service might need correction to ApiResponse<List<Post>>
         // if it actually returns a list. Assuming List<Post> here for DataSource.
-        ApiResponseSuccess(:final data) => [data as Post], // Placeholder if it really returns one
+        ApiResponseSuccess(:final data) => data, // Placeholder if it really returns one
         ApiResponseFailure(:final message, :final error) =>
           throw ServerException(message, error),
       };

@@ -20,6 +20,8 @@ class CreatePostController extends _$CreatePostController {
     List<String>? images,
     List<String>? hashtags,
     String? video,
+    bool isAnnouncement = false,
+    bool isSchedule = false,
   }) async {
     state = const CreatePostState.loading();
 
@@ -28,14 +30,18 @@ class CreatePostController extends _$CreatePostController {
       postType: postType,
       title: title,
       content: content,
-      images: images,
-      hashtags: hashtags,
-      video: video,
+      hashtags: hashtags ?? [],
+      isAnnouncement: isAnnouncement,
+      isSchedule: isSchedule,
     );
 
     final result = await ref
         .read(postRepositoryProvider)
-        .createPost(request)
+        .createPost(
+          request,
+          imagePaths: images,
+          videoPath: video,
+        )
         .run();
 
     result.fold(

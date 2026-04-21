@@ -157,9 +157,9 @@ abstract class CreatePostRequest with _$CreatePostRequest {
     required PostType postType,
     String? title,
     required String content,
-    @Default([]) List<String>? images,
     @Default([]) List<String>? hashtags,
-    String? video,
+    @Default(false) bool isAnnouncement,
+    @Default(false) bool isSchedule,
   }) = _CreatePostRequest;
 
   factory CreatePostRequest.fromJson(Map<String, dynamic> json) =>

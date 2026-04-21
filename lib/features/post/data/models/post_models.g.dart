@@ -189,21 +189,20 @@ Map<String, dynamic> _$PostModerationToJson(_PostModeration instance) =>
       'aiValidationComment': instance.aiValidationComment,
     };
 
-_CreatePostRequest _$CreatePostRequestFromJson(
-  Map<String, dynamic> json,
-) => _CreatePostRequest(
-  fanHubId: (json['fanHubId'] as num).toInt(),
-  postType: $enumDecode(_$PostTypeEnumMap, json['postType']),
-  title: json['title'] as String?,
-  content: json['content'] as String,
-  images:
-      (json['images'] as List<dynamic>?)?.map((e) => e as String).toList() ??
-      const [],
-  hashtags:
-      (json['hashtags'] as List<dynamic>?)?.map((e) => e as String).toList() ??
-      const [],
-  video: json['video'] as String?,
-);
+_CreatePostRequest _$CreatePostRequestFromJson(Map<String, dynamic> json) =>
+    _CreatePostRequest(
+      fanHubId: (json['fanHubId'] as num).toInt(),
+      postType: $enumDecode(_$PostTypeEnumMap, json['postType']),
+      title: json['title'] as String?,
+      content: json['content'] as String,
+      hashtags:
+          (json['hashtags'] as List<dynamic>?)
+              ?.map((e) => e as String)
+              .toList() ??
+          const [],
+      isAnnouncement: json['isAnnouncement'] as bool? ?? false,
+      isSchedule: json['isSchedule'] as bool? ?? false,
+    );
 
 Map<String, dynamic> _$CreatePostRequestToJson(_CreatePostRequest instance) =>
     <String, dynamic>{
@@ -211,9 +210,9 @@ Map<String, dynamic> _$CreatePostRequestToJson(_CreatePostRequest instance) =>
       'postType': _$PostTypeEnumMap[instance.postType]!,
       'title': instance.title,
       'content': instance.content,
-      'images': instance.images,
       'hashtags': instance.hashtags,
-      'video': instance.video,
+      'isAnnouncement': instance.isAnnouncement,
+      'isSchedule': instance.isSchedule,
     };
 
 _ReportRequest _$ReportRequestFromJson(Map<String, dynamic> json) =>

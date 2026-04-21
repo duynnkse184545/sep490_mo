@@ -1273,7 +1273,7 @@ as String?,
 /// @nodoc
 mixin _$CreatePostRequest {
 
- int get fanHubId; PostType get postType; String? get title; String get content; List<String>? get images; List<String>? get hashtags; String? get video;
+ int get fanHubId; PostType get postType; String? get title; String get content; List<String>? get hashtags; bool get isAnnouncement; bool get isSchedule;
 /// Create a copy of CreatePostRequest
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -1286,16 +1286,16 @@ $CreatePostRequestCopyWith<CreatePostRequest> get copyWith => _$CreatePostReques
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is CreatePostRequest&&(identical(other.fanHubId, fanHubId) || other.fanHubId == fanHubId)&&(identical(other.postType, postType) || other.postType == postType)&&(identical(other.title, title) || other.title == title)&&(identical(other.content, content) || other.content == content)&&const DeepCollectionEquality().equals(other.images, images)&&const DeepCollectionEquality().equals(other.hashtags, hashtags)&&(identical(other.video, video) || other.video == video));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is CreatePostRequest&&(identical(other.fanHubId, fanHubId) || other.fanHubId == fanHubId)&&(identical(other.postType, postType) || other.postType == postType)&&(identical(other.title, title) || other.title == title)&&(identical(other.content, content) || other.content == content)&&const DeepCollectionEquality().equals(other.hashtags, hashtags)&&(identical(other.isAnnouncement, isAnnouncement) || other.isAnnouncement == isAnnouncement)&&(identical(other.isSchedule, isSchedule) || other.isSchedule == isSchedule));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,fanHubId,postType,title,content,const DeepCollectionEquality().hash(images),const DeepCollectionEquality().hash(hashtags),video);
+int get hashCode => Object.hash(runtimeType,fanHubId,postType,title,content,const DeepCollectionEquality().hash(hashtags),isAnnouncement,isSchedule);
 
 @override
 String toString() {
-  return 'CreatePostRequest(fanHubId: $fanHubId, postType: $postType, title: $title, content: $content, images: $images, hashtags: $hashtags, video: $video)';
+  return 'CreatePostRequest(fanHubId: $fanHubId, postType: $postType, title: $title, content: $content, hashtags: $hashtags, isAnnouncement: $isAnnouncement, isSchedule: $isSchedule)';
 }
 
 
@@ -1306,7 +1306,7 @@ abstract mixin class $CreatePostRequestCopyWith<$Res>  {
   factory $CreatePostRequestCopyWith(CreatePostRequest value, $Res Function(CreatePostRequest) _then) = _$CreatePostRequestCopyWithImpl;
 @useResult
 $Res call({
- int fanHubId, PostType postType, String? title, String content, List<String>? images, List<String>? hashtags, String? video
+ int fanHubId, PostType postType, String? title, String content, List<String>? hashtags, bool isAnnouncement, bool isSchedule
 });
 
 
@@ -1323,16 +1323,16 @@ class _$CreatePostRequestCopyWithImpl<$Res>
 
 /// Create a copy of CreatePostRequest
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? fanHubId = null,Object? postType = null,Object? title = freezed,Object? content = null,Object? images = freezed,Object? hashtags = freezed,Object? video = freezed,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? fanHubId = null,Object? postType = null,Object? title = freezed,Object? content = null,Object? hashtags = freezed,Object? isAnnouncement = null,Object? isSchedule = null,}) {
   return _then(_self.copyWith(
 fanHubId: null == fanHubId ? _self.fanHubId : fanHubId // ignore: cast_nullable_to_non_nullable
 as int,postType: null == postType ? _self.postType : postType // ignore: cast_nullable_to_non_nullable
 as PostType,title: freezed == title ? _self.title : title // ignore: cast_nullable_to_non_nullable
 as String?,content: null == content ? _self.content : content // ignore: cast_nullable_to_non_nullable
-as String,images: freezed == images ? _self.images : images // ignore: cast_nullable_to_non_nullable
-as List<String>?,hashtags: freezed == hashtags ? _self.hashtags : hashtags // ignore: cast_nullable_to_non_nullable
-as List<String>?,video: freezed == video ? _self.video : video // ignore: cast_nullable_to_non_nullable
-as String?,
+as String,hashtags: freezed == hashtags ? _self.hashtags : hashtags // ignore: cast_nullable_to_non_nullable
+as List<String>?,isAnnouncement: null == isAnnouncement ? _self.isAnnouncement : isAnnouncement // ignore: cast_nullable_to_non_nullable
+as bool,isSchedule: null == isSchedule ? _self.isSchedule : isSchedule // ignore: cast_nullable_to_non_nullable
+as bool,
   ));
 }
 
@@ -1417,10 +1417,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( int fanHubId,  PostType postType,  String? title,  String content,  List<String>? images,  List<String>? hashtags,  String? video)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( int fanHubId,  PostType postType,  String? title,  String content,  List<String>? hashtags,  bool isAnnouncement,  bool isSchedule)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _CreatePostRequest() when $default != null:
-return $default(_that.fanHubId,_that.postType,_that.title,_that.content,_that.images,_that.hashtags,_that.video);case _:
+return $default(_that.fanHubId,_that.postType,_that.title,_that.content,_that.hashtags,_that.isAnnouncement,_that.isSchedule);case _:
   return orElse();
 
 }
@@ -1438,10 +1438,10 @@ return $default(_that.fanHubId,_that.postType,_that.title,_that.content,_that.im
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( int fanHubId,  PostType postType,  String? title,  String content,  List<String>? images,  List<String>? hashtags,  String? video)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( int fanHubId,  PostType postType,  String? title,  String content,  List<String>? hashtags,  bool isAnnouncement,  bool isSchedule)  $default,) {final _that = this;
 switch (_that) {
 case _CreatePostRequest():
-return $default(_that.fanHubId,_that.postType,_that.title,_that.content,_that.images,_that.hashtags,_that.video);case _:
+return $default(_that.fanHubId,_that.postType,_that.title,_that.content,_that.hashtags,_that.isAnnouncement,_that.isSchedule);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -1458,10 +1458,10 @@ return $default(_that.fanHubId,_that.postType,_that.title,_that.content,_that.im
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( int fanHubId,  PostType postType,  String? title,  String content,  List<String>? images,  List<String>? hashtags,  String? video)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( int fanHubId,  PostType postType,  String? title,  String content,  List<String>? hashtags,  bool isAnnouncement,  bool isSchedule)?  $default,) {final _that = this;
 switch (_that) {
 case _CreatePostRequest() when $default != null:
-return $default(_that.fanHubId,_that.postType,_that.title,_that.content,_that.images,_that.hashtags,_that.video);case _:
+return $default(_that.fanHubId,_that.postType,_that.title,_that.content,_that.hashtags,_that.isAnnouncement,_that.isSchedule);case _:
   return null;
 
 }
@@ -1473,22 +1473,13 @@ return $default(_that.fanHubId,_that.postType,_that.title,_that.content,_that.im
 @JsonSerializable()
 
 class _CreatePostRequest implements CreatePostRequest {
-  const _CreatePostRequest({required this.fanHubId, required this.postType, this.title, required this.content, final  List<String>? images = const [], final  List<String>? hashtags = const [], this.video}): _images = images,_hashtags = hashtags;
+  const _CreatePostRequest({required this.fanHubId, required this.postType, this.title, required this.content, final  List<String>? hashtags = const [], this.isAnnouncement = false, this.isSchedule = false}): _hashtags = hashtags;
   factory _CreatePostRequest.fromJson(Map<String, dynamic> json) => _$CreatePostRequestFromJson(json);
 
 @override final  int fanHubId;
 @override final  PostType postType;
 @override final  String? title;
 @override final  String content;
- final  List<String>? _images;
-@override@JsonKey() List<String>? get images {
-  final value = _images;
-  if (value == null) return null;
-  if (_images is EqualUnmodifiableListView) return _images;
-  // ignore: implicit_dynamic_type
-  return EqualUnmodifiableListView(value);
-}
-
  final  List<String>? _hashtags;
 @override@JsonKey() List<String>? get hashtags {
   final value = _hashtags;
@@ -1498,7 +1489,8 @@ class _CreatePostRequest implements CreatePostRequest {
   return EqualUnmodifiableListView(value);
 }
 
-@override final  String? video;
+@override@JsonKey() final  bool isAnnouncement;
+@override@JsonKey() final  bool isSchedule;
 
 /// Create a copy of CreatePostRequest
 /// with the given fields replaced by the non-null parameter values.
@@ -1513,16 +1505,16 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _CreatePostRequest&&(identical(other.fanHubId, fanHubId) || other.fanHubId == fanHubId)&&(identical(other.postType, postType) || other.postType == postType)&&(identical(other.title, title) || other.title == title)&&(identical(other.content, content) || other.content == content)&&const DeepCollectionEquality().equals(other._images, _images)&&const DeepCollectionEquality().equals(other._hashtags, _hashtags)&&(identical(other.video, video) || other.video == video));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _CreatePostRequest&&(identical(other.fanHubId, fanHubId) || other.fanHubId == fanHubId)&&(identical(other.postType, postType) || other.postType == postType)&&(identical(other.title, title) || other.title == title)&&(identical(other.content, content) || other.content == content)&&const DeepCollectionEquality().equals(other._hashtags, _hashtags)&&(identical(other.isAnnouncement, isAnnouncement) || other.isAnnouncement == isAnnouncement)&&(identical(other.isSchedule, isSchedule) || other.isSchedule == isSchedule));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,fanHubId,postType,title,content,const DeepCollectionEquality().hash(_images),const DeepCollectionEquality().hash(_hashtags),video);
+int get hashCode => Object.hash(runtimeType,fanHubId,postType,title,content,const DeepCollectionEquality().hash(_hashtags),isAnnouncement,isSchedule);
 
 @override
 String toString() {
-  return 'CreatePostRequest(fanHubId: $fanHubId, postType: $postType, title: $title, content: $content, images: $images, hashtags: $hashtags, video: $video)';
+  return 'CreatePostRequest(fanHubId: $fanHubId, postType: $postType, title: $title, content: $content, hashtags: $hashtags, isAnnouncement: $isAnnouncement, isSchedule: $isSchedule)';
 }
 
 
@@ -1533,7 +1525,7 @@ abstract mixin class _$CreatePostRequestCopyWith<$Res> implements $CreatePostReq
   factory _$CreatePostRequestCopyWith(_CreatePostRequest value, $Res Function(_CreatePostRequest) _then) = __$CreatePostRequestCopyWithImpl;
 @override @useResult
 $Res call({
- int fanHubId, PostType postType, String? title, String content, List<String>? images, List<String>? hashtags, String? video
+ int fanHubId, PostType postType, String? title, String content, List<String>? hashtags, bool isAnnouncement, bool isSchedule
 });
 
 
@@ -1550,16 +1542,16 @@ class __$CreatePostRequestCopyWithImpl<$Res>
 
 /// Create a copy of CreatePostRequest
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? fanHubId = null,Object? postType = null,Object? title = freezed,Object? content = null,Object? images = freezed,Object? hashtags = freezed,Object? video = freezed,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? fanHubId = null,Object? postType = null,Object? title = freezed,Object? content = null,Object? hashtags = freezed,Object? isAnnouncement = null,Object? isSchedule = null,}) {
   return _then(_CreatePostRequest(
 fanHubId: null == fanHubId ? _self.fanHubId : fanHubId // ignore: cast_nullable_to_non_nullable
 as int,postType: null == postType ? _self.postType : postType // ignore: cast_nullable_to_non_nullable
 as PostType,title: freezed == title ? _self.title : title // ignore: cast_nullable_to_non_nullable
 as String?,content: null == content ? _self.content : content // ignore: cast_nullable_to_non_nullable
-as String,images: freezed == images ? _self._images : images // ignore: cast_nullable_to_non_nullable
-as List<String>?,hashtags: freezed == hashtags ? _self._hashtags : hashtags // ignore: cast_nullable_to_non_nullable
-as List<String>?,video: freezed == video ? _self.video : video // ignore: cast_nullable_to_non_nullable
-as String?,
+as String,hashtags: freezed == hashtags ? _self._hashtags : hashtags // ignore: cast_nullable_to_non_nullable
+as List<String>?,isAnnouncement: null == isAnnouncement ? _self.isAnnouncement : isAnnouncement // ignore: cast_nullable_to_non_nullable
+as bool,isSchedule: null == isSchedule ? _self.isSchedule : isSchedule // ignore: cast_nullable_to_non_nullable
+as bool,
   ));
 }
 

@@ -82,6 +82,10 @@ RouteBase get $mainShellRoute => StatefulShellRouteData.$route(
               path: 'bookmarks',
               factory: $BookmarkRoute._fromState,
             ),
+            GoRouteData.$route(
+              path: 'vtuber-application',
+              factory: $VtuberApplicationRoute._fromState,
+            ),
           ],
         ),
       ],
@@ -160,6 +164,27 @@ mixin $BookmarkRoute on GoRouteData {
 
   @override
   String get location => GoRouteData.$location('/profile/bookmarks');
+
+  @override
+  void go(BuildContext context) => context.go(location);
+
+  @override
+  Future<T?> push<T>(BuildContext context) => context.push<T>(location);
+
+  @override
+  void pushReplacement(BuildContext context) =>
+      context.pushReplacement(location);
+
+  @override
+  void replace(BuildContext context) => context.replace(location);
+}
+
+mixin $VtuberApplicationRoute on GoRouteData {
+  static VtuberApplicationRoute _fromState(GoRouterState state) =>
+      const VtuberApplicationRoute();
+
+  @override
+  String get location => GoRouteData.$location('/profile/vtuber-application');
 
   @override
   void go(BuildContext context) => context.go(location);

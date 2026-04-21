@@ -187,6 +187,21 @@ class UserProfileScreen extends HookConsumerWidget {
                               ),
                             ),
                           ),
+                          const SizedBox(height: 12),
+
+                          // VTuber Application Button
+                          ListTile(
+                            leading: const Icon(Icons.video_camera_front_outlined),
+                            title: const Text('VTuber Application'),
+                            trailing: const Icon(Icons.chevron_right),
+                            onTap: () => const VtuberApplicationRoute().push(context),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(12),
+                              side: BorderSide(
+                                color: Theme.of(context).colorScheme.outlineVariant,
+                              ),
+                            ),
+                          ),
                           const SizedBox(height: 24),
 
                           // Stats Section

@@ -7,12 +7,14 @@ import 'package:sep490_mo/features/auth/presentation/screens/sign_up_screen.dart
 import 'package:sep490_mo/features/fanhub/presentation/screens/fanhub_detail_screen.dart';
 import 'package:sep490_mo/features/fanhub/presentation/screens/fanhub_list_screen.dart';
 import 'package:sep490_mo/features/member/presentation/screens/member_list_screen.dart';
+import 'package:sep490_mo/features/post/data/models/post_models.dart';
 import 'package:sep490_mo/features/post/presentation/screens/create_post_screen.dart';
 import 'package:sep490_mo/features/post/presentation/screens/bookmark_screen.dart';
 import 'package:sep490_mo/features/post/presentation/screens/feed_screen.dart';
 import 'package:sep490_mo/app/screen/moderation_home_screen.dart';
 import 'package:sep490_mo/features/post/presentation/widgets/hub_feed_widget.dart';
 import 'package:sep490_mo/features/user/presentation/screens/user_profile_screen.dart';
+import 'package:sep490_mo/features/user/presentation/screens/vtuber_application_screen.dart';
 
 part 'routes.g.dart';
 
@@ -53,6 +55,7 @@ class SignUpRoute extends GoRouteData with $SignUpRoute {
           path: '/profile',
           routes: [
             TypedGoRoute<BookmarkRoute>(path: 'bookmarks'),
+            TypedGoRoute<VtuberApplicationRoute>(path: 'vtuber-application'),
           ],
         ),
       ],
@@ -186,4 +189,12 @@ class BookmarkRoute extends GoRouteData with $BookmarkRoute {
   @override
   Widget build(BuildContext context, GoRouterState state) =>
       const BookmarkScreen();
+}
+
+class VtuberApplicationRoute extends GoRouteData with $VtuberApplicationRoute {
+  const VtuberApplicationRoute();
+
+  @override
+  Widget build(BuildContext context, GoRouterState state) =>
+      const VtuberApplicationScreen();
 }
