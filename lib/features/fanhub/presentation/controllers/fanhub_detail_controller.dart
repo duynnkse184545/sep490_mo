@@ -14,12 +14,13 @@ class FanHubDetailController extends _$FanHubDetailController {
         .run();
 
     return result.fold(
-          (failure) => FanHubDetailState.error(failure.message),
-          (fanHub) => FanHubDetailState.loaded(fanHub),
+      (failure) => throw failure,
+      (fanHub) => FanHubDetailState.loaded(fanHub),
     );
   }
 
   Future<void> refresh() async {
+    state = const AsyncValue.loading();
     ref.invalidateSelf();
   }
 }

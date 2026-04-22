@@ -52,7 +52,7 @@ final class FanHubDetailControllerProvider
 }
 
 String _$fanHubDetailControllerHash() =>
-    r'6dfb2541b533e63fb3f94813c81ad0fc249d9c24';
+    r'7c02d3680070acad455ca6ad9e5ab36e4b47338e';
 
 final class FanHubDetailControllerFamily extends $Family
     with

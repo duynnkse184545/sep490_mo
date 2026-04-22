@@ -33,9 +33,12 @@ class MemberDetailScreen extends HookConsumerWidget {
       ),
       body: SafeArea(
         child: detailAsync.when(
+          loading: () => const Loader(),
+          error: (error, stackTrace) => ErrorBanner(
+            message: error.toString(),
+            onRetry: controller.refresh,
+          ),
           data: (state) => state.when(
-            initial: () => const Loader(),
-            loading: () => const Loader(),
             loaded: (member) => RefreshIndicator(
               onRefresh: controller.refresh,
               child: CustomScrollView(
@@ -220,15 +223,6 @@ class MemberDetailScreen extends HookConsumerWidget {
                 ],
               ),
             ),
-            error: (message) => ErrorBanner(
-              message: message,
-              onRetry: controller.refresh,
-            ),
-          ),
-          loading: () => const Loader(),
-          error: (error, stackTrace) => ErrorBanner(
-            message: error.toString(),
-            onRetry: controller.refresh,
           ),
         ),
       ),

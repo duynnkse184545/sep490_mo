@@ -14,30 +14,70 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$FanHubDetailState {
 
-
+ FanHub get fanHub;
+/// Create a copy of FanHubDetailState
+/// with the given fields replaced by the non-null parameter values.
+@JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+$FanHubDetailStateCopyWith<FanHubDetailState> get copyWith => _$FanHubDetailStateCopyWithImpl<FanHubDetailState>(this as FanHubDetailState, _$identity);
 
 
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is FanHubDetailState);
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is FanHubDetailState&&(identical(other.fanHub, fanHub) || other.fanHub == fanHub));
 }
 
 
 @override
-int get hashCode => runtimeType.hashCode;
+int get hashCode => Object.hash(runtimeType,fanHub);
 
 @override
 String toString() {
-  return 'FanHubDetailState()';
+  return 'FanHubDetailState(fanHub: $fanHub)';
 }
 
 
 }
 
 /// @nodoc
-class $FanHubDetailStateCopyWith<$Res>  {
-$FanHubDetailStateCopyWith(FanHubDetailState _, $Res Function(FanHubDetailState) __);
+abstract mixin class $FanHubDetailStateCopyWith<$Res>  {
+  factory $FanHubDetailStateCopyWith(FanHubDetailState value, $Res Function(FanHubDetailState) _then) = _$FanHubDetailStateCopyWithImpl;
+@useResult
+$Res call({
+ FanHub fanHub
+});
+
+
+$FanHubCopyWith<$Res> get fanHub;
+
+}
+/// @nodoc
+class _$FanHubDetailStateCopyWithImpl<$Res>
+    implements $FanHubDetailStateCopyWith<$Res> {
+  _$FanHubDetailStateCopyWithImpl(this._self, this._then);
+
+  final FanHubDetailState _self;
+  final $Res Function(FanHubDetailState) _then;
+
+/// Create a copy of FanHubDetailState
+/// with the given fields replaced by the non-null parameter values.
+@pragma('vm:prefer-inline') @override $Res call({Object? fanHub = null,}) {
+  return _then(_self.copyWith(
+fanHub: null == fanHub ? _self.fanHub : fanHub // ignore: cast_nullable_to_non_nullable
+as FanHub,
+  ));
+}
+/// Create a copy of FanHubDetailState
+/// with the given fields replaced by the non-null parameter values.
+@override
+@pragma('vm:prefer-inline')
+$FanHubCopyWith<$Res> get fanHub {
+  
+  return $FanHubCopyWith<$Res>(_self.fanHub, (value) {
+    return _then(_self.copyWith(fanHub: value));
+  });
+}
 }
 
 
@@ -55,14 +95,11 @@ extension FanHubDetailStatePatterns on FanHubDetailState {
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeMap<TResult extends Object?>({TResult Function( _Initial value)?  initial,TResult Function( _Loading value)?  loading,TResult Function( _Loaded value)?  loaded,TResult Function( _Error value)?  error,required TResult orElse(),}){
+@optionalTypeArgs TResult maybeMap<TResult extends Object?>({TResult Function( _Loaded value)?  loaded,required TResult orElse(),}){
 final _that = this;
 switch (_that) {
-case _Initial() when initial != null:
-return initial(_that);case _Loading() when loading != null:
-return loading(_that);case _Loaded() when loaded != null:
-return loaded(_that);case _Error() when error != null:
-return error(_that);case _:
+case _Loaded() when loaded != null:
+return loaded(_that);case _:
   return orElse();
 
 }
@@ -80,14 +117,11 @@ return error(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult map<TResult extends Object?>({required TResult Function( _Initial value)  initial,required TResult Function( _Loading value)  loading,required TResult Function( _Loaded value)  loaded,required TResult Function( _Error value)  error,}){
+@optionalTypeArgs TResult map<TResult extends Object?>({required TResult Function( _Loaded value)  loaded,}){
 final _that = this;
 switch (_that) {
-case _Initial():
-return initial(_that);case _Loading():
-return loading(_that);case _Loaded():
-return loaded(_that);case _Error():
-return error(_that);}
+case _Loaded():
+return loaded(_that);}
 }
 /// A variant of `map` that fallback to returning `null`.
 ///
@@ -101,14 +135,11 @@ return error(_that);}
 /// }
 /// ```
 
-@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>({TResult? Function( _Initial value)?  initial,TResult? Function( _Loading value)?  loading,TResult? Function( _Loaded value)?  loaded,TResult? Function( _Error value)?  error,}){
+@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>({TResult? Function( _Loaded value)?  loaded,}){
 final _that = this;
 switch (_that) {
-case _Initial() when initial != null:
-return initial(_that);case _Loading() when loading != null:
-return loading(_that);case _Loaded() when loaded != null:
-return loaded(_that);case _Error() when error != null:
-return error(_that);case _:
+case _Loaded() when loaded != null:
+return loaded(_that);case _:
   return null;
 
 }
@@ -125,13 +156,10 @@ return error(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function()?  initial,TResult Function()?  loading,TResult Function( FanHub fanHub)?  loaded,TResult Function( String message)?  error,required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function( FanHub fanHub)?  loaded,required TResult orElse(),}) {final _that = this;
 switch (_that) {
-case _Initial() when initial != null:
-return initial();case _Loading() when loading != null:
-return loading();case _Loaded() when loaded != null:
-return loaded(_that.fanHub);case _Error() when error != null:
-return error(_that.message);case _:
+case _Loaded() when loaded != null:
+return loaded(_that.fanHub);case _:
   return orElse();
 
 }
@@ -149,13 +177,10 @@ return error(_that.message);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function()  initial,required TResult Function()  loading,required TResult Function( FanHub fanHub)  loaded,required TResult Function( String message)  error,}) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function( FanHub fanHub)  loaded,}) {final _that = this;
 switch (_that) {
-case _Initial():
-return initial();case _Loading():
-return loading();case _Loaded():
-return loaded(_that.fanHub);case _Error():
-return error(_that.message);}
+case _Loaded():
+return loaded(_that.fanHub);}
 }
 /// A variant of `when` that fallback to returning `null`
 ///
@@ -169,13 +194,10 @@ return error(_that.message);}
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function()?  initial,TResult? Function()?  loading,TResult? Function( FanHub fanHub)?  loaded,TResult? Function( String message)?  error,}) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function( FanHub fanHub)?  loaded,}) {final _that = this;
 switch (_that) {
-case _Initial() when initial != null:
-return initial();case _Loading() when loading != null:
-return loading();case _Loaded() when loaded != null:
-return loaded(_that.fanHub);case _Error() when error != null:
-return error(_that.message);case _:
+case _Loaded() when loaded != null:
+return loaded(_that.fanHub);case _:
   return null;
 
 }
@@ -186,79 +208,15 @@ return error(_that.message);case _:
 /// @nodoc
 
 
-class _Initial implements FanHubDetailState {
-  const _Initial();
-  
-
-
-
-
-
-
-@override
-bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _Initial);
-}
-
-
-@override
-int get hashCode => runtimeType.hashCode;
-
-@override
-String toString() {
-  return 'FanHubDetailState.initial()';
-}
-
-
-}
-
-
-
-
-/// @nodoc
-
-
-class _Loading implements FanHubDetailState {
-  const _Loading();
-  
-
-
-
-
-
-
-@override
-bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _Loading);
-}
-
-
-@override
-int get hashCode => runtimeType.hashCode;
-
-@override
-String toString() {
-  return 'FanHubDetailState.loading()';
-}
-
-
-}
-
-
-
-
-/// @nodoc
-
-
 class _Loaded implements FanHubDetailState {
   const _Loaded(this.fanHub);
   
 
- final  FanHub fanHub;
+@override final  FanHub fanHub;
 
 /// Create a copy of FanHubDetailState
 /// with the given fields replaced by the non-null parameter values.
-@JsonKey(includeFromJson: false, includeToJson: false)
+@override @JsonKey(includeFromJson: false, includeToJson: false)
 @pragma('vm:prefer-inline')
 _$LoadedCopyWith<_Loaded> get copyWith => __$LoadedCopyWithImpl<_Loaded>(this, _$identity);
 
@@ -284,13 +242,13 @@ String toString() {
 /// @nodoc
 abstract mixin class _$LoadedCopyWith<$Res> implements $FanHubDetailStateCopyWith<$Res> {
   factory _$LoadedCopyWith(_Loaded value, $Res Function(_Loaded) _then) = __$LoadedCopyWithImpl;
-@useResult
+@override @useResult
 $Res call({
  FanHub fanHub
 });
 
 
-$FanHubCopyWith<$Res> get fanHub;
+@override $FanHubCopyWith<$Res> get fanHub;
 
 }
 /// @nodoc
@@ -303,7 +261,7 @@ class __$LoadedCopyWithImpl<$Res>
 
 /// Create a copy of FanHubDetailState
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') $Res call({Object? fanHub = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? fanHub = null,}) {
   return _then(_Loaded(
 null == fanHub ? _self.fanHub : fanHub // ignore: cast_nullable_to_non_nullable
 as FanHub,
@@ -320,72 +278,6 @@ $FanHubCopyWith<$Res> get fanHub {
     return _then(_self.copyWith(fanHub: value));
   });
 }
-}
-
-/// @nodoc
-
-
-class _Error implements FanHubDetailState {
-  const _Error(this.message);
-  
-
- final  String message;
-
-/// Create a copy of FanHubDetailState
-/// with the given fields replaced by the non-null parameter values.
-@JsonKey(includeFromJson: false, includeToJson: false)
-@pragma('vm:prefer-inline')
-_$ErrorCopyWith<_Error> get copyWith => __$ErrorCopyWithImpl<_Error>(this, _$identity);
-
-
-
-@override
-bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _Error&&(identical(other.message, message) || other.message == message));
-}
-
-
-@override
-int get hashCode => Object.hash(runtimeType,message);
-
-@override
-String toString() {
-  return 'FanHubDetailState.error(message: $message)';
-}
-
-
-}
-
-/// @nodoc
-abstract mixin class _$ErrorCopyWith<$Res> implements $FanHubDetailStateCopyWith<$Res> {
-  factory _$ErrorCopyWith(_Error value, $Res Function(_Error) _then) = __$ErrorCopyWithImpl;
-@useResult
-$Res call({
- String message
-});
-
-
-
-
-}
-/// @nodoc
-class __$ErrorCopyWithImpl<$Res>
-    implements _$ErrorCopyWith<$Res> {
-  __$ErrorCopyWithImpl(this._self, this._then);
-
-  final _Error _self;
-  final $Res Function(_Error) _then;
-
-/// Create a copy of FanHubDetailState
-/// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') $Res call({Object? message = null,}) {
-  return _then(_Error(
-null == message ? _self.message : message // ignore: cast_nullable_to_non_nullable
-as String,
-  ));
-}
-
-
 }
 
 // dart format on

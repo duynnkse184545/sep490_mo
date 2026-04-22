@@ -14,12 +14,13 @@ class MemberDetailController extends _$MemberDetailController {
         .run();
 
     return result.fold(
-      (failure) => MemberDetailState.error(failure.message),
+      (failure) => throw failure,
       (member) => MemberDetailState.loaded(member),
     );
   }
 
   Future<void> refresh() async {
+    state = const AsyncValue.loading();
     ref.invalidateSelf();
   }
 }

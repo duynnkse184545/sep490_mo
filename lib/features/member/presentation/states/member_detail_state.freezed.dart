@@ -14,30 +14,70 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$MemberDetailState {
 
-
+ Member get member;
+/// Create a copy of MemberDetailState
+/// with the given fields replaced by the non-null parameter values.
+@JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+$MemberDetailStateCopyWith<MemberDetailState> get copyWith => _$MemberDetailStateCopyWithImpl<MemberDetailState>(this as MemberDetailState, _$identity);
 
 
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is MemberDetailState);
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is MemberDetailState&&(identical(other.member, member) || other.member == member));
 }
 
 
 @override
-int get hashCode => runtimeType.hashCode;
+int get hashCode => Object.hash(runtimeType,member);
 
 @override
 String toString() {
-  return 'MemberDetailState()';
+  return 'MemberDetailState(member: $member)';
 }
 
 
 }
 
 /// @nodoc
-class $MemberDetailStateCopyWith<$Res>  {
-$MemberDetailStateCopyWith(MemberDetailState _, $Res Function(MemberDetailState) __);
+abstract mixin class $MemberDetailStateCopyWith<$Res>  {
+  factory $MemberDetailStateCopyWith(MemberDetailState value, $Res Function(MemberDetailState) _then) = _$MemberDetailStateCopyWithImpl;
+@useResult
+$Res call({
+ Member member
+});
+
+
+$MemberCopyWith<$Res> get member;
+
+}
+/// @nodoc
+class _$MemberDetailStateCopyWithImpl<$Res>
+    implements $MemberDetailStateCopyWith<$Res> {
+  _$MemberDetailStateCopyWithImpl(this._self, this._then);
+
+  final MemberDetailState _self;
+  final $Res Function(MemberDetailState) _then;
+
+/// Create a copy of MemberDetailState
+/// with the given fields replaced by the non-null parameter values.
+@pragma('vm:prefer-inline') @override $Res call({Object? member = null,}) {
+  return _then(_self.copyWith(
+member: null == member ? _self.member : member // ignore: cast_nullable_to_non_nullable
+as Member,
+  ));
+}
+/// Create a copy of MemberDetailState
+/// with the given fields replaced by the non-null parameter values.
+@override
+@pragma('vm:prefer-inline')
+$MemberCopyWith<$Res> get member {
+  
+  return $MemberCopyWith<$Res>(_self.member, (value) {
+    return _then(_self.copyWith(member: value));
+  });
+}
 }
 
 
@@ -55,14 +95,11 @@ extension MemberDetailStatePatterns on MemberDetailState {
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeMap<TResult extends Object?>({TResult Function( _Initial value)?  initial,TResult Function( _Loading value)?  loading,TResult Function( _Loaded value)?  loaded,TResult Function( _Error value)?  error,required TResult orElse(),}){
+@optionalTypeArgs TResult maybeMap<TResult extends Object?>({TResult Function( _Loaded value)?  loaded,required TResult orElse(),}){
 final _that = this;
 switch (_that) {
-case _Initial() when initial != null:
-return initial(_that);case _Loading() when loading != null:
-return loading(_that);case _Loaded() when loaded != null:
-return loaded(_that);case _Error() when error != null:
-return error(_that);case _:
+case _Loaded() when loaded != null:
+return loaded(_that);case _:
   return orElse();
 
 }
@@ -80,14 +117,11 @@ return error(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult map<TResult extends Object?>({required TResult Function( _Initial value)  initial,required TResult Function( _Loading value)  loading,required TResult Function( _Loaded value)  loaded,required TResult Function( _Error value)  error,}){
+@optionalTypeArgs TResult map<TResult extends Object?>({required TResult Function( _Loaded value)  loaded,}){
 final _that = this;
 switch (_that) {
-case _Initial():
-return initial(_that);case _Loading():
-return loading(_that);case _Loaded():
-return loaded(_that);case _Error():
-return error(_that);}
+case _Loaded():
+return loaded(_that);}
 }
 /// A variant of `map` that fallback to returning `null`.
 ///
@@ -101,14 +135,11 @@ return error(_that);}
 /// }
 /// ```
 
-@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>({TResult? Function( _Initial value)?  initial,TResult? Function( _Loading value)?  loading,TResult? Function( _Loaded value)?  loaded,TResult? Function( _Error value)?  error,}){
+@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>({TResult? Function( _Loaded value)?  loaded,}){
 final _that = this;
 switch (_that) {
-case _Initial() when initial != null:
-return initial(_that);case _Loading() when loading != null:
-return loading(_that);case _Loaded() when loaded != null:
-return loaded(_that);case _Error() when error != null:
-return error(_that);case _:
+case _Loaded() when loaded != null:
+return loaded(_that);case _:
   return null;
 
 }
@@ -125,13 +156,10 @@ return error(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function()?  initial,TResult Function()?  loading,TResult Function( Member member)?  loaded,TResult Function( String message)?  error,required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function( Member member)?  loaded,required TResult orElse(),}) {final _that = this;
 switch (_that) {
-case _Initial() when initial != null:
-return initial();case _Loading() when loading != null:
-return loading();case _Loaded() when loaded != null:
-return loaded(_that.member);case _Error() when error != null:
-return error(_that.message);case _:
+case _Loaded() when loaded != null:
+return loaded(_that.member);case _:
   return orElse();
 
 }
@@ -149,13 +177,10 @@ return error(_that.message);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function()  initial,required TResult Function()  loading,required TResult Function( Member member)  loaded,required TResult Function( String message)  error,}) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function( Member member)  loaded,}) {final _that = this;
 switch (_that) {
-case _Initial():
-return initial();case _Loading():
-return loading();case _Loaded():
-return loaded(_that.member);case _Error():
-return error(_that.message);}
+case _Loaded():
+return loaded(_that.member);}
 }
 /// A variant of `when` that fallback to returning `null`
 ///
@@ -169,13 +194,10 @@ return error(_that.message);}
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function()?  initial,TResult? Function()?  loading,TResult? Function( Member member)?  loaded,TResult? Function( String message)?  error,}) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function( Member member)?  loaded,}) {final _that = this;
 switch (_that) {
-case _Initial() when initial != null:
-return initial();case _Loading() when loading != null:
-return loading();case _Loaded() when loaded != null:
-return loaded(_that.member);case _Error() when error != null:
-return error(_that.message);case _:
+case _Loaded() when loaded != null:
+return loaded(_that.member);case _:
   return null;
 
 }
@@ -186,79 +208,15 @@ return error(_that.message);case _:
 /// @nodoc
 
 
-class _Initial implements MemberDetailState {
-  const _Initial();
-  
-
-
-
-
-
-
-@override
-bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _Initial);
-}
-
-
-@override
-int get hashCode => runtimeType.hashCode;
-
-@override
-String toString() {
-  return 'MemberDetailState.initial()';
-}
-
-
-}
-
-
-
-
-/// @nodoc
-
-
-class _Loading implements MemberDetailState {
-  const _Loading();
-  
-
-
-
-
-
-
-@override
-bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _Loading);
-}
-
-
-@override
-int get hashCode => runtimeType.hashCode;
-
-@override
-String toString() {
-  return 'MemberDetailState.loading()';
-}
-
-
-}
-
-
-
-
-/// @nodoc
-
-
 class _Loaded implements MemberDetailState {
   const _Loaded(this.member);
   
 
- final  Member member;
+@override final  Member member;
 
 /// Create a copy of MemberDetailState
 /// with the given fields replaced by the non-null parameter values.
-@JsonKey(includeFromJson: false, includeToJson: false)
+@override @JsonKey(includeFromJson: false, includeToJson: false)
 @pragma('vm:prefer-inline')
 _$LoadedCopyWith<_Loaded> get copyWith => __$LoadedCopyWithImpl<_Loaded>(this, _$identity);
 
@@ -284,13 +242,13 @@ String toString() {
 /// @nodoc
 abstract mixin class _$LoadedCopyWith<$Res> implements $MemberDetailStateCopyWith<$Res> {
   factory _$LoadedCopyWith(_Loaded value, $Res Function(_Loaded) _then) = __$LoadedCopyWithImpl;
-@useResult
+@override @useResult
 $Res call({
  Member member
 });
 
 
-$MemberCopyWith<$Res> get member;
+@override $MemberCopyWith<$Res> get member;
 
 }
 /// @nodoc
@@ -303,7 +261,7 @@ class __$LoadedCopyWithImpl<$Res>
 
 /// Create a copy of MemberDetailState
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') $Res call({Object? member = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? member = null,}) {
   return _then(_Loaded(
 null == member ? _self.member : member // ignore: cast_nullable_to_non_nullable
 as Member,
@@ -320,72 +278,6 @@ $MemberCopyWith<$Res> get member {
     return _then(_self.copyWith(member: value));
   });
 }
-}
-
-/// @nodoc
-
-
-class _Error implements MemberDetailState {
-  const _Error(this.message);
-  
-
- final  String message;
-
-/// Create a copy of MemberDetailState
-/// with the given fields replaced by the non-null parameter values.
-@JsonKey(includeFromJson: false, includeToJson: false)
-@pragma('vm:prefer-inline')
-_$ErrorCopyWith<_Error> get copyWith => __$ErrorCopyWithImpl<_Error>(this, _$identity);
-
-
-
-@override
-bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _Error&&(identical(other.message, message) || other.message == message));
-}
-
-
-@override
-int get hashCode => Object.hash(runtimeType,message);
-
-@override
-String toString() {
-  return 'MemberDetailState.error(message: $message)';
-}
-
-
-}
-
-/// @nodoc
-abstract mixin class _$ErrorCopyWith<$Res> implements $MemberDetailStateCopyWith<$Res> {
-  factory _$ErrorCopyWith(_Error value, $Res Function(_Error) _then) = __$ErrorCopyWithImpl;
-@useResult
-$Res call({
- String message
-});
-
-
-
-
-}
-/// @nodoc
-class __$ErrorCopyWithImpl<$Res>
-    implements _$ErrorCopyWith<$Res> {
-  __$ErrorCopyWithImpl(this._self, this._then);
-
-  final _Error _self;
-  final $Res Function(_Error) _then;
-
-/// Create a copy of MemberDetailState
-/// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') $Res call({Object? message = null,}) {
-  return _then(_Error(
-null == message ? _self.message : message // ignore: cast_nullable_to_non_nullable
-as String,
-  ));
-}
-
-
 }
 
 // dart format on
