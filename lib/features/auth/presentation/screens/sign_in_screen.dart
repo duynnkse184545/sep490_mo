@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:sep490_mo/app/router/routes.dart';
+import 'package:sep490_mo/core/widgets/retro_text_field.dart';
+import '../widgets/retro_grid_vfx.dart';
 import '../../../../core/error/failure_handler.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/widgets/error_retry_widget.dart';
@@ -14,7 +18,7 @@ class SignInScreen extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    // Hooks - auto-disposed! No manual dispose needed ✅
+    // Hooks
     final emailController = useTextEditingController();
     final passwordController = useTextEditingController();
     final obscurePassword = useState(true);
@@ -25,7 +29,6 @@ class SignInScreen extends HookConsumerWidget {
     ref.listen<SignInState>(signInControllerProvider, (previous, next) {
       next.maybeWhen(
         success: () {
-          // Navigate to home (or wherever your auth flow goes)
           HomeRoute().go(context);
         },
         orElse: () {},
@@ -33,67 +36,59 @@ class SignInScreen extends HookConsumerWidget {
     });
 
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Sign In'),
-      ),
-      body: SafeArea(
-        child: signInState.when(
-          // Initial state - show form
-          initial: () => _buildSignInForm(
-            context,
-            ref,
-            emailController,
-            passwordController,
-            obscurePassword,
-          ),
-          
-          // Loading state - show form with loading button
-          loading: () => _buildSignInForm(
-            context,
-            ref,
-            emailController,
-            passwordController,
-            obscurePassword,
-            isLoading: true,
-          ),
-          
-          // Success state - will navigate via listener above
-          success: () => const Center(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Icon(Icons.check_circle, size: 80, color: AppColors.success),
-                SizedBox(height: 16),
-                Text('Sign in successful!'),
-              ],
-            ),
-          ),
-          
-          // Error state - show error with retry option
-          error: (message, failure) => Column(
-            children: [
-              // Error banner at top
-              ErrorBanner(
-                message: message,
-                onRetry: FailureHandler.isRetryable(failure)
-                    ? () => ref.read(signInControllerProvider.notifier).retry()
-                    : null,
-                onDismiss: () => ref.read(signInControllerProvider.notifier).resetState(),
+      body: Stack(
+        children: [
+          const Positioned.fill(child: RetroGridVfx()),
+          SafeArea(
+            child: signInState.when(
+              initial: () => _buildSignInForm(
+                context,
+                ref,
+                emailController,
+                passwordController,
+                obscurePassword,
               ),
-              
-              // Form still visible
-              Expanded(
-                child: _buildSignInForm(
-                  context,
-                  ref,
-                  emailController,
-                  passwordController,
-                  obscurePassword,
+              loading: () => _buildSignInForm(
+                context,
+                ref,
+                emailController,
+                passwordController,
+                obscurePassword,
+                isLoading: true,
+              ),
+              success: () => const Center(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Icon(Icons.check_circle, size: 80, color: AppColors.success),
+                    SizedBox(height: 16),
+                    Text('Sign in successful!'),
+                  ],
                 ),
               ),
-            ],
+              error: (message, failure) => Column(
+                children: [
+                  ErrorBanner(
+                    message: message,
+                    onRetry: FailureHandler.isRetryable(failure)
+                        ? () => ref.read(signInControllerProvider.notifier).retry()
+                        : null,
+                    onDismiss: () => ref.read(signInControllerProvider.notifier).resetState(),
+                  ),
+                  Expanded(
+                    child: _buildSignInForm(
+                      context,
+                      ref,
+                      emailController,
+                      passwordController,
+                      obscurePassword,
+                    ),
+                  ),
+                ],
+              ),
+            ),
           ),
-        ),
+        ],
       ),
     );
   }
@@ -106,95 +101,161 @@ class SignInScreen extends HookConsumerWidget {
     ValueNotifier<bool> obscurePassword,
     {bool isLoading = false}
   ) {
-    return SingleChildScrollView(
-      padding: const EdgeInsets.all(24.0),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          const SizedBox(height: 32),
-
-          // Logo or title
-          const Icon(Icons.task_alt, size: 80, color: AppColors.primary),
-          const SizedBox(height: 16),
-          Text(
-            'Welcome Back',
-            style: Theme.of(context).textTheme.headlineMedium,
-            textAlign: TextAlign.center,
-          ),
-          const SizedBox(height: 8),
-          Text(
-            'Sign in to continue',
-            style: Theme.of(context).textTheme.bodyMedium,
-            textAlign: TextAlign.center,
-          ),
-
-          const SizedBox(height: 48),
-
-          // Email field
-          TextField(
-            controller: emailController,
-            enabled: !isLoading,
-            keyboardType: TextInputType.emailAddress,
-            style: Theme.of(context).textTheme.bodyLarge,
-            decoration: InputDecoration(
-              labelText: 'Email',
-              hintText: 'Enter your email',
-              prefixIcon: const Icon(Icons.email_outlined),
-            ),
-          ),
-
-          const SizedBox(height: 16),
-
-          // Password field
-          TextField(
-            controller: passwordController,
-            enabled: !isLoading,
-            obscureText: obscurePassword.value,
-            style: Theme.of(context).textTheme.bodyLarge,
-            decoration: InputDecoration(
-              labelText: 'Password',
-              hintText: 'Enter your password',
-              prefixIcon: const Icon(Icons.lock_outline),
-              suffixIcon: IconButton(
-                icon: Icon(
-                  obscurePassword.value ? Icons.visibility : Icons.visibility_off,
-                ),
-                onPressed: () {
-                  obscurePassword.value = !obscurePassword.value;
-                },
+    return Center(
+      child: SingleChildScrollView(
+        child: Container(
+          margin: const EdgeInsets.symmetric(horizontal: 24, vertical: 40),
+          decoration: BoxDecoration(
+            color: const Color(0xFFD3D3D3),
+            border: Border.all(color: AppColors.border, width: 2),
+            borderRadius: BorderRadius.circular(5),
+            boxShadow: const [
+              BoxShadow(
+                color: AppColors.border,
+                offset: Offset(8, 8),
+                blurRadius: 0,
               ),
+            ],
+          ),
+          child: Padding(
+            padding: const EdgeInsets.all(30.0),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Text(
+                  "Log in",
+                  style: GoogleFonts.monda(
+                    fontSize: 28,
+                    fontWeight: FontWeight.w900,
+                    color: const Color(0xFF323232),
+                  ),
+                ),
+                const SizedBox(height: 12),
+                SvgPicture.asset(
+                  'assets/Nav -_ Logo.svg',
+                  height: 60,
+                ),
+                const SizedBox(height: 32),
+
+                // Email field
+                _buildLabel("Email"),
+                const SizedBox(height: 8),
+                RetroTextField(
+                  hintText: 'Enter your email',
+                  controller: emailController,
+                  enabled: !isLoading,
+                  keyboardType: TextInputType.emailAddress,
+                ),
+
+                const SizedBox(height: 20),
+
+                // Password field
+                _buildLabel("Password"),
+                const SizedBox(height: 8),
+                RetroTextField(
+                  hintText: 'Enter your password',
+                  controller: passwordController,
+                  enabled: !isLoading,
+                  isPassword: obscurePassword.value,
+                  suffixIcon: IconButton(
+                    icon: Icon(
+                      obscurePassword.value ? Icons.visibility : Icons.visibility_off,
+                      size: 20,
+                    ),
+                    onPressed: () {
+                      obscurePassword.value = !obscurePassword.value;
+                    },
+                  ),
+                ),
+
+                const SizedBox(height: 32),
+
+                // Sign in button
+                _buildRetroButton(
+                  text: 'Login!',
+                  isLoading: isLoading,
+                  onTap: () => _handleSignIn(
+                    ref,
+                    emailController,
+                    passwordController,
+                  ),
+                ),
+
+                const SizedBox(height: 24),
+
+                // Sign up link
+                GestureDetector(
+                  onTap: isLoading ? null : () {
+                    const SignUpRoute().go(context);
+                  },
+                  child: RichText(
+                    text: TextSpan(
+                      style: GoogleFonts.inter(color: Colors.black87, fontSize: 14),
+                      children: [
+                        const TextSpan(text: "Don't have an account? "),
+                        TextSpan(
+                          text: "Sign Up",
+                          style: GoogleFonts.inter(
+                            fontWeight: FontWeight.bold,
+                            decoration: TextDecoration.underline,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ],
             ),
           ),
+        ),
+      ),
+    );
+  }
 
-          const SizedBox(height: 24),
+  Widget _buildLabel(String text) {
+    return Align(
+      alignment: Alignment.centerLeft,
+      child: Text(
+        text,
+        style: GoogleFonts.monda(
+          fontWeight: FontWeight.bold,
+          fontSize: 14,
+          color: const Color(0xFF323232),
+        ),
+      ),
+    );
+  }
 
-          // Sign in button
-          SizedBox(
-            height: 48,
-            child: ElevatedButton(
-              onPressed: isLoading
-                  ? null
-                  : () => _handleSignIn(
-                        ref,
-                        emailController,
-                        passwordController,
-                      ),
-              child: isLoading
-                  ? const SmallLoader()
-                  : const Text('Sign In'),
-            ),
-          ),
-
-          const SizedBox(height: 16),
-
-          // Sign up link
-          TextButton(
-            onPressed: isLoading ? null : () {
-              const SignUpRoute().go(context);
-            },
-            child: const Text("Don't have an account? Sign Up"),
-          ),
-        ],
+  Widget _buildRetroButton({
+    required String text,
+    required VoidCallback onTap,
+    bool isLoading = false,
+  }) {
+    return InkWell(
+      onTap: isLoading ? null : onTap,
+      child: Container(
+        width: 140,
+        height: 48,
+        alignment: Alignment.center,
+        decoration: BoxDecoration(
+          color: Colors.white,
+          border: Border.all(color: AppColors.border, width: 2),
+          borderRadius: BorderRadius.circular(5),
+          boxShadow: const [
+            BoxShadow(color: AppColors.border, offset: Offset(4, 4)),
+          ],
+        ),
+        child: isLoading
+            ? const SmallLoader()
+            : Text(
+                text,
+                style: GoogleFonts.monda(
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                  color: const Color(0xFF323232),
+                ),
+              ),
       ),
     );
   }
@@ -204,13 +265,9 @@ class SignInScreen extends HookConsumerWidget {
     TextEditingController emailController,
     TextEditingController passwordController,
   ) async {
-    // Controller handles validation now
     await ref.read(signInControllerProvider.notifier).signIn(
       emailController.text,
       passwordController.text,
     );
-    
-    // Success navigation handled by listener above
-    // Errors shown via state.when(error: ...)
   }
 }

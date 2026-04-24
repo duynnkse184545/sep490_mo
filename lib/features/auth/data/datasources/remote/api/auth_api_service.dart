@@ -23,7 +23,4 @@ abstract class AuthApiService {
   // @GET('/auth/system-account-login')
   // Future<ApiResponse<SignInResponse>> signInSystemAcc(@Body() SignInRequest request);
 
-  @POST('/logout')
-  Future<void> signOut();
-
 }

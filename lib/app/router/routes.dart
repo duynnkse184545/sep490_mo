@@ -13,6 +13,7 @@ import 'package:sep490_mo/features/post/presentation/screens/feed_screen.dart';
 import 'package:sep490_mo/app/screen/moderation_home_screen.dart';
 import 'package:sep490_mo/features/post/presentation/widgets/hub_feed_widget.dart';
 import 'package:sep490_mo/features/store/presentation/screens/store_home_screen.dart';
+import 'package:sep490_mo/features/auth/presentation/widgets/logout_button.dart';
 import 'package:sep490_mo/features/user/presentation/screens/user_profile_screen.dart';
 import 'package:sep490_mo/features/user/presentation/screens/vtuber_application_screen.dart';
 
@@ -197,7 +198,7 @@ class UserProfileRoute extends GoRouteData with $UserProfileRoute {
 
   @override
   Widget build(BuildContext context, GoRouterState state) =>
-      UserProfileScreen();
+      const UserProfileScreen(logoutButton: LogoutButton());
 }
 
 class BookmarkRoute extends GoRouteData with $BookmarkRoute {

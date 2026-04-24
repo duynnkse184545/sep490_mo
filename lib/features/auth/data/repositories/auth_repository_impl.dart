@@ -41,18 +41,9 @@ class AuthRepositoryImpl implements AuthRepository {
   @override
   TaskVoid signOut() {
     return ErrorHandler.execute(() async {
-      // Try to sign out remotely, but don't fail if it errors (e.g. offline)
-      await ErrorHandler.handleSafely(
-        () => _remoteDataSource.signOut(),
-        'Remote SignOut',
-      );
-
       // Clear tokens using TokenService
       await _tokenService.clearTokens();
       await _tokenService.clearUserId();
-
-      // Clear cached user data (optional, don't fail if this fails)
-      // await ErrorHandler.executeOrNull(() => _localDataSource.clearUserCache());
     });
   }
 

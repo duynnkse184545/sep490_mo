@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:sep490_mo/core/theme/app_colors.dart';
 import 'package:sep490_mo/core/widgets/loader.dart';
+import 'package:sep490_mo/core/widgets/retro_text_field.dart';
 import 'package:sep490_mo/features/auth/presentation/controllers/sign_up_controller.dart';
 import 'package:sep490_mo/features/auth/presentation/states/sign_up_state.dart';
 import 'package:sep490_mo/features/auth/presentation/widgets/step_indicator_widget.dart';
@@ -22,112 +25,181 @@ class SignUpStep2Widget extends HookWidget {
     // Local loading state for buttons
     final isLoading = useState(false);
 
-    // Get theme colors
-    final colorScheme = Theme.of(context).colorScheme;
-
     // Initialize with existing OTP (for back navigation)
     useEffect(() {
       otpController.text = form.otp;
       return null;
     }, []);
 
-    return SingleChildScrollView(
-      padding: const EdgeInsets.all(24.0),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          const SizedBox(height: 32),
-
-          // Progress indicator
-          const StepIndicatorWidget(current: 2, total: 3),
-
-          const SizedBox(height: 48),
-
-          // Icon and title
-          Icon(Icons.sms_outlined, size: 80, color: colorScheme.primary),
-          const SizedBox(height: 16),
-          Text(
-            'Verify OTP',
-            style: Theme.of(context).textTheme.headlineMedium,
-            textAlign: TextAlign.center,
+    return Center(
+      child: SingleChildScrollView(
+        child: Container(
+          margin: const EdgeInsets.symmetric(horizontal: 24, vertical: 20),
+          decoration: BoxDecoration(
+            color: const Color(0xFFD3D3D3),
+            border: Border.all(color: AppColors.border, width: 2),
+            borderRadius: BorderRadius.circular(5),
+            boxShadow: const [
+              BoxShadow(
+                color: AppColors.border,
+                offset: Offset(8, 8),
+                blurRadius: 0,
+              ),
+            ],
           ),
-          const SizedBox(height: 8),
-          Text(
-            'Enter the OTP sent to ${form.email}',
-            style: Theme.of(context).textTheme.bodyMedium,
-            textAlign: TextAlign.center,
-          ),
+          child: Padding(
+            padding: const EdgeInsets.all(30.0),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Text(
+                  "Verify OTP",
+                  style: GoogleFonts.monda(
+                    fontSize: 28,
+                    fontWeight: FontWeight.w900,
+                    color: const Color(0xFF323232),
+                  ),
+                ),
+                const SizedBox(height: 12),
+                const StepIndicatorWidget(current: 2, total: 3),
+                const SizedBox(height: 24),
 
-          const SizedBox(height: 48),
+                Text(
+                  'Enter the OTP sent to ${form.email}',
+                  style: GoogleFonts.inter(
+                    fontSize: 14,
+                    color: const Color(0xFF323232),
+                  ),
+                  textAlign: TextAlign.center,
+                ),
 
-          // OTP field
-          TextField(
-            controller: otpController,
-            keyboardType: TextInputType.number,
-            textAlign: TextAlign.center,
-            style: const TextStyle(fontSize: 24, letterSpacing: 8),
-            maxLength: 6,
-            decoration: InputDecoration(
-              labelText: 'OTP',
-              hintText: '------',
-              prefixIcon: const Icon(Icons.pin_outlined),
-              border: const OutlineInputBorder(),
-              errorText: form.otpError,
-              counterText: '', // Hide character counter
-            ),
-          ),
+                const SizedBox(height: 32),
 
-          const SizedBox(height: 16),
+                // OTP field
+                _buildLabel("OTP Code"),
+                const SizedBox(height: 8),
+                RetroTextField(
+                  hintText: '------',
+                  controller: otpController,
+                  enabled: !isLoading.value,
+                  keyboardType: TextInputType.number,
+                ),
+                if (form.otpError != null) _buildError(form.otpError!),
 
-          // Resend OTP button with loading
-          TextButton.icon(
-            onPressed: isLoading.value
-                ? null
-                : () async {
+                const SizedBox(height: 16),
+
+                // Resend OTP button
+                GestureDetector(
+                  onTap: isLoading.value
+                      ? null
+                      : () async {
+                          isLoading.value = true;
+                          await controller.resendOtp();
+                          isLoading.value = false;
+                        },
+                  child: Text(
+                    isLoading.value ? 'Sending...' : 'Resend OTP',
+                    style: GoogleFonts.inter(
+                      fontWeight: FontWeight.bold,
+                      decoration: TextDecoration.underline,
+                      color: AppColors.primary,
+                    ),
+                  ),
+                ),
+
+                const SizedBox(height: 32),
+
+                // Next button
+                _buildRetroButton(
+                  text: 'Verify!',
+                  isLoading: isLoading.value,
+                  onTap: () async {
                     isLoading.value = true;
-                    await controller.resendOtp();
+                    await controller.submitStep2(
+                      otp: otpController.text,
+                    );
                     isLoading.value = false;
                   },
-            icon: isLoading.value
-                ? const SizedBox(
-                    width: 14,
-                    height: 14,
-                    child: CircularProgressIndicator(strokeWidth: 2),
-                  )
-                : const Icon(Icons.refresh, size: 16),
-            label: Text(isLoading.value ? 'Sending...' : 'Resend OTP'),
-          ),
+                ),
 
-          const SizedBox(height: 32),
+                const SizedBox(height: 24),
 
-          // Next button with loading
-          SizedBox(
-            height: 48,
-            child: ElevatedButton(
-              onPressed: isLoading.value
-                  ? null
-                  : () async {
-                      isLoading.value = true;
-                      await controller.submitStep2(
-                        otp: otpController.text,
-                      );
-                      isLoading.value = false;
-                    },
-              child: isLoading.value
-                  ? const SmallLoader()
-                  : const Text('Next: Complete Profile'),
+                // Back button
+                GestureDetector(
+                  onTap: controller.goBackToStep1,
+                  child: Text(
+                    'Back to Previous Step',
+                    style: GoogleFonts.inter(
+                      fontSize: 14,
+                      color: Colors.black54,
+                    ),
+                  ),
+                ),
+              ],
             ),
           ),
+        ),
+      ),
+    );
+  }
 
-          const SizedBox(height: 16),
+  Widget _buildLabel(String text) {
+    return Align(
+      alignment: Alignment.centerLeft,
+      child: Text(
+        text,
+        style: GoogleFonts.monda(
+          fontWeight: FontWeight.bold,
+          fontSize: 14,
+          color: const Color(0xFF323232),
+        ),
+      ),
+    );
+  }
 
-          // Back button
-          TextButton.icon(
-            onPressed: controller.goBackToStep1,
-            icon: const Icon(Icons.arrow_back, size: 16),
-            label: const Text('Back to Previous Step'),
-          ),
-        ],
+  Widget _buildError(String error) {
+    return Align(
+      alignment: Alignment.centerLeft,
+      child: Padding(
+        padding: const EdgeInsets.only(top: 4),
+        child: Text(
+          error,
+          style: const TextStyle(color: Colors.red, fontSize: 12, fontWeight: FontWeight.bold),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildRetroButton({
+    required String text,
+    required VoidCallback onTap,
+    bool isLoading = false,
+  }) {
+    return InkWell(
+      onTap: isLoading ? null : onTap,
+      child: Container(
+        width: 160,
+        height: 48,
+        alignment: Alignment.center,
+        decoration: BoxDecoration(
+          color: Colors.white,
+          border: Border.all(color: AppColors.border, width: 2),
+          borderRadius: BorderRadius.circular(5),
+          boxShadow: const [
+            BoxShadow(color: AppColors.border, offset: Offset(4, 4)),
+          ],
+        ),
+        child: isLoading
+            ? const SmallLoader()
+            : Text(
+                text,
+                style: GoogleFonts.monda(
+                  fontSize: 16,
+                  fontWeight: FontWeight.bold,
+                  color: const Color(0xFF323232),
+                ),
+              ),
       ),
     );
   }

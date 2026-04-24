@@ -5,8 +5,5 @@ abstract class AuthRemoteDataSource {
 
   Future<SignInResponse> signIn(SignInRequest request);
 
-  Future<void> signOut();
-
   Future<void> verify(String email);
-
-}
+  }

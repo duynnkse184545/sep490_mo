@@ -45,15 +45,6 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
   }
 
   @override
-  Future<void> signOut() async {
-    try {
-      await _authApi.signOut();
-    } on DioException catch (e) {
-      throw DioExceptionMapper.mapToException(e, 'Sign out failed');
-    }
-  }
-
-  @override
   Future<void> verify(String email) async {
     try {
       // Step 1: Create auth user
