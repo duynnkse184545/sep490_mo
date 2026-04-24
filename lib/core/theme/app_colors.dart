@@ -4,8 +4,21 @@ import 'package:flutter/material.dart';
 class AppColors {
   // Primary colors (shared across themes)
   static const Color primary = Color(0xFF24A7CB); // --color-primary
-  static const Color secondary = Color(0x7637A2C0); // --color-secondary
+  static const Color secondary = Color(0xFF37A2C0); // --color-secondary
   static const Color tertiary = Color(0x2D047D9E); // --color-tertiary
+  static const Color emphasis = Color(0xFF75FBC0);
+
+  // Retro Window Header Colors
+  static const Color windowRed = Color(0xFFF75F00);
+  static const Color windowBlue = Color(0xFFC7D5FF);
+  static const Color windowYellow = Color(0xFFFDCB96);
+  static const Color windowWhite = Colors.white;
+
+  // UI Elements
+  static const Color background = Color(0xFFDDFCFF);
+  static const Color backgroundEnd = Color(0xFFEEFEFF);
+  static const Color surface = Color(0xFF363940);
+  static const Color border = Color(0xFF000000);
 
   // HSL-based colors (shared, from hue 223)
   static const Color primaryBright = Color(0xFF6BB8E0); // hsl(223,90%,70%)
@@ -29,6 +42,12 @@ class AppColors {
   static const Color warning = Color(0xFFFF9800);
   static const Color info = Color(0xFF2196F3);
 
+  static const Gradient appBackgroundGradient = LinearGradient(
+    begin: Alignment.topLeft,
+    end: Alignment.bottomRight,
+    colors: [background, backgroundEnd],
+  );
+
   // Transition constants (from CSS)
   static const Duration transDur = Duration(milliseconds: 300);
   static const Curve transTiming = Curves.easeInOut;
@@ -48,7 +67,7 @@ class AppColors {
   static const Color paperDarkColor = Color(0x47393939);
   static const Color tapeGrayColor = Color(0xFFDBD8BE);
   static const Color tapeEdgeGrayColor = Color(0xFFB7B49D);
-  static const Color border = Color(0xFF4D4D57);
+  static const Color legacyBorder = Color(0xFF4D4D57);
   static const Color borderHover = Color(0xFF7F7F8A);
   static const Color onPrimary = Color(0xFFFFFFFF);
   static const Color onBackground = Color(0xFF222222);

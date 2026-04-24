@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-// import 'package:google_fonts/google_fonts.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'app_colors.dart';
 
 /// App theme configuration - Based on CSS design system
@@ -11,69 +11,41 @@ class AppTheme {
 
   static ThemeData get lightTheme {
     return ThemeData(
+      useMaterial3: true,
       colorScheme: ColorScheme.fromSeed(
         seedColor: AppColors.primary,
-        brightness: Brightness.light,
         primary: AppColors.primary,
-        onPrimary: LightColors.onPrimary,
-        secondary: AppColors.secondary,
-        onSecondary: LightColors.onSecondary,
-        tertiary: AppColors.warning,
-        onTertiary: LightColors.onPrimary,
-        surface: LightColors.background,
-        onSurface: LightColors.text,
-        surfaceContainer: LightColors.surface,
-        surfaceContainerHigh: LightColors.appBarBg,
-        outline: LightColors.border,
-        onSurfaceVariant: LightColors.textSecondary,
+        surface: AppColors.windowWhite,
         error: AppColors.error,
-        onError: LightColors.onPrimary,
       ),
-      scaffoldBackgroundColor: LightColors.background,
+      scaffoldBackgroundColor: AppColors.background,
       appBarTheme: const AppBarTheme(
-        backgroundColor: LightColors.appBarBg,
-        foregroundColor: LightColors.appBarFg,
+        backgroundColor: AppColors.surface,
+        foregroundColor: Colors.white,
         elevation: 0,
         centerTitle: false,
         systemOverlayStyle: SystemUiOverlayStyle.light,
       ),
-      cardTheme: CardThemeData(
-        elevation: 2,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(8),
-          side: BorderSide(color: LightColors.border),
+      textTheme: GoogleFonts.mondaTextTheme().copyWith(
+        displayLarge: GoogleFonts.monda(
+          fontWeight: FontWeight.w800,
+          fontSize: 26,
+          color: const Color(0xFF555555),
         ),
-      ),
-      inputDecorationTheme: InputDecorationTheme(
-        filled: true,
-        fillColor: LightColors.inputFill,
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(8),
-          borderSide: BorderSide(color: LightColors.border),
+        bodyMedium: GoogleFonts.inter(
+          fontSize: 14,
+          color: AppColors.border,
         ),
-        enabledBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(8),
-          borderSide: BorderSide(color: LightColors.border),
-        ),
-        focusedBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(8),
-          borderSide: const BorderSide(color: AppColors.primary, width: 2),
-        ),
-        errorBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(8),
-          borderSide: const BorderSide(color: AppColors.error),
-        ),
-        contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
       ),
       elevatedButtonTheme: ElevatedButtonThemeData(
         style: ElevatedButton.styleFrom(
-          backgroundColor: AppColors.primary,
-          foregroundColor: LightColors.onPrimary,
-          padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
+          backgroundColor: AppColors.border,
+          foregroundColor: Colors.white,
+          textStyle: const TextStyle(fontWeight: FontWeight.w400),
+          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(8),
+            borderRadius: BorderRadius.circular(20),
           ),
-          elevation: 0,
         ),
       ),
       textButtonTheme: TextButtonThemeData(
@@ -94,78 +66,7 @@ class AppTheme {
       ),
       floatingActionButtonTheme: const FloatingActionButtonThemeData(
         backgroundColor: AppColors.primary,
-        foregroundColor: LightColors.onPrimary,
-      ),
-      chipTheme: ChipThemeData(
-        backgroundColor: LightColors.chipBg,
-        labelStyle: const TextStyle(color: LightColors.text),
-        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(8),
-        ),
-      ),
-      // TODO: Uncomment textTheme below when ready to use Google Fonts (Work Sans)
-      // textTheme: GoogleFonts.workSansTextTheme(
-      //   TextTheme(
-      //     headlineLarge: TextStyle(
-      //       fontSize: 32,
-      //       fontWeight: FontWeight.bold,
-      //       color: LightColors.text,
-      //     ),
-      //     headlineMedium: TextStyle(
-      //       fontSize: 24,
-      //       fontWeight: FontWeight.bold,
-      //       color: LightColors.text,
-      //     ),
-      //     headlineSmall: TextStyle(
-      //       fontSize: 20,
-      //       fontWeight: FontWeight.bold,
-      //       color: LightColors.text,
-      //     ),
-      //     bodyLarge: TextStyle(
-      //       fontSize: 16,
-      //       color: LightColors.text,
-      //     ),
-      //     bodyMedium: TextStyle(
-      //       fontSize: 14,
-      //       color: LightColors.text,
-      //     ),
-      //     labelLarge: TextStyle(
-      //       fontSize: 14,
-      //       fontWeight: FontWeight.w600,
-      //       color: LightColors.text,
-      //     ),
-      //   ),
-      // ),
-      textTheme: const TextTheme(
-        headlineLarge: TextStyle(
-          fontSize: 32,
-          fontWeight: FontWeight.bold,
-          color: LightColors.text,
-        ),
-        headlineMedium: TextStyle(
-          fontSize: 24,
-          fontWeight: FontWeight.bold,
-          color: LightColors.text,
-        ),
-        headlineSmall: TextStyle(
-          fontSize: 20,
-          fontWeight: FontWeight.bold,
-          color: LightColors.text,
-        ),
-        bodyLarge: TextStyle(
-          fontSize: 16,
-          color: LightColors.onPrimary,
-        ),
-        bodyMedium: TextStyle(
-          fontSize: 14,
-          color: LightColors.text,
-        ),
-        labelLarge: TextStyle(
-          fontSize: 14,
-          fontWeight: FontWeight.w600,
-          color: LightColors.text,
-        ),
+        foregroundColor: Colors.white,
       ),
     );
   }
