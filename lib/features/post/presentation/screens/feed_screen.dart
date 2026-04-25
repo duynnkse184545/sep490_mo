@@ -14,7 +14,6 @@ class FeedScreen extends HookConsumerWidget {
     final feedAsync = ref.watch(feedControllerProvider);
     final controller = ref.read(feedControllerProvider.notifier);
     final scrollController = useScrollController();
-    final colorScheme = Theme.of(context).colorScheme;
 
     useEffect(() {
       void onScroll() {
@@ -30,10 +29,16 @@ class FeedScreen extends HookConsumerWidget {
     }, [scrollController]);
 
     return Scaffold(
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       appBar: AppBar(
-        title: const Text('Feed'),
-        backgroundColor: colorScheme.surfaceContainerHigh,
-        foregroundColor: colorScheme.onSurface,
+        title: const Text(
+          'FEED',
+          style: TextStyle(fontWeight: FontWeight.bold, letterSpacing: 2),
+        ),
+        centerTitle: true,
+        backgroundColor: Colors.white,
+        foregroundColor: Colors.black,
+        elevation: 0,
       ),
       body: SafeArea(
         child: feedAsync.when(

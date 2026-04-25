@@ -7,7 +7,7 @@ import 'package:sep490_mo/core/widgets/error_retry_widget.dart';
 import 'package:sep490_mo/core/widgets/loader.dart';
 import 'package:sep490_mo/features/member/data/models/member_models.dart';
 import 'package:sep490_mo/features/member/data/models/member_report_models.dart';
-import 'package:sep490_mo/features/member/data/providers/member_providers.dart';
+import 'package:sep490_mo/features/member/presentation/controllers/member_checking_controller.dart';
 import 'package:sep490_mo/features/member/presentation/controllers/member_ban_controller.dart';
 import 'package:sep490_mo/features/member/presentation/screens/member_detail_screen.dart';
 import 'package:sep490_mo/features/member/presentation/states/member_ban_state.dart';
@@ -40,7 +40,7 @@ class BannedMemberScreen extends HookConsumerWidget {
       return () => scrollController.removeListener(onScroll);
     }, [scrollController]);
 
-    final currentUserRoleAsync = ref.watch(memberCheckingProvider(fanHubId: fanHubId));
+    final currentUserRoleAsync = ref.watch(memberCheckingControllerProvider(fanHubId: fanHubId));
     final canRevoke = currentUserRoleAsync.when(
       data: (checking) => 
           checking.roleInHub == MemberRole.vtuber ||

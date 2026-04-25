@@ -62,7 +62,7 @@ class _GridPainter extends CustomPainter {
       ..color = const Color(0xFF909090).withValues(alpha: 0.3) // Match forFlutter exactly
       ..strokeWidth = 2.0;
 
-    const double gridSize = 60.0;
+    const double gridSize = 100.0;
     final double offset = progress * gridSize;
 
     // Horizontal lines (Moving)

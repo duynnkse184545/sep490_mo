@@ -7,6 +7,7 @@ import 'package:sep490_mo/features/auth/presentation/screens/sign_up_screen.dart
 import 'package:sep490_mo/features/fanhub/presentation/screens/fanhub_detail_screen.dart';
 import 'package:sep490_mo/features/fanhub/presentation/screens/fanhub_list_screen.dart';
 import 'package:sep490_mo/features/member/presentation/screens/member_list_screen.dart';
+import 'package:sep490_mo/features/member/presentation/widgets/join_hub_button.dart';
 import 'package:sep490_mo/features/post/presentation/screens/create_post_screen.dart';
 import 'package:sep490_mo/features/post/presentation/screens/bookmark_screen.dart';
 import 'package:sep490_mo/features/post/presentation/screens/feed_screen.dart';
@@ -146,6 +147,7 @@ class FanHubDetailRoute extends GoRouteData with $FanHubDetailRoute {
     subdomain: subdomain,
     feedWidget: HubFeedWidget(subdomain: subdomain),
     speedDial: HubSpeedDial(subdomain: subdomain, fanHubId: fanHubId),
+    joinButton: JoinHubButton(fanHubId: fanHubId),
   );
 }
 

@@ -3,7 +3,6 @@ import 'package:sep490_mo/core/providers/api_provider.dart';
 import 'package:sep490_mo/features/member/data/datasources/remote/api/member_api_service.dart';
 import 'package:sep490_mo/features/member/data/datasources/remote/member_remote_datasource.dart';
 import 'package:sep490_mo/features/member/data/datasources/remote/member_remote_datasource_impl.dart';
-import 'package:sep490_mo/features/member/data/models/member_models.dart';
 import 'package:sep490_mo/features/member/data/repositories/member_repository.dart';
 import 'package:sep490_mo/features/member/data/repositories/member_repository_impl.dart';
 
@@ -25,18 +24,5 @@ MemberRemoteDatasource memberRemoteDataSource(Ref ref) {
 MemberRepository memberRepository(Ref ref) {
   return MemberRepositoryImpl(
     remoteDataSource: ref.watch(memberRemoteDataSourceProvider),
-  );
-}
-
-@riverpod
-Future<MemberCheckingResponse> memberChecking(
-  Ref ref, {
-  required int fanHubId,
-}) async {
-  final repo = ref.watch(memberRepositoryProvider);
-  final result = await repo.isMember(fanHubId).run();
-  return result.fold(
-    (_) => throw Exception('Failed to check membership'),
-    (member) => member,
   );
 }

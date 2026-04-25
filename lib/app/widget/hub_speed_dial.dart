@@ -3,7 +3,7 @@ import 'package:freestyle_speed_dial/freestyle_speed_dial.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:sep490_mo/app/router/routes.dart';
 import 'package:sep490_mo/features/member/data/models/member_models.dart';
-import 'package:sep490_mo/features/member/data/providers/member_providers.dart';
+import 'package:sep490_mo/features/member/presentation/controllers/member_checking_controller.dart';
 
 enum _DialAction { createPost, members, moderation, invite, settings, report }
 
@@ -19,7 +19,7 @@ class HubSpeedDial extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final memberAsync = ref.watch(memberCheckingProvider(fanHubId: fanHubId));
+    final memberAsync = ref.watch(memberCheckingControllerProvider(fanHubId: fanHubId));
 
     final isMember = memberAsync.when(
       data: (member) => member.isMember,

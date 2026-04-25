@@ -94,4 +94,36 @@ class MemberListController extends _$MemberListController {
       },
     );
   }
+
+  Future<void> setModerator(int memberId) async {
+    final result = await ref
+        .read(memberRepositoryProvider)
+        .setModerator(fanHubId, [memberId])
+        .run();
+
+    result.fold(
+      (failure) {
+        // Handle failure
+      },
+      (_) {
+        refresh();
+      },
+    );
+  }
+
+  Future<void> removeModerator(int memberId) async {
+    final result = await ref
+        .read(memberRepositoryProvider)
+        .removeModerator(fanHubId, [memberId])
+        .run();
+
+    result.fold(
+      (failure) {
+        // Handle failure
+      },
+      (_) {
+        refresh();
+      },
+    );
+  }
 }

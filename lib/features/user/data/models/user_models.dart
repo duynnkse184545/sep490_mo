@@ -1,9 +1,15 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'user_models.freezed.dart';
+
 part 'user_models.g.dart';
 
-enum UserRole { VTUBER, USER }
+enum UserRole {
+  @JsonValue('USER')
+  user,
+  @JsonValue('VTUBER')
+  vtuber,
+}
 
 @freezed
 abstract class User with _$User {
@@ -25,8 +31,8 @@ abstract class User with _$User {
     required int totalBadges,
     required int totalFanHubs,
     required int totalReceivedGifts,
-    List<dynamic>? displayBadges,
-    List<dynamic>? allBadges,
+    List<Badge>? displayBadges,
+    List<Badge>? allBadges,
   }) = _User;
 
   factory User.fromJson(Map<String, dynamic> json) => _$UserFromJson(json);
@@ -63,12 +69,44 @@ abstract class UpdateProfileRequest with _$UpdateProfileRequest {
 }
 
 @freezed
-abstract class AvatarFrameRequest with _$AvatarFrameRequest {
-  const factory AvatarFrameRequest({
-    required String avatar,
-    required String frame,
-  }) = _AvatarFrameRequest;
+abstract class Badge with _$Badge {
+  const factory Badge({
+    required int userBadgeId,
+    required int badgeId,
+    required String badgeName,
+    required String description,
+    String? iconUrl,
+    required String requirement,
+    required DateTime acquiredAt,
+    required bool isDisplay,
+  }) = _Badge;
 
-  factory AvatarFrameRequest.fromJson(Map<String, dynamic> json) =>
-      _$AvatarFrameRequestFromJson(json);
+  factory Badge.fromJson(Map<String, dynamic> json) => _$BadgeFromJson(json);
+}
+
+@freezed
+abstract class Frame with _$Frame {
+  const factory Frame({
+    required int userItemId,
+    required int itemId,
+    required String itemName,
+    String? description,
+    String? imageUrl,
+    required String category,
+    required DateTime obtainedAt,
+  }) = _Frame;
+
+  factory Frame.fromJson(Map<String, dynamic> json) => _$FrameFromJson(json);
+}
+
+@freezed
+abstract class DailyMission with _$DailyMission {
+  const factory DailyMission({
+    required int likeAmount,
+    required bool bonus10,
+    required bool bonus20,
+  }) = _DailyMission;
+
+  factory DailyMission.fromJson(Map<String, dynamic> json) =>
+      _$DailyMissionFromJson(json);
 }

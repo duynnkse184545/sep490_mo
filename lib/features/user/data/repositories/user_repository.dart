@@ -1,24 +1,35 @@
+import 'dart:io';
 import 'package:sep490_mo/core/utils/type_defs.dart';
 import 'package:sep490_mo/features/user/data/models/user_models.dart';
 
 abstract class UserRepository {
   /// Get the current user
-  ///
-  /// Uses a cache-first strategy with TTL (5 minutes):
-  /// - Returns cached user if fresh (< 5 minutes)
-  /// - Fetches from remote if cache is stale or missing
-  /// - Falls back to stale cache if remote fails (offline support)
-  ///
-  /// [forceRefresh] - If true, bypasses cache and fetches from remote
   TaskResult<User> getCurrentUser({bool forceRefresh = false});
 
-  /// Update user profile
-  ///
-  /// Updates the profile on remote and caches the result.
-  TaskResult<void> updateProfile(UpdateProfileRequest request);
+  /// Get user by ID
+  TaskResult<User> getUserById(int userId);
 
-  /// Check if a username is available
-  ///
-  /// Returns true if the username is not taken.
-  // TaskResult<bool> isUsernameAvailable(String username);
+  /// Get user badges
+  TaskResult<List<Badge>> getBadges(int userId);
+
+  /// Get all available frames
+  TaskResult<List<Frame>> getFrames();
+
+  /// Get user items (owned frames)
+  TaskResult<List<Frame>> getMyItems();
+
+  /// Get user daily mission
+  TaskResult<DailyMission> getDailyMission();
+
+  /// Update avatar frame
+  TaskVoid updateAvatarFrame({String? frameName, required File avatarFile});
+
+  /// Set user oshi
+  TaskVoid setOshi(String oshiUsername);
+
+  /// Select badges to display
+  TaskVoid selectDisplayBadges(List<int> userBadgeIds);
+
+  /// Update user profile
+  TaskResult<void> updateProfile(UpdateProfileRequest request);
 }

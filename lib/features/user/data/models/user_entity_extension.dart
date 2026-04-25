@@ -23,10 +23,14 @@ extension CurrentUserEntityExtension on CurrentUserEntity {
       totalFanHubs: totalFanHubs,
       totalReceivedGifts: totalReceivedGifts,
       displayBadges: displayBadges != null
-          ? jsonDecode(displayBadges!) as List<dynamic>?
+          ? (jsonDecode(displayBadges!) as List)
+              .map((e) => Badge.fromJson(e as Map<String, dynamic>))
+              .toList()
           : null,
       allBadges: allBadges != null
-          ? jsonDecode(allBadges!) as List<dynamic>?
+          ? (jsonDecode(allBadges!) as List)
+              .map((e) => Badge.fromJson(e as Map<String, dynamic>))
+              .toList()
           : null,
     );
   }

@@ -51,6 +51,20 @@ class MemberRepositoryImpl implements MemberRepository {
   }
 
   @override
+  TaskVoid leaveFanHub(int fanHubId) {
+    return ErrorHandler.execute(() async {
+      await _remoteDataSource.leaveFanHub(fanHubId);
+    });
+  }
+
+  @override
+  TaskVoid kickMember(int fanHubId, int memberId) {
+    return ErrorHandler.execute(() async {
+      await _remoteDataSource.kickMember(fanHubId, memberId);
+    });
+  }
+
+  @override
   TaskVoid setModerator(int fanHubId, List<int>? memberIds) {
     return ErrorHandler.execute(() async {
       await _remoteDataSource.setModerator(fanHubId, memberIds);

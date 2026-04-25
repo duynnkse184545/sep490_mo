@@ -33,10 +33,14 @@ class UserDao extends DatabaseAccessor<AppDatabase> with _$UserDaoMixin {
       totalFanHubs: entity.totalFanHubs,
       totalReceivedGifts: entity.totalReceivedGifts,
       displayBadges: entity.displayBadges != null
-          ? jsonDecode(entity.displayBadges!) as List<dynamic>?
+          ? (jsonDecode(entity.displayBadges!) as List)
+              .map((e) => Badge.fromJson(e as Map<String, dynamic>))
+              .toList()
           : null,
       allBadges: entity.allBadges != null
-          ? jsonDecode(entity.allBadges!) as List<dynamic>?
+          ? (jsonDecode(entity.allBadges!) as List)
+              .map((e) => Badge.fromJson(e as Map<String, dynamic>))
+              .toList()
           : null,
     );
   }

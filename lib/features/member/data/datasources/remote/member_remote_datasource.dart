@@ -15,6 +15,10 @@ abstract class MemberRemoteDatasource {
 
   Future<void> joinFanHub(int fanHubId);
 
+  Future<void> leaveFanHub(int fanHubId);
+
+  Future<void> kickMember(int fanHubId, int memberId);
+
   Future<void> setModerator(int fanHubId, List<int>? memberIds);
 
   Future<void> removeModerator(int fanHubId, List<int>? memberIds);

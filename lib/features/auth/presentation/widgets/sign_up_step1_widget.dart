@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:sep490_mo/app/router/routes.dart';
 import 'package:sep490_mo/core/theme/app_colors.dart';
 import 'package:sep490_mo/core/widgets/loader.dart';
@@ -66,9 +65,8 @@ class SignUpStep1Widget extends HookWidget {
               children: [
                 Text(
                   "Sign up",
-                  style: GoogleFonts.monda(
+                  style: Theme.of(context).textTheme.displayLarge?.copyWith(
                     fontSize: 28,
-                    fontWeight: FontWeight.w900,
                     color: const Color(0xFF323232),
                   ),
                 ),
@@ -82,7 +80,7 @@ class SignUpStep1Widget extends HookWidget {
                 const SizedBox(height: 24),
 
                 // Username field
-                _buildLabel("Username"),
+                _buildLabel(context, "Username"),
                 const SizedBox(height: 8),
                 RetroTextField(
                   hintText: 'Choose a username',
@@ -94,7 +92,7 @@ class SignUpStep1Widget extends HookWidget {
                 const SizedBox(height: 16),
 
                 // Email field
-                _buildLabel("Email"),
+                _buildLabel(context, "Email"),
                 const SizedBox(height: 8),
                 RetroTextField(
                   hintText: 'Enter your email',
@@ -107,7 +105,7 @@ class SignUpStep1Widget extends HookWidget {
                 const SizedBox(height: 16),
 
                 // Password field
-                _buildLabel("Password"),
+                _buildLabel(context, "Password"),
                 const SizedBox(height: 8),
                 RetroTextField(
                   hintText: 'Create a password',
@@ -128,6 +126,7 @@ class SignUpStep1Widget extends HookWidget {
 
                 // Next button
                 _buildRetroButton(
+                  context: context,
                   text: 'Next!',
                   isLoading: isLoading.value,
                   onTap: () async {
@@ -150,12 +149,14 @@ class SignUpStep1Widget extends HookWidget {
                   },
                   child: RichText(
                     text: TextSpan(
-                      style: GoogleFonts.inter(color: Colors.black87, fontSize: 14),
+                      style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                        color: Colors.black87,
+                      ),
                       children: [
                         const TextSpan(text: "Already have an account? "),
                         TextSpan(
                           text: "Sign In",
-                          style: GoogleFonts.inter(
+                          style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                             fontWeight: FontWeight.bold,
                             decoration: TextDecoration.underline,
                           ),
@@ -172,14 +173,13 @@ class SignUpStep1Widget extends HookWidget {
     );
   }
 
-  Widget _buildLabel(String text) {
+  Widget _buildLabel(BuildContext context, String text) {
     return Align(
       alignment: Alignment.centerLeft,
       child: Text(
         text,
-        style: GoogleFonts.monda(
+        style: Theme.of(context).textTheme.labelLarge?.copyWith(
           fontWeight: FontWeight.bold,
-          fontSize: 14,
           color: const Color(0xFF323232),
         ),
       ),
@@ -200,6 +200,7 @@ class SignUpStep1Widget extends HookWidget {
   }
 
   Widget _buildRetroButton({
+    required BuildContext context,
     required String text,
     required VoidCallback onTap,
     bool isLoading = false,
@@ -211,7 +212,7 @@ class SignUpStep1Widget extends HookWidget {
         height: 48,
         alignment: Alignment.center,
         decoration: BoxDecoration(
-          color: Colors.white,
+          color: Theme.of(context).colorScheme.surface,
           border: Border.all(color: AppColors.border, width: 2),
           borderRadius: BorderRadius.circular(5),
           boxShadow: const [
@@ -222,7 +223,7 @@ class SignUpStep1Widget extends HookWidget {
             ? const SmallLoader()
             : Text(
                 text,
-                style: GoogleFonts.monda(
+                style: Theme.of(context).textTheme.labelLarge?.copyWith(
                   fontSize: 16,
                   fontWeight: FontWeight.bold,
                   color: const Color(0xFF323232),

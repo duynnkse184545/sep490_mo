@@ -103,6 +103,44 @@ class MemberRemoteDatasourceImpl implements MemberRemoteDatasource {
   }
 
   @override
+  Future<void> leaveFanHub(int fanHubId) async {
+    try {
+      final response = await _memberApi.leaveFanHub(fanHubId);
+      switch (response) {
+        case ApiResponseSuccess():
+          return;
+        case ApiResponseFailure(:final message, :final error):
+          throw ServerException(message, error);
+      }
+    } on DioException catch (e) {
+      throw DioExceptionMapper.mapToException(e, 'Failed to leave FanHub');
+    } catch (e, stack) {
+      debugPrint('MemberRemoteDatasourceImpl.leaveFanHub error: $e');
+      debugPrint('Stack: $stack');
+      rethrow;
+    }
+  }
+
+  @override
+  Future<void> kickMember(int fanHubId, int memberId) async {
+    try {
+      final response = await _memberApi.kickMember(fanHubId, memberId);
+      switch (response) {
+        case ApiResponseSuccess():
+          return;
+        case ApiResponseFailure(:final message, :final error):
+          throw ServerException(message, error);
+      }
+    } on DioException catch (e) {
+      throw DioExceptionMapper.mapToException(e, 'Failed to kick member');
+    } catch (e, stack) {
+      debugPrint('MemberRemoteDatasourceImpl.kickMember error: $e');
+      debugPrint('Stack: $stack');
+      rethrow;
+    }
+  }
+
+  @override
   Future<void> setModerator(int fanHubId, List<int>? memberIds) async {
     try {
       final response = await _memberApi.setModerator(fanHubId, memberIds);

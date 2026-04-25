@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:sep490_mo/app/router/routes.dart';
 import 'package:sep490_mo/core/widgets/retro_text_field.dart';
@@ -19,7 +18,7 @@ class SignInScreen extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     // Hooks
-    final emailController = useTextEditingController();
+    final usernameController = useTextEditingController();
     final passwordController = useTextEditingController();
     final obscurePassword = useState(true);
     
@@ -38,20 +37,28 @@ class SignInScreen extends HookConsumerWidget {
     return Scaffold(
       body: Stack(
         children: [
-          const Positioned.fill(child: RetroGridVfx()),
+          const Positioned.fill(
+            child: Align(
+              alignment: Alignment.bottomCenter,
+              child: SizedBox(
+                height: 400,
+                child: RetroGridVfx(),
+              ),
+            ),
+          ),
           SafeArea(
             child: signInState.when(
               initial: () => _buildSignInForm(
                 context,
                 ref,
-                emailController,
+                usernameController,
                 passwordController,
                 obscurePassword,
               ),
               loading: () => _buildSignInForm(
                 context,
                 ref,
-                emailController,
+                usernameController,
                 passwordController,
                 obscurePassword,
                 isLoading: true,
@@ -79,7 +86,7 @@ class SignInScreen extends HookConsumerWidget {
                     child: _buildSignInForm(
                       context,
                       ref,
-                      emailController,
+                      usernameController,
                       passwordController,
                       obscurePassword,
                     ),
@@ -96,7 +103,7 @@ class SignInScreen extends HookConsumerWidget {
   Widget _buildSignInForm(
     BuildContext context,
     WidgetRef ref,
-    TextEditingController emailController,
+    TextEditingController usernameController,
     TextEditingController passwordController,
     ValueNotifier<bool> obscurePassword,
     {bool isLoading = false}
@@ -125,9 +132,8 @@ class SignInScreen extends HookConsumerWidget {
               children: [
                 Text(
                   "Log in",
-                  style: GoogleFonts.monda(
+                  style: Theme.of(context).textTheme.displayLarge?.copyWith(
                     fontSize: 28,
-                    fontWeight: FontWeight.w900,
                     color: const Color(0xFF323232),
                   ),
                 ),
@@ -138,20 +144,20 @@ class SignInScreen extends HookConsumerWidget {
                 ),
                 const SizedBox(height: 32),
 
-                // Email field
-                _buildLabel("Email"),
+                // Username field
+                _buildLabel(context, "Username"),
                 const SizedBox(height: 8),
                 RetroTextField(
-                  hintText: 'Enter your email',
-                  controller: emailController,
+                  hintText: 'Enter your username',
+                  controller: usernameController,
                   enabled: !isLoading,
-                  keyboardType: TextInputType.emailAddress,
+                  keyboardType: TextInputType.text,
                 ),
 
                 const SizedBox(height: 20),
 
                 // Password field
-                _buildLabel("Password"),
+                _buildLabel(context, "Password"),
                 const SizedBox(height: 8),
                 RetroTextField(
                   hintText: 'Enter your password',
@@ -173,11 +179,12 @@ class SignInScreen extends HookConsumerWidget {
 
                 // Sign in button
                 _buildRetroButton(
+                  context: context,
                   text: 'Login!',
                   isLoading: isLoading,
                   onTap: () => _handleSignIn(
                     ref,
-                    emailController,
+                    usernameController,
                     passwordController,
                   ),
                 ),
@@ -191,12 +198,14 @@ class SignInScreen extends HookConsumerWidget {
                   },
                   child: RichText(
                     text: TextSpan(
-                      style: GoogleFonts.inter(color: Colors.black87, fontSize: 14),
+                      style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                        color: Colors.black87,
+                      ),
                       children: [
                         const TextSpan(text: "Don't have an account? "),
                         TextSpan(
                           text: "Sign Up",
-                          style: GoogleFonts.inter(
+                          style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                             fontWeight: FontWeight.bold,
                             decoration: TextDecoration.underline,
                           ),
@@ -213,14 +222,13 @@ class SignInScreen extends HookConsumerWidget {
     );
   }
 
-  Widget _buildLabel(String text) {
+  Widget _buildLabel(BuildContext context, String text) {
     return Align(
       alignment: Alignment.centerLeft,
       child: Text(
         text,
-        style: GoogleFonts.monda(
+        style: Theme.of(context).textTheme.labelLarge?.copyWith(
           fontWeight: FontWeight.bold,
-          fontSize: 14,
           color: const Color(0xFF323232),
         ),
       ),
@@ -228,6 +236,7 @@ class SignInScreen extends HookConsumerWidget {
   }
 
   Widget _buildRetroButton({
+    required BuildContext context,
     required String text,
     required VoidCallback onTap,
     bool isLoading = false,
@@ -239,7 +248,7 @@ class SignInScreen extends HookConsumerWidget {
         height: 48,
         alignment: Alignment.center,
         decoration: BoxDecoration(
-          color: Colors.white,
+          color: Theme.of(context).colorScheme.surface,
           border: Border.all(color: AppColors.border, width: 2),
           borderRadius: BorderRadius.circular(5),
           boxShadow: const [
@@ -250,7 +259,7 @@ class SignInScreen extends HookConsumerWidget {
             ? const SmallLoader()
             : Text(
                 text,
-                style: GoogleFonts.monda(
+                style: Theme.of(context).textTheme.labelLarge?.copyWith(
                   fontSize: 18,
                   fontWeight: FontWeight.bold,
                   color: const Color(0xFF323232),
@@ -262,11 +271,11 @@ class SignInScreen extends HookConsumerWidget {
 
   Future<void> _handleSignIn(
     WidgetRef ref,
-    TextEditingController emailController,
+    TextEditingController usernameController,
     TextEditingController passwordController,
   ) async {
     await ref.read(signInControllerProvider.notifier).signIn(
-      emailController.text,
+      usernameController.text,
       passwordController.text,
     );
   }

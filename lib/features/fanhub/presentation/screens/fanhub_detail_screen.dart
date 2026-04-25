@@ -9,12 +9,14 @@ class FanHubDetailScreen extends HookConsumerWidget {
   final String subdomain;
   final Widget feedWidget;
   final Widget speedDial;
+  final Widget joinButton;
 
   const FanHubDetailScreen({
     super.key,
     required this.subdomain,
     required this.feedWidget,
     required this.speedDial,
+    required this.joinButton,
   });
 
   @override
@@ -147,6 +149,10 @@ class FanHubDetailScreen extends HookConsumerWidget {
                               color: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.7),
                             ),
                           ),
+                          const SizedBox(height: 16),
+
+                          joinButton,
+
                           const SizedBox(height: 16),
 
                           // Stats row

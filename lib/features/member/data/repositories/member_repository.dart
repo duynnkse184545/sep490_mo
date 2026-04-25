@@ -16,6 +16,10 @@ abstract class MemberRepository {
 
   TaskVoid joinFanHub(int fanHubId);
 
+  TaskVoid leaveFanHub(int fanHubId);
+
+  TaskVoid kickMember(int fanHubId, int memberId);
+
   TaskVoid setModerator(int fanHubId, List<int>? memberIds);
 
   TaskVoid removeModerator(int fanHubId, List<int>? memberIds);

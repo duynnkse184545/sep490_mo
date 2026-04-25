@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:intl/intl.dart';
+import 'package:sep490_mo/core/theme/app_colors.dart';
 import 'package:sep490_mo/core/widgets/app_video_player.dart';
 import 'package:sep490_mo/features/post/data/models/post_models.dart';
 import 'package:sep490_mo/features/post/presentation/controllers/feed_controller.dart';
@@ -18,151 +19,271 @@ class PostCard extends ConsumerWidget {
     final colorScheme = Theme.of(context).colorScheme;
     final feedController = ref.read(feedControllerProvider.notifier);
 
-    return Card(
-      elevation: 0,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(8),
-        side: BorderSide(color: colorScheme.outline),
+    return Container(
+      margin: const EdgeInsets.symmetric(vertical: 4),
+      padding: const EdgeInsets.all(16),
+      decoration: BoxDecoration(
+        color: AppColors.backgroundEnd,
+        border: Border(
+          top: BorderSide(color: AppColors.border, width: 2),
+          bottom: BorderSide(color: AppColors.border, width: 2),
+        ),
       ),
-      child: Padding(
-        padding: const EdgeInsets.all(12),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            // Author row
-            Row(
-              children: [
-                CircleAvatar(
-                  radius: 20,
-                  backgroundColor: colorScheme.primary.withValues(alpha: 0.2),
-                  child: Text(
-                    post.authorDisplayName.isNotEmpty
-                        ? post.authorDisplayName[0].toUpperCase()
-                        : '?',
-                    style: TextStyle(
-                      color: colorScheme.primary,
-                      fontWeight: FontWeight.bold,
-                      fontSize: 16,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          // Author row
+          Row(
+            children: [
+              CircleAvatar(
+                radius: 16,
+                backgroundImage: post.authorAvatarUrl != null
+                    ? NetworkImage(post.authorAvatarUrl!)
+                    : const AssetImage(
+                            'assets/images/profile-pic-undefined.jpg',
+                          )
+                          as ImageProvider,
+              ),
+              const SizedBox(width: 10),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      "h/${post.fanHubName}",
+                      style: const TextStyle(
+                        fontWeight: FontWeight.w600,
+                        fontSize: 13,
+                        color: Colors.black,
+                      ),
+                    ),
+                    Text(
+                      _formatTimestamp(post.createdAt),
+                      style: const TextStyle(
+                        color: Color(0xFF878A8C),
+                        fontSize: 11,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              if (post.isPinned)
+                const Icon(Icons.push_pin, size: 16, color: Color(0xFFE65100)),
+              // Actions Menu
+              PopupMenuButton<String>(
+                onSelected: (value) => _handleMenuAction(context, ref, value),
+                itemBuilder: (context) => [
+                  const PopupMenuItem(
+                    value: 'summarize',
+                    child: Row(
+                      children: [
+                        Icon(Icons.auto_awesome, size: 20),
+                        SizedBox(width: 12),
+                        Text('Summarize (AI)'),
+                      ],
                     ),
                   ),
-                ),
-                const SizedBox(width: 10),
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        post.authorDisplayName,
-                        style: TextStyle(
-                          fontWeight: FontWeight.w600,
-                          color: colorScheme.onSurface,
-                          fontSize: 14,
-                        ),
-                      ),
-                      Text(
-                        '@${post.authorUsername} · ${post.fanHubName}',
-                        style: TextStyle(
-                          color: colorScheme.onSurfaceVariant,
-                          fontSize: 12,
-                        ),
-                      ),
-                    ],
+                  const PopupMenuItem(
+                    value: 'translate',
+                    child: Row(
+                      children: [
+                        Icon(Icons.translate, size: 20),
+                        SizedBox(width: 12),
+                        Text('Translate (AI)'),
+                      ],
+                    ),
                   ),
-                ),
-                // Actions Menu
-                PopupMenuButton<String>(
-                  onSelected: (value) => _handleMenuAction(context, ref, value),
-                  itemBuilder: (context) => [
-                    const PopupMenuItem(value: 'summarize', child: Text('Summarize (AI)')),
-                    const PopupMenuItem(value: 'translate', child: Text('Translate (AI)')),
-                    const PopupMenuItem(value: 'report', child: Text('Report')),
-                  ],
-                  icon: const Icon(Icons.more_vert),
-                ),
-              ],
-            ),
+                  const PopupMenuItem(
+                    value: 'report',
+                    child: Row(
+                      children: [
+                        Icon(
+                          Icons.report_problem_outlined,
+                          size: 20,
+                          color: Colors.red,
+                        ),
+                        SizedBox(width: 12),
+                        Text('Report', style: TextStyle(color: Colors.red)),
+                      ],
+                    ),
+                  ),
+                ],
+                icon: const Icon(Icons.more_vert, size: 20),
+                padding: EdgeInsets.zero,
+                constraints: const BoxConstraints(),
+              ),
+            ],
+          ),
 
+          const SizedBox(height: 12),
+          _buildPostTypeBadge(context),
+
+          if (post.title != null && post.title!.isNotEmpty) ...[
             const SizedBox(height: 8),
-            _buildPostTypeBadge(context),
+            Text(
+              post.title!,
+              style: const TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: 16,
+                color: Color(0xFF323232),
+              ),
+            ),
+          ],
 
-            if (post.title != null && post.title!.isNotEmpty) ...[
-              const SizedBox(height: 8),
-              Text(
-                post.title!,
-                style: TextStyle(
+          const SizedBox(height: 8),
+          Text(
+            post.content,
+            style: const TextStyle(
+              fontSize: 14,
+              color: Color(0xFF323232),
+              height: 1.5,
+            ),
+          ),
+
+          if (post.postType == PostType.poll) _buildPoll(context, ref),
+
+          if (post.mediaUrls.isNotEmpty) _buildMedia(context),
+
+          if (post.hashtags.isNotEmpty) _buildHashtags(colorScheme),
+
+          const SizedBox(height: 12),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Row(
+                children: [
+                  // Like Button
+                  _buildRetroLikeButton(feedController),
+                  const SizedBox(width: 8),
+                  // Comment Button
+                  _buildRetroCountButton(
+                    icon: Icons.chat_bubble_outline,
+                    count: 0,
+                    // Should be replaced with post.commentCount if available
+                    onPressed: () => _showComments(context),
+                  ),
+                ],
+              ),
+              Row(
+                children: [
+                  _buildRetroActionButton(
+                    icon: Icons.bookmark_border,
+                    onPressed: () => feedController.bookmark(post.postId),
+                  ),
+                  const SizedBox(width: 8),
+                  _buildRetroActionButton(
+                    icon: Icons.share_outlined,
+                    onPressed: () => feedController.share(post.postId),
+                  ),
+                ],
+              ),
+            ],
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildRetroCountButton({
+    required IconData icon,
+    required int count,
+    required VoidCallback onPressed,
+    Color? activeColor,
+    Color? activeIconColor,
+    bool isActive = false,
+  }) {
+    return GestureDetector(
+      onTap: onPressed,
+      child: Container(
+        height: 32,
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(24),
+          color: Colors.transparent,
+        ),
+        child: Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Container(
+              width: 36,
+              height: double.infinity,
+              alignment: Alignment.center,
+              decoration: BoxDecoration(
+                color: isActive
+                    ? (activeColor ?? Colors.transparent)
+                    : Colors.transparent,
+                borderRadius: const BorderRadius.only(
+                  topLeft: Radius.circular(24),
+                  bottomLeft: Radius.circular(24),
+                ),
+              ),
+              child: Icon(
+                icon,
+                size: 16,
+                color: isActive
+                    ? (activeIconColor ?? Colors.white)
+                    : Colors.black,
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 8),
+              child: Text(
+                count.toString(),
+                style: const TextStyle(
                   fontWeight: FontWeight.bold,
-                  fontSize: 16,
-                  color: colorScheme.onSurface,
+                  fontSize: 13,
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildRetroLikeButton(FeedController feedController) {
+    return _buildRetroCountButton(
+      icon: post.isLikedByCurrentUser ? Icons.favorite : Icons.favorite_border,
+      count: post.likeCount,
+      isActive: post.isLikedByCurrentUser,
+      activeColor: Colors.transparent,
+      // No background glow
+      activeIconColor: Colors.red,
+      // Icon glows red
+      onPressed: () {
+        if (post.isLikedByCurrentUser) {
+          feedController.unlike(post.postId);
+        } else {
+          feedController.like(post.postId);
+        }
+      },
+    );
+  }
+
+  Widget _buildRetroActionButton({
+    required IconData icon,
+    String? label,
+    required VoidCallback onPressed,
+  }) {
+    return GestureDetector(
+      onTap: onPressed,
+      child: Container(
+        height: 32,
+        padding: EdgeInsets.symmetric(horizontal: label != null ? 12 : 8),
+        decoration: BoxDecoration(borderRadius: BorderRadius.circular(24)),
+        child: Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Icon(icon, size: 16),
+            if (label != null) ...[
+              const SizedBox(width: 6),
+              Text(
+                label,
+                style: const TextStyle(
+                  fontSize: 13,
+                  fontWeight: FontWeight.bold,
                 ),
               ),
             ],
-
-            const SizedBox(height: 8),
-            Text(
-              post.content,
-              style: TextStyle(
-                fontSize: 14,
-                color: colorScheme.onSurface,
-                height: 1.5,
-              ),
-            ),
-
-            if (post.postType == PostType.poll) _buildPoll(context, ref),
-
-            if (post.mediaUrls.isNotEmpty) _buildMedia(context),
-
-            if (post.hashtags.isNotEmpty) _buildHashtags(colorScheme),
-
-            const SizedBox(height: 12),
-            Row(
-              children: [
-                _IconButtonWithCount(
-                  icon: post.isLikedByCurrentUser ? Icons.favorite : Icons.favorite_border,
-                  count: post.likeCount,
-                  color: post.isLikedByCurrentUser ? colorScheme.error : colorScheme.onSurfaceVariant,
-                  onPressed: () {
-                    if (post.isLikedByCurrentUser) {
-                      feedController.unlike(post.postId);
-                    } else {
-                      feedController.like(post.postId);
-                    }
-                  },
-                ),
-                const SizedBox(width: 16),
-                IconButton(
-                  onPressed: () => _showComments(context),
-                  icon: Icon(
-                    Icons.chat_bubble_outline,
-                    color: colorScheme.onSurfaceVariant,
-                    size: 20,
-                  ),
-                ),
-                IconButton(
-                  onPressed: () => feedController.bookmark(post.postId),
-                  icon: Icon(
-                    Icons.bookmark_border, // Ideally use isBookmarked field if available
-                    color: colorScheme.onSurfaceVariant,
-                    size: 20,
-                  ),
-                ),
-                IconButton(
-                  onPressed: () => feedController.share(post.postId),
-                  icon: Icon(
-                    Icons.share_outlined,
-                    color: colorScheme.onSurfaceVariant,
-                    size: 20,
-                  ),
-                ),
-                const Spacer(),
-                Text(
-                  _formatTimestamp(post.createdAt),
-                  style: TextStyle(
-                    fontSize: 11,
-                    color: colorScheme.onSurfaceVariant,
-                  ),
-                ),
-              ],
-            ),
           ],
         ),
       ),
@@ -205,18 +326,25 @@ class PostCard extends ConsumerWidget {
             child: InkWell(
               onTap: () {
                 if (post.userVotedOptionId == null) {
-                  ref.read(feedControllerProvider.notifier).vote(post.postId, option.id);
+                  ref
+                      .read(feedControllerProvider.notifier)
+                      .vote(post.postId, option.id);
                 } else if (isSelected) {
                   ref.read(feedControllerProvider.notifier).unvote(post.postId);
                 }
               },
               borderRadius: BorderRadius.circular(8),
               child: Container(
-                padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 12),
+                padding: const EdgeInsets.symmetric(
+                  vertical: 8,
+                  horizontal: 12,
+                ),
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(8),
                   border: Border.all(
-                    color: isSelected ? Theme.of(context).primaryColor : Colors.grey[300]!,
+                    color: isSelected
+                        ? Theme.of(context).primaryColor
+                        : Colors.grey[300]!,
                     width: isSelected ? 2 : 1,
                   ),
                 ),
@@ -227,7 +355,9 @@ class PostCard extends ConsumerWidget {
                       child: Container(
                         height: 24,
                         decoration: BoxDecoration(
-                          color: Theme.of(context).primaryColor.withValues(alpha: 0.1),
+                          color: Theme.of(
+                            context,
+                          ).primaryColor.withValues(alpha: 0.1),
                           borderRadius: BorderRadius.circular(4),
                         ),
                       ),
@@ -273,9 +403,10 @@ class PostCard extends ConsumerWidget {
                         url,
                         fit: BoxFit.cover,
                         width: double.infinity,
-                        errorBuilder: (context, error, stackTrace) => const Center(
-                          child: Icon(Icons.broken_image, size: 48),
-                        ),
+                        errorBuilder: (context, error, stackTrace) =>
+                            const Center(
+                              child: Icon(Icons.broken_image, size: 48),
+                            ),
                       )
                     : AppVideoPlayer(url: url),
               ),
@@ -302,14 +433,16 @@ class PostCard extends ConsumerWidget {
       child: Wrap(
         spacing: 6,
         children: post.hashtags
-            .map((tag) => Text(
-                  '#$tag',
-                  style: TextStyle(
-                    fontSize: 12,
-                    color: colorScheme.primary,
-                    fontWeight: FontWeight.w500,
-                  ),
-                ))
+            .map(
+              (tag) => Text(
+                '#$tag',
+                style: TextStyle(
+                  fontSize: 12,
+                  color: colorScheme.primary,
+                  fontWeight: FontWeight.w500,
+                ),
+              ),
+            )
             .toList(),
       ),
     );
@@ -346,9 +479,7 @@ class PostCard extends ConsumerWidget {
             ),
             const SizedBox(height: 8),
             const Divider(height: 1),
-            Expanded(
-              child: PostCommentsWidget(postId: post.postId),
-            ),
+            Expanded(child: PostCommentsWidget(postId: post.postId)),
           ],
         ),
       ),
@@ -398,7 +529,10 @@ class PostCard extends ConsumerWidget {
           maxLines: 3,
         ),
         actions: [
-          TextButton(onPressed: () => Navigator.pop(context), child: const Text('Cancel')),
+          TextButton(
+            onPressed: () => Navigator.pop(context),
+            child: const Text('Cancel'),
+          ),
           ElevatedButton(
             onPressed: () async {
               final reason = reasonController.text.trim();
@@ -411,9 +545,7 @@ class PostCard extends ConsumerWidget {
               if (context.mounted) {
                 Navigator.pop(context);
                 ScaffoldMessenger.of(context).showSnackBar(
-                  const SnackBar(
-                    content: Text('Post reported successfully'),
-                  ),
+                  const SnackBar(content: Text('Post reported successfully')),
                 );
               }
             },
@@ -435,37 +567,6 @@ class PostCard extends ConsumerWidget {
   }
 }
 
-class _IconButtonWithCount extends StatelessWidget {
-  final IconData icon;
-  final int count;
-  final Color color;
-  final VoidCallback onPressed;
-
-  const _IconButtonWithCount({
-    required this.icon,
-    required this.count,
-    required this.color,
-    required this.onPressed,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      children: [
-        IconButton(
-          onPressed: onPressed,
-          icon: Icon(icon, color: color, size: 20),
-          visualDensity: VisualDensity.compact,
-        ),
-        Text(
-          count.toString(),
-          style: TextStyle(fontSize: 12, color: Theme.of(context).colorScheme.onSurfaceVariant),
-        ),
-      ],
-    );
-  }
-}
-
 class _AIDialog extends ConsumerWidget {
   final int postId;
   final String type;
@@ -475,7 +576,9 @@ class _AIDialog extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final aiState = ref.watch(postAIControllerProvider(postId: postId));
-    final controller = ref.read(postAIControllerProvider(postId: postId).notifier);
+    final controller = ref.read(
+      postAIControllerProvider(postId: postId).notifier,
+    );
 
     // Initial trigger
     WidgetsBinding.instance.addPostFrameCallback((_) {
@@ -499,7 +602,8 @@ class _AIDialog extends ConsumerWidget {
           height: 100,
           child: Center(child: CircularProgressIndicator()),
         ),
-        error: (message) => Text('Error: $message', style: const TextStyle(color: Colors.red)),
+        error: (message) =>
+            Text('Error: $message', style: const TextStyle(color: Colors.red)),
         summarized: (summary) => Text(summary.summarizeResult),
         translated: (translation) => Column(
           mainAxisSize: MainAxisSize.min,
@@ -515,7 +619,10 @@ class _AIDialog extends ConsumerWidget {
         ),
       ),
       actions: [
-        TextButton(onPressed: () => Navigator.pop(context), child: const Text('Close')),
+        TextButton(
+          onPressed: () => Navigator.pop(context),
+          child: const Text('Close'),
+        ),
       ],
     );
   }

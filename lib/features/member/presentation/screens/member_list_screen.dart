@@ -5,7 +5,7 @@ import 'package:sep490_mo/core/widgets/empty_state.dart';
 import 'package:sep490_mo/core/widgets/error_retry_widget.dart';
 import 'package:sep490_mo/core/widgets/loader.dart';
 import 'package:sep490_mo/features/member/data/models/member_models.dart';
-import 'package:sep490_mo/features/member/data/providers/member_providers.dart';
+import 'package:sep490_mo/features/member/presentation/controllers/member_checking_controller.dart';
 import 'package:sep490_mo/features/member/presentation/controllers/member_list_controller.dart';
 import 'package:sep490_mo/features/member/presentation/screens/member_detail_screen.dart';
 import 'package:sep490_mo/features/member/presentation/states/member_list_state.dart';
@@ -140,7 +140,7 @@ class _MemberTile extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final theme = Theme.of(context);
-    final currentUserRoleAsync = ref.watch(memberCheckingProvider(fanHubId: fanHubId));
+    final currentUserRoleAsync = ref.watch(memberCheckingControllerProvider(fanHubId: fanHubId));
     
     final canBan = currentUserRoleAsync.when(
       data: (checking) => 
@@ -150,9 +150,11 @@ class _MemberTile extends HookConsumerWidget {
       error: (_, _) => false,
     );
 
-    // Don't show ban button for own user (simplified check, usually we'd have current user ID)
-    // and don't allow banning vtubers or moderators if not vtuber? 
-    // For now, follow "mod or vtuber can ban" as requested.
+    final isVtuber = currentUserRoleAsync.when(
+      data: (checking) => checking.roleInHub == MemberRole.vtuber,
+      loading: () => false,
+      error: (_, _) => false,
+    );
 
     return ListTile(
       leading: CircleAvatar(
@@ -172,10 +174,19 @@ class _MemberTile extends HookConsumerWidget {
         mainAxisSize: MainAxisSize.min,
         children: [
           if (member.roleInHub == MemberRole.moderator)
-            Chip(
-              label: const Text('MOD'),
-              visualDensity: VisualDensity.compact,
-              backgroundColor: theme.colorScheme.primaryContainer,
+            GestureDetector(
+              onLongPress: isVtuber ? () => _showDemoteDialog(context, ref) : null,
+              child: Chip(
+                label: const Text('MOD'),
+                visualDensity: VisualDensity.compact,
+                backgroundColor: theme.colorScheme.primaryContainer,
+              ),
+            ),
+          if (isVtuber && member.roleInHub == MemberRole.member)
+            IconButton(
+              icon: const Icon(Icons.shield_outlined, color: Colors.blue),
+              onPressed: () => _showPromoteDialog(context, ref),
+              tooltip: 'Promote to Moderator',
             ),
           if (canBan && member.roleInHub == MemberRole.member)
             IconButton(
@@ -194,6 +205,57 @@ class _MemberTile extends HookConsumerWidget {
           ),
         );
       },
+    );
+  }
+
+  Future<void> _showPromoteDialog(BuildContext context, WidgetRef ref) async {
+    return showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: const Text('Promote to Moderator'),
+        content: Text('Are you sure you want to promote ${member.displayName ?? member.username} to Moderator?'),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.of(context).pop(),
+            child: const Text('Cancel'),
+          ),
+          ElevatedButton(
+            onPressed: () {
+              ref
+                  .read(memberListControllerProvider(fanHubId: fanHubId).notifier)
+                  .setModerator(member.resolvedId);
+              Navigator.of(context).pop();
+            },
+            child: const Text('Promote'),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Future<void> _showDemoteDialog(BuildContext context, WidgetRef ref) async {
+    return showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: const Text('Demote Moderator'),
+        content: Text('Are you sure you want to remove moderator status from ${member.displayName ?? member.username}?'),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.of(context).pop(),
+            child: const Text('Cancel'),
+          ),
+          ElevatedButton(
+            style: ElevatedButton.styleFrom(backgroundColor: Colors.red),
+            onPressed: () {
+              ref
+                  .read(memberListControllerProvider(fanHubId: fanHubId).notifier)
+                  .removeModerator(member.resolvedId);
+              Navigator.of(context).pop();
+            },
+            child: const Text('Demote', style: TextStyle(color: Colors.white)),
+          ),
+        ],
+      ),
     );
   }
 

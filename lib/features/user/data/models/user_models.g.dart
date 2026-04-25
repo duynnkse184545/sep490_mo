@@ -24,8 +24,12 @@ _User _$UserFromJson(Map<String, dynamic> json) => _User(
   totalBadges: (json['totalBadges'] as num).toInt(),
   totalFanHubs: (json['totalFanHubs'] as num).toInt(),
   totalReceivedGifts: (json['totalReceivedGifts'] as num).toInt(),
-  displayBadges: json['displayBadges'] as List<dynamic>?,
-  allBadges: json['allBadges'] as List<dynamic>?,
+  displayBadges: (json['displayBadges'] as List<dynamic>?)
+      ?.map((e) => Badge.fromJson(e as Map<String, dynamic>))
+      .toList(),
+  allBadges: (json['allBadges'] as List<dynamic>?)
+      ?.map((e) => Badge.fromJson(e as Map<String, dynamic>))
+      .toList(),
 );
 
 Map<String, dynamic> _$UserToJson(_User instance) => <String, dynamic>{
@@ -50,7 +54,7 @@ Map<String, dynamic> _$UserToJson(_User instance) => <String, dynamic>{
   'allBadges': instance.allBadges,
 };
 
-const _$UserRoleEnumMap = {UserRole.VTUBER: 'VTUBER', UserRole.USER: 'USER'};
+const _$UserRoleEnumMap = {UserRole.user: 'USER', UserRole.vtuber: 'VTUBER'};
 
 _CreateProfileRequest _$CreateProfileRequestFromJson(
   Map<String, dynamic> json,
@@ -94,11 +98,58 @@ Map<String, dynamic> _$UpdateProfileRequestToJson(
   'translateLanguage': instance.translateLanguage,
 };
 
-_AvatarFrameRequest _$AvatarFrameRequestFromJson(Map<String, dynamic> json) =>
-    _AvatarFrameRequest(
-      avatar: json['avatar'] as String,
-      frame: json['frame'] as String,
+_Badge _$BadgeFromJson(Map<String, dynamic> json) => _Badge(
+  userBadgeId: (json['userBadgeId'] as num).toInt(),
+  badgeId: (json['badgeId'] as num).toInt(),
+  badgeName: json['badgeName'] as String,
+  description: json['description'] as String,
+  iconUrl: json['iconUrl'] as String?,
+  requirement: json['requirement'] as String,
+  acquiredAt: DateTime.parse(json['acquiredAt'] as String),
+  isDisplay: json['isDisplay'] as bool,
+);
+
+Map<String, dynamic> _$BadgeToJson(_Badge instance) => <String, dynamic>{
+  'userBadgeId': instance.userBadgeId,
+  'badgeId': instance.badgeId,
+  'badgeName': instance.badgeName,
+  'description': instance.description,
+  'iconUrl': instance.iconUrl,
+  'requirement': instance.requirement,
+  'acquiredAt': instance.acquiredAt.toIso8601String(),
+  'isDisplay': instance.isDisplay,
+};
+
+_Frame _$FrameFromJson(Map<String, dynamic> json) => _Frame(
+  userItemId: (json['userItemId'] as num).toInt(),
+  itemId: (json['itemId'] as num).toInt(),
+  itemName: json['itemName'] as String,
+  description: json['description'] as String?,
+  imageUrl: json['imageUrl'] as String?,
+  category: json['category'] as String,
+  obtainedAt: DateTime.parse(json['obtainedAt'] as String),
+);
+
+Map<String, dynamic> _$FrameToJson(_Frame instance) => <String, dynamic>{
+  'userItemId': instance.userItemId,
+  'itemId': instance.itemId,
+  'itemName': instance.itemName,
+  'description': instance.description,
+  'imageUrl': instance.imageUrl,
+  'category': instance.category,
+  'obtainedAt': instance.obtainedAt.toIso8601String(),
+};
+
+_DailyMission _$DailyMissionFromJson(Map<String, dynamic> json) =>
+    _DailyMission(
+      likeAmount: (json['likeAmount'] as num).toInt(),
+      bonus10: json['bonus10'] as bool,
+      bonus20: json['bonus20'] as bool,
     );
 
-Map<String, dynamic> _$AvatarFrameRequestToJson(_AvatarFrameRequest instance) =>
-    <String, dynamic>{'avatar': instance.avatar, 'frame': instance.frame};
+Map<String, dynamic> _$DailyMissionToJson(_DailyMission instance) =>
+    <String, dynamic>{
+      'likeAmount': instance.likeAmount,
+      'bonus10': instance.bonus10,
+      'bonus20': instance.bonus20,
+    };
