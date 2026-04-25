@@ -43,7 +43,7 @@ Map<String, dynamic> _$MemberWithReportsToJson(_MemberWithReports instance) =>
     };
 
 const _$MemberRoleEnumMap = {
-  MemberRole.vtuber: 'Vtuber',
+  MemberRole.vtuber: 'VTUBER',
   MemberRole.moderator: 'MODERATOR',
   MemberRole.member: 'MEMBER',
 };

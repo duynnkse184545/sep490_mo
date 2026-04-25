@@ -126,4 +126,20 @@ class MemberListController extends _$MemberListController {
       },
     );
   }
+
+  Future<void> kickMember(int memberId) async {
+    final result = await ref
+        .read(memberRepositoryProvider)
+        .kickMember(fanHubId, memberId)
+        .run();
+
+    result.fold(
+      (failure) {
+        // Handle failure
+      },
+      (_) {
+        refresh();
+      },
+    );
+  }
 }

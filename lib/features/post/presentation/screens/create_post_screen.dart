@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:sep490_mo/core/theme/app_colors.dart';
+import 'package:sep490_mo/core/widgets/retro_text_field.dart';
 import 'package:sep490_mo/features/post/data/models/post_models.dart';
 import 'package:sep490_mo/features/post/presentation/controllers/create_post_controller.dart';
 import 'package:sep490_mo/features/post/presentation/states/create_post_state.dart';
@@ -138,229 +140,405 @@ class CreatePostScreen extends HookConsumerWidget {
     });
 
     return Scaffold(
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       appBar: AppBar(
-        title: const Text('Create Post'),
-        actions: [
-          if (isSubmitting.value)
-            const Center(
-              child: Padding(
-                padding: EdgeInsets.symmetric(horizontal: 16),
-                child: SizedBox(
-                  width: 20,
-                  height: 20,
-                  child: CircularProgressIndicator(strokeWidth: 2),
-                ),
-              ),
-            )
-          else
-            TextButton(
-              onPressed: isFormValid ? submit : null,
-              child: Text(
-                'Post',
-                style: TextStyle(
-                  color: isFormValid ? null : Colors.grey,
-                ),
-              ),
-            ),
-        ],
+        title: const Text(
+          "CREATE POST",
+          style: TextStyle(fontWeight: FontWeight.bold, letterSpacing: 1.5),
+        ),
+        centerTitle: true,
+        backgroundColor: Colors.white,
+        foregroundColor: Colors.black,
+        elevation: 0,
       ),
-      body: Form(
-        key: formKey,
-        child: ListView(
-          padding: const EdgeInsets.all(16),
-          children: [
-            // Post Type Toggle
-            SegmentedButton<PostType>(
-              segments: const [
-                ButtonSegment(
-                  value: PostType.text,
-                  label: Text('Text'),
-                  icon: Icon(Icons.short_text),
-                ),
-                ButtonSegment(
-                  value: PostType.image,
-                  label: Text('Image'),
-                  icon: Icon(Icons.image_outlined),
-                ),
-                ButtonSegment(
-                  value: PostType.video,
-                  label: Text('Video'),
-                  icon: Icon(Icons.videocam_outlined),
-                ),
-                ButtonSegment(
-                  value: PostType.poll,
-                  label: Text('Poll'),
-                  icon: Icon(Icons.poll_outlined),
-                ),
-              ],
-              selected: {selectedType.value},
-              onSelectionChanged: (Set<PostType> newSelection) {
-                selectedType.value = newSelection.first;
-              },
-            ),
-            const SizedBox(height: 16),
-            TextFormField(
-              controller: titleController,
-              decoration: const InputDecoration(
-                labelText: 'Title (optional)',
-                border: OutlineInputBorder(),
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.all(20.0),
+          child: Form(
+            key: formKey,
+            child: Container(
+              padding: const EdgeInsets.all(24),
+              decoration: BoxDecoration(
+                color: Theme.of(context).colorScheme.surface,
+                borderRadius: BorderRadius.circular(12),
+                border: Border.all(color: AppColors.border, width: 2),
+                boxShadow: const [
+                  BoxShadow(
+                    color: AppColors.border,
+                    offset: Offset(6, 6),
+                    blurRadius: 0,
+                  ),
+                ],
               ),
-            ),
-            const SizedBox(height: 16),
-            TextFormField(
-              controller: hashtagsController,
-              decoration: const InputDecoration(
-                labelText: 'Hashtags (comma separated)',
-                border: OutlineInputBorder(),
-                hintText: 'gaming, anime, music',
-              ),
-            ),
-            const SizedBox(height: 16),
-            TextFormField(
-              controller: contentController,
-              decoration: const InputDecoration(
-                labelText: 'Content',
-                border: OutlineInputBorder(),
-                hintText: 'What\'s on your mind?',
-              ),
-              maxLines: 5,
-              validator: (value) => (value == null || value.isEmpty)
-                  ? 'Content is required'
-                  : null,
-            ),
-
-            const SizedBox(height: 16),
-
-            CheckboxListTile(
-              title: const Text('Mark as Announcement'),
-              value: isAnnouncement.value,
-              onChanged: (val) => isAnnouncement.value = val ?? false,
-              controlAffinity: ListTileControlAffinity.leading,
-              contentPadding: EdgeInsets.zero,
-            ),
-            CheckboxListTile(
-              title: const Text('Mark as Event Schedule'),
-              value: isSchedule.value,
-              onChanged: (val) => isSchedule.value = val ?? false,
-              controlAffinity: ListTileControlAffinity.leading,
-              contentPadding: EdgeInsets.zero,
-            ),
-
-            const SizedBox(height: 16),
-
-            // Extra Area based on Type
-            if (selectedType.value == PostType.poll)
-              PollOptionsWidget(
-                options: pollOptions.value,
-                onAddOption: () {
-                  if (pollOptions.value.length < 10) {
-                    pollOptions.value = [...pollOptions.value, ''];
-                  }
-                },
-                onRemoveOption: (index) {
-                  if (pollOptions.value.length > 2) {
-                    final newOptions = List<String>.from(pollOptions.value);
-                    newOptions.removeAt(index);
-                    pollOptions.value = newOptions;
-                  }
-                },
-                onOptionChanged: (index, val) {
-                  pollOptions.value[index] = val;
-                },
-              ),
-
-            if (selectedType.value == PostType.image) ...[
-              ElevatedButton.icon(
-                onPressed: pickImages,
-                icon: const Icon(Icons.add_a_photo),
-                label: const Text('Pick Images'),
-              ),
-              if (selectedImages.value.isNotEmpty)
-                SizedBox(
-                  height: 100,
-                  child: ListView.builder(
-                    scrollDirection: Axis.horizontal,
-                    itemCount: selectedImages.value.length,
-                    itemBuilder: (context, index) {
-                      return Padding(
-                        padding: const EdgeInsets.only(right: 8, top: 8),
-                        child: Stack(
-                          children: [
-                            Image.file(
-                              selectedImages.value[index],
-                              width: 100,
-                              height: 100,
-                              fit: BoxFit.cover,
-                            ),
-                            Positioned(
-                              right: 0,
-                              top: 0,
-                              child: GestureDetector(
-                                onTap: () {
-                                  final newImages = List<File>.from(
-                                    selectedImages.value,
-                                  );
-                                  newImages.removeAt(index);
-                                  selectedImages.value = newImages;
-                                },
-                                child: Container(
-                                  color: Colors.black54,
-                                  child: const Icon(
-                                    Icons.close,
-                                    color: Colors.white,
-                                    size: 16,
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ],
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    "What's on your mind?",
+                    style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                          fontWeight: FontWeight.bold,
                         ),
-                      );
-                    },
+                  ),
+                  const Divider(height: 32),
+
+                  // Toggles
+                  /*
+                  Row(
+                    children: [
+                      Expanded(
+                        child: _buildRetroToggle(
+                          context: context,
+                          label: "Announcement",
+                          value: isAnnouncement.value,
+                          onChanged: (val) => isAnnouncement.value = val,
+                        ),
+                      ),
+                      const SizedBox(width: 12),
+                      Expanded(
+                        child: _buildRetroToggle(
+                          context: context,
+                          label: "Schedule",
+                          value: isSchedule.value,
+                          onChanged: (val) => isSchedule.value = val,
+                        ),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 24),
+                  */
+
+                  // Post Type Selector
+                  _buildLabel(context, "Post Type"),
+                  _buildPostTypeSelector(selectedType),
+                  const SizedBox(height: 24),
+
+                  // Title
+                  _buildLabel(context, "Title (Optional)"),
+                  RetroTextField(
+                    hintText: "Enter post title",
+                    controller: titleController,
+                    enabled: !isSubmitting.value,
+                  ),
+                  const SizedBox(height: 24),
+
+                  // Hashtags
+                  _buildLabel(context, "Hashtags"),
+                  RetroTextField(
+                    hintText: "Add hashtags (comma-separated)",
+                    controller: hashtagsController,
+                    enabled: !isSubmitting.value,
+                  ),
+                  const SizedBox(height: 24),
+
+                  // Content
+                  _buildLabel(context, "Content Text", required: true),
+                  RetroTextField(
+                    hintText: "Tell your fans something...",
+                    controller: contentController,
+                    enabled: !isSubmitting.value,
+                    isMultiline: true,
+                  ),
+                  const SizedBox(height: 24),
+
+                  // Dynamic Areas
+                  if (selectedType.value == PostType.poll)
+                    PollOptionsWidget(
+                      options: pollOptions.value,
+                      onAddOption: () {
+                        if (pollOptions.value.length < 10) {
+                          pollOptions.value = [...pollOptions.value, ''];
+                        }
+                      },
+                      onRemoveOption: (index) {
+                        if (pollOptions.value.length > 2) {
+                          final newOptions = List<String>.from(pollOptions.value);
+                          newOptions.removeAt(index);
+                          pollOptions.value = newOptions;
+                        }
+                      },
+                      onOptionChanged: (index, val) {
+                        pollOptions.value[index] = val;
+                      },
+                    ),
+
+                  if (selectedType.value == PostType.image) _buildMediaUploadArea(
+                    context: context,
+                    label: "Upload Images",
+                    icon: Icons.add_a_photo_outlined,
+                    onTap: pickImages,
+                    files: selectedImages.value,
+                    onRemove: (idx) {
+                       final newImages = List<File>.from(selectedImages.value);
+                       newImages.removeAt(idx);
+                       selectedImages.value = newImages;
+                    }
+                  ),
+
+                  if (selectedType.value == PostType.video) _buildMediaUploadArea(
+                    context: context,
+                    label: "Upload Video",
+                    icon: Icons.videocam_outlined,
+                    onTap: pickVideo,
+                    files: selectedVideo.value != null ? [selectedVideo.value!] : [],
+                    onRemove: (_) => selectedVideo.value = null,
+                  ),
+
+                  const SizedBox(height: 32),
+
+                  // Actions
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      TextButton(
+                        onPressed: () => Navigator.pop(context),
+                        child: Text(
+                          "Cancel",
+                          style: TextStyle(color: Colors.grey[600], fontWeight: FontWeight.bold),
+                        ),
+                      ),
+                      const SizedBox(width: 12),
+                      _buildRetroButton(
+                        context: context,
+                        text: "Create Post",
+                        isLoading: isSubmitting.value,
+                        onTap: isFormValid ? submit : () {},
+                      ),
+                    ],
+                  ),
+
+                  if (postState.maybeWhen(error: (_) => true, orElse: () => false))
+                    Padding(
+                      padding: const EdgeInsets.only(top: 16),
+                      child: Text(
+                        postState.maybeWhen(error: (msg) => msg, orElse: () => ""),
+                        style: const TextStyle(color: Colors.red, fontWeight: FontWeight.bold),
+                      ),
+                    ),
+                ],
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildLabel(BuildContext context, String text, {bool required = false}) {
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 8),
+      child: RichText(
+        text: TextSpan(
+          text: text,
+          style: Theme.of(context).textTheme.labelLarge?.copyWith(
+                fontWeight: FontWeight.bold,
+                color: const Color(0xFF323232),
+              ),
+          children: [
+            if (required)
+              const TextSpan(
+                text: " *",
+                style: TextStyle(color: Colors.red),
+              ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  // Widget _buildRetroToggle({
+  //   required BuildContext context,
+  //   required String label,
+  //   required bool value,
+  //   required Function(bool) onChanged,
+  // }) {
+  //   return InkWell(
+  //     onTap: () => onChanged(!value),
+  //     child: Row(
+  //       children: [
+  //         SizedBox(
+  //           width: 24,
+  //           height: 24,
+  //           child: Checkbox(
+  //             value: value,
+  //             onChanged: (v) => onChanged(v ?? false),
+  //             activeColor: AppColors.primary,
+  //             side: const BorderSide(color: AppColors.border, width: 2),
+  //           ),
+  //         ),
+  //         const SizedBox(width: 8),
+  //         Text(
+  //           label,
+  //           style: const TextStyle(fontSize: 13, fontWeight: FontWeight.w600),
+  //         ),
+  //       ],
+  //     ),
+  //   );
+  // }
+
+  Widget _buildPostTypeSelector(ValueNotifier<PostType> selectedType) {
+    final types = [
+      {'type': PostType.text, 'label': 'Text', 'icon': Icons.short_text},
+      {'type': PostType.image, 'label': 'Image', 'icon': Icons.image_outlined},
+      {'type': PostType.video, 'label': 'Video', 'icon': Icons.videocam_outlined},
+      {'type': PostType.poll, 'label': 'Poll', 'icon': Icons.poll_outlined},
+    ];
+
+    return SingleChildScrollView(
+      scrollDirection: Axis.horizontal,
+      physics: const BouncingScrollPhysics(),
+      child: Row(
+        children: types.map((item) {
+          final isSelected = selectedType.value == item['type'];
+          return Padding(
+            padding: const EdgeInsets.only(right: 12),
+            child: GestureDetector(
+              onTap: () => selectedType.value = item['type'] as PostType,
+              child: Container(
+                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+                decoration: BoxDecoration(
+                  color: isSelected ? AppColors.primary : const Color(0xFFF5F5F5),
+                  borderRadius: BorderRadius.circular(30),
+                  border: Border.all(
+                    color: isSelected ? AppColors.border : Colors.black12,
+                    width: 1.5,
                   ),
                 ),
-            ],
-
-            if (selectedType.value == PostType.video) ...[
-              ElevatedButton.icon(
-                onPressed: pickVideo,
-                icon: const Icon(Icons.video_library),
-                label: const Text('Pick Video'),
-              ),
-              if (selectedVideo.value != null)
-                Padding(
-                  padding: const EdgeInsets.only(top: 8),
-                  child: Row(
-                    children: [
-                      const Icon(Icons.check_circle, color: Colors.green),
-                      const SizedBox(width: 8),
-                      Expanded(
-                        child: Text(selectedVideo.value!.path.split('/').last),
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Icon(
+                      item['icon'] as IconData,
+                      size: 18,
+                      color: isSelected ? Colors.white : const Color(0xFF666666),
+                    ),
+                    const SizedBox(width: 8),
+                    Text(
+                      item['label'] as String,
+                      style: TextStyle(
+                        color: isSelected ? Colors.white : const Color(0xFF666666),
+                        fontSize: 13,
+                        fontWeight: FontWeight.bold,
                       ),
-                      IconButton(
-                        icon: const Icon(Icons.close),
-                        onPressed: () => selectedVideo.value = null,
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          );
+        }).toList(),
+      ),
+    );
+  }
+
+  Widget _buildMediaUploadArea({
+    required BuildContext context,
+    required String label,
+    required IconData icon,
+    required VoidCallback onTap,
+    required List<File> files,
+    required Function(int) onRemove,
+  }) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        GestureDetector(
+          onTap: onTap,
+          child: Container(
+            width: double.infinity,
+            padding: const EdgeInsets.all(24),
+            decoration: BoxDecoration(
+              color: const Color(0xFFF5F5F5),
+              border: Border.all(color: Colors.black12, width: 2),
+              borderRadius: BorderRadius.circular(8),
+            ),
+            child: Column(
+              children: [
+                Icon(icon, size: 40, color: const Color(0xFF666666)),
+                const SizedBox(height: 8),
+                Text(
+                  label,
+                  style: const TextStyle(
+                    color: Color(0xFF666666),
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+        if (files.isNotEmpty)
+          Padding(
+            padding: const EdgeInsets.only(top: 12),
+            child: SizedBox(
+              height: 80,
+              child: ListView.builder(
+                scrollDirection: Axis.horizontal,
+                itemCount: files.length,
+                itemBuilder: (context, idx) => Padding(
+                  padding: const EdgeInsets.only(right: 8),
+                  child: Stack(
+                    children: [
+                      ClipRRect(
+                        borderRadius: BorderRadius.circular(8),
+                        child: Image.file(files[idx], width: 80, height: 80, fit: BoxFit.cover),
+                      ),
+                      Positioned(
+                        right: 2,
+                        top: 2,
+                        child: GestureDetector(
+                          onTap: () => onRemove(idx),
+                          child: CircleAvatar(
+                            radius: 10,
+                            backgroundColor: Colors.black.withValues(alpha: 0.6),
+                            child: const Icon(Icons.close, size: 12, color: Colors.white),
+                          ),
+                        ),
                       ),
                     ],
                   ),
                 ),
-            ],
-
-            const SizedBox(height: 24),
-
-            postState.maybeWhen(
-              error: (message) => Padding(
-                padding: const EdgeInsets.only(bottom: 16),
-                child: Text(
-                  message,
-                  style: const TextStyle(color: Colors.red),
-                  textAlign: TextAlign.center,
-                ),
               ),
-              orElse: () => const SizedBox.shrink(),
             ),
+          ),
+      ],
+    );
+  }
+
+  Widget _buildRetroButton({
+    required BuildContext context,
+    required String text,
+    required VoidCallback onTap,
+    bool isLoading = false,
+  }) {
+    return InkWell(
+      onTap: isLoading ? null : onTap,
+      child: Container(
+        padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+        decoration: BoxDecoration(
+          color: AppColors.primary,
+          border: Border.all(color: AppColors.border, width: 2),
+          borderRadius: BorderRadius.circular(5),
+          boxShadow: const [
+            BoxShadow(color: AppColors.border, offset: Offset(4, 4)),
           ],
         ),
+        child: isLoading
+            ? const SizedBox(
+                width: 20,
+                height: 20,
+                child: CircularProgressIndicator(
+                  strokeWidth: 2,
+                  color: Colors.white,
+                ),
+              )
+            : Text(
+                text,
+                style: const TextStyle(
+                  color: Colors.white,
+                  fontWeight: FontWeight.bold,
+                  fontSize: 15,
+                ),
+              ),
       ),
     );
   }

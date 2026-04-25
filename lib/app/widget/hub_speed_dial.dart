@@ -54,7 +54,7 @@ class HubSpeedDial extends HookConsumerWidget {
           goUp: true,
         ),
       // ── going LEFT ────────────────────────────
-      if (memberRole == MemberRole.moderator)
+      if (memberRole == MemberRole.moderator || memberRole == MemberRole.vtuber)
         (
           action: _DialAction.moderation,
           icon: Icons.shield_outlined,

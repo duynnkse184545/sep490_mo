@@ -142,20 +142,6 @@ class _MemberTile extends HookConsumerWidget {
     final theme = Theme.of(context);
     final currentUserRoleAsync = ref.watch(memberCheckingControllerProvider(fanHubId: fanHubId));
     
-    final canBan = currentUserRoleAsync.when(
-      data: (checking) => 
-          checking.roleInHub == MemberRole.vtuber || 
-          checking.roleInHub == MemberRole.moderator,
-      loading: () => false,
-      error: (_, _) => false,
-    );
-
-    final isVtuber = currentUserRoleAsync.when(
-      data: (checking) => checking.roleInHub == MemberRole.vtuber,
-      loading: () => false,
-      error: (_, _) => false,
-    );
-
     return ListTile(
       leading: CircleAvatar(
         backgroundImage: member.avatarUrl != null
@@ -174,26 +160,15 @@ class _MemberTile extends HookConsumerWidget {
         mainAxisSize: MainAxisSize.min,
         children: [
           if (member.roleInHub == MemberRole.moderator)
-            GestureDetector(
-              onLongPress: isVtuber ? () => _showDemoteDialog(context, ref) : null,
-              child: Chip(
-                label: const Text('MOD'),
-                visualDensity: VisualDensity.compact,
-                backgroundColor: theme.colorScheme.primaryContainer,
-              ),
+            Chip(
+              label: const Text('MOD'),
+              visualDensity: VisualDensity.compact,
+              backgroundColor: theme.colorScheme.primaryContainer,
             ),
-          if (isVtuber && member.roleInHub == MemberRole.member)
-            IconButton(
-              icon: const Icon(Icons.shield_outlined, color: Colors.blue),
-              onPressed: () => _showPromoteDialog(context, ref),
-              tooltip: 'Promote to Moderator',
-            ),
-          if (canBan && member.roleInHub == MemberRole.member)
-            IconButton(
-              icon: const Icon(Icons.gavel, color: Colors.red),
-              onPressed: () => _showBanDialog(context, ref),
-              tooltip: 'Ban member',
-            ),
+          currentUserRoleAsync.maybeWhen(
+            data: (checking) => _buildPopupMenu(context, ref, checking),
+            orElse: () => const SizedBox.shrink(),
+          ),
         ],
       ),
       onTap: () {
@@ -205,6 +180,84 @@ class _MemberTile extends HookConsumerWidget {
           ),
         );
       },
+    );
+  }
+
+  Widget _buildPopupMenu(BuildContext context, WidgetRef ref, MemberCheckingResponse checking) {
+    final isVtuber = checking.roleInHub == MemberRole.vtuber;
+    final isModerator = checking.roleInHub == MemberRole.moderator;
+    final canAdmin = isVtuber || isModerator;
+
+    // Determine available actions for this specific member tile
+    final showPromote = isVtuber && member.roleInHub == MemberRole.member;
+    final showDemote = isVtuber && member.roleInHub == MemberRole.moderator;
+    final showKick = canAdmin && member.roleInHub == MemberRole.member;
+    final showBan = canAdmin && member.roleInHub == MemberRole.member;
+
+    if (!showPromote && !showDemote && !showKick && !showBan) {
+      return const SizedBox.shrink();
+    }
+
+    return PopupMenuButton<String>(
+      icon: const Icon(Icons.more_vert),
+      onSelected: (action) {
+        switch (action) {
+          case 'promote':
+            _showPromoteDialog(context, ref);
+            break;
+          case 'demote':
+            _showDemoteDialog(context, ref);
+            break;
+          case 'kick':
+            _showKickDialog(context, ref);
+            break;
+          case 'ban':
+            _showBanDialog(context, ref);
+            break;
+        }
+      },
+      itemBuilder: (context) => [
+        if (showPromote)
+          const PopupMenuItem(
+            value: 'promote',
+            child: ListTile(
+              leading: Icon(Icons.military_tech, color: Colors.blue),
+              title: Text('Promote to Moderator'),
+              contentPadding: EdgeInsets.zero,
+              dense: true,
+            ),
+          ),
+        if (showDemote)
+          const PopupMenuItem(
+            value: 'demote',
+            child: ListTile(
+              leading: Icon(Icons.remove_moderator, color: Colors.orange),
+              title: Text('Demote Moderator'),
+              contentPadding: EdgeInsets.zero,
+              dense: true,
+            ),
+          ),
+        if (showKick)
+          const PopupMenuItem(
+            value: 'kick',
+            child: ListTile(
+              leading: Icon(Icons.person_remove, color: Colors.red),
+              title: Text('Kick Member'),
+              contentPadding: EdgeInsets.zero,
+              dense: true,
+            ),
+          ),
+        if (showBan)
+          const PopupMenuItem(
+            value: 'ban',
+            child: ListTile(
+              leading: Icon(Icons.gavel, color: Colors.red),
+              title: Text('Ban Member'),
+              contentPadding: EdgeInsets.zero,
+              dense: true,
+            ),
+          ),
+      ],
     );
   }
 
@@ -253,6 +306,32 @@ class _MemberTile extends HookConsumerWidget {
               Navigator.of(context).pop();
             },
             child: const Text('Demote', style: TextStyle(color: Colors.white)),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Future<void> _showKickDialog(BuildContext context, WidgetRef ref) async {
+    return showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: const Text('Kick Member'),
+        content: Text('Are you sure you want to kick ${member.displayName ?? member.username} from this Hub?'),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.of(context).pop(),
+            child: const Text('Cancel'),
+          ),
+          ElevatedButton(
+            style: ElevatedButton.styleFrom(backgroundColor: Colors.red),
+            onPressed: () {
+              ref
+                  .read(memberListControllerProvider(fanHubId: fanHubId).notifier)
+                  .kickMember(member.resolvedId);
+              Navigator.of(context).pop();
+            },
+            child: const Text('Kick', style: TextStyle(color: Colors.white)),
           ),
         ],
       ),
