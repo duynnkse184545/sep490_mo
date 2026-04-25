@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:intl/intl.dart';
+import 'package:sep490_mo/core/theme/app_colors.dart';
 import 'package:sep490_mo/core/widgets/empty_state.dart';
 import 'package:sep490_mo/core/widgets/error_retry_widget.dart';
 import 'package:sep490_mo/core/widgets/loader.dart';
@@ -167,108 +168,117 @@ class _BannedMemberTile extends HookWidget {
     final isExpanded = useState(false);
     final activeBans = member.bans.where((b) => b.isActive).toList();
 
-    return Card(
-      margin: const EdgeInsets.only(bottom: 8),
-      clipBehavior: Clip.antiAlias,
+    return Container(
+      margin: const EdgeInsets.only(bottom: 12, left: 4, right: 10),
+      decoration: BoxDecoration(
+        color: Theme.of(context).colorScheme.surface,
+        borderRadius: BorderRadius.circular(12),
+        border: Border.all(color: AppColors.border, width: 2),
+        boxShadow: const [
+          BoxShadow(
+            color: AppColors.border,
+            offset: Offset(6, 6),
+            blurRadius: 0,
+          ),
+        ],
+      ),
       child: Column(
         children: [
           ListTile(
             leading: CircleAvatar(
+              radius: 18,
+              backgroundColor: Theme.of(context).colorScheme.primary.withValues(alpha: 0.2),
               backgroundImage: member.avatarUrl != null
                   ? NetworkImage(member.avatarUrl!)
                   : null,
               child: member.avatarUrl == null
                   ? Text(
                       (member.displayName ?? member.username ?? 'M')[0].toUpperCase(),
+                      style: TextStyle(fontWeight: FontWeight.w900, color: Theme.of(context).colorScheme.primary),
                     )
                   : null,
             ),
-            title: Text(member.displayName ?? member.username ?? 'Unknown'),
-            subtitle: Text('${activeBans.length} active ban(s)'),
+            title: Text(
+              member.displayName ?? member.username ?? 'Unknown',
+              style: const TextStyle(fontWeight: FontWeight.w900, color: Color(0xFF323232)),
+            ),
+            subtitle: Text(
+              '${activeBans.length} active ban(s)',
+              style: const TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: Colors.red),
+            ),
             trailing: Icon(
               isExpanded.value ? Icons.expand_less : Icons.expand_more,
+              color: AppColors.border,
             ),
             onTap: () => isExpanded.value = !isExpanded.value,
           ),
           if (isExpanded.value) ...[
-            const Divider(height: 1),
-            Container(
-              color: Colors.grey[50],
-              child: ListView.separated(
-                shrinkWrap: true,
-                physics: const NeverScrollableScrollPhysics(),
-                itemCount: activeBans.length,
-                separatorBuilder: (_, _) => const Divider(height: 1),
-                itemBuilder: (context, index) {
-                  final ban = activeBans[index];
-                  return Padding(
-                    padding: const EdgeInsets.all(12),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Row(
-                          children: [
-                            Container(
-                              padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
-                              decoration: BoxDecoration(
-                                color: Colors.orange[100],
-                                borderRadius: BorderRadius.circular(4),
-                              ),
-                              child: Text(
-                                ban.banType.name.toUpperCase(),
-                                style: const TextStyle(
-                                  fontSize: 10, 
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.orange,
-                                ),
-                              ),
+            const Divider(height: 1, color: Colors.black12),
+            ListView.separated(
+              shrinkWrap: true,
+              physics: const NeverScrollableScrollPhysics(),
+              itemCount: activeBans.length,
+              separatorBuilder: (_, _) => const Divider(height: 1, color: Colors.black12),
+              itemBuilder: (context, index) {
+                final ban = activeBans[index];
+                return Padding(
+                  padding: const EdgeInsets.all(12),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Row(
+                        children: [
+                          Container(
+                            padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
+                            decoration: BoxDecoration(
+                              color: Colors.red[100],
+                              borderRadius: BorderRadius.circular(4),
+                              border: Border.all(color: Colors.red, width: 1),
                             ),
-                            const Spacer(),
-                            if(ban.bannedUntil != null)
-                            Text(
-                              'Until: ${DateFormat('MMM dd, yyyy').format(ban.bannedUntil!)}',
-                              style: const TextStyle(fontSize: 11, fontWeight: FontWeight.w500),
-                            ),
-                          ],
-                        ),
-                        const SizedBox(height: 8),
-                        Text(
-                          'Reason: ${ban.reason}',
-                          style: const TextStyle(fontSize: 13),
-                        ),
-                        const SizedBox(height: 4),
-                        Text(
-                          'By: ${ban.bannedByDisplayName} (@${ban.bannedByUsername})',
-                          style: TextStyle(fontSize: 11, color: Colors.grey[600]),
-                        ),
-                        if (canRevoke) ...[
-                          const SizedBox(height: 8),
-                          Align(
-                            alignment: Alignment.centerRight,
-                            child: OutlinedButton.icon(
-                              onPressed: () => onRevokeBan(ban.banId, ban.reason),
-                              icon: const Icon(Icons.undo, size: 14),
-                              label: const Text('Revoke'),
-                              style: OutlinedButton.styleFrom(
-                                foregroundColor: Colors.red,
-                                side: const BorderSide(color: Colors.red),
-                                padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 0),
-                                visualDensity: VisualDensity.compact,
+                            child: Text(
+                              ban.banType.name.toUpperCase(),
+                              style: const TextStyle(
+                                fontSize: 10, 
+                                fontWeight: FontWeight.w900,
+                                color: Colors.red,
                               ),
                             ),
                           ),
+                          const Spacer(),
+                          if(ban.bannedUntil != null)
+                          Text(
+                            'Until: ${DateFormat('MMM dd, yyyy').format(ban.bannedUntil!)}',
+                            style: const TextStyle(fontSize: 11, fontWeight: FontWeight.w900, color: Color(0xFF323232)),
+                          ),
                         ],
+                      ),
+                      const SizedBox(height: 8),
+                      Text(
+                        'Reason: ${ban.reason}',
+                        style: const TextStyle(fontSize: 13, color: Color(0xFF323232)),
+                      ),
+                      const SizedBox(height: 4),
+                      Text(
+                        'By: ${ban.bannedByDisplayName}',
+                        style: TextStyle(fontSize: 11, color: Colors.grey[600]),
+                      ),
+                      if (canRevoke) ...[
+                        const SizedBox(height: 12),
+                        _buildSmallRetroButton(
+                          label: 'REVOKE BAN',
+                          icon: Icons.undo,
+                          color: Colors.white,
+                          textColor: Colors.red,
+                          onTap: () => onRevokeBan(ban.banId, ban.reason),
+                        ),
                       ],
-                    ),
-                  );
-                },
-              ),
+                    ],
+                  ),
+                );
+              },
             ),
-            const Divider(height: 1),
-            ListTile(
-              dense: true,
-              leading: const Icon(Icons.info_outline, size: 16),
-              title: const Text('View Full Member Details'),
+            const Divider(height: 1, color: Colors.black12),
+            InkWell(
               onTap: () {
                 Navigator.of(context).push(
                   MaterialPageRoute(
@@ -278,9 +288,61 @@ class _BannedMemberTile extends HookWidget {
                   ),
                 );
               },
+              child: const Padding(
+                padding: EdgeInsets.symmetric(vertical: 12),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Icon(Icons.info_outline, size: 14, color: AppColors.primary),
+                    SizedBox(width: 8),
+                    Text(
+                      'View Full Member Details',
+                      style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: AppColors.primary),
+                    ),
+                  ],
+                ),
+              ),
             ),
           ],
         ],
+      ),
+    );
+  }
+
+  Widget _buildSmallRetroButton({
+    required String label,
+    required IconData icon,
+    required Color color,
+    required Color textColor,
+    required VoidCallback onTap,
+  }) {
+    return InkWell(
+      onTap: onTap,
+      child: Container(
+        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+        decoration: BoxDecoration(
+          color: color,
+          border: Border.all(color: AppColors.border, width: 1.5),
+          borderRadius: BorderRadius.circular(6),
+          boxShadow: const [
+            BoxShadow(color: AppColors.border, offset: Offset(2, 2)),
+          ],
+        ),
+        child: Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Icon(icon, size: 14, color: textColor),
+            const SizedBox(width: 6),
+            Text(
+              label,
+              style: TextStyle(
+                fontSize: 10,
+                fontWeight: FontWeight.w900,
+                color: textColor,
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

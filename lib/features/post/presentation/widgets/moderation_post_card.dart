@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:sep490_mo/core/theme/app_colors.dart';
 import 'package:sep490_mo/features/post/data/models/post_models.dart';
 
 // moderation_post_card.dart
@@ -31,42 +32,63 @@ class _ModerationPostCardState extends State<ModerationPostCard> {
 
   @override
   Widget build(BuildContext context) {
-    final colorScheme = Theme.of(context).colorScheme;
-
-    return Card(
-      margin: const EdgeInsets.only(bottom: 8),
-      elevation: widget.isSelected ? 2 : 0,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(8),
-        side: BorderSide(
-          color: widget.isSelected ? colorScheme.primary : colorScheme.outline,
-          width: widget.isSelected ? 2 : 1,
+    return Container(
+      margin: const EdgeInsets.only(bottom: 12, left: 4, right: 10),
+      decoration: BoxDecoration(
+        color: Theme.of(context).colorScheme.surface,
+        borderRadius: BorderRadius.circular(12),
+        border: Border.all(
+          color: widget.isSelected
+              ? Theme.of(context).colorScheme.primary
+              : AppColors.border,
+          width: 2,
         ),
+        boxShadow: [
+          BoxShadow(
+            color: widget.isSelected
+                ? Theme.of(context).colorScheme.primary.withValues(alpha: 0.5)
+                : AppColors.border,
+            offset: const Offset(6, 6),
+            blurRadius: 0,
+          ),
+        ],
       ),
       child: InkWell(
-        borderRadius: BorderRadius.circular(8),
+        borderRadius: BorderRadius.circular(12),
         onTap: () => setState(() => _isExpanded = !_isExpanded),
         child: Padding(
           padding: const EdgeInsets.all(12),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              // ── Collapsed header row (always visible) ──
+              // ── Collapsed header row ──
               Row(
                 children: [
-                  Checkbox(
-                    value: widget.isSelected,
-                    onChanged: (_) => widget.onToggleSelect(),
+                  SizedBox(
+                    width: 24,
+                    height: 24,
+                    child: Checkbox(
+                      value: widget.isSelected,
+                      onChanged: (_) => widget.onToggleSelect(),
+                      activeColor: Theme.of(context).colorScheme.primary,
+                      side: const BorderSide(
+                        color: AppColors.border,
+                        width: 1.5,
+                      ),
+                    ),
                   ),
+                  const SizedBox(width: 8),
                   CircleAvatar(
                     radius: 16,
-                    backgroundColor: colorScheme.primary.withAlpha(51),
+                    backgroundColor: Theme.of(
+                      context,
+                    ).colorScheme.primary.withValues(alpha: 0.2),
                     child: Text(
                       widget.post.authorDisplayName.isNotEmpty
                           ? widget.post.authorDisplayName[0].toUpperCase()
                           : '?',
                       style: TextStyle(
-                        color: colorScheme.primary,
+                        color: Theme.of(context).colorScheme.primary,
                         fontWeight: FontWeight.bold,
                         fontSize: 14,
                       ),
@@ -80,24 +102,16 @@ class _ModerationPostCardState extends State<ModerationPostCard> {
                         Text(
                           widget.post.authorDisplayName,
                           style: const TextStyle(
-                            fontWeight: FontWeight.w600,
+                            fontWeight: FontWeight.w900,
                             fontSize: 14,
+                            color: Color(0xFF323232),
                           ),
                         ),
-                        // Show a short preview of the content while collapsed
                         if (!_isExpanded)
                           Text(
                             widget.post.title ?? widget.post.content,
                             maxLines: 1,
                             overflow: TextOverflow.ellipsis,
-                            style: TextStyle(
-                              fontSize: 12,
-                              color: Colors.grey[600],
-                            ),
-                          ),
-                        if (_isExpanded)
-                          Text(
-                            '@${widget.post.authorUsername}',
                             style: TextStyle(
                               fontSize: 12,
                               color: Colors.grey[600],
@@ -111,7 +125,7 @@ class _ModerationPostCardState extends State<ModerationPostCard> {
                   Icon(
                     _isExpanded ? Icons.expand_less : Icons.expand_more,
                     size: 20,
-                    color: Colors.grey[600],
+                    color: AppColors.border,
                   ),
                 ],
               ),
@@ -119,187 +133,177 @@ class _ModerationPostCardState extends State<ModerationPostCard> {
               // ── Expanded body ──
               if (_isExpanded) ...[
                 const SizedBox(height: 12),
-
                 if (widget.post.title != null)
                   Text(
                     widget.post.title!,
                     style: const TextStyle(
                       fontWeight: FontWeight.bold,
                       fontSize: 16,
+                      color: Color(0xFF323232),
                     ),
                   ),
-                if (widget.post.title != null) const SizedBox(height: 4),
+                const SizedBox(height: 4),
                 Text(
                   widget.post.content,
-                  maxLines: 3,
-                  overflow: TextOverflow.ellipsis,
-                  style: const TextStyle(fontSize: 14),
-                ),
-
-                if (widget.post.media.isNotEmpty) ...[
-                  const SizedBox(height: 8),
-                  SizedBox(
-                    height: 60,
-                    child: ListView.builder(
-                      scrollDirection: Axis.horizontal,
-                      itemCount: widget.post.media.length,
-                      itemBuilder: (context, index) {
-                        final media = widget.post.media[index];
-                        final isImage = _isImage(media.mediaUrl);
-
-                        return Padding(
-                          padding: const EdgeInsets.only(right: 4),
-                          child: ClipRRect(
-                            borderRadius: BorderRadius.circular(4),
-                            child: isImage
-                                ? Image.network(
-                                    media.mediaUrl,
-                                    width: 60,
-                                    height: 60,
-                                    fit: BoxFit.cover,
-                                    errorBuilder: (_, _, _) => Container(
-                                      width: 60,
-                                      height: 60,
-                                      color: Colors.grey[300],
-                                      child: const Icon(Icons.image, size: 24),
-                                    ),
-                                  )
-                                : Container(
-                                    width: 60,
-                                    height: 60,
-                                    color: Colors.black,
-                                    child: const Icon(
-                                      Icons.play_circle_outline,
-                                      color: Colors.white,
-                                      size: 24,
-                                    ),
-                                  ),
-                          ),
-                        );
-                      },
-                    ),
+                  style: const TextStyle(
+                    fontSize: 14,
+                    color: Color(0xFF323232),
                   ),
+                ),
+                // ... rest of media and meta ...
+                if (widget.post.media.isNotEmpty) ...[
+                  const SizedBox(height: 12),
+                  _buildMediaList(),
                 ],
-
+                const SizedBox(height: 12),
+                _buildAiStatusRow(),
                 const SizedBox(height: 8),
-                Row(
-                  children: [
-                    Icon(
-                      _getAiValidationIcon(),
-                      size: 16,
-                      color: _getAiValidationColor(),
-                    ),
-                    const SizedBox(width: 4),
-                    Text(
-                      _getAiValidationText(),
-                      style: TextStyle(
-                        fontSize: 12,
-                        color: _getAiValidationColor(),
-                      ),
-                    ),
-                    if (widget.post.aiValidationComment != null) ...[
-                      const SizedBox(width: 4),
-                      Expanded(
-                        child: Text(
-                          widget.post.aiValidationComment!,
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
-                          style: TextStyle(
-                            fontSize: 11,
-                            color: Colors.grey[600],
-                            fontStyle: FontStyle.italic,
-                          ),
-                        ),
-                      ),
-                    ],
-                  ],
-                ),
-
-                const SizedBox(height: 8),
-                Row(
-                  children: [
-                    Icon(Icons.access_time, size: 14, color: Colors.grey[600]),
-                    const SizedBox(width: 4),
-                    Text(
-                      DateFormat(
-                        'MMM dd, yyyy HH:mm',
-                      ).format(widget.post.createdAt),
-                      style: TextStyle(fontSize: 12, color: Colors.grey[600]),
-                    ),
-                    const Spacer(),
-                    if (widget.post.isPinned)
-                      Container(
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 6,
-                          vertical: 2,
-                        ),
-                        decoration: BoxDecoration(
-                          color: Colors.orange[100],
-                          borderRadius: BorderRadius.circular(4),
-                        ),
-                        child: const Text(
-                          'Pinned',
-                          style: TextStyle(
-                            fontSize: 10,
-                            color: Colors.orange,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                      ),
-                    if (widget.post.hashtags.isNotEmpty) ...[
-                      const SizedBox(width: 8),
-                      Icon(Icons.tag, size: 14, color: Colors.grey[600]),
-                      const SizedBox(width: 2),
-                      Text(
-                        widget.post.hashtags.take(2).join(', '),
-                        style: TextStyle(fontSize: 12, color: Colors.grey[600]),
-                      ),
-                    ],
-                  ],
-                ),
-
-                const Divider(height: 24),
-
-                Row(
-                  children: [
-                    Expanded(
-                      child: OutlinedButton.icon(
-                        onPressed: widget.onRevalidate,
-                        icon: const Icon(Icons.refresh, size: 16),
-                        label: const Text('Revalidate'),
-                        style: OutlinedButton.styleFrom(
-                          padding: const EdgeInsets.symmetric(vertical: 8),
-                        ),
-                      ),
-                    ),
-                    const SizedBox(width: 8),
-                    Expanded(
-                      child: OutlinedButton.icon(
-                        onPressed: widget.onReject,
-                        icon: const Icon(Icons.close, size: 16),
-                        label: const Text('Reject'),
-                        style: OutlinedButton.styleFrom(
-                          foregroundColor: Colors.red,
-                          padding: const EdgeInsets.symmetric(vertical: 8),
-                        ),
-                      ),
-                    ),
-                    const SizedBox(width: 8),
-                    Expanded(
-                      child: ElevatedButton.icon(
-                        onPressed: widget.onApprove,
-                        icon: const Icon(Icons.check, size: 16),
-                        label: const Text('Approve'),
-                        style: ElevatedButton.styleFrom(
-                          padding: const EdgeInsets.symmetric(vertical: 8),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
+                _buildMetaRow(),
+                const Divider(height: 24, color: Colors.black12),
+                _buildActionButtons(context),
               ],
             ],
           ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildMediaList() {
+    return SizedBox(
+      height: 80,
+      child: ListView.builder(
+        scrollDirection: Axis.horizontal,
+        itemCount: widget.post.media.length,
+        itemBuilder: (context, index) {
+          final media = widget.post.media[index];
+          final isImage = _isImage(media.mediaUrl);
+          return Container(
+            margin: const EdgeInsets.only(right: 8),
+            decoration: BoxDecoration(
+              border: Border.all(color: AppColors.border, width: 1.5),
+              borderRadius: BorderRadius.circular(8),
+            ),
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(6),
+              child: isImage
+                  ? Image.network(
+                      media.mediaUrl,
+                      width: 80,
+                      height: 80,
+                      fit: BoxFit.cover,
+                    )
+                  : Container(
+                      width: 80,
+                      height: 80,
+                      color: Colors.black,
+                      child: const Icon(
+                        Icons.play_circle_outline,
+                        color: Colors.white,
+                      ),
+                    ),
+            ),
+          );
+        },
+      ),
+    );
+  }
+
+  Widget _buildAiStatusRow() {
+    return Row(
+      children: [
+        Icon(_getAiValidationIcon(), size: 16, color: _getAiValidationColor()),
+        const SizedBox(width: 6),
+        Text(
+          _getAiValidationText(),
+          style: TextStyle(
+            fontSize: 12,
+            fontWeight: FontWeight.bold,
+            color: _getAiValidationColor(),
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildMetaRow() {
+    return Row(
+      children: [
+        const Icon(Icons.access_time, size: 14, color: Colors.grey),
+        const SizedBox(width: 4),
+        Text(
+          DateFormat('MMM dd, HH:mm').format(widget.post.createdAt),
+          style: const TextStyle(fontSize: 11, color: Colors.grey),
+        ),
+        const Spacer(),
+        if (widget.post.isPinned)
+          const Icon(Icons.push_pin, size: 14, color: Colors.orange),
+      ],
+    );
+  }
+
+  Widget _buildActionButtons(BuildContext context) {
+    return Row(
+      children: [
+        _buildSmallRetroButton(
+          label: 'REVALIDATE',
+          icon: Icons.refresh,
+          color: Colors.grey[200]!,
+          onTap: widget.onRevalidate,
+        ),
+        const SizedBox(width: 8),
+        _buildSmallRetroButton(
+          label: 'REJECT',
+          icon: Icons.close,
+          color: Colors.red[50]!,
+          textColor: Colors.red,
+          onTap: widget.onReject,
+        ),
+        const SizedBox(width: 8),
+        Expanded(
+          child: _buildSmallRetroButton(
+            label: 'APPROVE',
+            icon: Icons.check,
+            color: Theme.of(context).colorScheme.primary,
+            textColor: Colors.white,
+            onTap: widget.onApprove,
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildSmallRetroButton({
+    required String label,
+    required IconData icon,
+    required Color color,
+    Color textColor = Colors.black87,
+    required VoidCallback onTap,
+  }) {
+    return InkWell(
+      onTap: onTap,
+      child: Container(
+        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+        decoration: BoxDecoration(
+          color: color,
+          border: Border.all(color: AppColors.border, width: 1.5),
+          borderRadius: BorderRadius.circular(8),
+        ),
+        child: Row(
+          mainAxisSize: MainAxisSize.min,
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Icon(icon, size: 14, color: textColor),
+            const SizedBox(width: 4),
+            Text(
+              label,
+              style: TextStyle(
+                fontSize: 11,
+                fontWeight: FontWeight.w900,
+                color: textColor,
+              ),
+            ),
+          ],
         ),
       ),
     );

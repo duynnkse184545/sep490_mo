@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:intl/intl.dart';
+import 'package:sep490_mo/core/theme/app_colors.dart';
 import 'package:sep490_mo/features/member/data/models/member_models.dart';
 import 'package:sep490_mo/features/member/data/models/member_report_models.dart';
 
@@ -21,46 +22,59 @@ class MemberReportCard extends HookWidget {
     final resolveMessageController = useTextEditingController();
     final resolveMessageError = useState<String?>(null);
 
-    final colorScheme = Theme.of(context).colorScheme;
     final hasReports = member.reports.isNotEmpty;
 
-    return Card(
-      margin: const EdgeInsets.only(bottom: 8),
-      elevation: 0,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(8),
-        side: BorderSide(
-          color: colorScheme.outline,
-          width: 1,
-        ),
+    return Container(
+      margin: const EdgeInsets.only(bottom: 12, left: 4, right: 10),
+      decoration: BoxDecoration(
+        color: Theme
+            .of(context)
+            .colorScheme
+            .surface,
+        borderRadius: BorderRadius.circular(12),
+        border: Border.all(color: AppColors.border, width: 2),
+        boxShadow: const [
+          BoxShadow(
+            color: AppColors.border,
+            offset: Offset(6, 6),
+            blurRadius: 0,
+          ),
+        ],
       ),
       child: InkWell(
-        borderRadius: BorderRadius.circular(8),
+        borderRadius: BorderRadius.circular(12),
         onTap: () => isExpanded.value = !isExpanded.value,
         child: Padding(
           padding: const EdgeInsets.all(12),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              // ── Collapsed header row (always visible) ──
+              // ── Collapsed header row ──
               Row(
                 children: [
                   CircleAvatar(
                     radius: 16,
-                    backgroundColor: colorScheme.primary.withAlpha(51),
+                    backgroundColor: Theme
+                        .of(context)
+                        .colorScheme
+                        .primary
+                        .withValues(alpha: 0.2),
                     backgroundImage: member.avatarUrl != null
                         ? NetworkImage(member.avatarUrl!)
                         : null,
                     child: member.avatarUrl == null
                         ? Text(
-                            (member.displayName ?? member.username ?? '?')[0]
-                                .toUpperCase(),
-                            style: TextStyle(
-                              color: colorScheme.primary,
-                              fontWeight: FontWeight.bold,
-                              fontSize: 14,
-                            ),
-                          )
+                      (member.displayName ?? member.username ?? '?')[0]
+                          .toUpperCase(),
+                      style: TextStyle(
+                        color: Theme
+                            .of(context)
+                            .colorScheme
+                            .primary,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 14,
+                      ),
+                    )
                         : null,
                   ),
                   const SizedBox(width: 10),
@@ -71,8 +85,9 @@ class MemberReportCard extends HookWidget {
                         Text(
                           member.displayName ?? member.username ?? 'Unknown',
                           style: const TextStyle(
-                            fontWeight: FontWeight.w600,
+                            fontWeight: FontWeight.w900,
                             fontSize: 14,
+                            color: Color(0xFF323232),
                           ),
                         ),
                         if (!isExpanded.value)
@@ -93,7 +108,7 @@ class MemberReportCard extends HookWidget {
                   Icon(
                     isExpanded.value ? Icons.expand_less : Icons.expand_more,
                     size: 20,
-                    color: Colors.grey[600],
+                    color: AppColors.border,
                   ),
                 ],
               ),
@@ -103,187 +118,189 @@ class MemberReportCard extends HookWidget {
                 const SizedBox(height: 12),
 
                 // Member details
-                Row(
-                  children: [
-                    const Icon(Icons.person, size: 16, color: Colors.grey),
-                    const SizedBox(width: 4),
-                    Text(
-                      'FanHub: ${member.fanHubName}',
-                      style: const TextStyle(
-                        fontSize: 13,
-                        fontWeight: FontWeight.w500,
-                      ),
-                    ),
-                  ],
-                ),
-                const SizedBox(height: 4),
-                Row(
-                  children: [
-                    const Icon(Icons.work, size: 16, color: Colors.grey),
-                    const SizedBox(width: 4),
-                    Text(
-                      'Role: ${member.roleInHub.name}',
-                      style: const TextStyle(fontSize: 13),
-                    ),
-                  ],
-                ),
-                if (member.joinedAt != null) ...[
-                  const SizedBox(height: 4),
-                  Row(
-                    children: [
-                      const Icon(
-                        Icons.calendar_today,
-                        size: 16,
-                        color: Colors.grey,
-                      ),
-                      const SizedBox(width: 4),
-                      Text(
-                        'Joined: ${_formatDate(member.joinedAt!)}',
-                        style: TextStyle(fontSize: 13, color: Colors.grey[600]),
-                      ),
-                    ],
-                  ),
-                ],
+                _buildInfoRow(Icons.person, 'FanHub: ${member.fanHubName}'),
+                _buildInfoRow(Icons.work, 'Role: ${member.roleInHub.name}'),
+                if (member.joinedAt != null)
+                  _buildInfoRow(Icons.calendar_today,
+                      'Joined: ${_formatDate(member.joinedAt!)}'),
 
                 const SizedBox(height: 12),
                 Text(
-                  'Reports (${member.reports.length})',
-                  style: const TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 14,
-                  ),
+                  'REPORTS (${member.reports.length})',
+                  style: const TextStyle(fontWeight: FontWeight.w900,
+                      fontSize: 12,
+                      letterSpacing: 1),
                 ),
                 const SizedBox(height: 8),
 
                 if (hasReports) ...[
                   // Report selector if multiple reports
-                  if (member.reports.length > 1)
-                    Row(
-                      children: [
-                        const Text('Report: ', style: TextStyle(fontSize: 12)),
-                        Expanded(
-                          child: SingleChildScrollView(
-                            scrollDirection: Axis.horizontal,
-                            child: Row(
-                              children: List.generate(
-                                member.reports.length,
-                                (index) => Padding(
-                                  padding: const EdgeInsets.only(right: 4),
-                                  child: FilterChip(
-                                    label: Text(
-                                      '#${index + 1}',
-                                      style: const TextStyle(fontSize: 12),
-                                    ),
-                                    selected: selectedReportIndex.value == index,
-                                    onSelected: (_) {
-                                      selectedReportIndex.value = index;
-                                    },
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  if (member.reports.length > 1) const SizedBox(height: 8),
-
-                  // Selected report details
+                  if (member.reports.length > 1) _buildReportSelector(
+                      selectedReportIndex),
                   _buildReportDetails(
-                    member.reports[selectedReportIndex.value],
-                  ),
+                      member.reports[selectedReportIndex.value]),
                 ] else
-                  const Text(
-                    'No reports',
-                    style: TextStyle(fontSize: 12, color: Colors.grey),
-                  ),
+                  const Text('No reports',
+                      style: TextStyle(fontSize: 12, color: Colors.grey)),
 
-                const SizedBox(height: 12),
-                const Divider(),
-                const SizedBox(height: 8),
+                const Divider(height: 24),
 
+                // Meta row
                 Row(
                   children: [
-                    Icon(Icons.access_time, size: 14, color: Colors.grey[600]),
+                    const Icon(Icons.access_time, size: 14, color: Colors.grey),
                     const SizedBox(width: 4),
                     Text(
                       _formatDate(member.memberStatus == MemberStatus.pending
                           ? DateTime.now()
                           : member.joinedAt ?? DateTime.now()),
-                      style: TextStyle(fontSize: 12, color: Colors.grey[600]),
+                      style: const TextStyle(fontSize: 11, color: Colors.grey),
                     ),
                     const Spacer(),
-                    Container(
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 6,
-                        vertical: 2,
-                      ),
-                      decoration: BoxDecoration(
-                        color: _getStatusColor(member.memberStatus)
-                            .withAlpha(51),
-                        borderRadius: BorderRadius.circular(4),
-                      ),
-                      child: Text(
-                        member.memberStatus.name,
-                        style: TextStyle(
-                          fontSize: 10,
-                          color: _getStatusColor(member.memberStatus),
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                    ),
+                    _buildMemberStatusBadge(member.memberStatus),
                   ],
                 ),
+
+                const SizedBox(height: 16),
+
+                // Resolve message input
+                _buildResolveInput(
+                    resolveMessageController, resolveMessageError),
 
                 const SizedBox(height: 12),
 
-                // ── Resolve message (required) ──
-                TextField(
-                  controller: resolveMessageController,
-                  minLines: 3,
-                  maxLines: 5,
-                  keyboardType: TextInputType.multiline,
-                  onChanged: (_) {
-                    if (resolveMessageError.value != null) {
-                      resolveMessageError.value = null;
+                // Resolve button
+                _buildRetroActionButton(
+                  label: 'RESOLVE ALL REPORTS',
+                  icon: Icons.check_circle_outline,
+                  color: Colors.green,
+                  onTap: () {
+                    final message = resolveMessageController.text.trim();
+                    if (message.isEmpty) {
+                      resolveMessageError.value = 'Message is required';
+                      return;
                     }
+                    onResolve(message);
                   },
-                  decoration: InputDecoration(
-                    hintText: 'Resolve message (required)...',
-                    border: const OutlineInputBorder(),
-                    isDense: true,
-                    contentPadding: const EdgeInsets.all(10),
-                    errorText: resolveMessageError.value,
-                  ),
-                ),
-                const SizedBox(height: 8),
-
-                // ── Resolve button ──
-                Row(
-                  children: [
-                    Expanded(
-                      child: OutlinedButton.icon(
-                        onPressed: () {
-                          final message = resolveMessageController.text.trim();
-                          if (message.isEmpty) {
-                            resolveMessageError.value =
-                                'A resolve message is required';
-                            return;
-                          }
-                          onResolve(message);
-                        },
-                        icon: const Icon(Icons.check_circle, size: 16),
-                        label: const Text('Resolve'),
-                        style: OutlinedButton.styleFrom(
-                          padding: const EdgeInsets.symmetric(vertical: 8),
-                        ),
-                      ),
-                    ),
-                  ],
                 ),
               ],
             ],
           ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildInfoRow(IconData icon, String text) {
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 4),
+      child: Row(
+        children: [
+          Icon(icon, size: 14, color: Colors.grey[600]),
+          const SizedBox(width: 8),
+          Text(text,
+              style: const TextStyle(fontSize: 13, color: Color(0xFF323232))),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildReportSelector(ValueNotifier<int> selectedIndex) {
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 8),
+      child: SingleChildScrollView(
+        scrollDirection: Axis.horizontal,
+        child: Row(
+          children: List.generate(
+            member.reports.length,
+                (index) =>
+                Padding(
+                  padding: const EdgeInsets.only(right: 6),
+                  child: ChoiceChip(
+                    label: Text(
+                        '#${index + 1}', style: const TextStyle(fontSize: 11)),
+                    selected: selectedIndex.value == index,
+                    onSelected: (_) => selectedIndex.value = index,
+                    padding: EdgeInsets.zero,
+                    visualDensity: VisualDensity.compact,
+                  ),
+                ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildMemberStatusBadge(MemberStatus status) {
+    final color = _getStatusColor(status);
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+      decoration: BoxDecoration(
+        color: color.withValues(alpha: 0.1),
+        borderRadius: BorderRadius.circular(4),
+        border: Border.all(color: color, width: 1),
+      ),
+      child: Text(
+        status.name.toUpperCase(),
+        style: TextStyle(
+            fontSize: 10, color: color, fontWeight: FontWeight.w900),
+      ),
+    );
+  }
+
+  Widget _buildResolveInput(TextEditingController controller,
+      ValueNotifier<String?> error) {
+    return Container(
+      decoration: BoxDecoration(
+        color: const Color(0xFFF5F5F5),
+        border: Border.all(color: AppColors.border, width: 1.5),
+        borderRadius: BorderRadius.circular(8),
+      ),
+      child: TextField(
+        controller: controller,
+        maxLines: 2,
+        style: const TextStyle(fontSize: 13),
+        decoration: InputDecoration(
+          hintText: 'Enter resolution message...',
+          contentPadding: const EdgeInsets.all(10),
+          border: InputBorder.none,
+          errorText: error.value,
+        ),
+      ),
+    );
+  }
+
+  Widget _buildRetroActionButton({
+    required String label,
+    required IconData icon,
+    required Color color,
+    required VoidCallback onTap,
+  }) {
+    return InkWell(
+      onTap: onTap,
+      child: Container(
+        width: double.infinity,
+        padding: const EdgeInsets.symmetric(vertical: 10),
+        decoration: BoxDecoration(
+          color: color,
+          border: Border.all(color: AppColors.border, width: 2),
+          borderRadius: BorderRadius.circular(8),
+          boxShadow: const [
+            BoxShadow(color: AppColors.border, offset: Offset(3, 3)),
+          ],
+        ),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Icon(icon, color: Colors.white, size: 18),
+            const SizedBox(width: 8),
+            Text(
+              label,
+              style: const TextStyle(color: Colors.white,
+                  fontWeight: FontWeight.w900,
+                  fontSize: 13),
+            ),
+          ],
         ),
       ),
     );
@@ -294,8 +311,8 @@ class MemberReportCard extends HookWidget {
     final color = reportCount > 2
         ? Colors.red
         : reportCount > 0
-            ? Colors.orange
-            : Colors.grey;
+        ? Colors.orange
+        : Colors.grey;
 
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
