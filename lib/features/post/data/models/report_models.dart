@@ -12,6 +12,8 @@ enum ReportStatus {
   resolved,
   @JsonValue('REJECTED')
   rejected,
+  @JsonValue('DELETED')
+  deleted,
 }
 
 /// Post data embedded in report response

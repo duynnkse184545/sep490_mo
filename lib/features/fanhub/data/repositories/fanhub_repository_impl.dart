@@ -70,4 +70,11 @@ class FanHubRepositoryImpl implements FanHubRepository {
       );
     });
   }
+
+  @override
+  TaskResult<FanHub?> getMyHubAsOwner() {
+    return ErrorHandler.execute(() async {
+      return await _remoteDataSource.getMyHubAsOwner();
+    });
+  }
 }

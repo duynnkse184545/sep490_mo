@@ -30,16 +30,6 @@ class FeedScreen extends HookConsumerWidget {
 
     return Scaffold(
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-      appBar: AppBar(
-        title: const Text(
-          'FEED',
-          style: TextStyle(fontWeight: FontWeight.bold, letterSpacing: 2),
-        ),
-        centerTitle: true,
-        backgroundColor: Colors.white,
-        foregroundColor: Colors.black,
-        elevation: 0,
-      ),
       body: SafeArea(
         child: feedAsync.when(
           data: (feedState) => FeedListWidget(

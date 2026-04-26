@@ -78,6 +78,7 @@ const _$PostStatusEnumMap = {
   PostStatus.pending: 'PENDING',
   PostStatus.approved: 'APPROVED',
   PostStatus.rejected: 'REJECTED',
+  PostStatus.deleted: 'DELETED',
 };
 
 _Report _$ReportFromJson(Map<String, dynamic> json) => _Report(
@@ -112,6 +113,7 @@ const _$ReportStatusEnumMap = {
   ReportStatus.pending: 'PENDING',
   ReportStatus.resolved: 'RESOLVED',
   ReportStatus.rejected: 'REJECTED',
+  ReportStatus.deleted: 'DELETED',
 };
 
 _ReportListResponse _$ReportListResponseFromJson(Map<String, dynamic> json) =>

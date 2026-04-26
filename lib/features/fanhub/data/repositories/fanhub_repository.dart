@@ -23,5 +23,7 @@ abstract class FanHubRepository {
     required String sortBy,
   });
 
+  TaskResult<FanHub?> getMyHubAsOwner();
+
   TaskVoid createFanHub(CreateFanHubRequest request);
 }

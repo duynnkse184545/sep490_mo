@@ -27,6 +27,8 @@ enum PostStatus {
   approved,
   @JsonValue('REJECTED')
   rejected,
+  @JsonValue('DELETED')
+  deleted,
 }
 
 enum AiStatus{

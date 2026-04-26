@@ -9,6 +9,8 @@ part of 'routes.dart';
 List<RouteBase> get $appRoutes => [
   $signInRoute,
   $signUpRoute,
+  $storeRoute,
+  $createFanHubRoute,
   $mainShellRoute,
   $fanHubDetailRoute,
 ];
@@ -59,6 +61,55 @@ mixin $SignUpRoute on GoRouteData {
   void replace(BuildContext context) => context.replace(location);
 }
 
+RouteBase get $storeRoute =>
+    GoRouteData.$route(path: '/store', factory: $StoreRoute._fromState);
+
+mixin $StoreRoute on GoRouteData {
+  static StoreRoute _fromState(GoRouterState state) => const StoreRoute();
+
+  @override
+  String get location => GoRouteData.$location('/store');
+
+  @override
+  void go(BuildContext context) => context.go(location);
+
+  @override
+  Future<T?> push<T>(BuildContext context) => context.push<T>(location);
+
+  @override
+  void pushReplacement(BuildContext context) =>
+      context.pushReplacement(location);
+
+  @override
+  void replace(BuildContext context) => context.replace(location);
+}
+
+RouteBase get $createFanHubRoute => GoRouteData.$route(
+  path: '/create-hub',
+  factory: $CreateFanHubRoute._fromState,
+);
+
+mixin $CreateFanHubRoute on GoRouteData {
+  static CreateFanHubRoute _fromState(GoRouterState state) =>
+      const CreateFanHubRoute();
+
+  @override
+  String get location => GoRouteData.$location('/create-hub');
+
+  @override
+  void go(BuildContext context) => context.go(location);
+
+  @override
+  Future<T?> push<T>(BuildContext context) => context.push<T>(location);
+
+  @override
+  void pushReplacement(BuildContext context) =>
+      context.pushReplacement(location);
+
+  @override
+  void replace(BuildContext context) => context.replace(location);
+}
+
 RouteBase get $mainShellRoute => StatefulShellRouteData.$route(
   factory: $MainShellRouteExtension._fromState,
   branches: [
@@ -70,11 +121,6 @@ RouteBase get $mainShellRoute => StatefulShellRouteData.$route(
     StatefulShellBranchData.$branch(
       routes: [
         GoRouteData.$route(path: '/explore', factory: $ExploreRoute._fromState),
-      ],
-    ),
-    StatefulShellBranchData.$branch(
-      routes: [
-        GoRouteData.$route(path: '/store', factory: $StoreRoute._fromState),
       ],
     ),
     StatefulShellBranchData.$branch(
@@ -128,26 +174,6 @@ mixin $ExploreRoute on GoRouteData {
 
   @override
   String get location => GoRouteData.$location('/explore');
-
-  @override
-  void go(BuildContext context) => context.go(location);
-
-  @override
-  Future<T?> push<T>(BuildContext context) => context.push<T>(location);
-
-  @override
-  void pushReplacement(BuildContext context) =>
-      context.pushReplacement(location);
-
-  @override
-  void replace(BuildContext context) => context.replace(location);
-}
-
-mixin $StoreRoute on GoRouteData {
-  static StoreRoute _fromState(GoRouterState state) => const StoreRoute();
-
-  @override
-  String get location => GoRouteData.$location('/store');
 
   @override
   void go(BuildContext context) => context.go(location);

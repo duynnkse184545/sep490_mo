@@ -1,83 +1,122 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:sep490_mo/core/theme/app_colors.dart';
 import 'package:sep490_mo/core/widgets/loader.dart';
 import 'package:sep490_mo/features/user/presentation/controllers/user_profile_controller.dart';
+import 'daily_mission_donut.dart';
 
-class ProfileDailyMission extends ConsumerWidget {
+class ProfileDailyMission extends StatelessWidget {
   const ProfileDailyMission({super.key});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final missionAsync = ref.watch(dailyMissionProvider);
-
-    return SliverToBoxAdapter(
+  Widget build(BuildContext context) {
+    return const SliverToBoxAdapter(
       child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 16),
+        padding: EdgeInsets.symmetric(horizontal: 16),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              'Daily Mission',
-              style: Theme.of(context).textTheme.titleMedium
-                  ?.copyWith(fontWeight: FontWeight.bold),
+              'DAILY MISSIONS',
+              style: TextStyle(
+                fontWeight: FontWeight.w900,
+                fontSize: 14,
+                letterSpacing: 1.5,
+              ),
             ),
-            const SizedBox(height: 12),
-            missionAsync.when(
-              data: (mission) {
-                return Card(
-                  child: Padding(
-                    padding: const EdgeInsets.all(16),
-                    child: Column(
-                      children: [
-                        _buildMissionItem(
-                          context,
-                          'Likes Given',
-                          '${mission.likeAmount} / 10',
-                          mission.likeAmount >= 10,
-                        ),
-                        const Divider(),
-                        _buildMissionItem(
-                          context,
-                          'Bonus (10 Likes)',
-                          mission.bonus10 ? 'Completed' : 'In Progress',
-                          mission.bonus10,
-                        ),
-                        const Divider(),
-                        _buildMissionItem(
-                          context,
-                          'Bonus (20 Likes)',
-                          mission.bonus20 ? 'Completed' : 'In Progress',
-                          mission.bonus20,
-                        ),
-                      ],
-                    ),
-                  ),
-                );
-              },
-              loading: () => const Loader(),
-              error: (error, _) => Text('Error: $error'),
-            ),
-            const SizedBox(height: 24),
+            SizedBox(height: 12),
+            DailyMissionContent(),
+            SizedBox(height: 24),
           ],
         ),
       ),
     );
   }
+}
 
-  Widget _buildMissionItem(BuildContext context, String title, String subtitle, bool isCompleted) {
+class DailyMissionContent extends ConsumerWidget {
+  const DailyMissionContent({super.key});
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final missionAsync = ref.watch(dailyMissionProvider);
+
+    return missionAsync.when(
+      data: (mission) {
+        return Container(
+          padding: const EdgeInsets.all(16),
+          decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(12),
+            border: Border.all(color: AppColors.border, width: 2),
+            boxShadow: const [
+              BoxShadow(color: AppColors.border, offset: Offset(4, 4)),
+            ],
+          ),
+          child: Column(
+            children: [
+              Row(
+                children: [
+                  DailyMissionDonut(count: mission.likeAmount, maxCount: 20),
+                  const SizedBox(width: 20),
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        const Text(
+                          "Like 20 Posts",
+                          style: TextStyle(fontSize: 15, fontWeight: FontWeight.w900, color: Color(0xFF323232)),
+                        ),
+                        const SizedBox(height: 12),
+                        _buildMilestoneDot("10 Likes", mission.likeAmount >= 10, mission.bonus10),
+                        const SizedBox(height: 8),
+                        _buildMilestoneDot("20 Likes", mission.likeAmount >= 20, mission.bonus20),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+              const Divider(height: 32, color: Colors.black12),
+              const Text(
+                "Keep liking to earn points! ✨",
+                style: TextStyle(fontSize: 11, fontWeight: FontWeight.bold, color: Colors.grey),
+              ),
+            ],
+          ),
+        );
+      },
+      loading: () => const Center(child: SmallLoader()),
+      error: (error, _) => Text('Error: $error', style: const TextStyle(color: Colors.red, fontWeight: FontWeight.bold)),
+    );
+  }
+
+  Widget _buildMilestoneDot(String label, bool reached, bool claimed) {
+    Color color = Colors.grey;
+    if (claimed) {
+      color = Colors.green;
+    } else if (reached) {
+      color = AppColors.primary;
+    }
+
     return Row(
       children: [
-        Icon(
-          isCompleted ? Icons.check_circle : Icons.radio_button_unchecked,
-          color: isCompleted ? Colors.green : Colors.grey,
+        Container(
+          width: 10,
+          height: 10,
+          decoration: BoxDecoration(
+            shape: BoxShape.circle, 
+            color: reached || claimed ? color : const Color(0xFFE0E0E0),
+            border: Border.all(color: AppColors.border.withValues(alpha: 0.1), width: 1),
+          ),
         ),
-        const SizedBox(width: 12),
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(title, style: const TextStyle(fontWeight: FontWeight.w500)),
-            Text(subtitle, style: TextStyle(color: Colors.grey[600], fontSize: 12)),
-          ],
+        const SizedBox(width: 10),
+        Text(
+          "$label ${claimed ? '✓' : ''}",
+          style: TextStyle(
+            fontSize: 12,
+            color: claimed ? Colors.green : (reached ? const Color(0xFF323232) : Colors.grey),
+            fontWeight: reached || claimed ? FontWeight.w900 : FontWeight.bold,
+          ),
         ),
       ],
     );

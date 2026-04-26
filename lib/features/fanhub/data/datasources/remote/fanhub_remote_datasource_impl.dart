@@ -136,4 +136,23 @@ class FanHubRemoteDatasourceImpl implements FanHubRemoteDatasource {
       rethrow;
     }
   }
+
+  @override
+  Future<FanHub?> getMyHubAsOwner() async {
+    try {
+      final response = await _fanHubApi.getMyHubsAsOwner();
+      return switch (response) {
+        ApiResponseSuccess(:final data) => data,
+        ApiResponseFailure(:final message) => 
+          (message == 'Forbidden' || message == 'Access Denied') ? null : throw Exception(message),
+      };
+    } on DioException catch (e) {
+      if (e.response?.statusCode == 404 || e.response?.statusCode == 403) return null;
+      throw DioExceptionMapper.mapToException(e, 'Failed to get owner hub');
+    } catch (e, stack) {
+      debugPrint('FanHubRemoteDatasourceImpl.getMyHubAsOwner error: $e');
+      debugPrint('Stack: $stack');
+      rethrow;
+    }
+  }
 }

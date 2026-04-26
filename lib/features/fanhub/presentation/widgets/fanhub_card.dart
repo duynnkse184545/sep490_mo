@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:sep490_mo/app/router/routes.dart';
+import 'package:sep490_mo/core/theme/app_colors.dart';
 import 'package:sep490_mo/features/fanhub/data/models/fanhub_models.dart';
 
 class FanHubCard extends StatelessWidget {
@@ -13,10 +14,22 @@ class FanHubCard extends StatelessWidget {
         ? Color(int.parse(fanHub.themeColor!.replaceFirst('#', '0xff')))
         : Theme.of(context).colorScheme.primary;
 
-    return Card(
-      margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-      clipBehavior: Clip.antiAlias,
+    return Container(
+      margin: const EdgeInsets.only(bottom: 20, left: 16, right: 24),
+      decoration: BoxDecoration(
+        color: Theme.of(context).colorScheme.surface,
+        borderRadius: BorderRadius.circular(12),
+        border: Border.all(color: AppColors.border, width: 2),
+        boxShadow: const [
+          BoxShadow(
+            color: AppColors.border,
+            offset: Offset(8, 8),
+            blurRadius: 0,
+          ),
+        ],
+      ),
       child: InkWell(
+        borderRadius: BorderRadius.circular(12),
         onTap: () {
           FanHubDetailRoute(
             subdomain: fanHub.subdomain,
@@ -32,6 +45,10 @@ class FanHubCard extends StatelessWidget {
               width: double.infinity,
               decoration: BoxDecoration(
                 color: themeColor.withValues(alpha: 0.3),
+                borderRadius: const BorderRadius.only(
+                  topLeft: Radius.circular(10),
+                  topRight: Radius.circular(10),
+                ),
                 image: fanHub.bannerUrl != null
                     ? DecorationImage(
                         image: NetworkImage(fanHub.bannerUrl!),
@@ -40,18 +57,22 @@ class FanHubCard extends StatelessWidget {
                     : null,
               ),
               child: Stack(
+                clipBehavior: Clip.none,
                 children: [
                   // Avatar
                   Positioned(
                     left: 16,
-                    bottom: -25,
+                    bottom: -30,
                     child: Container(
                       decoration: BoxDecoration(
                         shape: BoxShape.circle,
                         border: Border.all(
-                          color: Theme.of(context).colorScheme.surface,
-                          width: 3,
+                          color: AppColors.border,
+                          width: 2,
                         ),
+                        boxShadow: const [
+                          BoxShadow(color: Colors.black26, blurRadius: 4, offset: Offset(0, 2)),
+                        ],
                       ),
                       child: CircleAvatar(
                         radius: 30,
@@ -78,15 +99,17 @@ class FanHubCard extends StatelessWidget {
 
             // Content
             Padding(
-              padding: const EdgeInsets.fromLTRB(16, 32, 16, 16),
+              padding: const EdgeInsets.fromLTRB(16, 36, 16, 16),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   // Hub name
                   Text(
                     fanHub.hubName,
-                    style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                      fontWeight: FontWeight.bold,
+                    style: const TextStyle(
+                      fontWeight: FontWeight.w900,
+                      fontSize: 18,
+                      color: Color(0xFF323232),
                     ),
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
@@ -96,24 +119,23 @@ class FanHubCard extends StatelessWidget {
                   // Owner
                   Text(
                     'by ${fanHub.ownerDisplayName}',
-                    style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                      color: Theme.of(
-                        context,
-                      ).colorScheme.onSurface.withValues(alpha: 0.7),
+                    style: TextStyle(
+                      fontSize: 12,
+                      fontWeight: FontWeight.bold,
+                      color: Theme.of(context).colorScheme.primary,
                     ),
                   ),
-                  const SizedBox(height: 8),
+                  const SizedBox(height: 10),
 
                   // Description
-                  if (fanHub.description != null &&
-                      fanHub.description!.isNotEmpty) ...[
+                  if (fanHub.description != null && fanHub.description!.isNotEmpty) ...[
                     Text(
                       fanHub.description!,
-                      style: Theme.of(context).textTheme.bodyMedium,
+                      style: const TextStyle(fontSize: 13, color: Color(0xFF555555), height: 1.4),
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,
                     ),
-                    const SizedBox(height: 8),
+                    const SizedBox(height: 12),
                   ],
 
                   // Categories
@@ -122,61 +144,38 @@ class FanHubCard extends StatelessWidget {
                       spacing: 6,
                       runSpacing: 6,
                       children: fanHub.categories.take(3).map((category) {
-                        return Chip(
-                          label: Text(
-                            category,
-                            style: TextStyle(
-                              fontSize: 12,
-                              color: Theme.of(context).colorScheme.onSurface,
-                            ),
+                        return Container(
+                          padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                          decoration: BoxDecoration(
+                            color: const Color(0xFFF5F5F5),
+                            borderRadius: BorderRadius.circular(6),
+                            border: Border.all(color: Colors.black12),
                           ),
-                          backgroundColor: themeColor.withValues(alpha: 0.2),
-                          padding: EdgeInsets.zero,
-                          visualDensity: VisualDensity.compact,
+                          child: Text(
+                            category,
+                            style: const TextStyle(fontSize: 10, fontWeight: FontWeight.bold),
+                          ),
                         );
                       }).toList(),
                     ),
-                    const SizedBox(height: 8),
+                    const SizedBox(height: 12),
                   ],
 
                   // Member count & privacy indicators
                   Row(
                     children: [
-                      Icon(
-                        Icons.people_outline,
-                        size: 16,
-                        color: Theme.of(
-                          context,
-                        ).colorScheme.onSurface.withValues(alpha: 0.6),
-                      ),
+                      const Icon(Icons.people_outline, size: 16, color: Colors.black54),
                       const SizedBox(width: 4),
                       Text(
                         '${fanHub.memberCount} members',
-                        style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                          color: Theme.of(
-                            context,
-                          ).colorScheme.onSurface.withValues(alpha: 0.6),
-                        ),
+                        style: const TextStyle(fontSize: 11, fontWeight: FontWeight.bold, color: Colors.black54),
                       ),
                       const Spacer(),
-                      if (fanHub.isPrivate) ...[
-                        Icon(
-                          Icons.lock_outline,
-                          size: 16,
-                          color: Theme.of(
-                            context,
-                          ).colorScheme.onSurface.withValues(alpha: 0.6),
-                        ),
-                      ],
+                      if (fanHub.isPrivate)
+                        const Icon(Icons.lock_outline, size: 16, color: Colors.black54),
                       if (fanHub.requiresApproval) ...[
                         const SizedBox(width: 8),
-                        Icon(
-                          Icons.pending_outlined,
-                          size: 16,
-                          color: Theme.of(
-                            context,
-                          ).colorScheme.onSurface.withValues(alpha: 0.6),
-                        ),
+                        const Icon(Icons.pending_outlined, size: 16, color: Colors.black54),
                       ],
                     ],
                   ),

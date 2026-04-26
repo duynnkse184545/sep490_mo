@@ -36,6 +36,9 @@ abstract class FanHubApiService {
     @Query('sortBy') String sortBy,
   );
 
+  @GET('/fan-hub/my-hub-as-owner')
+  Future<ApiResponse<FanHub>> getMyHubsAsOwner();
+
   @POST('/fan-hub/create')
   Future<ApiResponse> createFanHub(@Body() CreateFanHubRequest request);
 

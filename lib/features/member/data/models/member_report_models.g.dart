@@ -126,6 +126,7 @@ const _$ReportStatusEnumMap = {
   ReportStatus.pending: 'PENDING',
   ReportStatus.resolved: 'RESOLVED',
   ReportStatus.rejected: 'REJECTED',
+  ReportStatus.deleted: 'DELETED',
 };
 
 _RelatedComment _$RelatedCommentFromJson(Map<String, dynamic> json) =>

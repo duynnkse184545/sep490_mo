@@ -6,6 +6,7 @@ import 'package:sep490_mo/features/auth/presentation/screens/sign_in_screen.dart
 import 'package:sep490_mo/features/auth/presentation/screens/sign_up_screen.dart';
 import 'package:sep490_mo/features/fanhub/presentation/screens/fanhub_detail_screen.dart';
 import 'package:sep490_mo/features/fanhub/presentation/screens/fanhub_list_screen.dart';
+import 'package:sep490_mo/features/fanhub/presentation/screens/create_fanhub_screen.dart';
 import 'package:sep490_mo/features/member/presentation/screens/member_list_screen.dart';
 import 'package:sep490_mo/features/member/presentation/widgets/join_hub_button.dart';
 import 'package:sep490_mo/features/post/presentation/screens/create_post_screen.dart';
@@ -41,6 +42,24 @@ class SignUpRoute extends GoRouteData with $SignUpRoute {
       const SignUpScreen();
 }
 
+// ─── Store Routes ─────────────────────────────────────────────────────────
+@TypedGoRoute<StoreRoute>(path: '/store')
+class StoreRoute extends GoRouteData with $StoreRoute {
+  const StoreRoute();
+
+  @override
+  Widget build(BuildContext context, GoRouterState state) =>
+      const StoreHomeScreen();
+}
+
+@TypedGoRoute<CreateFanHubRoute>(path: '/create-hub')
+class CreateFanHubRoute extends GoRouteData with $CreateFanHubRoute {
+  const CreateFanHubRoute();
+
+  @override
+  Widget build(BuildContext context, GoRouterState state) =>
+      const CreateFanHubScreen();
+}
 // ─── Shell (Bottom Nav wrapper) ────────────────────────────────────────────
 
 @TypedStatefulShellRoute<MainShellRoute>(
@@ -50,9 +69,6 @@ class SignUpRoute extends GoRouteData with $SignUpRoute {
     ),
     TypedStatefulShellBranch<ExploreBranch>(
       routes: [TypedGoRoute<ExploreRoute>(path: '/explore')],
-    ),
-    TypedStatefulShellBranch<StoreBranch>(
-      routes: [TypedGoRoute<StoreRoute>(path: '/store')],
     ),
     TypedStatefulShellBranch<ProfileBranch>(
       routes: [
@@ -116,16 +132,6 @@ class ExploreRoute extends GoRouteData with $ExploreRoute {
   @override
   Widget build(BuildContext context, GoRouterState state) =>
       const FanHubListScreen();
-}
-
-// ─── Store Routes ─────────────────────────────────────────────────────────
-
-class StoreRoute extends GoRouteData with $StoreRoute {
-  const StoreRoute();
-
-  @override
-  Widget build(BuildContext context, GoRouterState state) =>
-      const StoreHomeScreen();
 }
 
 @TypedGoRoute<FanHubDetailRoute>(

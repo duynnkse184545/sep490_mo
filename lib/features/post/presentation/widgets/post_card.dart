@@ -40,7 +40,7 @@ class PostCard extends ConsumerWidget {
                 backgroundImage: post.authorAvatarUrl != null
                     ? NetworkImage(post.authorAvatarUrl!)
                     : const AssetImage(
-                            'assets/images/profile-pic-undefined.jpg',
+                            'assets/profile-pic-undefined.jpg',
                           )
                           as ImageProvider,
               ),

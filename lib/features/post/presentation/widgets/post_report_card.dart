@@ -3,6 +3,7 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:intl/intl.dart';
 import 'package:sep490_mo/core/theme/app_colors.dart';
 import 'package:sep490_mo/core/widgets/app_video_player.dart';
+import 'package:sep490_mo/features/post/data/models/post_models.dart';
 import 'package:sep490_mo/features/post/data/models/report_models.dart';
 
 class PostReportCard extends HookWidget {
@@ -52,7 +53,7 @@ class PostReportCard extends HookWidget {
                     backgroundColor: Theme.of(context).colorScheme.primary.withValues(alpha: 0.2),
                     backgroundImage: post.authorAvatarUrl != null
                         ? NetworkImage(post.authorAvatarUrl!)
-                        : const AssetImage('assets/images/profile-pic-undefined.jpg') as ImageProvider,
+                        : const AssetImage('assets/profile-pic-undefined.jpg') as ImageProvider,
                   ),
                   const SizedBox(width: 10),
                   Expanded(
@@ -72,6 +73,19 @@ class PostReportCard extends HookWidget {
                   ),
                   _buildReportBadge(context),
                   const SizedBox(width: 4),
+                  if (post.status == PostStatus.deleted)
+                    Container(
+                      padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
+                      margin: const EdgeInsets.only(right: 4),
+                      decoration: BoxDecoration(
+                        color: Colors.grey,
+                        borderRadius: BorderRadius.circular(4),
+                      ),
+                      child: const Text(
+                        'DELETED',
+                        style: TextStyle(color: Colors.white, fontSize: 9, fontWeight: FontWeight.bold),
+                      ),
+                    ),
                   Icon(
                     isExpanded.value ? Icons.expand_less : Icons.expand_more,
                     size: 20,
@@ -116,21 +130,32 @@ class PostReportCard extends HookWidget {
                   const Text('No reports available', style: TextStyle(fontSize: 12, color: Colors.grey)),
 
                 const SizedBox(height: 16),
-                _buildResolveInput(resolveMessageController, resolveMessageError),
-                const SizedBox(height: 12),
-                _buildRetroActionButton(
-                  label: 'RESOLVE ALL REPORTS',
-                  icon: Icons.check_circle_outline,
-                  color: Colors.green,
-                  onTap: () {
-                    final message = resolveMessageController.text.trim();
-                    if (message.isEmpty) {
-                      resolveMessageError.value = 'Message is required';
-                      return;
-                    }
-                    onResolve(message);
-                  },
-                ),
+                if (post.status != PostStatus.deleted) ...[
+                  _buildResolveInput(resolveMessageController, resolveMessageError),
+                  const SizedBox(height: 12),
+                  _buildRetroActionButton(
+                    label: 'RESOLVE ALL REPORTS',
+                    icon: Icons.check_circle_outline,
+                    color: Colors.green,
+                    onTap: () {
+                      final message = resolveMessageController.text.trim();
+                      if (message.isEmpty) {
+                        resolveMessageError.value = 'Message is required';
+                        return;
+                      }
+                      onResolve(message);
+                    },
+                  ),
+                ] else
+                  const Center(
+                    child: Padding(
+                      padding: EdgeInsets.all(8.0),
+                      child: Text(
+                        'This post has been deleted and cannot be resolved.',
+                        style: TextStyle(color: Colors.grey, fontStyle: FontStyle.italic, fontSize: 13),
+                      ),
+                    ),
+                  ),
               ],
             ],
           ),

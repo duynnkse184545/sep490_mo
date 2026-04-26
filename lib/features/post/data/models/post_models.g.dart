@@ -113,6 +113,7 @@ const _$PostStatusEnumMap = {
   PostStatus.pending: 'PENDING',
   PostStatus.approved: 'APPROVED',
   PostStatus.rejected: 'REJECTED',
+  PostStatus.deleted: 'DELETED',
 };
 
 _PostModeration _$PostModerationFromJson(Map<String, dynamic> json) =>

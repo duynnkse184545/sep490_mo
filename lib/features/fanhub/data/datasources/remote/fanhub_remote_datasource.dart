@@ -22,5 +22,7 @@ abstract class FanHubRemoteDatasource {
     required String sortBy,
   });
 
+  Future<FanHub?> getMyHubAsOwner();
+
   Future<void> createFanHub(CreateFanHubRequest request);
 }

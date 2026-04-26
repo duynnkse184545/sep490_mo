@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'main_app_bar.dart';
 
 class MainShell extends StatelessWidget {
   const MainShell({super.key, required this.navigationShell});
@@ -8,17 +9,17 @@ class MainShell extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: navigationShell, // ← directly, no child needed
+      appBar: const MainAppBar(),
+      body: navigationShell,
       bottomNavigationBar: NavigationBar(
-        selectedIndex: navigationShell.currentIndex, // ← built in, no manual tracking
+        selectedIndex: navigationShell.currentIndex,
         onDestinationSelected: (i) => navigationShell.goBranch(
           i,
-          initialLocation: i == navigationShell.currentIndex, // re-taps go to root of tab
+          initialLocation: i == navigationShell.currentIndex,
         ),
         destinations: const [
           NavigationDestination(icon: Icon(Icons.home_outlined), label: 'Home'),
           NavigationDestination(icon: Icon(Icons.explore_outlined), label: 'Explore'),
-          NavigationDestination(icon: Icon(Icons.shopping_bag_outlined), label: 'Store'),
           NavigationDestination(icon: Icon(Icons.person_outline), label: 'Profile'),
         ],
       ),

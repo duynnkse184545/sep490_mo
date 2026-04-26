@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:intl/intl.dart';
+import 'package:sep490_mo/core/theme/app_colors.dart';
 import 'package:sep490_mo/core/widgets/loader.dart';
+import 'package:sep490_mo/core/widgets/retro_text_field.dart';
 import 'package:sep490_mo/features/user/data/models/vtuber_models.dart';
 import 'package:sep490_mo/features/user/presentation/controllers/vtuber_application_controller.dart';
 import 'package:sep490_mo/features/user/presentation/states/vtuber_application_state.dart';
@@ -39,31 +41,22 @@ class VtuberApplicationScreen extends HookConsumerWidget {
     });
 
     return Scaffold(
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       appBar: AppBar(
-        title: const Text('VTuber Application'),
+        title: const Text(
+          'VTUBER APPLICATION',
+          style: TextStyle(fontWeight: FontWeight.bold, letterSpacing: 1.5),
+        ),
+        centerTitle: true,
+        backgroundColor: Colors.white,
+        foregroundColor: Colors.black,
+        elevation: 0,
       ),
       body: Column(
         children: [
           Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: SegmentedButton<_ViewMode>(
-              segments: const [
-                ButtonSegment(
-                  value: _ViewMode.send,
-                  label: Text('Send Application'),
-                  icon: Icon(Icons.send_outlined),
-                ),
-                ButtonSegment(
-                  value: _ViewMode.my,
-                  label: Text('My Application'),
-                  icon: Icon(Icons.history_outlined),
-                ),
-              ],
-              selected: {viewMode.value},
-              onSelectionChanged: (Set<_ViewMode> newSelection) {
-                viewMode.value = newSelection.first;
-              },
-            ),
+            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+            child: _buildViewModeSelector(context, viewMode),
           ),
           Expanded(
             child: state.maybeWhen(
@@ -72,22 +65,22 @@ class VtuberApplicationScreen extends HookConsumerWidget {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Text('Error: $message', style: const TextStyle(color: Colors.red)),
+                    Text('Error: $message', style: const TextStyle(color: Colors.red, fontWeight: FontWeight.bold)),
                     const SizedBox(height: 16),
-                    ElevatedButton(
-                      onPressed: () {
+                    _buildRetroButton(
+                      label: 'RETRY',
+                      onTap: () {
                         if (viewMode.value == _ViewMode.my) {
                           controller.fetchMyApplication();
                         } else {
                           controller.reset();
                         }
                       },
-                      child: const Text('Retry'),
                     ),
                   ],
                 ),
               ),
-              success: () => const SizedBox.shrink(), // Handled by listener
+              success: () => const SizedBox.shrink(),
               loaded: (apps) {
                 if (viewMode.value == _ViewMode.send) {
                   return _SendApplicationView(onSubmit: controller.registerVtuber);
@@ -101,11 +94,83 @@ class VtuberApplicationScreen extends HookConsumerWidget {
                 if (viewMode.value == _ViewMode.send) {
                   return _SendApplicationView(onSubmit: controller.registerVtuber);
                 }
-                return const Center(child: Text('No applications found.'));
+                return const Center(child: Text('No applications found.', style: TextStyle(fontWeight: FontWeight.bold)));
               },
             ),
           ),
         ],
+      ),
+    );
+  }
+
+  Widget _buildViewModeSelector(BuildContext context, ValueNotifier<_ViewMode> viewMode) {
+    final modes = [
+      {'mode': _ViewMode.send, 'label': 'Apply', 'icon': Icons.send_outlined},
+      {'mode': _ViewMode.my, 'label': 'History', 'icon': Icons.history_outlined},
+    ];
+
+    return Row(
+      children: modes.map((item) {
+        final isSelected = viewMode.value == item['mode'];
+        return Expanded(
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 4),
+            child: GestureDetector(
+              onTap: () => viewMode.value = item['mode'] as _ViewMode,
+              child: Container(
+                padding: const EdgeInsets.symmetric(vertical: 10),
+                decoration: BoxDecoration(
+                  color: isSelected ? Theme.of(context).colorScheme.primary : const Color(0xFFF5F5F5),
+                  borderRadius: BorderRadius.circular(30),
+                  border: Border.all(
+                    color: isSelected ? AppColors.border : Colors.black12,
+                    width: 1.5,
+                  ),
+                ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Icon(
+                      item['icon'] as IconData,
+                      size: 18,
+                      color: isSelected ? Colors.white : const Color(0xFF666666),
+                    ),
+                    const SizedBox(width: 8),
+                    Text(
+                      item['label'] as String,
+                      style: TextStyle(
+                        color: isSelected ? Colors.white : const Color(0xFF666666),
+                        fontSize: 13,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ),
+        );
+      }).toList(),
+    );
+  }
+
+  Widget _buildRetroButton({required String label, required VoidCallback onTap}) {
+    return InkWell(
+      onTap: onTap,
+      child: Container(
+        padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 10),
+        decoration: BoxDecoration(
+          color: Colors.white,
+          border: Border.all(color: AppColors.border, width: 2),
+          borderRadius: BorderRadius.circular(8),
+          boxShadow: const [
+            BoxShadow(color: AppColors.border, offset: Offset(4, 4)),
+          ],
+        ),
+        child: Text(
+          label,
+          style: const TextStyle(fontWeight: FontWeight.w900, color: Color(0xFF323232)),
+        ),
       ),
     );
   }
@@ -123,52 +188,89 @@ class _SendApplicationView extends HookWidget {
     final formKey = useMemoized(() => GlobalKey<FormState>());
 
     return SingleChildScrollView(
-      padding: const EdgeInsets.all(16),
-      child: Form(
-        key: formKey,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            const Text(
-              'Apply to become a VTuber on our platform. Please provide your channel details for verification.',
-              style: TextStyle(color: Colors.grey),
-            ),
-            const SizedBox(height: 24),
-            TextFormField(
-              controller: channelNameController,
-              decoration: const InputDecoration(
-                labelText: 'Channel Name',
-                border: OutlineInputBorder(),
-                hintText: 'e.g. Gawr Gura Ch.',
-              ),
-              validator: (v) => (v == null || v.isEmpty) ? 'Required' : null,
-            ),
-            const SizedBox(height: 16),
-            TextFormField(
-              controller: channelLinkController,
-              decoration: const InputDecoration(
-                labelText: 'Channel Link',
-                border: OutlineInputBorder(),
-                hintText: 'https://youtube.com/@...',
-              ),
-              validator: (v) => (v == null || v.isEmpty) ? 'Required' : null,
-            ),
-            const SizedBox(height: 24),
-            ElevatedButton(
-              onPressed: () {
-                if (formKey.currentState!.validate()) {
-                  onSubmit(VtuberRegisterRequest(
-                    channelName: channelNameController.text.trim(),
-                    channelLink: channelLinkController.text.trim(),
-                  ));
-                }
-              },
-              style: ElevatedButton.styleFrom(
-                padding: const EdgeInsets.symmetric(vertical: 16),
-              ),
-              child: const Text('Submit Application'),
-            ),
+      padding: const EdgeInsets.all(20),
+      child: Container(
+        padding: const EdgeInsets.all(24),
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(12),
+          border: Border.all(color: AppColors.border, width: 2),
+          boxShadow: const [
+            BoxShadow(color: AppColors.border, offset: Offset(8, 8)),
           ],
+        ),
+        child: Form(
+          key: formKey,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              const Text(
+                'Apply to become a VTuber',
+                style: TextStyle(fontWeight: FontWeight.w900, fontSize: 18, color: Color(0xFF323232)),
+              ),
+              const SizedBox(height: 8),
+              const Text(
+                'Please provide your channel details for verification.',
+                style: TextStyle(color: Colors.grey, fontSize: 13, fontWeight: FontWeight.w500),
+              ),
+              const Divider(height: 32),
+              
+              _buildLabel('CHANNEL NAME'),
+              RetroTextField(
+                hintText: 'e.g. Gawr Gura Ch.',
+                controller: channelNameController,
+              ),
+              const SizedBox(height: 20),
+              
+              _buildLabel('CHANNEL LINK'),
+              RetroTextField(
+                hintText: 'https://youtube.com/@...',
+                controller: channelLinkController,
+              ),
+              const SizedBox(height: 32),
+              
+              _buildSubmitButton(context, formKey, channelNameController, channelLinkController),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildLabel(String label) {
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 8),
+      child: Text(
+        label,
+        style: const TextStyle(fontWeight: FontWeight.w900, fontSize: 11, letterSpacing: 1.2, color: Colors.grey),
+      ),
+    );
+  }
+
+  Widget _buildSubmitButton(BuildContext context, GlobalKey<FormState> formKey, TextEditingController name, TextEditingController link) {
+    return InkWell(
+      onTap: () {
+        if (formKey.currentState!.validate()) {
+          onSubmit(VtuberRegisterRequest(
+            channelName: name.text.trim(),
+            channelLink: link.text.trim(),
+          ));
+        }
+      },
+      child: Container(
+        padding: const EdgeInsets.symmetric(vertical: 14),
+        decoration: BoxDecoration(
+          color: Theme.of(context).colorScheme.primary,
+          border: Border.all(color: AppColors.border, width: 2),
+          borderRadius: BorderRadius.circular(8),
+          boxShadow: const [
+            BoxShadow(color: AppColors.border, offset: Offset(4, 4)),
+          ],
+        ),
+        child: const Text(
+          'SUBMIT APPLICATION',
+          textAlign: TextAlign.center,
+          style: TextStyle(color: Colors.white, fontWeight: FontWeight.w900, letterSpacing: 1),
         ),
       ),
     );
@@ -194,7 +296,7 @@ class _MyApplicationView extends StatelessWidget {
           child: Center(
             child: Padding(
               padding: EdgeInsets.only(top: 100),
-              child: Text('No applications found.'),
+              child: Text('No applications found.', style: TextStyle(fontWeight: FontWeight.bold)),
             ),
           ),
         ),
@@ -223,76 +325,73 @@ class _VtuberApplicationTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
     final statusColor = switch (application.status) {
       VtuberApplicationStatus.pending => Colors.orange,
       VtuberApplicationStatus.approved => Colors.green,
       VtuberApplicationStatus.rejected => Colors.red,
     };
 
-    return Card(
-      margin: EdgeInsets.zero,
-      child: Padding(
-        padding: const EdgeInsets.all(16),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  'Application #${application.id}',
-                  style: theme.textTheme.titleMedium?.copyWith(fontWeight: FontWeight.bold),
-                ),
-                Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-                  decoration: BoxDecoration(
-                    color: statusColor.withAlpha(51),
-                    borderRadius: BorderRadius.circular(4),
-                  ),
-                  child: Text(
-                    application.status.name.toUpperCase(),
-                    style: TextStyle(
-                      color: statusColor,
-                      fontWeight: FontWeight.bold,
-                      fontSize: 12,
-                    ),
-                  ),
-                ),
-              ],
-            ),
-            const Divider(height: 32),
-            _buildInfo('Channel Name', application.channelName),
-            const SizedBox(height: 12),
-            _buildInfo('Channel Link', application.channelLink),
-            const SizedBox(height: 12),
-            _buildInfo('Applied On', DateFormat('MMM dd, yyyy HH:mm').format(application.createdAt)),
-            if (application.status == VtuberApplicationStatus.rejected && application.reason != null) ...[
-              const SizedBox(height: 12),
-              const Text('Rejection Reason', style: TextStyle(color: Colors.grey, fontSize: 12)),
-              const SizedBox(height: 4),
+    return Container(
+      padding: const EdgeInsets.all(16),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(12),
+        border: Border.all(color: AppColors.border, width: 2),
+        boxShadow: const [
+          BoxShadow(color: AppColors.border, offset: Offset(4, 4)),
+        ],
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
               Text(
-                application.reason!,
-                style: const TextStyle(color: Colors.red, fontStyle: FontStyle.italic),
+                'APP #${application.id}',
+                style: const TextStyle(fontWeight: FontWeight.w900, fontSize: 13, letterSpacing: 1),
               ),
+              _buildStatusBadge(application.status, statusColor),
             ],
-            if (application.reviewAt != null) ...[
-              const SizedBox(height: 12),
-              _buildInfo('Reviewed At', DateFormat('MMM dd, yyyy HH:mm').format(application.reviewAt!)),
-            ],
+          ),
+          const Divider(height: 32, color: Colors.black12),
+          _buildInfo('CHANNEL NAME', application.channelName),
+          const SizedBox(height: 12),
+          _buildInfo('CHANNEL LINK', application.channelLink),
+          const SizedBox(height: 12),
+          _buildInfo('APPLIED ON', DateFormat('MMM dd, yyyy').format(application.createdAt)),
+          
+          if (application.status == VtuberApplicationStatus.rejected && application.reason != null) ...[
+            const SizedBox(height: 12),
+            _buildInfo('REJECTION REASON', application.reason!, color: Colors.red),
           ],
-        ),
+        ],
       ),
     );
   }
 
-  Widget _buildInfo(String label, String value) {
+  Widget _buildStatusBadge(VtuberApplicationStatus status, Color color) {
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+      decoration: BoxDecoration(
+        color: color.withValues(alpha: 0.1),
+        borderRadius: BorderRadius.circular(4),
+        border: Border.all(color: color, width: 1),
+      ),
+      child: Text(
+        status.name.toUpperCase(),
+        style: TextStyle(color: color, fontWeight: FontWeight.w900, fontSize: 10),
+      ),
+    );
+  }
+
+  Widget _buildInfo(String label, String value, {Color? color}) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(label, style: const TextStyle(color: Colors.grey, fontSize: 12)),
+        Text(label, style: const TextStyle(color: Colors.grey, fontSize: 10, fontWeight: FontWeight.bold, letterSpacing: 1)),
         const SizedBox(height: 4),
-        Text(value, style: const TextStyle(fontWeight: FontWeight.w500)),
+        Text(value, style: TextStyle(fontWeight: FontWeight.w900, fontSize: 13, color: color ?? const Color(0xFF323232))),
       ],
     );
   }
