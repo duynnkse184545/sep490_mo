@@ -3,10 +3,10 @@ import 'package:sep490_mo/features/fanhub/data/models/fanhub_models.dart';
 
 abstract class FanHubRepository {
   TaskResult<List<FanHub>> getFanHubs({
-    required int pageNo,
-    required int pageSize,
-    required String sortBy,
-    required bool includePrivate,
+    int pageNo = 0,
+    int pageSize = 20,
+    String sortBy = 'createdAt',
+    bool includePrivate = false,
   });
 
   TaskResult<List<FanHub>> getFanHubsByCategory({
@@ -18,12 +18,31 @@ abstract class FanHubRepository {
   TaskResult<FanHub> getFanHubBySubdomain(String subdomain);
 
   TaskResult<List<FanHub>> getMyHubs({
-    required int pageNo,
-    required int pageSize,
-    required String sortBy,
+    int pageNo = 0,
+    int pageSize = 20,
+    String sortBy = 'createdAt',
   });
 
-  TaskResult<FanHub?> getMyHubAsOwner();
+  TaskResult<FanHub> getMyHubsAsOwner();
 
-  TaskVoid createFanHub(CreateFanHubRequest request);
+  TaskResult<List<FanHub>> searchHubs({
+    required String keyword,
+    int pageNo = 0,
+    int pageSize = 20,
+    String sortBy = 'createdAt',
+    String sortDir = 'desc',
+  });
+
+  TaskVoid createFanHub({
+    required CreateFanHubRequest request,
+    String? bannerPath,
+    String? avatarPath,
+  });
+
+  TaskVoid uploadFanHubImages({
+    required int fanHubId,
+    required List<String> backgrounds,
+    String? bannerPath,
+    String? avatarPath,
+  });
 }

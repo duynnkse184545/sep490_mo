@@ -61,12 +61,13 @@ class HubSpeedDial extends HookConsumerWidget {
           label: 'Moderation',
           goUp: false,
         ),
-      (
-        action: _DialAction.settings,
-        icon: Icons.settings_outlined,
-        label: 'Settings',
-        goUp: false,
-      ),
+      if (memberRole == MemberRole.vtuber)
+        (
+          action: _DialAction.settings,
+          icon: Icons.settings_outlined,
+          label: 'Settings',
+          goUp: false,
+        ),
       (
         action: _DialAction.report,
         icon: Icons.flag_outlined,
@@ -101,7 +102,11 @@ class HubSpeedDial extends HookConsumerWidget {
           ).push(context);
           break;
         case _DialAction.settings:
-          break; // HubSettingsRoute
+          JoinQuestionsManagementRoute(
+            subdomain: subdomain,
+            fanHubId: fanHubId,
+          ).push(context);
+          break;
         case _DialAction.report:
           break; // ReportRoute
       }

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:sep490_mo/app/app_notifier.dart';
+import 'package:sep490_mo/app/app_state.dart';
 import 'package:sep490_mo/app/router/routes.dart';
 import 'package:sep490_mo/core/theme/app_colors.dart';
 import 'package:sep490_mo/core/widgets/empty_state.dart';
@@ -11,6 +13,7 @@ import 'package:sep490_mo/features/fanhub/presentation/controllers/fanhub_list_c
 import 'package:sep490_mo/features/fanhub/presentation/controllers/fanhub_owner_controller.dart';
 import 'package:sep490_mo/features/fanhub/presentation/states/fanhub_state.dart';
 import 'package:sep490_mo/features/fanhub/presentation/widgets/fanhub_card.dart';
+import 'package:sep490_mo/features/user/data/models/user_models.dart';
 
 class FanHubListScreen extends HookConsumerWidget {
   const FanHubListScreen({super.key});
@@ -20,8 +23,10 @@ class FanHubListScreen extends HookConsumerWidget {
     final fanHubAsync = ref.watch(fanHubListControllerProvider);
     final controller = ref.read(fanHubListControllerProvider.notifier);
     final scrollController = useScrollController();
+    final searchController = useTextEditingController();
     
     final ownerHubAsync = ref.watch(fanHubOwnerControllerProvider);
+    final isVtuber = ref.watch(appProvider).whenOrNull(ready: (user) => user.role == UserRole.vtuber);
 
     useEffect(() {
       void onScroll() {
@@ -47,10 +52,39 @@ class FanHubListScreen extends HookConsumerWidget {
                 children: [
                   Expanded(child: _buildTabSelector(context, controller)),
                   const SizedBox(width: 8),
-                  _buildActionButton(context, ownerHubAsync),
+                  _buildActionButton(context, ownerHubAsync, isVtuber),
                 ],
               ),
             ),
+            if (controller.activeTab == FanHubTab.discover)
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                child: TextField(
+                  controller: searchController,
+                  decoration: InputDecoration(
+                    hintText: 'Search Fan Hubs...',
+                    prefixIcon: const Icon(Icons.search),
+                    suffixIcon: searchController.text.isNotEmpty
+                        ? IconButton(
+                            icon: const Icon(Icons.clear),
+                            onPressed: () {
+                              searchController.clear();
+                              controller.search(null);
+                            },
+                          )
+                        : null,
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    isDense: true,
+                    contentPadding: const EdgeInsets.symmetric(vertical: 8),
+                  ),
+                  onSubmitted: (value) => controller.search(value),
+                  onChanged: (value) {
+                    if (value.isEmpty) controller.search(null);
+                  },
+                ),
+              ),
             Expanded(
               child: fanHubAsync.when(
                 data: (fanHubState) => fanHubState.when(
@@ -60,7 +94,7 @@ class FanHubListScreen extends HookConsumerWidget {
                       controller: scrollController,
                       padding: const EdgeInsets.only(top: 8, bottom: 16),
                       itemCount: fanHubs.length + 1,
-                      separatorBuilder: (_, __) => const SizedBox(height: 8),
+                      separatorBuilder: (_, _) => const SizedBox(height: 8),
                       itemBuilder: (context, index) {
                         if (index == fanHubs.length) {
                           return const SizedBox.shrink();
@@ -73,7 +107,7 @@ class FanHubListScreen extends HookConsumerWidget {
                     controller: scrollController,
                     padding: const EdgeInsets.only(top: 8, bottom: 16),
                     itemCount: fanHubs.length + 1,
-                    separatorBuilder: (_, __) => const SizedBox(height: 8),
+                    separatorBuilder: (_, _) => const SizedBox(height: 8),
                     itemBuilder: (context, index) {
                       if (index == fanHubs.length) {
                         return const Padding(
@@ -88,7 +122,7 @@ class FanHubListScreen extends HookConsumerWidget {
                     controller: scrollController,
                     padding: const EdgeInsets.only(top: 8, bottom: 16),
                     itemCount: fanHubs.length,
-                    separatorBuilder: (_, __) => const SizedBox(height: 8),
+                    separatorBuilder: (_, _) => const SizedBox(height: 8),
                     itemBuilder: (context, index) =>
                         FanHubCard(fanHub: fanHubs[index]),
                   ),
@@ -165,7 +199,14 @@ class FanHubListScreen extends HookConsumerWidget {
     );
   }
 
-  Widget _buildActionButton(BuildContext context, AsyncValue<FanHub?> ownerHubAsync) {
+  Widget _buildActionButton(
+    BuildContext context,
+    AsyncValue<FanHub?> ownerHubAsync,
+      bool? isVtuber
+  ) {
+
+    if (isVtuber != true) return const SizedBox.shrink();
+
     return ownerHubAsync.when(
       data: (hub) {
         if (hub == null) {
@@ -188,7 +229,7 @@ class FanHubListScreen extends HookConsumerWidget {
         }
       },
       loading: () => const CircularProgressIndicator(),
-      error: (_, __) => IconButton(
+      error: (_, _) => IconButton(
         onPressed: () => const CreateFanHubRoute().push(context),
         icon: const Icon(Icons.add),
       ),

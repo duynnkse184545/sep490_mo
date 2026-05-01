@@ -1,6 +1,7 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'fanhub_models.freezed.dart';
+
 part 'fanhub_models.g.dart';
 
 @freezed
@@ -77,28 +78,14 @@ abstract class CreateFanHubRequest with _$CreateFanHubRequest {
 abstract class UpdateFanHubRequest with _$UpdateFanHubRequest {
   const factory UpdateFanHubRequest({
     String? hubName,
+    String? subdomain,
     String? description,
-    String? bannerUrl,
-    String? backgroundUrl,
     String? themeColor,
-    String? avatarUrl,
     bool? isPrivate,
     bool? requiresApproval,
-    List<String>? categories,
-    List<String>? highlightImgUrls,
+    List<String>? category,
   }) = _UpdateFanHubRequest;
 
   factory UpdateFanHubRequest.fromJson(Map<String, dynamic> json) =>
       _$UpdateFanHubRequestFromJson(json);
-}
-
-@freezed
-abstract class FanHubUploadRequest with _$FanHubUploadRequest {
-  const factory FanHubUploadRequest({
-    required String avatar,
-    required String banner,
-  }) = _FanHubUploadRequest;
-
-  factory FanHubUploadRequest.fromJson(Map<String, dynamic> json) =>
-      _$FanHubUploadRequestFromJson(json);
 }

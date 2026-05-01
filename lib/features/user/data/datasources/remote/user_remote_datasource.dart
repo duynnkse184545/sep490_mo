@@ -1,4 +1,3 @@
-import 'dart:io';
 import 'package:sep490_mo/features/user/data/models/user_models.dart';
 
 abstract class UserRemoteDataSource {
@@ -18,7 +17,7 @@ abstract class UserRemoteDataSource {
   Future<DailyMission> getDailyMission();
 
   /// Update avatar frame
-  Future<void> updateAvatarFrame({String? frameName, required File avatarFile});
+  Future<void> updateAvatarFrame({String? frameName, String? avatarPath});
 
   /// Set user oshi
   Future<void> setOshi(String oshiUsername);

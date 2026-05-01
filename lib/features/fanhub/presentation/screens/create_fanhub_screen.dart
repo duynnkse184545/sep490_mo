@@ -1,6 +1,8 @@
+import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:sep490_mo/features/fanhub/data/models/fanhub_models.dart';
 import 'package:sep490_mo/features/fanhub/presentation/controllers/create_fanhub_controller.dart';
 import 'package:sep490_mo/features/fanhub/presentation/states/create_fanhub_state.dart';
@@ -20,8 +22,28 @@ class CreateFanHubScreen extends HookConsumerWidget {
     final isPrivate = useState(false);
     final requiresApproval = useState(false);
 
+    // Media state
+    final selectedAvatar = useState<File?>(null);
+    final selectedBanner = useState<File?>(null);
+
+    final picker = useMemoized(() => ImagePicker());
+
     final createController = ref.read(createFanHubControllerProvider.notifier);
     final createState = ref.watch(createFanHubControllerProvider);
+
+    Future<void> pickAvatar() async {
+      final pickedFile = await picker.pickImage(source: ImageSource.gallery);
+      if (pickedFile != null) {
+        selectedAvatar.value = File(pickedFile.path);
+      }
+    }
+
+    Future<void> pickBanner() async {
+      final pickedFile = await picker.pickImage(source: ImageSource.gallery);
+      if (pickedFile != null) {
+        selectedBanner.value = File(pickedFile.path);
+      }
+    }
 
     ref.listen(createFanHubControllerProvider, (previous, next) {
       next.maybeWhen(
@@ -95,6 +117,27 @@ class CreateFanHubScreen extends HookConsumerWidget {
             ),
             const SizedBox(height: 16),
 
+            // Media Selection
+            _buildMediaPicker(
+              context: context,
+              label: "Hub Avatar",
+              icon: Icons.face,
+              onTap: pickAvatar,
+              file: selectedAvatar.value,
+              onRemove: () => selectedAvatar.value = null,
+            ),
+            const SizedBox(height: 16),
+            _buildMediaPicker(
+              context: context,
+              label: "Hub Banner",
+              icon: Icons.image,
+              onTap: pickBanner,
+              file: selectedBanner.value,
+              onRemove: () => selectedBanner.value = null,
+              isBanner: true,
+            ),
+            const SizedBox(height: 16),
+
             SwitchListTile(
               title: const Text('Private Hub'),
               subtitle: const Text('Only approved members can view content'),
@@ -134,7 +177,11 @@ class CreateFanHubScreen extends HookConsumerWidget {
                       isPrivate: isPrivate.value,
                       requiresApproval: requiresApproval.value,
                     );
-                    createController.createFanHub(request);
+                    createController.createFanHub(
+                      request,
+                      avatarPath: selectedAvatar.value?.path,
+                      bannerPath: selectedBanner.value?.path,
+                    );
                   }
                 },
               ),
@@ -143,9 +190,64 @@ class CreateFanHubScreen extends HookConsumerWidget {
               ),
               child: const Text('Create FanHub'),
             ),
+            const SizedBox(height: 32),
           ],
         ),
       ),
+    );
+  }
+
+  Widget _buildMediaPicker({
+    required BuildContext context,
+    required String label,
+    required IconData icon,
+    required VoidCallback onTap,
+    required File? file,
+    required VoidCallback onRemove,
+    bool isBanner = false,
+  }) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(label, style: Theme.of(context).textTheme.titleSmall),
+        const SizedBox(height: 8),
+        GestureDetector(
+          onTap: onTap,
+          child: Container(
+            width: double.infinity,
+            height: isBanner ? 120 : 80,
+            decoration: BoxDecoration(
+              color: Colors.grey[200],
+              borderRadius: BorderRadius.circular(8),
+              border: Border.all(color: Colors.grey[300]!),
+              image: file != null
+                  ? DecorationImage(
+                      image: FileImage(file),
+                      fit: BoxFit.cover,
+                    )
+                  : null,
+            ),
+            child: file == null
+                ? Icon(icon, color: Colors.grey[600], size: 32)
+                : Stack(
+                    children: [
+                      Positioned(
+                        right: 4,
+                        top: 4,
+                        child: GestureDetector(
+                          onTap: onRemove,
+                          child: CircleAvatar(
+                            radius: 12,
+                            backgroundColor: Colors.black.withValues(alpha: 0.6),
+                            child: const Icon(Icons.close, size: 16, color: Colors.white),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+          ),
+        ),
+      ],
     );
   }
 }

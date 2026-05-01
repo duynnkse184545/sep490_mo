@@ -15,8 +15,8 @@ FanHubApiService fanHubApiService(Ref ref) {
 }
 
 @riverpod
-FanHubRemoteDatasource fanHubRemoteDataSource(Ref ref) {
-  return FanHubRemoteDatasourceImpl(fanHubApi: ref.watch(fanHubApiServiceProvider));
+FanHubRemoteDataSource fanHubRemoteDataSource(Ref ref) {
+  return FanHubRemoteDataSourceImpl(apiService: ref.watch(fanHubApiServiceProvider));
 }
 
 @riverpod

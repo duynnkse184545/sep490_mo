@@ -1273,7 +1273,7 @@ as String?,
 /// @nodoc
 mixin _$CreatePostRequest {
 
- int get fanHubId; PostType get postType; String? get title; String get content; List<String>? get hashtags; bool get isAnnouncement; bool get isSchedule;
+ int get fanHubId; PostType get postType; String? get title; String get content; List<String>? get hashtags; bool get isAnnouncement; bool get isSchedule; DateTime? get startTime; DateTime? get endTime;
 /// Create a copy of CreatePostRequest
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -1286,16 +1286,16 @@ $CreatePostRequestCopyWith<CreatePostRequest> get copyWith => _$CreatePostReques
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is CreatePostRequest&&(identical(other.fanHubId, fanHubId) || other.fanHubId == fanHubId)&&(identical(other.postType, postType) || other.postType == postType)&&(identical(other.title, title) || other.title == title)&&(identical(other.content, content) || other.content == content)&&const DeepCollectionEquality().equals(other.hashtags, hashtags)&&(identical(other.isAnnouncement, isAnnouncement) || other.isAnnouncement == isAnnouncement)&&(identical(other.isSchedule, isSchedule) || other.isSchedule == isSchedule));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is CreatePostRequest&&(identical(other.fanHubId, fanHubId) || other.fanHubId == fanHubId)&&(identical(other.postType, postType) || other.postType == postType)&&(identical(other.title, title) || other.title == title)&&(identical(other.content, content) || other.content == content)&&const DeepCollectionEquality().equals(other.hashtags, hashtags)&&(identical(other.isAnnouncement, isAnnouncement) || other.isAnnouncement == isAnnouncement)&&(identical(other.isSchedule, isSchedule) || other.isSchedule == isSchedule)&&(identical(other.startTime, startTime) || other.startTime == startTime)&&(identical(other.endTime, endTime) || other.endTime == endTime));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,fanHubId,postType,title,content,const DeepCollectionEquality().hash(hashtags),isAnnouncement,isSchedule);
+int get hashCode => Object.hash(runtimeType,fanHubId,postType,title,content,const DeepCollectionEquality().hash(hashtags),isAnnouncement,isSchedule,startTime,endTime);
 
 @override
 String toString() {
-  return 'CreatePostRequest(fanHubId: $fanHubId, postType: $postType, title: $title, content: $content, hashtags: $hashtags, isAnnouncement: $isAnnouncement, isSchedule: $isSchedule)';
+  return 'CreatePostRequest(fanHubId: $fanHubId, postType: $postType, title: $title, content: $content, hashtags: $hashtags, isAnnouncement: $isAnnouncement, isSchedule: $isSchedule, startTime: $startTime, endTime: $endTime)';
 }
 
 
@@ -1306,7 +1306,7 @@ abstract mixin class $CreatePostRequestCopyWith<$Res>  {
   factory $CreatePostRequestCopyWith(CreatePostRequest value, $Res Function(CreatePostRequest) _then) = _$CreatePostRequestCopyWithImpl;
 @useResult
 $Res call({
- int fanHubId, PostType postType, String? title, String content, List<String>? hashtags, bool isAnnouncement, bool isSchedule
+ int fanHubId, PostType postType, String? title, String content, List<String>? hashtags, bool isAnnouncement, bool isSchedule, DateTime? startTime, DateTime? endTime
 });
 
 
@@ -1323,7 +1323,7 @@ class _$CreatePostRequestCopyWithImpl<$Res>
 
 /// Create a copy of CreatePostRequest
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? fanHubId = null,Object? postType = null,Object? title = freezed,Object? content = null,Object? hashtags = freezed,Object? isAnnouncement = null,Object? isSchedule = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? fanHubId = null,Object? postType = null,Object? title = freezed,Object? content = null,Object? hashtags = freezed,Object? isAnnouncement = null,Object? isSchedule = null,Object? startTime = freezed,Object? endTime = freezed,}) {
   return _then(_self.copyWith(
 fanHubId: null == fanHubId ? _self.fanHubId : fanHubId // ignore: cast_nullable_to_non_nullable
 as int,postType: null == postType ? _self.postType : postType // ignore: cast_nullable_to_non_nullable
@@ -1332,7 +1332,9 @@ as String?,content: null == content ? _self.content : content // ignore: cast_nu
 as String,hashtags: freezed == hashtags ? _self.hashtags : hashtags // ignore: cast_nullable_to_non_nullable
 as List<String>?,isAnnouncement: null == isAnnouncement ? _self.isAnnouncement : isAnnouncement // ignore: cast_nullable_to_non_nullable
 as bool,isSchedule: null == isSchedule ? _self.isSchedule : isSchedule // ignore: cast_nullable_to_non_nullable
-as bool,
+as bool,startTime: freezed == startTime ? _self.startTime : startTime // ignore: cast_nullable_to_non_nullable
+as DateTime?,endTime: freezed == endTime ? _self.endTime : endTime // ignore: cast_nullable_to_non_nullable
+as DateTime?,
   ));
 }
 
@@ -1417,10 +1419,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( int fanHubId,  PostType postType,  String? title,  String content,  List<String>? hashtags,  bool isAnnouncement,  bool isSchedule)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( int fanHubId,  PostType postType,  String? title,  String content,  List<String>? hashtags,  bool isAnnouncement,  bool isSchedule,  DateTime? startTime,  DateTime? endTime)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _CreatePostRequest() when $default != null:
-return $default(_that.fanHubId,_that.postType,_that.title,_that.content,_that.hashtags,_that.isAnnouncement,_that.isSchedule);case _:
+return $default(_that.fanHubId,_that.postType,_that.title,_that.content,_that.hashtags,_that.isAnnouncement,_that.isSchedule,_that.startTime,_that.endTime);case _:
   return orElse();
 
 }
@@ -1438,10 +1440,10 @@ return $default(_that.fanHubId,_that.postType,_that.title,_that.content,_that.ha
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( int fanHubId,  PostType postType,  String? title,  String content,  List<String>? hashtags,  bool isAnnouncement,  bool isSchedule)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( int fanHubId,  PostType postType,  String? title,  String content,  List<String>? hashtags,  bool isAnnouncement,  bool isSchedule,  DateTime? startTime,  DateTime? endTime)  $default,) {final _that = this;
 switch (_that) {
 case _CreatePostRequest():
-return $default(_that.fanHubId,_that.postType,_that.title,_that.content,_that.hashtags,_that.isAnnouncement,_that.isSchedule);case _:
+return $default(_that.fanHubId,_that.postType,_that.title,_that.content,_that.hashtags,_that.isAnnouncement,_that.isSchedule,_that.startTime,_that.endTime);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -1458,10 +1460,10 @@ return $default(_that.fanHubId,_that.postType,_that.title,_that.content,_that.ha
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( int fanHubId,  PostType postType,  String? title,  String content,  List<String>? hashtags,  bool isAnnouncement,  bool isSchedule)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( int fanHubId,  PostType postType,  String? title,  String content,  List<String>? hashtags,  bool isAnnouncement,  bool isSchedule,  DateTime? startTime,  DateTime? endTime)?  $default,) {final _that = this;
 switch (_that) {
 case _CreatePostRequest() when $default != null:
-return $default(_that.fanHubId,_that.postType,_that.title,_that.content,_that.hashtags,_that.isAnnouncement,_that.isSchedule);case _:
+return $default(_that.fanHubId,_that.postType,_that.title,_that.content,_that.hashtags,_that.isAnnouncement,_that.isSchedule,_that.startTime,_that.endTime);case _:
   return null;
 
 }
@@ -1473,7 +1475,7 @@ return $default(_that.fanHubId,_that.postType,_that.title,_that.content,_that.ha
 @JsonSerializable()
 
 class _CreatePostRequest implements CreatePostRequest {
-  const _CreatePostRequest({required this.fanHubId, required this.postType, this.title, required this.content, final  List<String>? hashtags = const [], this.isAnnouncement = false, this.isSchedule = false}): _hashtags = hashtags;
+  const _CreatePostRequest({required this.fanHubId, required this.postType, this.title, required this.content, final  List<String>? hashtags = const [], this.isAnnouncement = false, this.isSchedule = false, this.startTime, this.endTime}): _hashtags = hashtags;
   factory _CreatePostRequest.fromJson(Map<String, dynamic> json) => _$CreatePostRequestFromJson(json);
 
 @override final  int fanHubId;
@@ -1491,6 +1493,8 @@ class _CreatePostRequest implements CreatePostRequest {
 
 @override@JsonKey() final  bool isAnnouncement;
 @override@JsonKey() final  bool isSchedule;
+@override final  DateTime? startTime;
+@override final  DateTime? endTime;
 
 /// Create a copy of CreatePostRequest
 /// with the given fields replaced by the non-null parameter values.
@@ -1505,16 +1509,16 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _CreatePostRequest&&(identical(other.fanHubId, fanHubId) || other.fanHubId == fanHubId)&&(identical(other.postType, postType) || other.postType == postType)&&(identical(other.title, title) || other.title == title)&&(identical(other.content, content) || other.content == content)&&const DeepCollectionEquality().equals(other._hashtags, _hashtags)&&(identical(other.isAnnouncement, isAnnouncement) || other.isAnnouncement == isAnnouncement)&&(identical(other.isSchedule, isSchedule) || other.isSchedule == isSchedule));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _CreatePostRequest&&(identical(other.fanHubId, fanHubId) || other.fanHubId == fanHubId)&&(identical(other.postType, postType) || other.postType == postType)&&(identical(other.title, title) || other.title == title)&&(identical(other.content, content) || other.content == content)&&const DeepCollectionEquality().equals(other._hashtags, _hashtags)&&(identical(other.isAnnouncement, isAnnouncement) || other.isAnnouncement == isAnnouncement)&&(identical(other.isSchedule, isSchedule) || other.isSchedule == isSchedule)&&(identical(other.startTime, startTime) || other.startTime == startTime)&&(identical(other.endTime, endTime) || other.endTime == endTime));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,fanHubId,postType,title,content,const DeepCollectionEquality().hash(_hashtags),isAnnouncement,isSchedule);
+int get hashCode => Object.hash(runtimeType,fanHubId,postType,title,content,const DeepCollectionEquality().hash(_hashtags),isAnnouncement,isSchedule,startTime,endTime);
 
 @override
 String toString() {
-  return 'CreatePostRequest(fanHubId: $fanHubId, postType: $postType, title: $title, content: $content, hashtags: $hashtags, isAnnouncement: $isAnnouncement, isSchedule: $isSchedule)';
+  return 'CreatePostRequest(fanHubId: $fanHubId, postType: $postType, title: $title, content: $content, hashtags: $hashtags, isAnnouncement: $isAnnouncement, isSchedule: $isSchedule, startTime: $startTime, endTime: $endTime)';
 }
 
 
@@ -1525,7 +1529,7 @@ abstract mixin class _$CreatePostRequestCopyWith<$Res> implements $CreatePostReq
   factory _$CreatePostRequestCopyWith(_CreatePostRequest value, $Res Function(_CreatePostRequest) _then) = __$CreatePostRequestCopyWithImpl;
 @override @useResult
 $Res call({
- int fanHubId, PostType postType, String? title, String content, List<String>? hashtags, bool isAnnouncement, bool isSchedule
+ int fanHubId, PostType postType, String? title, String content, List<String>? hashtags, bool isAnnouncement, bool isSchedule, DateTime? startTime, DateTime? endTime
 });
 
 
@@ -1542,7 +1546,7 @@ class __$CreatePostRequestCopyWithImpl<$Res>
 
 /// Create a copy of CreatePostRequest
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? fanHubId = null,Object? postType = null,Object? title = freezed,Object? content = null,Object? hashtags = freezed,Object? isAnnouncement = null,Object? isSchedule = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? fanHubId = null,Object? postType = null,Object? title = freezed,Object? content = null,Object? hashtags = freezed,Object? isAnnouncement = null,Object? isSchedule = null,Object? startTime = freezed,Object? endTime = freezed,}) {
   return _then(_CreatePostRequest(
 fanHubId: null == fanHubId ? _self.fanHubId : fanHubId // ignore: cast_nullable_to_non_nullable
 as int,postType: null == postType ? _self.postType : postType // ignore: cast_nullable_to_non_nullable
@@ -1551,7 +1555,9 @@ as String?,content: null == content ? _self.content : content // ignore: cast_nu
 as String,hashtags: freezed == hashtags ? _self._hashtags : hashtags // ignore: cast_nullable_to_non_nullable
 as List<String>?,isAnnouncement: null == isAnnouncement ? _self.isAnnouncement : isAnnouncement // ignore: cast_nullable_to_non_nullable
 as bool,isSchedule: null == isSchedule ? _self.isSchedule : isSchedule // ignore: cast_nullable_to_non_nullable
-as bool,
+as bool,startTime: freezed == startTime ? _self.startTime : startTime // ignore: cast_nullable_to_non_nullable
+as DateTime?,endTime: freezed == endTime ? _self.endTime : endTime // ignore: cast_nullable_to_non_nullable
+as DateTime?,
   ));
 }
 

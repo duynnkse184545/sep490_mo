@@ -3,6 +3,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:sep490_mo/core/theme/app_colors.dart';
 import 'package:sep490_mo/core/widgets/error_retry_widget.dart';
 import 'package:sep490_mo/core/widgets/loader.dart';
+import 'package:sep490_mo/features/fanhub/data/models/fanhub_models.dart';
 import 'package:sep490_mo/features/fanhub/presentation/controllers/fanhub_detail_controller.dart';
 import 'package:sep490_mo/features/fanhub/presentation/states/fanhub_detail_state.dart';
 
@@ -10,14 +11,14 @@ class FanHubDetailScreen extends HookConsumerWidget {
   final String subdomain;
   final Widget feedWidget;
   final Widget speedDial;
-  final Widget joinButton;
+  final Widget Function(bool requiresApproval) joinButtonBuilder;
 
   const FanHubDetailScreen({
     super.key,
     required this.subdomain,
     required this.feedWidget,
     required this.speedDial,
-    required this.joinButton,
+    required this.joinButtonBuilder,
   });
 
   @override
@@ -38,7 +39,7 @@ class FanHubDetailScreen extends HookConsumerWidget {
             ErrorBanner(message: error.toString(), onRetry: controller.refresh),
         data: (state) => state.when(
           loaded: (fanHub) {
-            final hubColor = fanHub.themeColor != null
+            final hubColor = fanHub.themeColor != null && fanHub.themeColor != 'string'
                 ? Color(int.parse(fanHub.themeColor!.replaceFirst('#', '0xff')))
                 : Theme.of(context).colorScheme.primary;
 
@@ -84,7 +85,7 @@ class FanHubDetailScreen extends HookConsumerWidget {
 
   Widget _buildSliverAppBar(
     BuildContext context,
-    dynamic fanHub,
+    FanHub fanHub,
     Color themeColor,
   ) {
     return SliverAppBar(
@@ -185,8 +186,8 @@ class FanHubDetailScreen extends HookConsumerWidget {
                       ],
                     ),
                   ),
-                  // Join Button (passed from parent)
-                  joinButton,
+                  // Join Button (built using builder)
+                  joinButtonBuilder(fanHub.requiresApproval),
                 ],
               ),
             ),
@@ -198,7 +199,7 @@ class FanHubDetailScreen extends HookConsumerWidget {
 
   Widget _buildAboutSection(
     BuildContext context,
-    dynamic fanHub,
+    FanHub fanHub,
     Color themeColor,
   ) {
     return Container(

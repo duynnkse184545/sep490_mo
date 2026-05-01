@@ -69,7 +69,8 @@ extension MemberX on Member {
 abstract class MemberCheckingResponse with _$MemberCheckingResponse {
   const factory MemberCheckingResponse({
     required bool isMember,
-    required MemberRole roleInHub,
+    MemberRole? roleInHub,
+    MemberStatus? status,
   }) = _MemberCheckingResponse;
 
   factory MemberCheckingResponse.fromJson(Map<String, dynamic> json) =>

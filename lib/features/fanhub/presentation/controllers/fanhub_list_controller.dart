@@ -14,6 +14,7 @@ class FanHubListController extends _$FanHubListController {
   bool _isFetchingMore = false;
   List<FanHub> _fanHubs = [];
   FanHubTab _activeTab = FanHubTab.discover;
+  String? _searchKeyword;
 
   @override
   Future<FanHubState> build() async {
@@ -26,6 +27,17 @@ class FanHubListController extends _$FanHubListController {
   void switchTab(FanHubTab tab) {
     if (_activeTab == tab) return;
     _activeTab = tab;
+    // Clear search when switching tabs (or keep it if you prefer)
+    _searchKeyword = null;
+    _resetPagination();
+    ref.invalidateSelf();
+  }
+
+  void search(String? keyword) {
+    final cleanKeyword = keyword?.trim();
+    if (_searchKeyword == cleanKeyword) return;
+    
+    _searchKeyword = cleanKeyword?.isEmpty == true ? null : cleanKeyword;
     _resetPagination();
     ref.invalidateSelf();
   }
@@ -55,23 +67,23 @@ class FanHubListController extends _$FanHubListController {
 
   Future<void> _fetchNextPage() async {
     final result = switch (_activeTab) {
-      FanHubTab.discover => await ref
-          .read(fanHubRepositoryProvider)
-          .getFanHubs(
-            pageNo: _currentPage,
-            pageSize: _pageSize,
-            sortBy: 'createdAt',
-            includePrivate: false,
-          )
-          .run(),
-      FanHubTab.myHubs => await ref
-          .read(fanHubRepositoryProvider)
-          .getMyHubs(
-            pageNo: _currentPage,
-            pageSize: _pageSize,
-            sortBy: 'createdAt',
-          )
-          .run(),
+      FanHubTab.discover => _searchKeyword != null
+          ? await ref.read(fanHubRepositoryProvider).searchHubs(
+                keyword: _searchKeyword!,
+                pageNo: _currentPage,
+                pageSize: _pageSize,
+              ).run()
+          : await ref.read(fanHubRepositoryProvider).getFanHubs(
+                pageNo: _currentPage,
+                pageSize: _pageSize,
+                sortBy: 'createdAt',
+                includePrivate: false,
+              ).run(),
+      FanHubTab.myHubs => await ref.read(fanHubRepositoryProvider).getMyHubs(
+                pageNo: _currentPage,
+                pageSize: _pageSize,
+                sortBy: 'createdAt',
+              ).run(),
     };
 
     result.fold(

@@ -118,17 +118,12 @@ Map<String, dynamic> _$CreateFanHubRequestToJson(
 _UpdateFanHubRequest _$UpdateFanHubRequestFromJson(Map<String, dynamic> json) =>
     _UpdateFanHubRequest(
       hubName: json['hubName'] as String?,
+      subdomain: json['subdomain'] as String?,
       description: json['description'] as String?,
-      bannerUrl: json['bannerUrl'] as String?,
-      backgroundUrl: json['backgroundUrl'] as String?,
       themeColor: json['themeColor'] as String?,
-      avatarUrl: json['avatarUrl'] as String?,
       isPrivate: json['isPrivate'] as bool?,
       requiresApproval: json['requiresApproval'] as bool?,
-      categories: (json['categories'] as List<dynamic>?)
-          ?.map((e) => e as String)
-          .toList(),
-      highlightImgUrls: (json['highlightImgUrls'] as List<dynamic>?)
+      category: (json['category'] as List<dynamic>?)
           ?.map((e) => e as String)
           .toList(),
     );
@@ -137,23 +132,10 @@ Map<String, dynamic> _$UpdateFanHubRequestToJson(
   _UpdateFanHubRequest instance,
 ) => <String, dynamic>{
   'hubName': instance.hubName,
+  'subdomain': instance.subdomain,
   'description': instance.description,
-  'bannerUrl': instance.bannerUrl,
-  'backgroundUrl': instance.backgroundUrl,
   'themeColor': instance.themeColor,
-  'avatarUrl': instance.avatarUrl,
   'isPrivate': instance.isPrivate,
   'requiresApproval': instance.requiresApproval,
-  'categories': instance.categories,
-  'highlightImgUrls': instance.highlightImgUrls,
+  'category': instance.category,
 };
-
-_FanHubUploadRequest _$FanHubUploadRequestFromJson(Map<String, dynamic> json) =>
-    _FanHubUploadRequest(
-      avatar: json['avatar'] as String,
-      banner: json['banner'] as String,
-    );
-
-Map<String, dynamic> _$FanHubUploadRequestToJson(
-  _FanHubUploadRequest instance,
-) => <String, dynamic>{'avatar': instance.avatar, 'banner': instance.banner};

@@ -5,7 +5,6 @@ import 'package:sep490_mo/core/models/api_response_wrapper.dart';
 import 'package:sep490_mo/features/user/data/datasources/remote/api/user_api_service.dart';
 import 'package:sep490_mo/features/user/data/models/user_models.dart';
 import 'user_remote_datasource.dart';
-import 'dart:io';
 
 class UserRemoteDataSourceImpl implements UserRemoteDataSource {
   final UserApiService _userApi;
@@ -79,13 +78,16 @@ class UserRemoteDataSourceImpl implements UserRemoteDataSource {
   }
 
   @override
-  Future<void> updateAvatarFrame({String? frameName, required File avatarFile}) async {
+  Future<void> updateAvatarFrame({String? frameName, String? avatarPath}) async {
     try {
-      final fileName = avatarFile.path.split('/').last;
-      final multipartFile = await MultipartFile.fromFile(
-        avatarFile.path,
-        filename: fileName,
-      );
+      MultipartFile? multipartFile;
+      if (avatarPath != null) {
+        final fileName = avatarPath.split('/').last;
+        multipartFile = await MultipartFile.fromFile(
+          avatarPath,
+          filename: fileName,
+        );
+      }
 
       final response = await _userApi.updateAvatarFrame(frameName, multipartFile);
       switch (response) {

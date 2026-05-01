@@ -1,5 +1,9 @@
+import 'dart:convert';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:http_parser/http_parser.dart';
+import 'package:mime/mime.dart';
+import 'package:sep490_mo/core/constants/api_constants.dart';
 import 'package:sep490_mo/core/error/dio_exception_mapper.dart';
 import 'package:sep490_mo/core/error/exceptions.dart';
 import 'package:sep490_mo/core/models/api_response_wrapper.dart';
@@ -7,11 +11,11 @@ import 'package:sep490_mo/features/fanhub/data/datasources/remote/api/fanhub_api
 import 'package:sep490_mo/features/fanhub/data/datasources/remote/fanhub_remote_datasource.dart';
 import 'package:sep490_mo/features/fanhub/data/models/fanhub_models.dart';
 
-class FanHubRemoteDatasourceImpl implements FanHubRemoteDatasource {
-  final FanHubApiService _fanHubApi;
+class FanHubRemoteDataSourceImpl implements FanHubRemoteDataSource {
+  final FanHubApiService _apiService;
 
-  FanHubRemoteDatasourceImpl({required FanHubApiService fanHubApi})
-    : _fanHubApi = fanHubApi;
+  FanHubRemoteDataSourceImpl({required FanHubApiService apiService})
+    : _apiService = apiService;
 
   @override
   Future<List<FanHub>> getFanHubs({
@@ -21,22 +25,21 @@ class FanHubRemoteDatasourceImpl implements FanHubRemoteDatasource {
     required bool includePrivate,
   }) async {
     try {
-      final response = await _fanHubApi.getFanHubs(
+      final response = await _apiService.getFanHubs(
         pageNo,
         pageSize,
         sortBy,
         includePrivate,
       );
-      debugPrint('FanHubRemoteDatasourceImpl.getFanHubs: $response');
       return switch (response) {
         ApiResponseSuccess(:final data) => data,
         ApiResponseFailure(:final message, :final error) =>
           throw ServerException(message, error),
       };
     } on DioException catch (e) {
-      throw DioExceptionMapper.mapToException(e, 'Failed to get fan hubs');
+      throw DioExceptionMapper.mapToException(e, 'Failed to fetch FanHubs');
     } catch (e, stack) {
-      debugPrint('Other error: $e');
+      debugPrint('FanHubRemoteDataSourceImpl.getFanHubs error: $e');
       debugPrint('Stack: $stack');
       rethrow;
     }
@@ -49,12 +52,11 @@ class FanHubRemoteDatasourceImpl implements FanHubRemoteDatasource {
     required String category,
   }) async {
     try {
-      final response = await _fanHubApi.getFanHubsByCategory(
+      final response = await _apiService.getFanHubsByCategory(
         pageNo,
         pageSize,
         category,
       );
-      debugPrint('FanHubRemoteDatasourceImpl.getFanHubsByCategory: $response');
       return switch (response) {
         ApiResponseSuccess(:final data) => data,
         ApiResponseFailure(:final message, :final error) =>
@@ -63,10 +65,10 @@ class FanHubRemoteDatasourceImpl implements FanHubRemoteDatasource {
     } on DioException catch (e) {
       throw DioExceptionMapper.mapToException(
         e,
-        'Failed to get fan hubs by category',
+        'Failed to fetch FanHubs by category',
       );
     } catch (e, stack) {
-      debugPrint('Other error: $e');
+      debugPrint('FanHubRemoteDataSourceImpl.getFanHubsByCategory error: $e');
       debugPrint('Stack: $stack');
       rethrow;
     }
@@ -75,8 +77,7 @@ class FanHubRemoteDatasourceImpl implements FanHubRemoteDatasource {
   @override
   Future<FanHub> getFanHubBySubdomain(String subdomain) async {
     try {
-      final response = await _fanHubApi.getFanHubBySubdomain(subdomain);
-      debugPrint('FanHubRemoteDatasourceImpl.getFanHubBySubdomain: $response');
+      final response = await _apiService.getFanHubBySubdomain(subdomain);
       return switch (response) {
         ApiResponseSuccess(:final data) => data,
         ApiResponseFailure(:final message, :final error) =>
@@ -85,30 +86,10 @@ class FanHubRemoteDatasourceImpl implements FanHubRemoteDatasource {
     } on DioException catch (e) {
       throw DioExceptionMapper.mapToException(
         e,
-        'Failed to get fan hub by subdomain',
+        'Failed to fetch FanHub details',
       );
     } catch (e, stack) {
-      debugPrint('Other error: $e');
-      debugPrint('Stack: $stack');
-      rethrow;
-    }
-  }
-
-  @override
-  Future<void> createFanHub(CreateFanHubRequest request) async {
-    try {
-      final response = await _fanHubApi.createFanHub(request);
-      debugPrint('FanHubRemoteDatasourceImpl.createFanHub: $response');
-      switch (response) {
-        case ApiResponseSuccess():
-          return;
-        case ApiResponseFailure(:final message, :final error):
-          throw ServerException(message, error);
-      }
-    } on DioException catch (e) {
-      throw DioExceptionMapper.mapToException(e, 'Failed to create fan hub');
-    } catch (e, stack) {
-      debugPrint('Other error: $e');
+      debugPrint('FanHubRemoteDataSourceImpl.getFanHubBySubdomain error: $e');
       debugPrint('Stack: $stack');
       rethrow;
     }
@@ -121,36 +102,169 @@ class FanHubRemoteDatasourceImpl implements FanHubRemoteDatasource {
     required String sortBy,
   }) async {
     try {
-      final response = await _fanHubApi.getMyHubs(pageNo, pageSize, sortBy);
-      debugPrint('FanHubRemoteDatasourceImpl.getMyHubs: $response');
+      final response = await _apiService.getMyHubs(pageNo, pageSize, sortBy);
       return switch (response) {
         ApiResponseSuccess(:final data) => data,
         ApiResponseFailure(:final message, :final error) =>
           throw ServerException(message, error),
       };
     } on DioException catch (e) {
-      throw DioExceptionMapper.mapToException(e, 'Failed to get my hubs');
+      throw DioExceptionMapper.mapToException(
+        e,
+        'Failed to fetch your FanHubs',
+      );
     } catch (e, stack) {
-      debugPrint('Other error: $e');
+      debugPrint('FanHubRemoteDataSourceImpl.getMyHubs error: $e');
       debugPrint('Stack: $stack');
       rethrow;
     }
   }
 
   @override
-  Future<FanHub?> getMyHubAsOwner() async {
+  Future<FanHub> getMyHubsAsOwner() async {
     try {
-      final response = await _fanHubApi.getMyHubsAsOwner();
+      final response = await _apiService.getMyHubsAsOwner();
       return switch (response) {
         ApiResponseSuccess(:final data) => data,
-        ApiResponseFailure(:final message) => 
-          (message == 'Forbidden' || message == 'Access Denied') ? null : throw Exception(message),
+        ApiResponseFailure(:final message, :final error) =>
+          throw ServerException(message, error),
       };
     } on DioException catch (e) {
-      if (e.response?.statusCode == 404 || e.response?.statusCode == 403) return null;
-      throw DioExceptionMapper.mapToException(e, 'Failed to get owner hub');
+      throw DioExceptionMapper.mapToException(
+        e,
+        'Failed to fetch your owned FanHub',
+      );
     } catch (e, stack) {
-      debugPrint('FanHubRemoteDatasourceImpl.getMyHubAsOwner error: $e');
+      debugPrint('FanHubRemoteDataSourceImpl.getMyHubsAsOwner error: $e');
+      debugPrint('Stack: $stack');
+      rethrow;
+    }
+  }
+
+  @override
+  Future<List<FanHub>> searchHubs({
+    required String keyword,
+    required int pageNo,
+    required int pageSize,
+    required String sortBy,
+    required String sortDir,
+  }) async {
+    try {
+      final response = await _apiService.searchHubs(
+        keyword,
+        pageNo,
+        pageSize,
+        sortBy,
+        sortDir,
+      );
+      return switch (response) {
+        ApiResponseSuccess(:final data) => data,
+        ApiResponseFailure(:final message, :final error) =>
+          throw ServerException(message, error),
+      };
+    } on DioException catch (e) {
+      throw DioExceptionMapper.mapToException(e, 'Failed to search FanHubs');
+    } catch (e, stack) {
+      debugPrint('FanHubRemoteDataSourceImpl.searchHubs error: $e');
+      debugPrint('Stack: $stack');
+      rethrow;
+    }
+  }
+
+  @override
+  Future<void> createFanHub({
+    required CreateFanHubRequest request,
+    String? bannerPath,
+    String? avatarPath,
+  }) async {
+    try {
+      final requestPart = MultipartFile.fromString(
+        jsonEncode(request.toJson()),
+        contentType: MediaType.parse(ApiConstants.contentTypeJson),
+      );
+
+      MultipartFile? banner;
+      if (bannerPath != null) {
+        final mimeType = lookupMimeType(bannerPath) ?? 'image/jpeg';
+        banner = await MultipartFile.fromFile(
+          bannerPath,
+          contentType: MediaType.parse(mimeType),
+        );
+      }
+
+      MultipartFile? avatar;
+      if (avatarPath != null) {
+        final mimeType = lookupMimeType(avatarPath) ?? 'image/jpeg';
+        avatar = await MultipartFile.fromFile(
+          avatarPath,
+          contentType: MediaType.parse(mimeType),
+        );
+      }
+
+      final response = await _apiService.createFanHub(
+        requestPart,
+        banner,
+        avatar,
+      );
+
+      switch (response) {
+        case ApiResponseSuccess():
+          return;
+        case ApiResponseFailure(:final message, :final error):
+          throw ServerException(message, error);
+      }
+    } on DioException catch (e) {
+      throw DioExceptionMapper.mapToException(e, 'Failed to create FanHub');
+    } catch (e, stack) {
+      debugPrint('FanHubRemoteDataSourceImpl.createFanHub error: $e');
+      debugPrint('Stack: $stack');
+      rethrow;
+    }
+  }
+
+  @override
+  Future<void> uploadFanHubImages({
+    required int fanHubId,
+    required List<String> backgrounds,
+    String? bannerPath,
+    String? avatarPath,
+  }) async {
+    try {
+      MultipartFile? banner;
+      if (bannerPath != null) {
+        final mimeType = lookupMimeType(bannerPath) ?? 'image/jpeg';
+        banner = await MultipartFile.fromFile(
+          bannerPath,
+          contentType: MediaType.parse(mimeType),
+        );
+      }
+
+      MultipartFile? avatar;
+      if (avatarPath != null) {
+        final mimeType = lookupMimeType(avatarPath) ?? 'image/jpeg';
+        avatar = await MultipartFile.fromFile(
+          avatarPath,
+          contentType: MediaType.parse(mimeType),
+        );
+      }
+
+      final response = await _apiService.uploadFanHub(
+        fanHubId,
+        backgrounds,
+        banner,
+        avatar,
+      );
+
+      switch (response) {
+        case ApiResponseSuccess():
+          return;
+        case ApiResponseFailure(:final message, :final error):
+          throw ServerException(message, error);
+      }
+    } on DioException catch (e) {
+      throw DioExceptionMapper.mapToException(e, 'Failed to upload images');
+    } catch (e, stack) {
+      debugPrint('FanHubRemoteDataSourceImpl.uploadFanHubImages error: $e');
       debugPrint('Stack: $stack');
       rethrow;
     }

@@ -1,6 +1,6 @@
 import 'package:sep490_mo/features/fanhub/data/models/fanhub_models.dart';
 
-abstract class FanHubRemoteDatasource {
+abstract class FanHubRemoteDataSource {
   Future<List<FanHub>> getFanHubs({
     required int pageNo,
     required int pageSize,
@@ -22,7 +22,26 @@ abstract class FanHubRemoteDatasource {
     required String sortBy,
   });
 
-  Future<FanHub?> getMyHubAsOwner();
+  Future<FanHub> getMyHubsAsOwner();
 
-  Future<void> createFanHub(CreateFanHubRequest request);
+  Future<List<FanHub>> searchHubs({
+    required String keyword,
+    required int pageNo,
+    required int pageSize,
+    required String sortBy,
+    required String sortDir,
+  });
+
+  Future<void> createFanHub({
+    required CreateFanHubRequest request,
+    String? bannerPath,
+    String? avatarPath,
+  });
+
+  Future<void> uploadFanHubImages({
+    required int fanHubId,
+    required List<String> backgrounds,
+    String? bannerPath,
+    String? avatarPath,
+  });
 }

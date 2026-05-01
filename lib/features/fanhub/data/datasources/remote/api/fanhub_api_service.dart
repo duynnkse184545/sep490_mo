@@ -39,22 +39,35 @@ abstract class FanHubApiService {
   @GET('/fan-hub/my-hub-as-owner')
   Future<ApiResponse<FanHub>> getMyHubsAsOwner();
 
-  @POST('/fan-hub/create')
-  Future<ApiResponse> createFanHub(@Body() CreateFanHubRequest request);
+  @GET('/fan-hub/search')
+  Future<ApiResponse<List<FanHub>>> searchHubs(
+    @Query('keyword') String keyword,
+    @Query('pageNo') int pageNo,
+    @Query('pageSize') int pageSize,
+    @Query('sortBy') String sortBy,
+    @Query('sortDir') String sortDir,
+  );
+
+  @POST('/fan-hub/create/v2')
+  @MultiPart()
+  Future<ApiResponse> createFanHub(
+    @Part() MultipartFile request,
+    @Part() MultipartFile? banner,
+    @Part() MultipartFile? avatar,
+  );
 
   @POST('/fan-hub/upload-images/{fanHubId}')
+  @MultiPart()
   Future<ApiResponse> uploadFanHub(
     @Path('fanHubId') int fanHubId,
     @Query('backgrounds') List<String> backgrounds,
-    @Body() FanHubUploadRequest request,
+    @Part() MultipartFile? banner,
+    @Part() MultipartFile? avatar,
   );
-  // @POST('/vhub/api/v1/fan-hub/upload-images/{fanHubId}')
-  // @MultiPart()
-  // Future<Response> uploadFanHubImages({
-  //   @Path('fanHubId') required int fanHubId,
-  //   @Part(name: 'backgrounds') required List<MultipartFile> backgrounds,
-  //   @Part(name: 'banner') required String banner,
-  //   @Part(name: 'avatar') required String avatar,
-  // });
-  // If banner/avatar are actual file uploads (base64 or URLs), they'd stay as String; if they're multipart files, you'd switch the body to @MultiPart() with @Part() annotations instead
+
+  @PATCH('/fan-hub/update/{fanHubId}')
+  Future<ApiResponse> updateFanHub(
+    @Path('fanHubId') int fanHubId,
+    @Body() UpdateFanHubRequest request,
+  );
 }

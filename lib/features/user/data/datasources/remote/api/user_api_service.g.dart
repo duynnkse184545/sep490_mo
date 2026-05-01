@@ -184,14 +184,16 @@ class _UserApiService implements UserApiService {
   @override
   Future<ApiResponse<dynamic>> updateAvatarFrame(
     String? frame,
-    MultipartFile avatar,
+    MultipartFile? avatar,
   ) async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{r'frame': frame};
     queryParameters.removeWhere((k, v) => v == null);
     final _headers = <String, dynamic>{};
     final _data = FormData();
-    _data.files.add(MapEntry('avatar', avatar));
+    if (avatar != null) {
+      _data.files.add(MapEntry('avatar', avatar));
+    }
     final _options = _setStreamType<ApiResponse<dynamic>>(
       Options(
             method: 'POST',

@@ -60,14 +60,16 @@ _MemberCheckingResponse _$MemberCheckingResponseFromJson(
   Map<String, dynamic> json,
 ) => _MemberCheckingResponse(
   isMember: json['isMember'] as bool,
-  roleInHub: $enumDecode(_$MemberRoleEnumMap, json['roleInHub']),
+  roleInHub: $enumDecodeNullable(_$MemberRoleEnumMap, json['roleInHub']),
+  status: $enumDecodeNullable(_$MemberStatusEnumMap, json['status']),
 );
 
 Map<String, dynamic> _$MemberCheckingResponseToJson(
   _MemberCheckingResponse instance,
 ) => <String, dynamic>{
   'isMember': instance.isMember,
-  'roleInHub': _$MemberRoleEnumMap[instance.roleInHub]!,
+  'roleInHub': _$MemberRoleEnumMap[instance.roleInHub],
+  'status': _$MemberStatusEnumMap[instance.status],
 };
 
 _BanRequest _$BanRequestFromJson(Map<String, dynamic> json) => _BanRequest(

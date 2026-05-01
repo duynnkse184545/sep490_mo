@@ -1,4 +1,3 @@
-import 'dart:io';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:sep490_mo/features/user/data/models/user_models.dart';
 import 'package:sep490_mo/features/user/data/providers/user_providers.dart';
@@ -31,11 +30,11 @@ class UserProfileController extends _$UserProfileController {
     );
   }
 
-  Future<void> updateAvatarFrame({String? frameName, required File avatarFile}) async {
+  Future<void> updateAvatarFrame({String? frameName, String? avatarPath}) async {
     state = const AsyncValue.loading();
     final result = await ref.read(userRepositoryProvider).updateAvatarFrame(
       frameName: frameName,
-      avatarFile: avatarFile,
+      avatarPath: avatarPath,
     ).run();
     
     result.fold(

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:sep490_mo/app/router/routes.dart';
 import 'package:sep490_mo/core/theme/app_colors.dart';
 import 'package:sep490_mo/core/widgets/error_retry_widget.dart';
@@ -20,6 +22,15 @@ class UserProfileScreen extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final profileAsync = ref.watch(userProfileControllerProvider);
     final controller = ref.read(userProfileControllerProvider.notifier);
+    
+    final picker = useMemoized(() => ImagePicker());
+
+    Future<void> pickAvatar() async {
+      final pickedFile = await picker.pickImage(source: ImageSource.gallery);
+      if (pickedFile != null) {
+        controller.updateAvatarFrame(avatarPath: pickedFile.path);
+      }
+    }
 
     return Scaffold(
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
@@ -39,9 +50,7 @@ class UserProfileScreen extends HookConsumerWidget {
                   children: [
                     ProfileHeader(
                       user: user,
-                      onEdit: () {
-                        // TODO: Implement edit avatar
-                      },
+                      onPickAvatar: pickAvatar,
                     ),
                     const SizedBox(height: 8),
                     ProfileStats(user: user),

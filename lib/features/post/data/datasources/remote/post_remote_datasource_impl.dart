@@ -1,7 +1,10 @@
+import 'dart:convert';
+
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:http_parser/http_parser.dart';
 import 'package:mime/mime.dart';
+import 'package:sep490_mo/core/constants/api_constants.dart';
 import 'package:sep490_mo/core/error/dio_exception_mapper.dart';
 import 'package:sep490_mo/core/error/exceptions.dart';
 import 'package:sep490_mo/core/models/api_response_wrapper.dart';
@@ -33,8 +36,13 @@ class PostRemoteDatasourceImpl implements PostRemoteDataSource {
         video = await MultipartFile.fromFile(videoPath, contentType: MediaType.parse(mimeType));
       }
 
+      final requestPart = MultipartFile.fromString(
+        jsonEncode(request.toJson()),
+        contentType: MediaType.parse(ApiConstants.contentTypeJson),
+      ); 
+
       final response = await _postApi.createPost(
-        request,
+        requestPart,
         images,
         video,
       );

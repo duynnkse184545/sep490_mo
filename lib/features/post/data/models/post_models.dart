@@ -162,6 +162,8 @@ abstract class CreatePostRequest with _$CreatePostRequest {
     @Default([]) List<String>? hashtags,
     @Default(false) bool isAnnouncement,
     @Default(false) bool isSchedule,
+    DateTime? startTime,
+    DateTime? endTime,
   }) = _CreatePostRequest;
 
   factory CreatePostRequest.fromJson(Map<String, dynamic> json) =>

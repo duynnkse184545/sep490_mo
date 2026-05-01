@@ -261,6 +261,10 @@ RouteBase get $fanHubDetailRoute => GoRouteData.$route(
       path: 'moderation',
       factory: $ModerationRoute._fromState,
     ),
+    GoRouteData.$route(
+      path: 'join-questions-settings',
+      factory: $JoinQuestionsManagementRoute._fromState,
+    ),
   ],
 );
 
@@ -370,6 +374,36 @@ mixin $ModerationRoute on GoRouteData {
       'fan-hub-id': _self.fanHubId.toString(),
       if (_self.initialTab != 0) 'initial-tab': _self.initialTab.toString(),
     },
+  );
+
+  @override
+  void go(BuildContext context) => context.go(location);
+
+  @override
+  Future<T?> push<T>(BuildContext context) => context.push<T>(location);
+
+  @override
+  void pushReplacement(BuildContext context) =>
+      context.pushReplacement(location);
+
+  @override
+  void replace(BuildContext context) => context.replace(location);
+}
+
+mixin $JoinQuestionsManagementRoute on GoRouteData {
+  static JoinQuestionsManagementRoute _fromState(GoRouterState state) =>
+      JoinQuestionsManagementRoute(
+        subdomain: state.pathParameters['subdomain']!,
+        fanHubId: int.parse(state.uri.queryParameters['fan-hub-id']!),
+      );
+
+  JoinQuestionsManagementRoute get _self =>
+      this as JoinQuestionsManagementRoute;
+
+  @override
+  String get location => GoRouteData.$location(
+    '/explore/${Uri.encodeComponent(_self.subdomain)}/join-questions-settings',
+    queryParams: {'fan-hub-id': _self.fanHubId.toString()},
   );
 
   @override

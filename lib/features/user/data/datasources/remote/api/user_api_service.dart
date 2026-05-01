@@ -31,7 +31,7 @@ abstract class UserApiService {
   @MultiPart()
   Future<ApiResponse> updateAvatarFrame(
     @Query('frame') String? frame,
-    @Part() MultipartFile avatar
+    @Part(name: "avatar") MultipartFile? avatar
   );
 
   @POST('/user/set-oshi')

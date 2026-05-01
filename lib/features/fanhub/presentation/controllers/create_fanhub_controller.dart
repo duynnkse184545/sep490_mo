@@ -13,12 +13,20 @@ class CreateFanHubController extends _$CreateFanHubController {
     return const CreateFanHubState.initial();
   }
 
-  Future<void> createFanHub(CreateFanHubRequest request) async {
+  Future<void> createFanHub(
+    CreateFanHubRequest request, {
+    String? bannerPath,
+    String? avatarPath,
+  }) async {
     state = const CreateFanHubState.loading();
 
     final result = await ref
         .read(fanHubRepositoryProvider)
-        .createFanHub(request)
+        .createFanHub(
+          request: request,
+          bannerPath: bannerPath,
+          avatarPath: avatarPath,
+        )
         .run();
 
     result.fold(

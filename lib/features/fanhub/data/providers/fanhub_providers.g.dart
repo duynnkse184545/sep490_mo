@@ -61,11 +61,11 @@ final fanHubRemoteDataSourceProvider = FanHubRemoteDataSourceProvider._();
 final class FanHubRemoteDataSourceProvider
     extends
         $FunctionalProvider<
-          FanHubRemoteDatasource,
-          FanHubRemoteDatasource,
-          FanHubRemoteDatasource
+          FanHubRemoteDataSource,
+          FanHubRemoteDataSource,
+          FanHubRemoteDataSource
         >
-    with $Provider<FanHubRemoteDatasource> {
+    with $Provider<FanHubRemoteDataSource> {
   FanHubRemoteDataSourceProvider._()
     : super(
         from: null,
@@ -82,26 +82,26 @@ final class FanHubRemoteDataSourceProvider
 
   @$internal
   @override
-  $ProviderElement<FanHubRemoteDatasource> $createElement(
+  $ProviderElement<FanHubRemoteDataSource> $createElement(
     $ProviderPointer pointer,
   ) => $ProviderElement(pointer);
 
   @override
-  FanHubRemoteDatasource create(Ref ref) {
+  FanHubRemoteDataSource create(Ref ref) {
     return fanHubRemoteDataSource(ref);
   }
 
   /// {@macro riverpod.override_with_value}
-  Override overrideWithValue(FanHubRemoteDatasource value) {
+  Override overrideWithValue(FanHubRemoteDataSource value) {
     return $ProviderOverride(
       origin: this,
-      providerOverride: $SyncValueProvider<FanHubRemoteDatasource>(value),
+      providerOverride: $SyncValueProvider<FanHubRemoteDataSource>(value),
     );
   }
 }
 
 String _$fanHubRemoteDataSourceHash() =>
-    r'bc0053094fc584f280cfa09086ff4c5740ea15ef';
+    r'c1427ed069fce9d11156ba7286f145b687a27eb5';
 
 @ProviderFor(fanHubRepository)
 final fanHubRepositoryProvider = FanHubRepositoryProvider._();

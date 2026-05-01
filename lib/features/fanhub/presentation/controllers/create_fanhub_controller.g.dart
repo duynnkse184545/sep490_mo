@@ -42,7 +42,7 @@ final class CreateFanHubControllerProvider
 }
 
 String _$createFanHubControllerHash() =>
-    r'ed8ba36e0e30aa95db460f669ec1956990487919';
+    r'fbc15c2c55bfdcc94b76768c2b83699e1e2cd597';
 
 abstract class _$CreateFanHubController extends $Notifier<CreateFanHubState> {
   CreateFanHubState build();

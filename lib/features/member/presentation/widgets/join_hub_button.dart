@@ -1,13 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:sep490_mo/features/member/data/models/member_models.dart';
 import 'package:sep490_mo/features/member/presentation/controllers/member_checking_controller.dart';
+import 'package:sep490_mo/features/member/presentation/widgets/join_questions_modal.dart';
 
 class JoinHubButton extends ConsumerWidget {
   final int fanHubId;
+  final bool requiresApproval;
 
   const JoinHubButton({
     super.key,
     required this.fanHubId,
+    this.requiresApproval = false,
   });
 
   @override
@@ -17,9 +21,25 @@ class JoinHubButton extends ConsumerWidget {
 
     return memberAsync.when(
       data: (memberResponse) {
-        final isMember = memberResponse.isMember;
+        // Owners (VTubers) don't need to join or leave their own hub
+        if (memberResponse.roleInHub == MemberRole.vtuber) {
+          return const SizedBox.shrink();
+        }
 
-        if (isMember) {
+        if (memberResponse.status == MemberStatus.pending) {
+          return ElevatedButton.icon(
+            onPressed: null,
+            icon: const Icon(Icons.hourglass_empty, size: 18),
+            label: const Text('Pending Approval'),
+            style: ElevatedButton.styleFrom(
+              backgroundColor: Colors.grey.shade400,
+              disabledBackgroundColor: Colors.grey.shade400,
+              disabledForegroundColor: Colors.white70,
+            ),
+          );
+        }
+
+        if (memberResponse.status == MemberStatus.joined) {
           return OutlinedButton.icon(
             onPressed: () => _showLeaveDialog(context, controller),
             icon: const Icon(Icons.exit_to_app, size: 18),
@@ -29,13 +49,20 @@ class JoinHubButton extends ConsumerWidget {
               side: const BorderSide(color: Colors.red),
             ),
           );
-        } else {
-          return ElevatedButton.icon(
-            onPressed: () => controller.join(),
-            icon: const Icon(Icons.add),
-            label: const Text('Join Hub'),
-          );
         }
+
+        // Not joined and not pending (either never joined or rejected)
+        return ElevatedButton.icon(
+          onPressed: () {
+            if (requiresApproval) {
+              _showJoinModal(context);
+            } else {
+              controller.join();
+            }
+          },
+          icon: const Icon(Icons.add),
+          label: const Text('Join Hub'),
+        );
       },
       loading: () => const ElevatedButton(
         onPressed: null,
@@ -48,6 +75,22 @@ class JoinHubButton extends ConsumerWidget {
       error: (error, _) => ElevatedButton(
         onPressed: () => ref.invalidate(memberCheckingControllerProvider(fanHubId: fanHubId)),
         child: const Text('Retry'),
+      ),
+    );
+  }
+
+  void _showJoinModal(BuildContext context) {
+    showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      backgroundColor: Colors.transparent,
+      builder: (context) => JoinQuestionsModal(
+        fanHubId: fanHubId,
+        onSuccess: () {
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(content: Text('Join request submitted successfully!')),
+          );
+        },
       ),
     );
   }

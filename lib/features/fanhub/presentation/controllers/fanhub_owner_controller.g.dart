@@ -34,7 +34,7 @@ final class FanHubOwnerControllerProvider
 }
 
 String _$fanHubOwnerControllerHash() =>
-    r'f59034fa59cc069bb8063981a2b5c11bc868f262';
+    r'ea61c05ac8ee2801bf025afbc1da1573d70d707f';
 
 abstract class _$FanHubOwnerController extends $AsyncNotifier<FanHub?> {
   FutureOr<FanHub?> build();

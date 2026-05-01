@@ -123,7 +123,7 @@ class _PostApiService implements PostApiService {
 
   @override
   Future<ApiResponse<dynamic>> createPost(
-    CreatePostRequest request,
+    MultipartFile request,
     List<MultipartFile>? images,
     MultipartFile? video,
   ) async {
@@ -131,7 +131,14 @@ class _PostApiService implements PostApiService {
     final queryParameters = <String, dynamic>{};
     queryParameters.removeWhere((k, v) => v == null);
     final _headers = <String, dynamic>{};
-    final _data = request;
+    final _data = FormData();
+    _data.files.add(MapEntry('request', request));
+    if (images != null) {
+      _data.files.addAll(images.map((i) => MapEntry('images', i)));
+    }
+    if (video != null) {
+      _data.files.add(MapEntry('video', video));
+    }
     final _options = _setStreamType<ApiResponse<dynamic>>(
       Options(
             method: 'POST',

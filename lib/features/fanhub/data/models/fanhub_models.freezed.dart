@@ -1178,7 +1178,7 @@ as bool,
 /// @nodoc
 mixin _$UpdateFanHubRequest {
 
- String? get hubName; String? get description; String? get bannerUrl; String? get backgroundUrl; String? get themeColor; String? get avatarUrl; bool? get isPrivate; bool? get requiresApproval; List<String>? get categories; List<String>? get highlightImgUrls;
+ String? get hubName; String? get subdomain; String? get description; String? get themeColor; bool? get isPrivate; bool? get requiresApproval; List<String>? get category;
 /// Create a copy of UpdateFanHubRequest
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -1191,16 +1191,16 @@ $UpdateFanHubRequestCopyWith<UpdateFanHubRequest> get copyWith => _$UpdateFanHub
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is UpdateFanHubRequest&&(identical(other.hubName, hubName) || other.hubName == hubName)&&(identical(other.description, description) || other.description == description)&&(identical(other.bannerUrl, bannerUrl) || other.bannerUrl == bannerUrl)&&(identical(other.backgroundUrl, backgroundUrl) || other.backgroundUrl == backgroundUrl)&&(identical(other.themeColor, themeColor) || other.themeColor == themeColor)&&(identical(other.avatarUrl, avatarUrl) || other.avatarUrl == avatarUrl)&&(identical(other.isPrivate, isPrivate) || other.isPrivate == isPrivate)&&(identical(other.requiresApproval, requiresApproval) || other.requiresApproval == requiresApproval)&&const DeepCollectionEquality().equals(other.categories, categories)&&const DeepCollectionEquality().equals(other.highlightImgUrls, highlightImgUrls));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is UpdateFanHubRequest&&(identical(other.hubName, hubName) || other.hubName == hubName)&&(identical(other.subdomain, subdomain) || other.subdomain == subdomain)&&(identical(other.description, description) || other.description == description)&&(identical(other.themeColor, themeColor) || other.themeColor == themeColor)&&(identical(other.isPrivate, isPrivate) || other.isPrivate == isPrivate)&&(identical(other.requiresApproval, requiresApproval) || other.requiresApproval == requiresApproval)&&const DeepCollectionEquality().equals(other.category, category));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,hubName,description,bannerUrl,backgroundUrl,themeColor,avatarUrl,isPrivate,requiresApproval,const DeepCollectionEquality().hash(categories),const DeepCollectionEquality().hash(highlightImgUrls));
+int get hashCode => Object.hash(runtimeType,hubName,subdomain,description,themeColor,isPrivate,requiresApproval,const DeepCollectionEquality().hash(category));
 
 @override
 String toString() {
-  return 'UpdateFanHubRequest(hubName: $hubName, description: $description, bannerUrl: $bannerUrl, backgroundUrl: $backgroundUrl, themeColor: $themeColor, avatarUrl: $avatarUrl, isPrivate: $isPrivate, requiresApproval: $requiresApproval, categories: $categories, highlightImgUrls: $highlightImgUrls)';
+  return 'UpdateFanHubRequest(hubName: $hubName, subdomain: $subdomain, description: $description, themeColor: $themeColor, isPrivate: $isPrivate, requiresApproval: $requiresApproval, category: $category)';
 }
 
 
@@ -1211,7 +1211,7 @@ abstract mixin class $UpdateFanHubRequestCopyWith<$Res>  {
   factory $UpdateFanHubRequestCopyWith(UpdateFanHubRequest value, $Res Function(UpdateFanHubRequest) _then) = _$UpdateFanHubRequestCopyWithImpl;
 @useResult
 $Res call({
- String? hubName, String? description, String? bannerUrl, String? backgroundUrl, String? themeColor, String? avatarUrl, bool? isPrivate, bool? requiresApproval, List<String>? categories, List<String>? highlightImgUrls
+ String? hubName, String? subdomain, String? description, String? themeColor, bool? isPrivate, bool? requiresApproval, List<String>? category
 });
 
 
@@ -1228,18 +1228,15 @@ class _$UpdateFanHubRequestCopyWithImpl<$Res>
 
 /// Create a copy of UpdateFanHubRequest
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? hubName = freezed,Object? description = freezed,Object? bannerUrl = freezed,Object? backgroundUrl = freezed,Object? themeColor = freezed,Object? avatarUrl = freezed,Object? isPrivate = freezed,Object? requiresApproval = freezed,Object? categories = freezed,Object? highlightImgUrls = freezed,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? hubName = freezed,Object? subdomain = freezed,Object? description = freezed,Object? themeColor = freezed,Object? isPrivate = freezed,Object? requiresApproval = freezed,Object? category = freezed,}) {
   return _then(_self.copyWith(
 hubName: freezed == hubName ? _self.hubName : hubName // ignore: cast_nullable_to_non_nullable
+as String?,subdomain: freezed == subdomain ? _self.subdomain : subdomain // ignore: cast_nullable_to_non_nullable
 as String?,description: freezed == description ? _self.description : description // ignore: cast_nullable_to_non_nullable
-as String?,bannerUrl: freezed == bannerUrl ? _self.bannerUrl : bannerUrl // ignore: cast_nullable_to_non_nullable
-as String?,backgroundUrl: freezed == backgroundUrl ? _self.backgroundUrl : backgroundUrl // ignore: cast_nullable_to_non_nullable
 as String?,themeColor: freezed == themeColor ? _self.themeColor : themeColor // ignore: cast_nullable_to_non_nullable
-as String?,avatarUrl: freezed == avatarUrl ? _self.avatarUrl : avatarUrl // ignore: cast_nullable_to_non_nullable
 as String?,isPrivate: freezed == isPrivate ? _self.isPrivate : isPrivate // ignore: cast_nullable_to_non_nullable
 as bool?,requiresApproval: freezed == requiresApproval ? _self.requiresApproval : requiresApproval // ignore: cast_nullable_to_non_nullable
-as bool?,categories: freezed == categories ? _self.categories : categories // ignore: cast_nullable_to_non_nullable
-as List<String>?,highlightImgUrls: freezed == highlightImgUrls ? _self.highlightImgUrls : highlightImgUrls // ignore: cast_nullable_to_non_nullable
+as bool?,category: freezed == category ? _self.category : category // ignore: cast_nullable_to_non_nullable
 as List<String>?,
   ));
 }
@@ -1325,10 +1322,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String? hubName,  String? description,  String? bannerUrl,  String? backgroundUrl,  String? themeColor,  String? avatarUrl,  bool? isPrivate,  bool? requiresApproval,  List<String>? categories,  List<String>? highlightImgUrls)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String? hubName,  String? subdomain,  String? description,  String? themeColor,  bool? isPrivate,  bool? requiresApproval,  List<String>? category)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _UpdateFanHubRequest() when $default != null:
-return $default(_that.hubName,_that.description,_that.bannerUrl,_that.backgroundUrl,_that.themeColor,_that.avatarUrl,_that.isPrivate,_that.requiresApproval,_that.categories,_that.highlightImgUrls);case _:
+return $default(_that.hubName,_that.subdomain,_that.description,_that.themeColor,_that.isPrivate,_that.requiresApproval,_that.category);case _:
   return orElse();
 
 }
@@ -1346,10 +1343,10 @@ return $default(_that.hubName,_that.description,_that.bannerUrl,_that.background
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String? hubName,  String? description,  String? bannerUrl,  String? backgroundUrl,  String? themeColor,  String? avatarUrl,  bool? isPrivate,  bool? requiresApproval,  List<String>? categories,  List<String>? highlightImgUrls)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String? hubName,  String? subdomain,  String? description,  String? themeColor,  bool? isPrivate,  bool? requiresApproval,  List<String>? category)  $default,) {final _that = this;
 switch (_that) {
 case _UpdateFanHubRequest():
-return $default(_that.hubName,_that.description,_that.bannerUrl,_that.backgroundUrl,_that.themeColor,_that.avatarUrl,_that.isPrivate,_that.requiresApproval,_that.categories,_that.highlightImgUrls);case _:
+return $default(_that.hubName,_that.subdomain,_that.description,_that.themeColor,_that.isPrivate,_that.requiresApproval,_that.category);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -1366,10 +1363,10 @@ return $default(_that.hubName,_that.description,_that.bannerUrl,_that.background
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String? hubName,  String? description,  String? bannerUrl,  String? backgroundUrl,  String? themeColor,  String? avatarUrl,  bool? isPrivate,  bool? requiresApproval,  List<String>? categories,  List<String>? highlightImgUrls)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String? hubName,  String? subdomain,  String? description,  String? themeColor,  bool? isPrivate,  bool? requiresApproval,  List<String>? category)?  $default,) {final _that = this;
 switch (_that) {
 case _UpdateFanHubRequest() when $default != null:
-return $default(_that.hubName,_that.description,_that.bannerUrl,_that.backgroundUrl,_that.themeColor,_that.avatarUrl,_that.isPrivate,_that.requiresApproval,_that.categories,_that.highlightImgUrls);case _:
+return $default(_that.hubName,_that.subdomain,_that.description,_that.themeColor,_that.isPrivate,_that.requiresApproval,_that.category);case _:
   return null;
 
 }
@@ -1381,31 +1378,20 @@ return $default(_that.hubName,_that.description,_that.bannerUrl,_that.background
 @JsonSerializable()
 
 class _UpdateFanHubRequest implements UpdateFanHubRequest {
-  const _UpdateFanHubRequest({this.hubName, this.description, this.bannerUrl, this.backgroundUrl, this.themeColor, this.avatarUrl, this.isPrivate, this.requiresApproval, final  List<String>? categories, final  List<String>? highlightImgUrls}): _categories = categories,_highlightImgUrls = highlightImgUrls;
+  const _UpdateFanHubRequest({this.hubName, this.subdomain, this.description, this.themeColor, this.isPrivate, this.requiresApproval, final  List<String>? category}): _category = category;
   factory _UpdateFanHubRequest.fromJson(Map<String, dynamic> json) => _$UpdateFanHubRequestFromJson(json);
 
 @override final  String? hubName;
+@override final  String? subdomain;
 @override final  String? description;
-@override final  String? bannerUrl;
-@override final  String? backgroundUrl;
 @override final  String? themeColor;
-@override final  String? avatarUrl;
 @override final  bool? isPrivate;
 @override final  bool? requiresApproval;
- final  List<String>? _categories;
-@override List<String>? get categories {
-  final value = _categories;
+ final  List<String>? _category;
+@override List<String>? get category {
+  final value = _category;
   if (value == null) return null;
-  if (_categories is EqualUnmodifiableListView) return _categories;
-  // ignore: implicit_dynamic_type
-  return EqualUnmodifiableListView(value);
-}
-
- final  List<String>? _highlightImgUrls;
-@override List<String>? get highlightImgUrls {
-  final value = _highlightImgUrls;
-  if (value == null) return null;
-  if (_highlightImgUrls is EqualUnmodifiableListView) return _highlightImgUrls;
+  if (_category is EqualUnmodifiableListView) return _category;
   // ignore: implicit_dynamic_type
   return EqualUnmodifiableListView(value);
 }
@@ -1424,16 +1410,16 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _UpdateFanHubRequest&&(identical(other.hubName, hubName) || other.hubName == hubName)&&(identical(other.description, description) || other.description == description)&&(identical(other.bannerUrl, bannerUrl) || other.bannerUrl == bannerUrl)&&(identical(other.backgroundUrl, backgroundUrl) || other.backgroundUrl == backgroundUrl)&&(identical(other.themeColor, themeColor) || other.themeColor == themeColor)&&(identical(other.avatarUrl, avatarUrl) || other.avatarUrl == avatarUrl)&&(identical(other.isPrivate, isPrivate) || other.isPrivate == isPrivate)&&(identical(other.requiresApproval, requiresApproval) || other.requiresApproval == requiresApproval)&&const DeepCollectionEquality().equals(other._categories, _categories)&&const DeepCollectionEquality().equals(other._highlightImgUrls, _highlightImgUrls));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _UpdateFanHubRequest&&(identical(other.hubName, hubName) || other.hubName == hubName)&&(identical(other.subdomain, subdomain) || other.subdomain == subdomain)&&(identical(other.description, description) || other.description == description)&&(identical(other.themeColor, themeColor) || other.themeColor == themeColor)&&(identical(other.isPrivate, isPrivate) || other.isPrivate == isPrivate)&&(identical(other.requiresApproval, requiresApproval) || other.requiresApproval == requiresApproval)&&const DeepCollectionEquality().equals(other._category, _category));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,hubName,description,bannerUrl,backgroundUrl,themeColor,avatarUrl,isPrivate,requiresApproval,const DeepCollectionEquality().hash(_categories),const DeepCollectionEquality().hash(_highlightImgUrls));
+int get hashCode => Object.hash(runtimeType,hubName,subdomain,description,themeColor,isPrivate,requiresApproval,const DeepCollectionEquality().hash(_category));
 
 @override
 String toString() {
-  return 'UpdateFanHubRequest(hubName: $hubName, description: $description, bannerUrl: $bannerUrl, backgroundUrl: $backgroundUrl, themeColor: $themeColor, avatarUrl: $avatarUrl, isPrivate: $isPrivate, requiresApproval: $requiresApproval, categories: $categories, highlightImgUrls: $highlightImgUrls)';
+  return 'UpdateFanHubRequest(hubName: $hubName, subdomain: $subdomain, description: $description, themeColor: $themeColor, isPrivate: $isPrivate, requiresApproval: $requiresApproval, category: $category)';
 }
 
 
@@ -1444,7 +1430,7 @@ abstract mixin class _$UpdateFanHubRequestCopyWith<$Res> implements $UpdateFanHu
   factory _$UpdateFanHubRequestCopyWith(_UpdateFanHubRequest value, $Res Function(_UpdateFanHubRequest) _then) = __$UpdateFanHubRequestCopyWithImpl;
 @override @useResult
 $Res call({
- String? hubName, String? description, String? bannerUrl, String? backgroundUrl, String? themeColor, String? avatarUrl, bool? isPrivate, bool? requiresApproval, List<String>? categories, List<String>? highlightImgUrls
+ String? hubName, String? subdomain, String? description, String? themeColor, bool? isPrivate, bool? requiresApproval, List<String>? category
 });
 
 
@@ -1461,285 +1447,16 @@ class __$UpdateFanHubRequestCopyWithImpl<$Res>
 
 /// Create a copy of UpdateFanHubRequest
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? hubName = freezed,Object? description = freezed,Object? bannerUrl = freezed,Object? backgroundUrl = freezed,Object? themeColor = freezed,Object? avatarUrl = freezed,Object? isPrivate = freezed,Object? requiresApproval = freezed,Object? categories = freezed,Object? highlightImgUrls = freezed,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? hubName = freezed,Object? subdomain = freezed,Object? description = freezed,Object? themeColor = freezed,Object? isPrivate = freezed,Object? requiresApproval = freezed,Object? category = freezed,}) {
   return _then(_UpdateFanHubRequest(
 hubName: freezed == hubName ? _self.hubName : hubName // ignore: cast_nullable_to_non_nullable
+as String?,subdomain: freezed == subdomain ? _self.subdomain : subdomain // ignore: cast_nullable_to_non_nullable
 as String?,description: freezed == description ? _self.description : description // ignore: cast_nullable_to_non_nullable
-as String?,bannerUrl: freezed == bannerUrl ? _self.bannerUrl : bannerUrl // ignore: cast_nullable_to_non_nullable
-as String?,backgroundUrl: freezed == backgroundUrl ? _self.backgroundUrl : backgroundUrl // ignore: cast_nullable_to_non_nullable
 as String?,themeColor: freezed == themeColor ? _self.themeColor : themeColor // ignore: cast_nullable_to_non_nullable
-as String?,avatarUrl: freezed == avatarUrl ? _self.avatarUrl : avatarUrl // ignore: cast_nullable_to_non_nullable
 as String?,isPrivate: freezed == isPrivate ? _self.isPrivate : isPrivate // ignore: cast_nullable_to_non_nullable
 as bool?,requiresApproval: freezed == requiresApproval ? _self.requiresApproval : requiresApproval // ignore: cast_nullable_to_non_nullable
-as bool?,categories: freezed == categories ? _self._categories : categories // ignore: cast_nullable_to_non_nullable
-as List<String>?,highlightImgUrls: freezed == highlightImgUrls ? _self._highlightImgUrls : highlightImgUrls // ignore: cast_nullable_to_non_nullable
+as bool?,category: freezed == category ? _self._category : category // ignore: cast_nullable_to_non_nullable
 as List<String>?,
-  ));
-}
-
-
-}
-
-
-/// @nodoc
-mixin _$FanHubUploadRequest {
-
- String get avatar; String get banner;
-/// Create a copy of FanHubUploadRequest
-/// with the given fields replaced by the non-null parameter values.
-@JsonKey(includeFromJson: false, includeToJson: false)
-@pragma('vm:prefer-inline')
-$FanHubUploadRequestCopyWith<FanHubUploadRequest> get copyWith => _$FanHubUploadRequestCopyWithImpl<FanHubUploadRequest>(this as FanHubUploadRequest, _$identity);
-
-  /// Serializes this FanHubUploadRequest to a JSON map.
-  Map<String, dynamic> toJson();
-
-
-@override
-bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is FanHubUploadRequest&&(identical(other.avatar, avatar) || other.avatar == avatar)&&(identical(other.banner, banner) || other.banner == banner));
-}
-
-@JsonKey(includeFromJson: false, includeToJson: false)
-@override
-int get hashCode => Object.hash(runtimeType,avatar,banner);
-
-@override
-String toString() {
-  return 'FanHubUploadRequest(avatar: $avatar, banner: $banner)';
-}
-
-
-}
-
-/// @nodoc
-abstract mixin class $FanHubUploadRequestCopyWith<$Res>  {
-  factory $FanHubUploadRequestCopyWith(FanHubUploadRequest value, $Res Function(FanHubUploadRequest) _then) = _$FanHubUploadRequestCopyWithImpl;
-@useResult
-$Res call({
- String avatar, String banner
-});
-
-
-
-
-}
-/// @nodoc
-class _$FanHubUploadRequestCopyWithImpl<$Res>
-    implements $FanHubUploadRequestCopyWith<$Res> {
-  _$FanHubUploadRequestCopyWithImpl(this._self, this._then);
-
-  final FanHubUploadRequest _self;
-  final $Res Function(FanHubUploadRequest) _then;
-
-/// Create a copy of FanHubUploadRequest
-/// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? avatar = null,Object? banner = null,}) {
-  return _then(_self.copyWith(
-avatar: null == avatar ? _self.avatar : avatar // ignore: cast_nullable_to_non_nullable
-as String,banner: null == banner ? _self.banner : banner // ignore: cast_nullable_to_non_nullable
-as String,
-  ));
-}
-
-}
-
-
-/// Adds pattern-matching-related methods to [FanHubUploadRequest].
-extension FanHubUploadRequestPatterns on FanHubUploadRequest {
-/// A variant of `map` that fallback to returning `orElse`.
-///
-/// It is equivalent to doing:
-/// ```dart
-/// switch (sealedClass) {
-///   case final Subclass value:
-///     return ...;
-///   case _:
-///     return orElse();
-/// }
-/// ```
-
-@optionalTypeArgs TResult maybeMap<TResult extends Object?>(TResult Function( _FanHubUploadRequest value)?  $default,{required TResult orElse(),}){
-final _that = this;
-switch (_that) {
-case _FanHubUploadRequest() when $default != null:
-return $default(_that);case _:
-  return orElse();
-
-}
-}
-/// A `switch`-like method, using callbacks.
-///
-/// Callbacks receives the raw object, upcasted.
-/// It is equivalent to doing:
-/// ```dart
-/// switch (sealedClass) {
-///   case final Subclass value:
-///     return ...;
-///   case final Subclass2 value:
-///     return ...;
-/// }
-/// ```
-
-@optionalTypeArgs TResult map<TResult extends Object?>(TResult Function( _FanHubUploadRequest value)  $default,){
-final _that = this;
-switch (_that) {
-case _FanHubUploadRequest():
-return $default(_that);case _:
-  throw StateError('Unexpected subclass');
-
-}
-}
-/// A variant of `map` that fallback to returning `null`.
-///
-/// It is equivalent to doing:
-/// ```dart
-/// switch (sealedClass) {
-///   case final Subclass value:
-///     return ...;
-///   case _:
-///     return null;
-/// }
-/// ```
-
-@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>(TResult? Function( _FanHubUploadRequest value)?  $default,){
-final _that = this;
-switch (_that) {
-case _FanHubUploadRequest() when $default != null:
-return $default(_that);case _:
-  return null;
-
-}
-}
-/// A variant of `when` that fallback to an `orElse` callback.
-///
-/// It is equivalent to doing:
-/// ```dart
-/// switch (sealedClass) {
-///   case Subclass(:final field):
-///     return ...;
-///   case _:
-///     return orElse();
-/// }
-/// ```
-
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String avatar,  String banner)?  $default,{required TResult orElse(),}) {final _that = this;
-switch (_that) {
-case _FanHubUploadRequest() when $default != null:
-return $default(_that.avatar,_that.banner);case _:
-  return orElse();
-
-}
-}
-/// A `switch`-like method, using callbacks.
-///
-/// As opposed to `map`, this offers destructuring.
-/// It is equivalent to doing:
-/// ```dart
-/// switch (sealedClass) {
-///   case Subclass(:final field):
-///     return ...;
-///   case Subclass2(:final field2):
-///     return ...;
-/// }
-/// ```
-
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String avatar,  String banner)  $default,) {final _that = this;
-switch (_that) {
-case _FanHubUploadRequest():
-return $default(_that.avatar,_that.banner);case _:
-  throw StateError('Unexpected subclass');
-
-}
-}
-/// A variant of `when` that fallback to returning `null`
-///
-/// It is equivalent to doing:
-/// ```dart
-/// switch (sealedClass) {
-///   case Subclass(:final field):
-///     return ...;
-///   case _:
-///     return null;
-/// }
-/// ```
-
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String avatar,  String banner)?  $default,) {final _that = this;
-switch (_that) {
-case _FanHubUploadRequest() when $default != null:
-return $default(_that.avatar,_that.banner);case _:
-  return null;
-
-}
-}
-
-}
-
-/// @nodoc
-@JsonSerializable()
-
-class _FanHubUploadRequest implements FanHubUploadRequest {
-  const _FanHubUploadRequest({required this.avatar, required this.banner});
-  factory _FanHubUploadRequest.fromJson(Map<String, dynamic> json) => _$FanHubUploadRequestFromJson(json);
-
-@override final  String avatar;
-@override final  String banner;
-
-/// Create a copy of FanHubUploadRequest
-/// with the given fields replaced by the non-null parameter values.
-@override @JsonKey(includeFromJson: false, includeToJson: false)
-@pragma('vm:prefer-inline')
-_$FanHubUploadRequestCopyWith<_FanHubUploadRequest> get copyWith => __$FanHubUploadRequestCopyWithImpl<_FanHubUploadRequest>(this, _$identity);
-
-@override
-Map<String, dynamic> toJson() {
-  return _$FanHubUploadRequestToJson(this, );
-}
-
-@override
-bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _FanHubUploadRequest&&(identical(other.avatar, avatar) || other.avatar == avatar)&&(identical(other.banner, banner) || other.banner == banner));
-}
-
-@JsonKey(includeFromJson: false, includeToJson: false)
-@override
-int get hashCode => Object.hash(runtimeType,avatar,banner);
-
-@override
-String toString() {
-  return 'FanHubUploadRequest(avatar: $avatar, banner: $banner)';
-}
-
-
-}
-
-/// @nodoc
-abstract mixin class _$FanHubUploadRequestCopyWith<$Res> implements $FanHubUploadRequestCopyWith<$Res> {
-  factory _$FanHubUploadRequestCopyWith(_FanHubUploadRequest value, $Res Function(_FanHubUploadRequest) _then) = __$FanHubUploadRequestCopyWithImpl;
-@override @useResult
-$Res call({
- String avatar, String banner
-});
-
-
-
-
-}
-/// @nodoc
-class __$FanHubUploadRequestCopyWithImpl<$Res>
-    implements _$FanHubUploadRequestCopyWith<$Res> {
-  __$FanHubUploadRequestCopyWithImpl(this._self, this._then);
-
-  final _FanHubUploadRequest _self;
-  final $Res Function(_FanHubUploadRequest) _then;
-
-/// Create a copy of FanHubUploadRequest
-/// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? avatar = null,Object? banner = null,}) {
-  return _then(_FanHubUploadRequest(
-avatar: null == avatar ? _self.avatar : avatar // ignore: cast_nullable_to_non_nullable
-as String,banner: null == banner ? _self.banner : banner // ignore: cast_nullable_to_non_nullable
-as String,
   ));
 }
 

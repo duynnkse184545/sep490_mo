@@ -1,4 +1,3 @@
-import 'dart:io';
 import 'package:sep490_mo/core/error/error_handler.dart';
 import 'package:sep490_mo/core/services/token_service.dart';
 import 'package:sep490_mo/core/utils/type_defs.dart';
@@ -89,9 +88,9 @@ class UserRepositoryImpl implements UserRepository {
   }
 
   @override
-  TaskVoid updateAvatarFrame({String? frameName, required File avatarFile}) {
+  TaskVoid updateAvatarFrame({String? frameName, String? avatarPath}) {
     return ErrorHandler.execute(() async {
-      await _remoteDataSource.updateAvatarFrame(frameName: frameName, avatarFile: avatarFile);
+      await _remoteDataSource.updateAvatarFrame(frameName: frameName, avatarPath: avatarPath);
     });
   }
 

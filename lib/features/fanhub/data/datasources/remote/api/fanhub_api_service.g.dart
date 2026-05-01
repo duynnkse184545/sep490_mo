@@ -214,16 +214,81 @@ class _FanHubApiService implements FanHubApiService {
   }
 
   @override
-  Future<ApiResponse<dynamic>> createFanHub(CreateFanHubRequest request) async {
+  Future<ApiResponse<List<FanHub>>> searchHubs(
+    String keyword,
+    int pageNo,
+    int pageSize,
+    String sortBy,
+    String sortDir,
+  ) async {
     final _extra = <String, dynamic>{};
-    final queryParameters = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{
+      r'keyword': keyword,
+      r'pageNo': pageNo,
+      r'pageSize': pageSize,
+      r'sortBy': sortBy,
+      r'sortDir': sortDir,
+    };
     final _headers = <String, dynamic>{};
-    final _data = request;
-    final _options = _setStreamType<ApiResponse<dynamic>>(
-      Options(method: 'POST', headers: _headers, extra: _extra)
+    const Map<String, dynamic>? _data = null;
+    final _options = _setStreamType<ApiResponse<List<FanHub>>>(
+      Options(method: 'GET', headers: _headers, extra: _extra)
           .compose(
             _dio.options,
-            '/fan-hub/create',
+            '/fan-hub/search',
+            queryParameters: queryParameters,
+            data: _data,
+          )
+          .copyWith(baseUrl: _combineBaseUrls(_dio.options.baseUrl, baseUrl)),
+    );
+    final _result = await _dio.fetch<Map<String, dynamic>>(_options);
+    late ApiResponse<List<FanHub>> _value;
+    try {
+      _value = ApiResponse<List<FanHub>>.fromJson(
+        _result.data!,
+        (json) => json is List<dynamic>
+            ? json
+                  .map<FanHub>(
+                    (i) => FanHub.fromJson(i as Map<String, dynamic>),
+                  )
+                  .toList()
+            : List.empty(),
+      );
+    } on Object catch (e, s) {
+      errorLogger?.logError(e, s, _options, response: _result);
+      rethrow;
+    }
+    return _value;
+  }
+
+  @override
+  Future<ApiResponse<dynamic>> createFanHub(
+    MultipartFile request,
+    MultipartFile? banner,
+    MultipartFile? avatar,
+  ) async {
+    final _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    queryParameters.removeWhere((k, v) => v == null);
+    final _headers = <String, dynamic>{};
+    final _data = FormData();
+    _data.files.add(MapEntry('request', request));
+    if (banner != null) {
+      _data.files.add(MapEntry('banner', banner));
+    }
+    if (avatar != null) {
+      _data.files.add(MapEntry('avatar', avatar));
+    }
+    final _options = _setStreamType<ApiResponse<dynamic>>(
+      Options(
+            method: 'POST',
+            headers: _headers,
+            extra: _extra,
+            contentType: 'multipart/form-data',
+          )
+          .compose(
+            _dio.options,
+            '/fan-hub/create/v2',
             queryParameters: queryParameters,
             data: _data,
           )
@@ -247,17 +312,63 @@ class _FanHubApiService implements FanHubApiService {
   Future<ApiResponse<dynamic>> uploadFanHub(
     int fanHubId,
     List<String> backgrounds,
-    FanHubUploadRequest request,
+    MultipartFile? banner,
+    MultipartFile? avatar,
   ) async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{r'backgrounds': backgrounds};
+    queryParameters.removeWhere((k, v) => v == null);
     final _headers = <String, dynamic>{};
-    final _data = request;
+    final _data = FormData();
+    if (banner != null) {
+      _data.files.add(MapEntry('banner', banner));
+    }
+    if (avatar != null) {
+      _data.files.add(MapEntry('avatar', avatar));
+    }
     final _options = _setStreamType<ApiResponse<dynamic>>(
-      Options(method: 'POST', headers: _headers, extra: _extra)
+      Options(
+            method: 'POST',
+            headers: _headers,
+            extra: _extra,
+            contentType: 'multipart/form-data',
+          )
           .compose(
             _dio.options,
             '/fan-hub/upload-images/${fanHubId}',
+            queryParameters: queryParameters,
+            data: _data,
+          )
+          .copyWith(baseUrl: _combineBaseUrls(_dio.options.baseUrl, baseUrl)),
+    );
+    final _result = await _dio.fetch<Map<String, dynamic>>(_options);
+    late ApiResponse<dynamic> _value;
+    try {
+      _value = ApiResponse<dynamic>.fromJson(
+        _result.data!,
+        (json) => json as dynamic,
+      );
+    } on Object catch (e, s) {
+      errorLogger?.logError(e, s, _options, response: _result);
+      rethrow;
+    }
+    return _value;
+  }
+
+  @override
+  Future<ApiResponse<dynamic>> updateFanHub(
+    int fanHubId,
+    UpdateFanHubRequest request,
+  ) async {
+    final _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{};
+    final _data = request;
+    final _options = _setStreamType<ApiResponse<dynamic>>(
+      Options(method: 'PATCH', headers: _headers, extra: _extra)
+          .compose(
+            _dio.options,
+            '/fan-hub/update/${fanHubId}',
             queryParameters: queryParameters,
             data: _data,
           )

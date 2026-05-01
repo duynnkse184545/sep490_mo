@@ -320,7 +320,7 @@ as String?,
 /// @nodoc
 mixin _$MemberCheckingResponse {
 
- bool get isMember; MemberRole get roleInHub;
+ bool get isMember; MemberRole? get roleInHub; MemberStatus? get status;
 /// Create a copy of MemberCheckingResponse
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -333,16 +333,16 @@ $MemberCheckingResponseCopyWith<MemberCheckingResponse> get copyWith => _$Member
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is MemberCheckingResponse&&(identical(other.isMember, isMember) || other.isMember == isMember)&&(identical(other.roleInHub, roleInHub) || other.roleInHub == roleInHub));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is MemberCheckingResponse&&(identical(other.isMember, isMember) || other.isMember == isMember)&&(identical(other.roleInHub, roleInHub) || other.roleInHub == roleInHub)&&(identical(other.status, status) || other.status == status));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,isMember,roleInHub);
+int get hashCode => Object.hash(runtimeType,isMember,roleInHub,status);
 
 @override
 String toString() {
-  return 'MemberCheckingResponse(isMember: $isMember, roleInHub: $roleInHub)';
+  return 'MemberCheckingResponse(isMember: $isMember, roleInHub: $roleInHub, status: $status)';
 }
 
 
@@ -353,7 +353,7 @@ abstract mixin class $MemberCheckingResponseCopyWith<$Res>  {
   factory $MemberCheckingResponseCopyWith(MemberCheckingResponse value, $Res Function(MemberCheckingResponse) _then) = _$MemberCheckingResponseCopyWithImpl;
 @useResult
 $Res call({
- bool isMember, MemberRole roleInHub
+ bool isMember, MemberRole? roleInHub, MemberStatus? status
 });
 
 
@@ -370,11 +370,12 @@ class _$MemberCheckingResponseCopyWithImpl<$Res>
 
 /// Create a copy of MemberCheckingResponse
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? isMember = null,Object? roleInHub = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? isMember = null,Object? roleInHub = freezed,Object? status = freezed,}) {
   return _then(_self.copyWith(
 isMember: null == isMember ? _self.isMember : isMember // ignore: cast_nullable_to_non_nullable
-as bool,roleInHub: null == roleInHub ? _self.roleInHub : roleInHub // ignore: cast_nullable_to_non_nullable
-as MemberRole,
+as bool,roleInHub: freezed == roleInHub ? _self.roleInHub : roleInHub // ignore: cast_nullable_to_non_nullable
+as MemberRole?,status: freezed == status ? _self.status : status // ignore: cast_nullable_to_non_nullable
+as MemberStatus?,
   ));
 }
 
@@ -459,10 +460,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( bool isMember,  MemberRole roleInHub)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( bool isMember,  MemberRole? roleInHub,  MemberStatus? status)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _MemberCheckingResponse() when $default != null:
-return $default(_that.isMember,_that.roleInHub);case _:
+return $default(_that.isMember,_that.roleInHub,_that.status);case _:
   return orElse();
 
 }
@@ -480,10 +481,10 @@ return $default(_that.isMember,_that.roleInHub);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( bool isMember,  MemberRole roleInHub)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( bool isMember,  MemberRole? roleInHub,  MemberStatus? status)  $default,) {final _that = this;
 switch (_that) {
 case _MemberCheckingResponse():
-return $default(_that.isMember,_that.roleInHub);case _:
+return $default(_that.isMember,_that.roleInHub,_that.status);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -500,10 +501,10 @@ return $default(_that.isMember,_that.roleInHub);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( bool isMember,  MemberRole roleInHub)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( bool isMember,  MemberRole? roleInHub,  MemberStatus? status)?  $default,) {final _that = this;
 switch (_that) {
 case _MemberCheckingResponse() when $default != null:
-return $default(_that.isMember,_that.roleInHub);case _:
+return $default(_that.isMember,_that.roleInHub,_that.status);case _:
   return null;
 
 }
@@ -515,11 +516,12 @@ return $default(_that.isMember,_that.roleInHub);case _:
 @JsonSerializable()
 
 class _MemberCheckingResponse implements MemberCheckingResponse {
-  const _MemberCheckingResponse({required this.isMember, required this.roleInHub});
+  const _MemberCheckingResponse({required this.isMember, this.roleInHub, this.status});
   factory _MemberCheckingResponse.fromJson(Map<String, dynamic> json) => _$MemberCheckingResponseFromJson(json);
 
 @override final  bool isMember;
-@override final  MemberRole roleInHub;
+@override final  MemberRole? roleInHub;
+@override final  MemberStatus? status;
 
 /// Create a copy of MemberCheckingResponse
 /// with the given fields replaced by the non-null parameter values.
@@ -534,16 +536,16 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _MemberCheckingResponse&&(identical(other.isMember, isMember) || other.isMember == isMember)&&(identical(other.roleInHub, roleInHub) || other.roleInHub == roleInHub));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _MemberCheckingResponse&&(identical(other.isMember, isMember) || other.isMember == isMember)&&(identical(other.roleInHub, roleInHub) || other.roleInHub == roleInHub)&&(identical(other.status, status) || other.status == status));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,isMember,roleInHub);
+int get hashCode => Object.hash(runtimeType,isMember,roleInHub,status);
 
 @override
 String toString() {
-  return 'MemberCheckingResponse(isMember: $isMember, roleInHub: $roleInHub)';
+  return 'MemberCheckingResponse(isMember: $isMember, roleInHub: $roleInHub, status: $status)';
 }
 
 
@@ -554,7 +556,7 @@ abstract mixin class _$MemberCheckingResponseCopyWith<$Res> implements $MemberCh
   factory _$MemberCheckingResponseCopyWith(_MemberCheckingResponse value, $Res Function(_MemberCheckingResponse) _then) = __$MemberCheckingResponseCopyWithImpl;
 @override @useResult
 $Res call({
- bool isMember, MemberRole roleInHub
+ bool isMember, MemberRole? roleInHub, MemberStatus? status
 });
 
 
@@ -571,11 +573,12 @@ class __$MemberCheckingResponseCopyWithImpl<$Res>
 
 /// Create a copy of MemberCheckingResponse
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? isMember = null,Object? roleInHub = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? isMember = null,Object? roleInHub = freezed,Object? status = freezed,}) {
   return _then(_MemberCheckingResponse(
 isMember: null == isMember ? _self.isMember : isMember // ignore: cast_nullable_to_non_nullable
-as bool,roleInHub: null == roleInHub ? _self.roleInHub : roleInHub // ignore: cast_nullable_to_non_nullable
-as MemberRole,
+as bool,roleInHub: freezed == roleInHub ? _self.roleInHub : roleInHub // ignore: cast_nullable_to_non_nullable
+as MemberRole?,status: freezed == status ? _self.status : status // ignore: cast_nullable_to_non_nullable
+as MemberStatus?,
   ));
 }
 

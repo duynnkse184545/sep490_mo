@@ -8,7 +8,7 @@ part 'fanhub_owner_controller.g.dart';
 class FanHubOwnerController extends _$FanHubOwnerController {
   @override
   Future<FanHub?> build() async {
-    final result = await ref.read(fanHubRepositoryProvider).getMyHubAsOwner().run();
+    final result = await ref.read(fanHubRepositoryProvider).getMyHubsAsOwner().run();
     return result.fold(
       (failure) => throw failure,
       (hub) => hub,

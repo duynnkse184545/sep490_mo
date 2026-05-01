@@ -4,8 +4,8 @@ import 'package:sep490_mo/features/user/data/models/user_models.dart';
 
 class ProfileHeader extends StatelessWidget {
   final User user;
-  final VoidCallback? onEdit;
-  const ProfileHeader({super.key, required this.user, this.onEdit});
+  final VoidCallback? onPickAvatar;
+  const ProfileHeader({super.key, required this.user, this.onPickAvatar});
 
   @override
   Widget build(BuildContext context) {
@@ -47,12 +47,12 @@ class ProfileHeader extends StatelessWidget {
                       : null,
                 ),
               ),
-              if (onEdit != null)
+              if (onPickAvatar != null)
                 Positioned(
                   bottom: 0,
                   right: 0,
                   child: InkWell(
-                    onTap: onEdit,
+                    onTap: onPickAvatar,
                     child: Container(
                       padding: const EdgeInsets.all(8),
                       decoration: BoxDecoration(

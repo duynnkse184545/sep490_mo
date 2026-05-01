@@ -1,4 +1,3 @@
-import 'dart:io';
 import 'package:sep490_mo/core/utils/type_defs.dart';
 import 'package:sep490_mo/features/user/data/models/user_models.dart';
 
@@ -22,7 +21,7 @@ abstract class UserRepository {
   TaskResult<DailyMission> getDailyMission();
 
   /// Update avatar frame
-  TaskVoid updateAvatarFrame({String? frameName, required File avatarFile});
+  TaskVoid updateAvatarFrame({String? frameName, String? avatarPath});
 
   /// Set user oshi
   TaskVoid setOshi(String oshiUsername);

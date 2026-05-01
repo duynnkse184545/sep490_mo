@@ -203,6 +203,12 @@ _CreatePostRequest _$CreatePostRequestFromJson(Map<String, dynamic> json) =>
           const [],
       isAnnouncement: json['isAnnouncement'] as bool? ?? false,
       isSchedule: json['isSchedule'] as bool? ?? false,
+      startTime: json['startTime'] == null
+          ? null
+          : DateTime.parse(json['startTime'] as String),
+      endTime: json['endTime'] == null
+          ? null
+          : DateTime.parse(json['endTime'] as String),
     );
 
 Map<String, dynamic> _$CreatePostRequestToJson(_CreatePostRequest instance) =>
@@ -214,6 +220,8 @@ Map<String, dynamic> _$CreatePostRequestToJson(_CreatePostRequest instance) =>
       'hashtags': instance.hashtags,
       'isAnnouncement': instance.isAnnouncement,
       'isSchedule': instance.isSchedule,
+      'startTime': instance.startTime?.toIso8601String(),
+      'endTime': instance.endTime?.toIso8601String(),
     };
 
 _ReportRequest _$ReportRequestFromJson(Map<String, dynamic> json) =>

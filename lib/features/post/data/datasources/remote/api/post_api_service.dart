@@ -27,10 +27,10 @@ abstract class PostApiService {
   @POST('/posts')
   @MultiPart()
   Future<ApiResponse> createPost(
-    @Body() CreatePostRequest request,
+    @Part() MultipartFile request,
     @Part() List<MultipartFile>? images,
     @Part() MultipartFile? video,
-  ); 
+  );
 
   @POST('/posts/bookmark')
   Future<ApiResponse> bookmark(@Query('postId') int postId);
