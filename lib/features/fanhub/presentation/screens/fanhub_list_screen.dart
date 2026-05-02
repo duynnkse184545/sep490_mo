@@ -20,8 +20,11 @@ class FanHubListScreen extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final fanHubAsync = ref.watch(fanHubListControllerProvider);
-    final controller = ref.read(fanHubListControllerProvider.notifier);
+    final activeTab = useState(FanHubTab.discover);
+    
+    final fanHubAsync = ref.watch(fanHubListControllerProvider(activeTab.value));
+    final controller = ref.read(fanHubListControllerProvider(activeTab.value).notifier);
+    
     final scrollController = useScrollController();
     final searchController = useTextEditingController();
     
@@ -39,7 +42,7 @@ class FanHubListScreen extends HookConsumerWidget {
 
       scrollController.addListener(onScroll);
       return () => scrollController.removeListener(onScroll);
-    }, [scrollController]);
+    }, [scrollController, activeTab.value]); // Depend on activeTab to re-hook listener
 
     return Scaffold(
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
@@ -50,13 +53,13 @@ class FanHubListScreen extends HookConsumerWidget {
               padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
               child: Row(
                 children: [
-                  Expanded(child: _buildTabSelector(context, controller)),
+                  Expanded(child: _buildTabSelector(context, activeTab)),
                   const SizedBox(width: 8),
                   _buildActionButton(context, ownerHubAsync, isVtuber),
                 ],
               ),
             ),
-            if (controller.activeTab == FanHubTab.discover)
+            if (activeTab.value == FanHubTab.discover)
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
                 child: TextField(
@@ -127,7 +130,7 @@ class FanHubListScreen extends HookConsumerWidget {
                         FanHubCard(fanHub: fanHubs[index]),
                   ),
                   empty: (_) => EmptyState(
-                    message: controller.activeTab == FanHubTab.myHubs
+                    message: activeTab.value == FanHubTab.myHubs
                         ? 'You have not joined any Fan Hubs yet'
                         : 'No Fan Hubs found',
                     icon: Icons.groups_outlined,
@@ -146,7 +149,7 @@ class FanHubListScreen extends HookConsumerWidget {
     );
   }
 
-  Widget _buildTabSelector(BuildContext context, FanHubListController controller) {
+  Widget _buildTabSelector(BuildContext context, ValueNotifier<FanHubTab> activeTab) {
     final tabs = [
       {'tab': FanHubTab.discover, 'label': 'Discover', 'icon': Icons.explore_outlined},
       {'tab': FanHubTab.myHubs, 'label': 'Joined Hubs', 'icon': Icons.groups_outlined},
@@ -157,11 +160,11 @@ class FanHubListScreen extends HookConsumerWidget {
       physics: const BouncingScrollPhysics(),
       child: Row(
         children: tabs.map((item) {
-          final isSelected = controller.activeTab == item['tab'];
+          final isSelected = activeTab.value == item['tab'];
           return Padding(
             padding: const EdgeInsets.only(right: 12),
             child: GestureDetector(
-              onTap: () => controller.switchTab(item['tab'] as FanHubTab),
+              onTap: () => activeTab.value = item['tab'] as FanHubTab,
               child: Container(
                 padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
                 decoration: BoxDecoration(

@@ -13,24 +13,15 @@ class FanHubListController extends _$FanHubListController {
   bool _hasMore = true;
   bool _isFetchingMore = false;
   List<FanHub> _fanHubs = [];
-  FanHubTab _activeTab = FanHubTab.discover;
   String? _searchKeyword;
 
+  // Need background refresh after x times to fetch new data
   @override
-  Future<FanHubState> build() async {
+  Future<FanHubState> build(FanHubTab tab) async {
+    ref.keepAlive(); // For no refreshing, but stay until app close
+    // Each tab (discover/myHubs) now has its own independent cache
     await _fetchNextPage();
-    return state.value ?? FanHubState.empty(_activeTab);
-  }
-
-  FanHubTab get activeTab => _activeTab;
-
-  void switchTab(FanHubTab tab) {
-    if (_activeTab == tab) return;
-    _activeTab = tab;
-    // Clear search when switching tabs (or keep it if you prefer)
-    _searchKeyword = null;
-    _resetPagination();
-    ref.invalidateSelf();
+    return state.value ?? FanHubState.empty(tab);
   }
 
   void search(String? keyword) {
@@ -52,7 +43,7 @@ class FanHubListController extends _$FanHubListController {
 
     _isFetchingMore = true;
     state = AsyncValue.data(
-      FanHubState.loadingMore(_fanHubs, _activeTab),
+      FanHubState.loadingMore(_fanHubs, tab),
     );
     await _fetchNextPage();
     _isFetchingMore = false;
@@ -66,7 +57,7 @@ class FanHubListController extends _$FanHubListController {
   }
 
   Future<void> _fetchNextPage() async {
-    final result = switch (_activeTab) {
+    final result = switch (tab) {
       FanHubTab.discover => _searchKeyword != null
           ? await ref.read(fanHubRepositoryProvider).searchHubs(
                 keyword: _searchKeyword!,
@@ -97,10 +88,10 @@ class FanHubListController extends _$FanHubListController {
         _fanHubs.addAll(newFanHubs);
         if (newFanHubs.isNotEmpty) _currentPage++;
         if (_fanHubs.isEmpty) {
-          state = AsyncValue.data(FanHubState.empty(_activeTab));
+          state = AsyncValue.data(FanHubState.empty(tab));
         } else {
           state = AsyncValue.data(
-            FanHubState.ready(List.from(_fanHubs), _activeTab),
+            FanHubState.ready(List.from(_fanHubs), tab),
           );
         }
       },

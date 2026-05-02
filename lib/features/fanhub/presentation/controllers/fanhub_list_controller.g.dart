@@ -10,34 +10,79 @@ part of 'fanhub_list_controller.dart';
 // ignore_for_file: type=lint, type=warning
 
 @ProviderFor(FanHubListController)
-final fanHubListControllerProvider = FanHubListControllerProvider._();
+final fanHubListControllerProvider = FanHubListControllerFamily._();
 
 final class FanHubListControllerProvider
     extends $AsyncNotifierProvider<FanHubListController, FanHubState> {
-  FanHubListControllerProvider._()
-    : super(
-        from: null,
-        argument: null,
-        retry: null,
-        name: r'fanHubListControllerProvider',
-        isAutoDispose: true,
-        dependencies: null,
-        $allTransitiveDependencies: null,
-      );
+  FanHubListControllerProvider._({
+    required FanHubListControllerFamily super.from,
+    required FanHubTab super.argument,
+  }) : super(
+         retry: null,
+         name: r'fanHubListControllerProvider',
+         isAutoDispose: true,
+         dependencies: null,
+         $allTransitiveDependencies: null,
+       );
 
   @override
   String debugGetCreateSourceHash() => _$fanHubListControllerHash();
 
+  @override
+  String toString() {
+    return r'fanHubListControllerProvider'
+        ''
+        '($argument)';
+  }
+
   @$internal
   @override
   FanHubListController create() => FanHubListController();
+
+  @override
+  bool operator ==(Object other) {
+    return other is FanHubListControllerProvider && other.argument == argument;
+  }
+
+  @override
+  int get hashCode {
+    return argument.hashCode;
+  }
 }
 
 String _$fanHubListControllerHash() =>
-    r'dbcbc7a3c22ee172c175a3eedef3ac0c3f1d1069';
+    r'c6f939a9c1cdb5fdd2b81566474f17c7e0497d48';
+
+final class FanHubListControllerFamily extends $Family
+    with
+        $ClassFamilyOverride<
+          FanHubListController,
+          AsyncValue<FanHubState>,
+          FanHubState,
+          FutureOr<FanHubState>,
+          FanHubTab
+        > {
+  FanHubListControllerFamily._()
+    : super(
+        retry: null,
+        name: r'fanHubListControllerProvider',
+        dependencies: null,
+        $allTransitiveDependencies: null,
+        isAutoDispose: true,
+      );
+
+  FanHubListControllerProvider call(FanHubTab tab) =>
+      FanHubListControllerProvider._(argument: tab, from: this);
+
+  @override
+  String toString() => r'fanHubListControllerProvider';
+}
 
 abstract class _$FanHubListController extends $AsyncNotifier<FanHubState> {
-  FutureOr<FanHubState> build();
+  late final _$args = ref.$arg as FanHubTab;
+  FanHubTab get tab => _$args;
+
+  FutureOr<FanHubState> build(FanHubTab tab);
   @$mustCallSuper
   @override
   void runBuild() {
@@ -50,6 +95,6 @@ abstract class _$FanHubListController extends $AsyncNotifier<FanHubState> {
               Object?,
               Object?
             >;
-    element.handleCreate(ref, build);
+    element.handleCreate(ref, () => build(_$args));
   }
 }
