@@ -51,7 +51,7 @@ final class FanHubListControllerProvider
 }
 
 String _$fanHubListControllerHash() =>
-    r'c6f939a9c1cdb5fdd2b81566474f17c7e0497d48';
+    r'd5c63eb9fd8c0b7480e2ff57980f94e1f473ef1e';
 
 final class FanHubListControllerFamily extends $Family
     with

@@ -23,7 +23,7 @@ abstract class FanHubRepository {
     String sortBy = 'createdAt',
   });
 
-  TaskResult<FanHub> getMyHubsAsOwner();
+  TaskResult<FanHub?> getMyHubsAsOwner();
 
   TaskResult<List<FanHub>> searchHubs({
     required String keyword,

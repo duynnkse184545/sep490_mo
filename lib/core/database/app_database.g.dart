@@ -1516,18 +1516,380 @@ class PostTblCompanion extends UpdateCompanion<PostEntity> {
   }
 }
 
+class $NotificationTblTable extends NotificationTbl
+    with TableInfo<$NotificationTblTable, NotificationEntity> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $NotificationTblTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<int> id = GeneratedColumn<int>(
+    'id',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _notificationDataMeta = const VerificationMeta(
+    'notificationData',
+  );
+  @override
+  late final GeneratedColumn<String> notificationData = GeneratedColumn<String>(
+    'notification_data',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _isReadMeta = const VerificationMeta('isRead');
+  @override
+  late final GeneratedColumn<bool> isRead = GeneratedColumn<bool>(
+    'is_read',
+    aliasedName,
+    false,
+    type: DriftSqlType.bool,
+    requiredDuringInsert: false,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'CHECK ("is_read" IN (0, 1))',
+    ),
+    defaultValue: const Constant(false),
+  );
+  static const VerificationMeta _createdAtMeta = const VerificationMeta(
+    'createdAt',
+  );
+  @override
+  late final GeneratedColumn<DateTime> createdAt = GeneratedColumn<DateTime>(
+    'created_at',
+    aliasedName,
+    false,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _cachedAtMeta = const VerificationMeta(
+    'cachedAt',
+  );
+  @override
+  late final GeneratedColumn<DateTime> cachedAt = GeneratedColumn<DateTime>(
+    'cached_at',
+    aliasedName,
+    false,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: false,
+    defaultValue: currentDateAndTime,
+  );
+  @override
+  List<GeneratedColumn> get $columns => [
+    id,
+    notificationData,
+    isRead,
+    createdAt,
+    cachedAt,
+  ];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'notification_tbl';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<NotificationEntity> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    }
+    if (data.containsKey('notification_data')) {
+      context.handle(
+        _notificationDataMeta,
+        notificationData.isAcceptableOrUnknown(
+          data['notification_data']!,
+          _notificationDataMeta,
+        ),
+      );
+    } else if (isInserting) {
+      context.missing(_notificationDataMeta);
+    }
+    if (data.containsKey('is_read')) {
+      context.handle(
+        _isReadMeta,
+        isRead.isAcceptableOrUnknown(data['is_read']!, _isReadMeta),
+      );
+    }
+    if (data.containsKey('created_at')) {
+      context.handle(
+        _createdAtMeta,
+        createdAt.isAcceptableOrUnknown(data['created_at']!, _createdAtMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_createdAtMeta);
+    }
+    if (data.containsKey('cached_at')) {
+      context.handle(
+        _cachedAtMeta,
+        cachedAt.isAcceptableOrUnknown(data['cached_at']!, _cachedAtMeta),
+      );
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  NotificationEntity map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return NotificationEntity(
+      id: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}id'],
+      )!,
+      notificationData: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}notification_data'],
+      )!,
+      isRead: attachedDatabase.typeMapping.read(
+        DriftSqlType.bool,
+        data['${effectivePrefix}is_read'],
+      )!,
+      createdAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}created_at'],
+      )!,
+      cachedAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}cached_at'],
+      )!,
+    );
+  }
+
+  @override
+  $NotificationTblTable createAlias(String alias) {
+    return $NotificationTblTable(attachedDatabase, alias);
+  }
+}
+
+class NotificationEntity extends DataClass
+    implements Insertable<NotificationEntity> {
+  final int id;
+  final String notificationData;
+  final bool isRead;
+  final DateTime createdAt;
+  final DateTime cachedAt;
+  const NotificationEntity({
+    required this.id,
+    required this.notificationData,
+    required this.isRead,
+    required this.createdAt,
+    required this.cachedAt,
+  });
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['id'] = Variable<int>(id);
+    map['notification_data'] = Variable<String>(notificationData);
+    map['is_read'] = Variable<bool>(isRead);
+    map['created_at'] = Variable<DateTime>(createdAt);
+    map['cached_at'] = Variable<DateTime>(cachedAt);
+    return map;
+  }
+
+  NotificationTblCompanion toCompanion(bool nullToAbsent) {
+    return NotificationTblCompanion(
+      id: Value(id),
+      notificationData: Value(notificationData),
+      isRead: Value(isRead),
+      createdAt: Value(createdAt),
+      cachedAt: Value(cachedAt),
+    );
+  }
+
+  factory NotificationEntity.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return NotificationEntity(
+      id: serializer.fromJson<int>(json['id']),
+      notificationData: serializer.fromJson<String>(json['notificationData']),
+      isRead: serializer.fromJson<bool>(json['isRead']),
+      createdAt: serializer.fromJson<DateTime>(json['createdAt']),
+      cachedAt: serializer.fromJson<DateTime>(json['cachedAt']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<int>(id),
+      'notificationData': serializer.toJson<String>(notificationData),
+      'isRead': serializer.toJson<bool>(isRead),
+      'createdAt': serializer.toJson<DateTime>(createdAt),
+      'cachedAt': serializer.toJson<DateTime>(cachedAt),
+    };
+  }
+
+  NotificationEntity copyWith({
+    int? id,
+    String? notificationData,
+    bool? isRead,
+    DateTime? createdAt,
+    DateTime? cachedAt,
+  }) => NotificationEntity(
+    id: id ?? this.id,
+    notificationData: notificationData ?? this.notificationData,
+    isRead: isRead ?? this.isRead,
+    createdAt: createdAt ?? this.createdAt,
+    cachedAt: cachedAt ?? this.cachedAt,
+  );
+  NotificationEntity copyWithCompanion(NotificationTblCompanion data) {
+    return NotificationEntity(
+      id: data.id.present ? data.id.value : this.id,
+      notificationData: data.notificationData.present
+          ? data.notificationData.value
+          : this.notificationData,
+      isRead: data.isRead.present ? data.isRead.value : this.isRead,
+      createdAt: data.createdAt.present ? data.createdAt.value : this.createdAt,
+      cachedAt: data.cachedAt.present ? data.cachedAt.value : this.cachedAt,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('NotificationEntity(')
+          ..write('id: $id, ')
+          ..write('notificationData: $notificationData, ')
+          ..write('isRead: $isRead, ')
+          ..write('createdAt: $createdAt, ')
+          ..write('cachedAt: $cachedAt')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode =>
+      Object.hash(id, notificationData, isRead, createdAt, cachedAt);
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is NotificationEntity &&
+          other.id == this.id &&
+          other.notificationData == this.notificationData &&
+          other.isRead == this.isRead &&
+          other.createdAt == this.createdAt &&
+          other.cachedAt == this.cachedAt);
+}
+
+class NotificationTblCompanion extends UpdateCompanion<NotificationEntity> {
+  final Value<int> id;
+  final Value<String> notificationData;
+  final Value<bool> isRead;
+  final Value<DateTime> createdAt;
+  final Value<DateTime> cachedAt;
+  const NotificationTblCompanion({
+    this.id = const Value.absent(),
+    this.notificationData = const Value.absent(),
+    this.isRead = const Value.absent(),
+    this.createdAt = const Value.absent(),
+    this.cachedAt = const Value.absent(),
+  });
+  NotificationTblCompanion.insert({
+    this.id = const Value.absent(),
+    required String notificationData,
+    this.isRead = const Value.absent(),
+    required DateTime createdAt,
+    this.cachedAt = const Value.absent(),
+  }) : notificationData = Value(notificationData),
+       createdAt = Value(createdAt);
+  static Insertable<NotificationEntity> custom({
+    Expression<int>? id,
+    Expression<String>? notificationData,
+    Expression<bool>? isRead,
+    Expression<DateTime>? createdAt,
+    Expression<DateTime>? cachedAt,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (notificationData != null) 'notification_data': notificationData,
+      if (isRead != null) 'is_read': isRead,
+      if (createdAt != null) 'created_at': createdAt,
+      if (cachedAt != null) 'cached_at': cachedAt,
+    });
+  }
+
+  NotificationTblCompanion copyWith({
+    Value<int>? id,
+    Value<String>? notificationData,
+    Value<bool>? isRead,
+    Value<DateTime>? createdAt,
+    Value<DateTime>? cachedAt,
+  }) {
+    return NotificationTblCompanion(
+      id: id ?? this.id,
+      notificationData: notificationData ?? this.notificationData,
+      isRead: isRead ?? this.isRead,
+      createdAt: createdAt ?? this.createdAt,
+      cachedAt: cachedAt ?? this.cachedAt,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<int>(id.value);
+    }
+    if (notificationData.present) {
+      map['notification_data'] = Variable<String>(notificationData.value);
+    }
+    if (isRead.present) {
+      map['is_read'] = Variable<bool>(isRead.value);
+    }
+    if (createdAt.present) {
+      map['created_at'] = Variable<DateTime>(createdAt.value);
+    }
+    if (cachedAt.present) {
+      map['cached_at'] = Variable<DateTime>(cachedAt.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('NotificationTblCompanion(')
+          ..write('id: $id, ')
+          ..write('notificationData: $notificationData, ')
+          ..write('isRead: $isRead, ')
+          ..write('createdAt: $createdAt, ')
+          ..write('cachedAt: $cachedAt')
+          ..write(')'))
+        .toString();
+  }
+}
+
 abstract class _$AppDatabase extends GeneratedDatabase {
   _$AppDatabase(QueryExecutor e) : super(e);
   $AppDatabaseManager get managers => $AppDatabaseManager(this);
   late final $CurrentUserTblTable currentUserTbl = $CurrentUserTblTable(this);
   late final $PostTblTable postTbl = $PostTblTable(this);
+  late final $NotificationTblTable notificationTbl = $NotificationTblTable(
+    this,
+  );
   late final UserDao userDao = UserDao(this as AppDatabase);
   late final PostDao postDao = PostDao(this as AppDatabase);
+  late final NotificationDao notificationDao = NotificationDao(
+    this as AppDatabase,
+  );
   @override
   Iterable<TableInfo<Table, Object?>> get allTables =>
       allSchemaEntities.whereType<TableInfo<Table, Object?>>();
   @override
-  List<DatabaseSchemaEntity> get allSchemaEntities => [currentUserTbl, postTbl];
+  List<DatabaseSchemaEntity> get allSchemaEntities => [
+    currentUserTbl,
+    postTbl,
+    notificationTbl,
+  ];
 }
 
 typedef $$CurrentUserTblTableCreateCompanionBuilder =
@@ -2239,6 +2601,212 @@ typedef $$PostTblTableProcessedTableManager =
       PostEntity,
       PrefetchHooks Function()
     >;
+typedef $$NotificationTblTableCreateCompanionBuilder =
+    NotificationTblCompanion Function({
+      Value<int> id,
+      required String notificationData,
+      Value<bool> isRead,
+      required DateTime createdAt,
+      Value<DateTime> cachedAt,
+    });
+typedef $$NotificationTblTableUpdateCompanionBuilder =
+    NotificationTblCompanion Function({
+      Value<int> id,
+      Value<String> notificationData,
+      Value<bool> isRead,
+      Value<DateTime> createdAt,
+      Value<DateTime> cachedAt,
+    });
+
+class $$NotificationTblTableFilterComposer
+    extends Composer<_$AppDatabase, $NotificationTblTable> {
+  $$NotificationTblTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<int> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get notificationData => $composableBuilder(
+    column: $table.notificationData,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<bool> get isRead => $composableBuilder(
+    column: $table.isRead,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get createdAt => $composableBuilder(
+    column: $table.createdAt,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get cachedAt => $composableBuilder(
+    column: $table.cachedAt,
+    builder: (column) => ColumnFilters(column),
+  );
+}
+
+class $$NotificationTblTableOrderingComposer
+    extends Composer<_$AppDatabase, $NotificationTblTable> {
+  $$NotificationTblTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<int> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get notificationData => $composableBuilder(
+    column: $table.notificationData,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<bool> get isRead => $composableBuilder(
+    column: $table.isRead,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get createdAt => $composableBuilder(
+    column: $table.createdAt,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get cachedAt => $composableBuilder(
+    column: $table.cachedAt,
+    builder: (column) => ColumnOrderings(column),
+  );
+}
+
+class $$NotificationTblTableAnnotationComposer
+    extends Composer<_$AppDatabase, $NotificationTblTable> {
+  $$NotificationTblTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<int> get id =>
+      $composableBuilder(column: $table.id, builder: (column) => column);
+
+  GeneratedColumn<String> get notificationData => $composableBuilder(
+    column: $table.notificationData,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<bool> get isRead =>
+      $composableBuilder(column: $table.isRead, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get createdAt =>
+      $composableBuilder(column: $table.createdAt, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get cachedAt =>
+      $composableBuilder(column: $table.cachedAt, builder: (column) => column);
+}
+
+class $$NotificationTblTableTableManager
+    extends
+        RootTableManager<
+          _$AppDatabase,
+          $NotificationTblTable,
+          NotificationEntity,
+          $$NotificationTblTableFilterComposer,
+          $$NotificationTblTableOrderingComposer,
+          $$NotificationTblTableAnnotationComposer,
+          $$NotificationTblTableCreateCompanionBuilder,
+          $$NotificationTblTableUpdateCompanionBuilder,
+          (
+            NotificationEntity,
+            BaseReferences<
+              _$AppDatabase,
+              $NotificationTblTable,
+              NotificationEntity
+            >,
+          ),
+          NotificationEntity,
+          PrefetchHooks Function()
+        > {
+  $$NotificationTblTableTableManager(
+    _$AppDatabase db,
+    $NotificationTblTable table,
+  ) : super(
+        TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$NotificationTblTableFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $$NotificationTblTableOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () =>
+              $$NotificationTblTableAnnotationComposer($db: db, $table: table),
+          updateCompanionCallback:
+              ({
+                Value<int> id = const Value.absent(),
+                Value<String> notificationData = const Value.absent(),
+                Value<bool> isRead = const Value.absent(),
+                Value<DateTime> createdAt = const Value.absent(),
+                Value<DateTime> cachedAt = const Value.absent(),
+              }) => NotificationTblCompanion(
+                id: id,
+                notificationData: notificationData,
+                isRead: isRead,
+                createdAt: createdAt,
+                cachedAt: cachedAt,
+              ),
+          createCompanionCallback:
+              ({
+                Value<int> id = const Value.absent(),
+                required String notificationData,
+                Value<bool> isRead = const Value.absent(),
+                required DateTime createdAt,
+                Value<DateTime> cachedAt = const Value.absent(),
+              }) => NotificationTblCompanion.insert(
+                id: id,
+                notificationData: notificationData,
+                isRead: isRead,
+                createdAt: createdAt,
+                cachedAt: cachedAt,
+              ),
+          withReferenceMapper: (p0) => p0
+              .map((e) => (e.readTable(table), BaseReferences(db, table, e)))
+              .toList(),
+          prefetchHooksCallback: null,
+        ),
+      );
+}
+
+typedef $$NotificationTblTableProcessedTableManager =
+    ProcessedTableManager<
+      _$AppDatabase,
+      $NotificationTblTable,
+      NotificationEntity,
+      $$NotificationTblTableFilterComposer,
+      $$NotificationTblTableOrderingComposer,
+      $$NotificationTblTableAnnotationComposer,
+      $$NotificationTblTableCreateCompanionBuilder,
+      $$NotificationTblTableUpdateCompanionBuilder,
+      (
+        NotificationEntity,
+        BaseReferences<
+          _$AppDatabase,
+          $NotificationTblTable,
+          NotificationEntity
+        >,
+      ),
+      NotificationEntity,
+      PrefetchHooks Function()
+    >;
 
 class $AppDatabaseManager {
   final _$AppDatabase _db;
@@ -2247,4 +2815,6 @@ class $AppDatabaseManager {
       $$CurrentUserTblTableTableManager(_db, _db.currentUserTbl);
   $$PostTblTableTableManager get postTbl =>
       $$PostTblTableTableManager(_db, _db.postTbl);
+  $$NotificationTblTableTableManager get notificationTbl =>
+      $$NotificationTblTableTableManager(_db, _db.notificationTbl);
 }

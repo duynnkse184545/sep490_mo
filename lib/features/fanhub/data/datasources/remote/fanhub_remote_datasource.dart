@@ -22,7 +22,7 @@ abstract class FanHubRemoteDataSource {
     required String sortBy,
   });
 
-  Future<FanHub> getMyHubsAsOwner();
+  Future<FanHub?> getMyHubsAsOwner();
 
   Future<List<FanHub>> searchHubs({
     required String keyword,

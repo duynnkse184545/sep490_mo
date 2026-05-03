@@ -131,3 +131,45 @@ final class PostDaoProvider
 }
 
 String _$postDaoHash() => r'5319007eb418b32774c450a1723c0c43096902b9';
+
+@ProviderFor(notificationDao)
+final notificationDaoProvider = NotificationDaoProvider._();
+
+final class NotificationDaoProvider
+    extends
+        $FunctionalProvider<NotificationDao, NotificationDao, NotificationDao>
+    with $Provider<NotificationDao> {
+  NotificationDaoProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'notificationDaoProvider',
+        isAutoDispose: true,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$notificationDaoHash();
+
+  @$internal
+  @override
+  $ProviderElement<NotificationDao> $createElement($ProviderPointer pointer) =>
+      $ProviderElement(pointer);
+
+  @override
+  NotificationDao create(Ref ref) {
+    return notificationDao(ref);
+  }
+
+  /// {@macro riverpod.override_with_value}
+  Override overrideWithValue(NotificationDao value) {
+    return $ProviderOverride(
+      origin: this,
+      providerOverride: $SyncValueProvider<NotificationDao>(value),
+    );
+  }
+}
+
+String _$notificationDaoHash() => r'c91e3fd5a69e004da23df055fa8bfde5df4747c6';

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:sep490_mo/app/router/routes.dart';
+import 'package:sep490_mo/features/notification/presentation/widgets/notification_app_bar_action.dart';
 import 'package:sep490_mo/features/user/presentation/widgets/profile_daily_mission.dart';
 
 class MainAppBar extends StatelessWidget implements PreferredSizeWidget {
@@ -20,7 +21,7 @@ class MainAppBar extends StatelessWidget implements PreferredSizeWidget {
         ),
       ),
       actions: [
-        // Daily Mission as a Menu instead of a Dialog
+        // Daily Mission
         PopupMenuButton(
           icon: const Icon(Icons.assignment_outlined, color: Colors.black),
           offset: const Offset(0, 50),
@@ -52,6 +53,9 @@ class MainAppBar extends StatelessWidget implements PreferredSizeWidget {
             ),
           ],
         ),
+
+        const NotificationAppBarAction(),
+
         IconButton(
           icon: const Icon(Icons.shopping_bag_outlined, color: Colors.black),
           onPressed: () {

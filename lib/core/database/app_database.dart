@@ -3,6 +3,7 @@ import 'package:drift/drift.dart';
 import 'package:drift/native.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:path/path.dart' as p;
+import 'package:sep490_mo/core/database/daos/notification_dao.dart';
 import 'package:sep490_mo/core/database/daos/post_dao.dart';
 import 'package:sep490_mo/core/database/daos/user_dao.dart';
 
@@ -53,12 +54,46 @@ class PostTbl extends Table {
   Set<Column> get primaryKey => {postId};
 }
 
-@DriftDatabase(tables: [CurrentUserTbl, PostTbl], daos: [UserDao, PostDao])
+/// Notification cache table
+@DataClassName('NotificationEntity')
+class NotificationTbl extends Table {
+  IntColumn get id => integer()();
+  TextColumn get notificationData => text()(); // Store full notification JSON
+  BoolColumn get isRead => boolean().withDefault(const Constant(false))();
+  DateTimeColumn get createdAt => dateTime()();
+  DateTimeColumn get cachedAt => dateTime().withDefault(currentDateAndTime)();
+
+  @override
+  Set<Column> get primaryKey => {id};
+}
+
+@DriftDatabase(
+  tables: [CurrentUserTbl, PostTbl, NotificationTbl],
+  daos: [UserDao, PostDao, NotificationDao],
+)
 class AppDatabase extends _$AppDatabase {
   AppDatabase() : super(_openConnection());
 
   @override
-  int get schemaVersion => 2;
+  int get schemaVersion => 3;
+
+  @override
+  MigrationStrategy get migration {
+    return MigrationStrategy(
+      onCreate: (m) async {
+        await m.createAll();
+      },
+      onUpgrade: (m, from, to) async {
+        if (from < 2) {
+          // Add migrations for older versions if necessary
+        }
+        if (from < 3) {
+          // We added NotificationTbl in version 3
+          await m.createTable(notificationTbl);
+        }
+      },
+    );
+  }
 
   /// Clear all tables
   Future<void> clearAllTables() async {

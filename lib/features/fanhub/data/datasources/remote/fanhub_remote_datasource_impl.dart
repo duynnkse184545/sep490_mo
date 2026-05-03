@@ -121,7 +121,7 @@ class FanHubRemoteDataSourceImpl implements FanHubRemoteDataSource {
   }
 
   @override
-  Future<FanHub> getMyHubsAsOwner() async {
+  Future<FanHub?> getMyHubsAsOwner() async {
     try {
       final response = await _apiService.getMyHubsAsOwner();
       return switch (response) {
@@ -130,6 +130,9 @@ class FanHubRemoteDataSourceImpl implements FanHubRemoteDataSource {
           throw ServerException(message, error),
       };
     } on DioException catch (e) {
+      if (e.response?.statusCode == 403) {
+        return null;
+      }
       throw DioExceptionMapper.mapToException(
         e,
         'Failed to fetch your owned FanHub',

@@ -14,6 +14,18 @@ enum NotificationType {
   memberReport,
   @JsonValue('POST_REPORT')
   postReport,
+  @JsonValue('POST_APPROVED')
+  postApproved,
+  @JsonValue('MEMBER_BANNED')
+  memberBanned,
+  @JsonValue('REPORT_POST_RESOLVED')
+  reportPostResolved,
+  @JsonValue('VTUBER_APPLICATION_APPROVED')
+  vtuberApplicationApproved,
+  @JsonValue('VTUBER_APPLICATION_REJECTED')
+  vtuberApplicationRejected,
+  @JsonValue('FAN_HUB_STRIKE')
+  fanHubStrike,
 }
 
 @freezed
@@ -30,10 +42,22 @@ abstract class Notification with _$Notification {
     int? triggeredByUserId,
     String? triggeredByUsername,
     String? triggeredByAvatarUrl,
+    String? triggeredByFrameUrl,
     required bool isRead,
     required DateTime createdAt,
   }) = _Notification;
 
   factory Notification.fromJson(Map<String, dynamic> json) =>
       _$NotificationFromJson(json);
+}
+
+@freezed
+abstract class StreamStatus with _$StreamStatus {
+  const factory StreamStatus({
+    required String status,
+    required int activeConnections,
+  }) = _StreamStatus;
+
+  factory StreamStatus.fromJson(Map<String, dynamic> json) =>
+      _$StreamStatusFromJson(json);
 }
