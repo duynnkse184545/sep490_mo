@@ -10,16 +10,15 @@ class AuthController extends _$AuthController {
   @override
   AuthState build() {
     _checkAuthStatus();
-    return const AuthState.initial();
+    return const AuthState.loading();
   }
 
   /// Check authentication status on startup
-  /// Uses cache-first strategy: instant if cached, fresh if stale
   Future<void> _checkAuthStatus() async {
     final result = await ref.read(authRepositoryProvider).checkAuthStatus().run();
     state = result.fold(
-          (_) => const AuthState.unauthenticated(),
-          (_) => const AuthState.authenticated(),
+      (_) => const AuthState.unauthenticated(),
+      (_) => const AuthState.authenticated(),
     );
   }
 

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:intl/intl.dart';
 import 'package:sep490_mo/core/theme/app_colors.dart';
@@ -9,7 +10,7 @@ import 'package:sep490_mo/features/post/presentation/controllers/post_ai_control
 import 'package:sep490_mo/features/post/presentation/states/post_ai_state.dart';
 import 'package:sep490_mo/features/post/presentation/widgets/post_comments_widget.dart';
 
-class PostCard extends ConsumerWidget {
+class PostCard extends HookConsumerWidget {
   final Post post;
 
   const PostCard({super.key, required this.post});
@@ -18,6 +19,17 @@ class PostCard extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final colorScheme = Theme.of(context).colorScheme;
     final feedController = ref.read(feedControllerProvider.notifier);
+
+    // Local state for instant feedback (Optimistic UI)
+    final isLiked = useState(post.isLikedByCurrentUser);
+    final likeCount = useState(post.likeCount);
+
+    // Sync with external state changes (e.g. when feed is refreshed or synced)
+    useEffect(() {
+      isLiked.value = post.isLikedByCurrentUser;
+      likeCount.value = post.likeCount;
+      return null;
+    }, [post.isLikedByCurrentUser, post.likeCount]);
 
     return Container(
       margin: const EdgeInsets.symmetric(vertical: 4),
@@ -153,7 +165,21 @@ class PostCard extends ConsumerWidget {
               Row(
                 children: [
                   // Like Button
-                  _buildRetroLikeButton(feedController),
+                  _buildRetroLikeButton(
+                    isLiked: isLiked.value,
+                    likeCount: likeCount.value,
+                    onToggle: () {
+                      if (isLiked.value) {
+                        isLiked.value = false;
+                        likeCount.value--;
+                        feedController.unlike(post.postId);
+                      } else {
+                        isLiked.value = true;
+                        likeCount.value++;
+                        feedController.like(post.postId);
+                      }
+                    },
+                  ),
                   const SizedBox(width: 8),
                   // Comment Button
                   _buildRetroCountButton(
@@ -240,22 +266,20 @@ class PostCard extends ConsumerWidget {
     );
   }
 
-  Widget _buildRetroLikeButton(FeedController feedController) {
+  Widget _buildRetroLikeButton({
+    required bool isLiked,
+    required int likeCount,
+    required VoidCallback onToggle,
+  }) {
     return _buildRetroCountButton(
-      icon: post.isLikedByCurrentUser ? Icons.favorite : Icons.favorite_border,
-      count: post.likeCount,
-      isActive: post.isLikedByCurrentUser,
+      icon: isLiked ? Icons.favorite : Icons.favorite_border,
+      count: likeCount,
+      isActive: isLiked,
       activeColor: Colors.transparent,
       // No background glow
       activeIconColor: Colors.red,
       // Icon glows red
-      onPressed: () {
-        if (post.isLikedByCurrentUser) {
-          feedController.unlike(post.postId);
-        } else {
-          feedController.like(post.postId);
-        }
-      },
+      onPressed: onToggle,
     );
   }
 

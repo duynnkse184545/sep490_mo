@@ -4,6 +4,8 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:sep490_mo/app/router/routes.dart';
 import 'package:sep490_mo/core/widgets/retro_text_field.dart';
+import 'package:sep490_mo/features/auth/presentation/controllers/auth_controller.dart';
+import 'package:sep490_mo/features/auth/presentation/states/auth_state.dart';
 import '../widgets/retro_grid_vfx.dart';
 import '../../../../core/error/failure_handler.dart';
 import '../../../../core/theme/app_colors.dart';
@@ -23,6 +25,7 @@ class SignInScreen extends HookConsumerWidget {
     final obscurePassword = useState(true);
     
     final signInState = ref.watch(signInControllerProvider);
+    final authState = ref.watch(authControllerProvider);
 
     // Listen for success to navigate
     ref.listen<SignInState>(signInControllerProvider, (previous, next) {
@@ -47,51 +50,49 @@ class SignInScreen extends HookConsumerWidget {
             ),
           ),
           SafeArea(
-            child: signInState.when(
-              initial: () => _buildSignInForm(
-                context,
-                ref,
-                usernameController,
-                passwordController,
-                obscurePassword,
-              ),
-              loading: () => _buildSignInForm(
-                context,
-                ref,
-                usernameController,
-                passwordController,
-                obscurePassword,
-                isLoading: true,
-              ),
-              success: () => const Center(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
+            child: authState.maybeWhen(
+              loading: () => const Loader(),
+              orElse: () => signInState.when(
+                initial: () => _buildSignInForm(
+                  context,
+                  ref,
+                  usernameController,
+                  passwordController,
+                  obscurePassword,
+                ),
+                loading: () => _buildSignInForm(
+                  context,
+                  ref,
+                  usernameController,
+                  passwordController,
+                  obscurePassword,
+                  isLoading: true,
+                ),
+                success: () => const Loader(), // Just show loader while navigating
+                error: (message, failure) => Column(
                   children: [
-                    Icon(Icons.check_circle, size: 80, color: AppColors.success),
-                    SizedBox(height: 16),
-                    Text('Sign in successful!'),
+                    ErrorBanner(
+                      message: message,
+                      onRetry: FailureHandler.isRetryable(failure)
+                          ? () => ref
+                              .read(signInControllerProvider.notifier)
+                              .retry()
+                          : null,
+                      onDismiss: () => ref
+                          .read(signInControllerProvider.notifier)
+                          .resetState(),
+                    ),
+                    Expanded(
+                      child: _buildSignInForm(
+                        context,
+                        ref,
+                        usernameController,
+                        passwordController,
+                        obscurePassword,
+                      ),
+                    ),
                   ],
                 ),
-              ),
-              error: (message, failure) => Column(
-                children: [
-                  ErrorBanner(
-                    message: message,
-                    onRetry: FailureHandler.isRetryable(failure)
-                        ? () => ref.read(signInControllerProvider.notifier).retry()
-                        : null,
-                    onDismiss: () => ref.read(signInControllerProvider.notifier).resetState(),
-                  ),
-                  Expanded(
-                    child: _buildSignInForm(
-                      context,
-                      ref,
-                      usernameController,
-                      passwordController,
-                      obscurePassword,
-                    ),
-                  ),
-                ],
               ),
             ),
           ),

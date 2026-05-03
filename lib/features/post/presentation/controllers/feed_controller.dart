@@ -88,11 +88,57 @@ class FeedController extends _$FeedController {
   }
 
   Future<void> like(int postId) async {
-    await ref.read(postRepositoryProvider).like(postId).run();
+    final previousState = state;
+
+    // Optimistically update the UI
+    state = state.whenData((feedState) => feedState.maybeMap(
+          ready: (ready) => ready.copyWith(
+            posts: ready.posts
+                .map((p) => p.postId == postId
+                    ? p.copyWith(
+                        isLikedByCurrentUser: true,
+                        likeCount: p.likeCount + 1,
+                      )
+                    : p)
+                .toList(),
+          ),
+          orElse: () => feedState,
+        ));
+
+    final result = await ref.read(postRepositoryProvider).like(postId).run();
+
+    // Rollback if failed
+    result.fold(
+      (failure) => state = previousState,
+      (_) => null,
+    );
   }
 
   Future<void> unlike(int postId) async {
-    await ref.read(postRepositoryProvider).unlike(postId).run();
+    final previousState = state;
+
+    // Optimistically update the UI
+    state = state.whenData((feedState) => feedState.maybeMap(
+          ready: (ready) => ready.copyWith(
+            posts: ready.posts
+                .map((p) => p.postId == postId
+                    ? p.copyWith(
+                        isLikedByCurrentUser: false,
+                        likeCount: (p.likeCount - 1).clamp(0, 999999),
+                      )
+                    : p)
+                .toList(),
+          ),
+          orElse: () => feedState,
+        ));
+
+    final result = await ref.read(postRepositoryProvider).unlike(postId).run();
+
+    // Rollback if failed
+    result.fold(
+      (failure) => state = previousState,
+      (_) => null,
+    );
   }
 
   Future<void> bookmark(int postId) async {
