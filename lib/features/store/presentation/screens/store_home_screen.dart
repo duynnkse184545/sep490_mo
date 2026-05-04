@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:sep490_mo/app/app_notifier.dart';
+import 'package:sep490_mo/app/app_state.dart';
 import 'package:sep490_mo/core/widgets/loader.dart';
 import 'package:sep490_mo/core/widgets/error_retry_widget.dart';
 import 'package:sep490_mo/features/store/data/models/item_models.dart';
@@ -7,6 +9,7 @@ import 'package:sep490_mo/features/store/presentation/controllers/shop_controlle
 import 'package:sep490_mo/features/store/presentation/controllers/banner_controller.dart';
 import 'package:sep490_mo/features/store/presentation/states/banner_state.dart';
 import 'package:sep490_mo/features/store/presentation/states/shop_state.dart';
+import 'package:sep490_mo/features/store/presentation/widgets/insufficient_points_modal.dart';
 
 class StoreHomeScreen extends HookConsumerWidget {
   const StoreHomeScreen({super.key});
@@ -64,6 +67,17 @@ class _ShopView extends ConsumerWidget {
                   subtitle: Text(item.description ?? item.category),
                   trailing: ElevatedButton(
                     onPressed: () async {
+                      final appState = ref.read(appProvider);
+                      final userPoints = appState.maybeWhen(ready: (user) => user.points, orElse: () => 0);
+                      
+                      if (userPoints < item.price) {
+                        showDialog(
+                          context: context,
+                          builder: (_) => const InsufficientPointsModal(),
+                        );
+                        return;
+                      }
+
                       final success = await controller.purchaseItem(item.itemId);
                       if (context.mounted) {
                         ScaffoldMessenger.of(context).showSnackBar(
@@ -168,6 +182,17 @@ class _GachaView extends ConsumerWidget {
                 const SizedBox(height: 24),
                 ElevatedButton.icon(
                   onPressed: () async {
+                    final appState = ref.read(appProvider);
+                    final userPoints = appState.maybeWhen(ready: (user) => user.points, orElse: () => 0);
+                    
+                    if (userPoints < banner.gachaCost) {
+                      showDialog(
+                        context: context,
+                        builder: (_) => const InsufficientPointsModal(),
+                      );
+                      return;
+                    }
+
                     final success = await controller.performGacha(banner.bannerId);
                     if (context.mounted && success) {
                       ScaffoldMessenger.of(context).showSnackBar(

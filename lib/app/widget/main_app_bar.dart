@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:sep490_mo/app/router/routes.dart';
+import 'package:sep490_mo/app/widget/point_display.dart';
 import 'package:sep490_mo/features/notification/presentation/widgets/notification_app_bar_action.dart';
 import 'package:sep490_mo/features/user/presentation/widgets/profile_daily_mission.dart';
 
@@ -62,6 +63,7 @@ class MainAppBar extends StatelessWidget implements PreferredSizeWidget {
             const StoreRoute().push(context);
           },
         ),
+        const PointDisplay(),
         const SizedBox(width: 8),
       ],
     );

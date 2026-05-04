@@ -13,6 +13,9 @@ List<RouteBase> get $appRoutes => [
   $createFanHubRoute,
   $mainShellRoute,
   $fanHubDetailRoute,
+  $paymentRoute,
+  $paymentReturnRoute,
+  $paymentCancelRoute,
 ];
 
 RouteBase get $signInRoute =>
@@ -427,4 +430,107 @@ T? _$convertMapValue<T>(
 ) {
   final value = map[key];
   return value == null ? null : converter(value);
+}
+
+RouteBase get $paymentRoute =>
+    GoRouteData.$route(path: '/payment', factory: $PaymentRoute._fromState);
+
+mixin $PaymentRoute on GoRouteData {
+  static PaymentRoute _fromState(GoRouterState state) => const PaymentRoute();
+
+  @override
+  String get location => GoRouteData.$location('/payment');
+
+  @override
+  void go(BuildContext context) => context.go(location);
+
+  @override
+  Future<T?> push<T>(BuildContext context) => context.push<T>(location);
+
+  @override
+  void pushReplacement(BuildContext context) =>
+      context.pushReplacement(location);
+
+  @override
+  void replace(BuildContext context) => context.replace(location);
+}
+
+RouteBase get $paymentReturnRoute => GoRouteData.$route(
+  path: '/payment/return',
+  factory: $PaymentReturnRoute._fromState,
+);
+
+mixin $PaymentReturnRoute on GoRouteData {
+  static PaymentReturnRoute _fromState(GoRouterState state) =>
+      PaymentReturnRoute(
+        status: state.uri.queryParameters['status'],
+        vnpTxnRef: _$convertMapValue(
+          'vnp-txn-ref',
+          state.uri.queryParameters,
+          int.tryParse,
+        ),
+      );
+
+  PaymentReturnRoute get _self => this as PaymentReturnRoute;
+
+  @override
+  String get location => GoRouteData.$location(
+    '/payment/return',
+    queryParams: {
+      if (_self.status != null) 'status': _self.status,
+      if (_self.vnpTxnRef != null) 'vnp-txn-ref': _self.vnpTxnRef!.toString(),
+    },
+  );
+
+  @override
+  void go(BuildContext context) => context.go(location);
+
+  @override
+  Future<T?> push<T>(BuildContext context) => context.push<T>(location);
+
+  @override
+  void pushReplacement(BuildContext context) =>
+      context.pushReplacement(location);
+
+  @override
+  void replace(BuildContext context) => context.replace(location);
+}
+
+RouteBase get $paymentCancelRoute => GoRouteData.$route(
+  path: '/payment/cancel',
+  factory: $PaymentCancelRoute._fromState,
+);
+
+mixin $PaymentCancelRoute on GoRouteData {
+  static PaymentCancelRoute _fromState(GoRouterState state) =>
+      PaymentCancelRoute(
+        vnpTxnRef: _$convertMapValue(
+          'vnp-txn-ref',
+          state.uri.queryParameters,
+          int.tryParse,
+        ),
+      );
+
+  PaymentCancelRoute get _self => this as PaymentCancelRoute;
+
+  @override
+  String get location => GoRouteData.$location(
+    '/payment/cancel',
+    queryParams: {
+      if (_self.vnpTxnRef != null) 'vnp-txn-ref': _self.vnpTxnRef!.toString(),
+    },
+  );
+
+  @override
+  void go(BuildContext context) => context.go(location);
+
+  @override
+  Future<T?> push<T>(BuildContext context) => context.push<T>(location);
+
+  @override
+  void pushReplacement(BuildContext context) =>
+      context.pushReplacement(location);
+
+  @override
+  void replace(BuildContext context) => context.replace(location);
 }

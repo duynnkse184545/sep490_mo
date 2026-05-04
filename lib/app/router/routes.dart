@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:go_router/go_router.dart';
 import 'package:sep490_mo/app/widget/hub_speed_dial.dart';
 import 'package:sep490_mo/app/widget/bottom_tab_nav.dart';
@@ -16,6 +17,8 @@ import 'package:sep490_mo/features/post/presentation/screens/feed_screen.dart';
 import 'package:sep490_mo/app/screen/moderation_home_screen.dart';
 import 'package:sep490_mo/features/post/presentation/widgets/hub_feed_widget.dart';
 import 'package:sep490_mo/features/store/presentation/screens/store_home_screen.dart';
+import 'package:sep490_mo/features/payment/presentation/screens/payment_screen.dart';
+import 'package:sep490_mo/features/payment/presentation/screens/payment_result_screen.dart';
 import 'package:sep490_mo/features/auth/presentation/widgets/logout_button.dart';
 import 'package:sep490_mo/features/user/presentation/screens/user_profile_screen.dart';
 import 'package:sep490_mo/features/user/presentation/screens/vtuber_application_screen.dart';
@@ -240,3 +243,40 @@ class JoinQuestionsManagementRoute extends GoRouteData with $JoinQuestionsManage
   Widget build(BuildContext context, GoRouterState state) =>
       JoinQuestionsManagementScreen(fanHubId: fanHubId);
 }
+
+// ─── Payment Routes ────────────────────────────────────────────────────────
+@TypedGoRoute<PaymentRoute>(path: '/payment')
+class PaymentRoute extends GoRouteData with $PaymentRoute {
+  const PaymentRoute();
+
+  @override
+  Widget build(BuildContext context, GoRouterState state) => const PaymentScreen();
+}
+
+@TypedGoRoute<PaymentReturnRoute>(path: '/payment/return')
+class PaymentReturnRoute extends GoRouteData with $PaymentReturnRoute {
+  final String? status;
+  @JsonKey(name: 'vnp_TxnRef')
+  final int? vnpTxnRef;
+
+  const PaymentReturnRoute({this.status, this.vnpTxnRef});
+
+  @override
+  Widget build(BuildContext context, GoRouterState state) {
+    return PaymentResultScreen(status: 'success', paymentId: vnpTxnRef);
+  }
+}
+
+@TypedGoRoute<PaymentCancelRoute>(path: '/payment/cancel')
+class PaymentCancelRoute extends GoRouteData with $PaymentCancelRoute {
+  @JsonKey(name: 'vnp_TxnRef')
+  final int? vnpTxnRef;
+
+  const PaymentCancelRoute({this.vnpTxnRef});
+
+  @override
+  Widget build(BuildContext context, GoRouterState state) {
+    return PaymentResultScreen(status: 'cancel', paymentId: vnpTxnRef);
+  }
+}
+
