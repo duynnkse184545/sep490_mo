@@ -19,6 +19,8 @@ abstract class PostRemoteDataSource {
 
   Future<void> bookmark(int postId);
 
+  Future<void> unbookmark(int postId);
+
   Future<void> like(int postId);
 
   Future<void> unlike(int postId);

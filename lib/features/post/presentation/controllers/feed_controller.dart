@@ -142,7 +142,47 @@ class FeedController extends _$FeedController {
   }
 
   Future<void> bookmark(int postId) async {
-    await ref.read(postRepositoryProvider).bookmark(postId).run();
+    final previousState = state;
+
+    state = state.whenData((feedState) => feedState.maybeMap(
+          ready: (ready) => ready.copyWith(
+            posts: ready.posts
+                .map((p) => p.postId == postId
+                    ? p.copyWith(isBookmarkedByCurrentUser: true)
+                    : p)
+                .toList(),
+          ),
+          orElse: () => feedState,
+        ));
+
+    final result = await ref.read(postRepositoryProvider).bookmark(postId).run();
+
+    result.fold(
+      (failure) => state = previousState,
+      (_) => null,
+    );
+  }
+
+  Future<void> unbookmark(int postId) async {
+    final previousState = state;
+
+    state = state.whenData((feedState) => feedState.maybeMap(
+          ready: (ready) => ready.copyWith(
+            posts: ready.posts
+                .map((p) => p.postId == postId
+                    ? p.copyWith(isBookmarkedByCurrentUser: false)
+                    : p)
+                .toList(),
+          ),
+          orElse: () => feedState,
+        ));
+
+    final result = await ref.read(postRepositoryProvider).unbookmark(postId).run();
+
+    result.fold(
+      (failure) => state = previousState,
+      (_) => null,
+    );
   }
 
   Future<void> vote(int postId, int optionId) async {

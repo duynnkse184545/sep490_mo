@@ -19,87 +19,96 @@ class NotificationPopupContent extends ConsumerWidget {
       data: (state) {
         return Container(
           width: 320,
-          padding: const EdgeInsets.all(16),
           decoration: BoxDecoration(
             color: Colors.white,
             borderRadius: BorderRadius.circular(12),
             border: Border.all(color: AppColors.border, width: 2),
-            boxShadow: const [
-              BoxShadow(color: AppColors.border, offset: Offset(4, 4)),
-            ],
           ),
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
               // Header
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  const Text(
-                    "NOTIFICATIONS",
-                    style: TextStyle(
-                      fontSize: 12,
-                      fontWeight: FontWeight.w900,
-                      letterSpacing: 1.2,
-                      color: Colors.grey,
-                    ),
-                  ),
-                  state.maybeWhen(
-                    ready: (notifications) => TextButton(
-                      onPressed: () => controller.markAllAsRead(),
-                      style: TextButton.styleFrom(
-                        padding: EdgeInsets.zero,
-                        minimumSize: Size.zero,
-                        tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+              Container(
+                padding: const EdgeInsets.all(16),
+                decoration: const BoxDecoration(
+                  border: Border(bottom: BorderSide(color: Colors.black12, width: 1)),
+                ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    const Text(
+                      "NOTIFICATIONS",
+                      style: TextStyle(
+                        fontSize: 12,
+                        fontWeight: FontWeight.w900,
+                        letterSpacing: 1.2,
+                        color: Colors.grey,
                       ),
-                      child: const Text(
-                        "Mark all as read",
-                        style: TextStyle(
-                          fontSize: 11,
-                          fontWeight: FontWeight.bold,
-                          color: AppColors.primary,
+                    ),
+                    state.maybeWhen(
+                      ready: (notifications) => InkWell(
+                        onTap: () => controller.markAllAsRead(),
+                        child: const Text(
+                          "Mark all as read",
+                          style: TextStyle(
+                            fontSize: 11,
+                            fontWeight: FontWeight.w900,
+                            color: AppColors.primary,
+                            decoration: TextDecoration.underline,
+                          ),
                         ),
                       ),
+                      orElse: () => const SizedBox.shrink(),
                     ),
-                    orElse: () => const SizedBox.shrink(),
-                  ),
-                ],
+                  ],
+                ),
               ),
-              const SizedBox(height: 12),
 
-              // Content
-              state.when(
-                ready: (notifications) => Flexible(
-                  child: ListView.separated(
-                    shrinkWrap: true,
-                    itemCount: notifications.length,
-                    separatorBuilder: (_, _) => const Divider(height: 24, color: Colors.black12),
-                    itemBuilder: (context, index) {
-                      final notification = notifications[index];
-                      return _NotificationItem(
-                        notification: notification,
-                        onTap: () => controller.markAsRead(notification.id),
-                        onDelete: () => controller.deleteNotification(notification.id),
-                      );
-                    },
-                  ),
-                ),
-                loading: () => const Padding(
-                  padding: EdgeInsets.all(20),
-                  child: SmallLoader(),
-                ),
-                empty: () => const Padding(
-                  padding: EdgeInsets.all(20),
-                  child: Text(
-                    "No new notifications ☕",
-                    style: TextStyle(fontSize: 13, color: Colors.grey, fontWeight: FontWeight.bold),
-                  ),
-                ),
-                error: (message) => Padding(
-                  padding: const EdgeInsets.all(20),
-                  child: Text(
-                    message,
-                    style: const TextStyle(color: Colors.red, fontWeight: FontWeight.bold, fontSize: 12),
+              // Content Area
+              Flexible(
+                child: ConstrainedBox(
+                  constraints: const BoxConstraints(maxHeight: 400),
+                  child: state.when(
+                    ready: (notifications) => ListView.separated(
+                      padding: const EdgeInsets.symmetric(vertical: 8),
+                      shrinkWrap: true,
+                      itemCount: notifications.length,
+                      separatorBuilder: (_, __) => const Divider(height: 1, color: Colors.black12, indent: 60),
+                      itemBuilder: (context, index) {
+                        final notification = notifications[index];
+                        return _NotificationItem(
+                          notification: notification,
+                          onTap: () => controller.markAsRead(notification.id),
+                          onDelete: () => controller.deleteNotification(notification.id),
+                        );
+                      },
+                    ),
+                    loading: () => const Padding(
+                      padding: EdgeInsets.all(32),
+                      child: SmallLoader(),
+                    ),
+                    empty: () => const Padding(
+                      padding: EdgeInsets.all(32),
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Icon(Icons.notifications_none, size: 48, color: Colors.grey),
+                          SizedBox(height: 12),
+                          Text(
+                            "No new notifications ☕",
+                            style: TextStyle(fontSize: 13, color: Colors.grey, fontWeight: FontWeight.w900),
+                          ),
+                        ],
+                      ),
+                    ),
+                    error: (message) => Padding(
+                      padding: const EdgeInsets.all(32),
+                      child: Text(
+                        message,
+                        style: const TextStyle(color: Colors.red, fontWeight: FontWeight.w900, fontSize: 12),
+                        textAlign: TextAlign.center,
+                      ),
+                    ),
                   ),
                 ),
               ),
@@ -128,100 +137,97 @@ class _NotificationItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: onTap,
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          // Icon based on type
-          Container(
-            padding: const EdgeInsets.all(8),
-            decoration: BoxDecoration(
-              color: _getIconColor(notification.type).withValues(alpha: 0.1),
-              shape: BoxShape.circle,
+      child: Container(
+        color: notification.isRead ? Colors.transparent : AppColors.primary.withValues(alpha: 0.03),
+        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            // Icon
+            Container(
+              padding: const EdgeInsets.all(8),
+              decoration: BoxDecoration(
+                color: _getIconColor(notification.type).withValues(alpha: 0.1),
+                border: Border.all(color: _getIconColor(notification.type).withValues(alpha: 0.3), width: 1),
+                shape: BoxShape.circle,
+              ),
+              child: Icon(
+                _getIconData(notification.type),
+                size: 16,
+                color: _getIconColor(notification.type),
+              ),
             ),
-            child: Icon(
-              _getIconData(notification.type),
-              size: 18,
-              color: _getIconColor(notification.type),
-            ),
-          ),
-          const SizedBox(width: 12),
-          
-          // Text content
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Row(
-                  children: [
-                    Expanded(
-                      child: Text(
-                        notification.title,
-                        style: TextStyle(
-                          fontSize: 13,
-                          fontWeight: notification.isRead ? FontWeight.bold : FontWeight.w900,
-                          color: notification.isRead ? Colors.grey[700] : const Color(0xFF323232),
+            const SizedBox(width: 12),
+            
+            // Text
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(
+                    children: [
+                      Expanded(
+                        child: Text(
+                          notification.title,
+                          style: TextStyle(
+                            fontSize: 13,
+                            fontWeight: notification.isRead ? FontWeight.bold : FontWeight.w900,
+                            color: notification.isRead ? const Color(0xFF666666) : const Color(0xFF323232),
+                          ),
                         ),
                       ),
-                    ),
-                    if (!notification.isRead)
-                      Container(
-                        width: 8,
-                        height: 8,
-                        decoration: const BoxDecoration(
-                          color: AppColors.primary,
-                          shape: BoxShape.circle,
+                      if (!notification.isRead)
+                        Container(
+                          width: 8,
+                          height: 8,
+                          decoration: const BoxDecoration(
+                            color: AppColors.primary,
+                            shape: BoxShape.circle,
+                          ),
                         ),
-                      ),
-                  ],
-                ),
-                const SizedBox(height: 4),
-                Text(
-                  notification.message,
-                  maxLines: 2,
-                  overflow: TextOverflow.ellipsis,
-                  style: TextStyle(
-                    fontSize: 12,
-                    color: Colors.grey[600],
+                    ],
                   ),
-                ),
-                const SizedBox(height: 4),
-                Text(
-                  _formatDate(notification.createdAt),
-                  style: TextStyle(
-                    fontSize: 10,
-                    color: Colors.grey[400],
-                    fontWeight: FontWeight.bold,
+                  const SizedBox(height: 4),
+                  Text(
+                    notification.message,
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
+                    style: const TextStyle(fontSize: 12, color: Color(0xFF555555), height: 1.4),
                   ),
-                ),
-              ],
+                  const SizedBox(height: 6),
+                  Text(
+                    _formatDate(notification.createdAt),
+                    style: const TextStyle(fontSize: 10, color: Colors.grey, fontWeight: FontWeight.w900),
+                  ),
+                ],
+              ),
             ),
-          ),
 
-          // Delete button
-          IconButton(
-            onPressed: onDelete,
-            icon: const Icon(Icons.close, size: 14, color: Colors.grey),
-            visualDensity: VisualDensity.compact,
-            padding: EdgeInsets.zero,
-            constraints: const BoxConstraints(),
-          ),
-        ],
+            const SizedBox(width: 8),
+
+            // Delete
+            GestureDetector(
+              onTap: onDelete,
+              child: const Icon(Icons.close, size: 14, color: Colors.black26),
+            ),
+          ],
+        ),
       ),
     );
   }
 
   IconData _getIconData(NotificationType type) {
     return switch (type) {
-      NotificationType.postLike => Icons.favorite_border,
-      NotificationType.postComment => Icons.comment_outlined,
-      NotificationType.memberReport => Icons.report_problem_outlined,
-      NotificationType.postReport => Icons.flag_outlined,
-      NotificationType.postApproved => Icons.verified_outlined,
+      NotificationType.postLike => Icons.favorite,
+      NotificationType.postComment => Icons.comment,
+      NotificationType.memberReport => Icons.report_problem,
+      NotificationType.postReport => Icons.flag,
+      NotificationType.postApproved => Icons.verified,
       NotificationType.memberBanned => Icons.gavel,
-      NotificationType.reportPostResolved => Icons.check_circle_outline,
-      NotificationType.vtuberApplicationApproved => Icons.stars_outlined,
-      NotificationType.vtuberApplicationRejected => Icons.assignment_late_outlined,
-      NotificationType.fanHubStrike => Icons.warning_amber_outlined,
+      NotificationType.reportPostResolved => Icons.check_circle,
+      NotificationType.vtuberApplicationApproved => Icons.stars,
+      NotificationType.vtuberApplicationRejected => Icons.assignment_late,
+      NotificationType.fanHubStrike => Icons.warning,
     };
   }
 
@@ -242,14 +248,9 @@ class _NotificationItem extends StatelessWidget {
 
   String _formatDate(DateTime date) {
     final now = DateTime.now();
-    final difference = now.difference(date);
-
-    if (difference.inMinutes < 60) {
-      return '${difference.inMinutes}m ago';
-    } else if (difference.inHours < 24) {
-      return '${difference.inHours}h ago';
-    } else {
-      return DateFormat('MMM dd').format(date);
-    }
+    final diff = now.difference(date);
+    if (diff.inMinutes < 60) return '${diff.inMinutes}m ago';
+    if (diff.inHours < 24) return '${diff.inHours}h ago';
+    return DateFormat('MMM dd').format(date);
   }
 }

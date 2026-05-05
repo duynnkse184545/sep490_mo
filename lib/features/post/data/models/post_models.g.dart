@@ -72,6 +72,8 @@ _Post _$PostFromJson(Map<String, dynamic> json) => _Post(
       : DateTime.parse(json['updatedAt'] as String),
   likeCount: (json['likeCount'] as num?)?.toInt() ?? 0,
   isLikedByCurrentUser: json['isLikedByCurrentUser'] as bool? ?? false,
+  isBookmarkedByCurrentUser:
+      json['isBookmarkedByCurrentUser'] as bool? ?? false,
 );
 
 Map<String, dynamic> _$PostToJson(_Post instance) => <String, dynamic>{
@@ -98,6 +100,7 @@ Map<String, dynamic> _$PostToJson(_Post instance) => <String, dynamic>{
   'updatedAt': instance.updatedAt?.toIso8601String(),
   'likeCount': instance.likeCount,
   'isLikedByCurrentUser': instance.isLikedByCurrentUser,
+  'isBookmarkedByCurrentUser': instance.isBookmarkedByCurrentUser,
 };
 
 const _$PostTypeEnumMap = {

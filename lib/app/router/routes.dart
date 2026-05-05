@@ -76,15 +76,7 @@ class CreateFanHubRoute extends GoRouteData with $CreateFanHubRoute {
       routes: [TypedGoRoute<ExploreRoute>(path: '/explore')],
     ),
     TypedStatefulShellBranch<ProfileBranch>(
-      routes: [
-        TypedGoRoute<UserProfileRoute>(
-          path: '/profile',
-          routes: [
-            TypedGoRoute<BookmarkRoute>(path: 'bookmarks'),
-            TypedGoRoute<VtuberApplicationRoute>(path: 'vtuber-application'),
-          ],
-        ),
-      ],
+      routes: [TypedGoRoute<UserProfileRoute>(path: '/profile')],
     ),
   ],
 )
@@ -160,10 +152,8 @@ class FanHubDetailRoute extends GoRouteData with $FanHubDetailRoute {
     subdomain: subdomain,
     feedWidget: HubFeedWidget(subdomain: subdomain),
     speedDial: HubSpeedDial(subdomain: subdomain, fanHubId: fanHubId),
-    joinButtonBuilder: (requiresApproval) => JoinHubButton(
-      fanHubId: fanHubId,
-      requiresApproval: requiresApproval,
-    ),
+    joinButtonBuilder: (requiresApproval) =>
+        JoinHubButton(fanHubId: fanHubId, requiresApproval: requiresApproval),
   );
 }
 
@@ -219,6 +209,7 @@ class UserProfileRoute extends GoRouteData with $UserProfileRoute {
       const UserProfileScreen(logoutButton: LogoutButton());
 }
 
+@TypedGoRoute<BookmarkRoute>(path: '/profile/bookmarks')
 class BookmarkRoute extends GoRouteData with $BookmarkRoute {
   const BookmarkRoute();
 
@@ -227,6 +218,7 @@ class BookmarkRoute extends GoRouteData with $BookmarkRoute {
       const BookmarkScreen();
 }
 
+@TypedGoRoute<VtuberApplicationRoute>(path: '/profile/vtuber-application')
 class VtuberApplicationRoute extends GoRouteData with $VtuberApplicationRoute {
   const VtuberApplicationRoute();
 
@@ -255,8 +247,12 @@ class HubSettingsRoute extends GoRouteData with $HubSettingsRoute {
       );
 }
 
-class JoinQuestionsManagementRoute extends GoRouteData with $JoinQuestionsManagementRoute {
-  const JoinQuestionsManagementRoute({required this.subdomain, required this.fanHubId});
+class JoinQuestionsManagementRoute extends GoRouteData
+    with $JoinQuestionsManagementRoute {
+  const JoinQuestionsManagementRoute({
+    required this.subdomain,
+    required this.fanHubId,
+  });
 
   final String subdomain;
   final int fanHubId;
@@ -272,7 +268,8 @@ class PaymentRoute extends GoRouteData with $PaymentRoute {
   const PaymentRoute();
 
   @override
-  Widget build(BuildContext context, GoRouterState state) => const PaymentScreen();
+  Widget build(BuildContext context, GoRouterState state) =>
+      const PaymentScreen();
 }
 
 @TypedGoRoute<PaymentReturnRoute>(path: '/payment/return')
@@ -301,4 +298,3 @@ class PaymentCancelRoute extends GoRouteData with $PaymentCancelRoute {
     return PaymentResultScreen(status: 'cancel', paymentId: vnpTxnRef);
   }
 }
-

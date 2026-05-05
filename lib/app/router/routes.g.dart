@@ -13,6 +13,8 @@ List<RouteBase> get $appRoutes => [
   $createFanHubRoute,
   $mainShellRoute,
   $fanHubDetailRoute,
+  $bookmarkRoute,
+  $vtuberApplicationRoute,
   $paymentRoute,
   $paymentReturnRoute,
   $paymentCancelRoute,
@@ -131,16 +133,6 @@ RouteBase get $mainShellRoute => StatefulShellRouteData.$route(
         GoRouteData.$route(
           path: '/profile',
           factory: $UserProfileRoute._fromState,
-          routes: [
-            GoRouteData.$route(
-              path: 'bookmarks',
-              factory: $BookmarkRoute._fromState,
-            ),
-            GoRouteData.$route(
-              path: 'vtuber-application',
-              factory: $VtuberApplicationRoute._fromState,
-            ),
-          ],
         ),
       ],
     ),
@@ -198,47 +190,6 @@ mixin $UserProfileRoute on GoRouteData {
 
   @override
   String get location => GoRouteData.$location('/profile');
-
-  @override
-  void go(BuildContext context) => context.go(location);
-
-  @override
-  Future<T?> push<T>(BuildContext context) => context.push<T>(location);
-
-  @override
-  void pushReplacement(BuildContext context) =>
-      context.pushReplacement(location);
-
-  @override
-  void replace(BuildContext context) => context.replace(location);
-}
-
-mixin $BookmarkRoute on GoRouteData {
-  static BookmarkRoute _fromState(GoRouterState state) => const BookmarkRoute();
-
-  @override
-  String get location => GoRouteData.$location('/profile/bookmarks');
-
-  @override
-  void go(BuildContext context) => context.go(location);
-
-  @override
-  Future<T?> push<T>(BuildContext context) => context.push<T>(location);
-
-  @override
-  void pushReplacement(BuildContext context) =>
-      context.pushReplacement(location);
-
-  @override
-  void replace(BuildContext context) => context.replace(location);
-}
-
-mixin $VtuberApplicationRoute on GoRouteData {
-  static VtuberApplicationRoute _fromState(GoRouterState state) =>
-      const VtuberApplicationRoute();
-
-  @override
-  String get location => GoRouteData.$location('/profile/vtuber-application');
 
   @override
   void go(BuildContext context) => context.go(location);
@@ -469,6 +420,57 @@ T? _$convertMapValue<T>(
 ) {
   final value = map[key];
   return value == null ? null : converter(value);
+}
+
+RouteBase get $bookmarkRoute => GoRouteData.$route(
+  path: '/profile/bookmarks',
+  factory: $BookmarkRoute._fromState,
+);
+
+mixin $BookmarkRoute on GoRouteData {
+  static BookmarkRoute _fromState(GoRouterState state) => const BookmarkRoute();
+
+  @override
+  String get location => GoRouteData.$location('/profile/bookmarks');
+
+  @override
+  void go(BuildContext context) => context.go(location);
+
+  @override
+  Future<T?> push<T>(BuildContext context) => context.push<T>(location);
+
+  @override
+  void pushReplacement(BuildContext context) =>
+      context.pushReplacement(location);
+
+  @override
+  void replace(BuildContext context) => context.replace(location);
+}
+
+RouteBase get $vtuberApplicationRoute => GoRouteData.$route(
+  path: '/profile/vtuber-application',
+  factory: $VtuberApplicationRoute._fromState,
+);
+
+mixin $VtuberApplicationRoute on GoRouteData {
+  static VtuberApplicationRoute _fromState(GoRouterState state) =>
+      const VtuberApplicationRoute();
+
+  @override
+  String get location => GoRouteData.$location('/profile/vtuber-application');
+
+  @override
+  void go(BuildContext context) => context.go(location);
+
+  @override
+  Future<T?> push<T>(BuildContext context) => context.push<T>(location);
+
+  @override
+  void pushReplacement(BuildContext context) =>
+      context.pushReplacement(location);
+
+  @override
+  void replace(BuildContext context) => context.replace(location);
 }
 
 RouteBase get $paymentRoute =>

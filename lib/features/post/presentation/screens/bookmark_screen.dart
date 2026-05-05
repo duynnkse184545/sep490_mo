@@ -43,7 +43,39 @@ class BookmarkScreen extends HookConsumerWidget {
               padding: const EdgeInsets.all(12),
               itemCount: posts.length,
               separatorBuilder: (_, _) => const SizedBox(height: 8),
-              itemBuilder: (context, index) => PostCard(post: posts[index]),
+              itemBuilder: (context, index) => PostCard(
+                post: posts[index].copyWith(isBookmarkedByCurrentUser: true),
+                onBookmarkToggle: (isBookmarked) async {
+                  if (!isBookmarked) {
+                    final confirm = await showDialog<bool>(
+                      context: context,
+                      builder: (context) => AlertDialog(
+                        title: const Text('Remove Bookmark?'),
+                        content: const Text('Are you sure you want to remove this post from your bookmarks?'),
+                        actions: [
+                          TextButton(
+                            onPressed: () => Navigator.pop(context, false),
+                            child: const Text('Cancel'),
+                          ),
+                          ElevatedButton(
+                            style: ElevatedButton.styleFrom(backgroundColor: Colors.red),
+                            onPressed: () => Navigator.pop(context, true),
+                            child: const Text('Remove', style: TextStyle(color: Colors.white)),
+                          ),
+                        ],
+                      ),
+                    );
+                    
+                    if (confirm == true) {
+                      await controller.unbookmark(posts[index].postId);
+                      return false; // Return false to indicate it's unbookmarked
+                    } else {
+                      return true; // User cancelled, keep it bookmarked
+                    }
+                  }
+                  return isBookmarked;
+                },
+              ),
             ),
           ),
           loadingMore: (posts) => RefreshIndicator(
@@ -60,7 +92,39 @@ class BookmarkScreen extends HookConsumerWidget {
                     child: Center(child: CircularProgressIndicator()),
                   );
                 }
-                return PostCard(post: posts[index]);
+                return PostCard(
+                  post: posts[index].copyWith(isBookmarkedByCurrentUser: true),
+                  onBookmarkToggle: (isBookmarked) async {
+                    if (!isBookmarked) {
+                      final confirm = await showDialog<bool>(
+                        context: context,
+                        builder: (context) => AlertDialog(
+                          title: const Text('Remove Bookmark?'),
+                          content: const Text('Are you sure you want to remove this post from your bookmarks?'),
+                          actions: [
+                            TextButton(
+                              onPressed: () => Navigator.pop(context, false),
+                              child: const Text('Cancel'),
+                            ),
+                            ElevatedButton(
+                              style: ElevatedButton.styleFrom(backgroundColor: Colors.red),
+                              onPressed: () => Navigator.pop(context, true),
+                              child: const Text('Remove', style: TextStyle(color: Colors.white)),
+                            ),
+                          ],
+                        ),
+                      );
+                      
+                      if (confirm == true) {
+                        await controller.unbookmark(posts[index].postId);
+                        return false;
+                      } else {
+                        return true;
+                      }
+                    }
+                    return isBookmarked;
+                  },
+                );
               },
             ),
           ),

@@ -141,6 +141,25 @@ class PostRemoteDatasourceImpl implements PostRemoteDataSource {
   }
 
   @override
+  Future<void> unbookmark(int postId) async {
+    try {
+      final response = await _postApi.unbookmark(postId);
+      switch (response) {
+        case ApiResponseSuccess():
+          return;
+        case ApiResponseFailure(:final message, :final error):
+          throw ServerException(message, error);
+      }
+    } on DioException catch (e) {
+      throw DioExceptionMapper.mapToException(e, 'Failed to unbookmark post');
+    } catch (e, stack) {
+      debugPrint('PostRemoteDatasourceImpl.unbookmark error: $e');
+      debugPrint('Stack: $stack');
+      rethrow;
+    }
+  }
+
+  @override
   Future<void> like(int postId) async {
     try {
       final response = await _postApi.like(postId);

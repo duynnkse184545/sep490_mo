@@ -62,6 +62,13 @@ class PostRepositoryImpl implements PostRepository {
   }
 
   @override
+  TaskVoid unbookmark(int postId) {
+    return ErrorHandler.execute(() async {
+      await _remoteDataSource.unbookmark(postId);
+    });
+  }
+
+  @override
   TaskVoid like(int postId) {
     return ErrorHandler.execute(() async {
       await _remoteDataSource.like(postId);

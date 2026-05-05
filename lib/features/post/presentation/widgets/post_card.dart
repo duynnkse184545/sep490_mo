@@ -12,8 +12,9 @@ import 'package:sep490_mo/features/post/presentation/widgets/post_comments_widge
 
 class PostCard extends HookConsumerWidget {
   final Post post;
+  final Future<bool> Function(bool)? onBookmarkToggle;
 
-  const PostCard({super.key, required this.post});
+  const PostCard({super.key, required this.post, this.onBookmarkToggle});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -23,13 +24,15 @@ class PostCard extends HookConsumerWidget {
     // Local state for instant feedback (Optimistic UI)
     final isLiked = useState(post.isLikedByCurrentUser);
     final likeCount = useState(post.likeCount);
+    final isBookmarked = useState(post.isBookmarkedByCurrentUser);
 
     // Sync with external state changes (e.g. when feed is refreshed or synced)
     useEffect(() {
       isLiked.value = post.isLikedByCurrentUser;
       likeCount.value = post.likeCount;
+      isBookmarked.value = post.isBookmarkedByCurrentUser;
       return null;
-    }, [post.isLikedByCurrentUser, post.likeCount]);
+    }, [post.isLikedByCurrentUser, post.likeCount, post.isBookmarkedByCurrentUser]);
 
     return Container(
       margin: const EdgeInsets.symmetric(vertical: 4),
@@ -193,8 +196,23 @@ class PostCard extends HookConsumerWidget {
               Row(
                 children: [
                   _buildRetroActionButton(
-                    icon: Icons.bookmark_border,
-                    onPressed: () => feedController.bookmark(post.postId),
+                    icon: isBookmarked.value ? Icons.bookmark : Icons.bookmark_border,
+                    onPressed: () async {
+                      bool newBookmarkState = !isBookmarked.value;
+                      
+                      if (onBookmarkToggle != null) {
+                        newBookmarkState = await onBookmarkToggle!(newBookmarkState);
+                        isBookmarked.value = newBookmarkState;
+                      } else {
+                        if (isBookmarked.value) {
+                          isBookmarked.value = false;
+                          feedController.unbookmark(post.postId);
+                        } else {
+                          isBookmarked.value = true;
+                          feedController.bookmark(post.postId);
+                        }
+                      }
+                    },
                   ),
                   const SizedBox(width: 8),
                   _buildRetroActionButton(
@@ -651,3 +669,4 @@ class _AIDialog extends ConsumerWidget {
     );
   }
 }
+

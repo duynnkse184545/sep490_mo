@@ -20,6 +20,8 @@ abstract class PostRepository {
 
   TaskVoid bookmark(int postId);
 
+  TaskVoid unbookmark(int postId);
+
   TaskVoid like(int postId);
 
   TaskVoid unlike(int postId);

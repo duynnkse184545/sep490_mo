@@ -4,8 +4,8 @@ import 'package:sep490_mo/features/user/data/models/user_models.dart';
 
 class ProfileHeader extends StatelessWidget {
   final User user;
-  final VoidCallback? onPickAvatar;
-  const ProfileHeader({super.key, required this.user, this.onPickAvatar});
+  final VoidCallback? onEdit;
+  const ProfileHeader({super.key, required this.user, this.onEdit});
 
   @override
   Widget build(BuildContext context) {
@@ -18,41 +18,67 @@ class ProfileHeader extends StatelessWidget {
       ),
       child: Column(
         children: [
-          // Avatar with Edit Button
+          // Avatar with Frame and Edit Button
           Stack(
+            alignment: Alignment.center,
             children: [
+              // 1. Shadow & Background Container
               Container(
-                width: 120,
-                height: 120,
+                width: 110,
+                height: 110,
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
+                  color: Colors.white,
                   border: Border.all(color: Theme.of(context).colorScheme.primary, width: 4),
                   boxShadow: const [
                     BoxShadow(color: AppColors.border, offset: Offset(4, 4)),
                   ],
                 ),
-                child: CircleAvatar(
-                  radius: 50,
-                  backgroundColor: Colors.white,
-                  backgroundImage: user.avatarUrl != null ? NetworkImage(user.avatarUrl!) : null,
-                  child: user.avatarUrl == null
-                      ? Text(
-                          (user.displayName ?? user.username)[0].toUpperCase(),
-                          style: TextStyle(
-                            fontSize: 40,
-                            fontWeight: FontWeight.w900,
-                            color: Theme.of(context).colorScheme.primary,
-                          ),
-                        )
-                      : null,
-                ),
               ),
-              if (onPickAvatar != null)
+
+              // 2. User Frame
+              if (user.frameUrl != null && user.frameUrl!.isNotEmpty)
+                IgnorePointer(
+                  child: SizedBox(
+                    width: 140, // Frame is usually larger than the avatar
+                    height: 140,
+                    child: Image.network(
+                      user.frameUrl!,
+                      fit: BoxFit.contain,
+                      isAntiAlias: true,
+                      filterQuality: FilterQuality.high,
+                      colorBlendMode: BlendMode.multiply,
+                      color: Colors.white,
+                      errorBuilder: (_, _, _) => const SizedBox.shrink(),
+                    ),
+                  ),
+                ),
+
+
+              // 3. The Actual Avatar
+              CircleAvatar(
+                radius: 50,
+                backgroundColor: Colors.transparent,
+                backgroundImage: user.avatarUrl != null ? NetworkImage(user.avatarUrl!) : null,
+                child: user.avatarUrl == null
+                    ? Text(
+                        (user.displayName ?? user.username)[0].toUpperCase(),
+                        style: TextStyle(
+                          fontSize: 40,
+                          fontWeight: FontWeight.w900,
+                          color: Theme.of(context).colorScheme.primary,
+                        ),
+                      )
+                    : null,
+              ),
+
+              // 4. Edit Button
+              if (onEdit != null)
                 Positioned(
-                  bottom: 0,
-                  right: 0,
+                  bottom: 5,
+                  right: 5,
                   child: InkWell(
-                    onTap: onPickAvatar,
+                    onTap: onEdit,
                     child: Container(
                       padding: const EdgeInsets.all(8),
                       decoration: BoxDecoration(

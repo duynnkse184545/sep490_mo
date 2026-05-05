@@ -35,6 +35,9 @@ abstract class PostApiService {
   @POST('/posts/bookmark')
   Future<ApiResponse> bookmark(@Query('postId') int postId);
 
+  @POST('/posts/unbookmark')
+  Future<ApiResponse> unbookmark(@Query('postId') int postId);
+
   @POST('/posts/like')
   Future<ApiResponse> like(@Query('postId') int postId);
 

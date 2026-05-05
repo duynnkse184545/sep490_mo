@@ -50,7 +50,7 @@ class UserProfileScreen extends HookConsumerWidget {
                   children: [
                     ProfileHeader(
                       user: user,
-                      onPickAvatar: pickAvatar,
+                      onEdit: pickAvatar,
                     ),
                     const SizedBox(height: 8),
                     ProfileStats(user: user),

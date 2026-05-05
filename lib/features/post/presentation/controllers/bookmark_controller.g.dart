@@ -34,7 +34,7 @@ final class BookmarkControllerProvider
 }
 
 String _$bookmarkControllerHash() =>
-    r'f54d177dc95f2a13f4cf2a0e77c2f699127efdb5';
+    r'468ae03ffbde8622a185b1d488f89c69e367f646';
 
 abstract class _$BookmarkController extends $AsyncNotifier<BookmarkState> {
   FutureOr<BookmarkState> build();

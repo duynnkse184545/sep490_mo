@@ -64,4 +64,25 @@ class BookmarkController extends _$BookmarkController {
       },
     );
   }
+
+  Future<void> unbookmark(int postId) async {
+    final previousState = state;
+
+    // Optimistically remove from bookmark list
+    state = state.whenData((bookmarkState) => bookmarkState.maybeMap(
+          ready: (ready) => ready.copyWith(
+            posts: ready.posts.where((p) => p.postId != postId).toList(),
+          ),
+          orElse: () => bookmarkState,
+        ));
+
+    final result = await ref.read(postRepositoryProvider).unbookmark(postId).run();
+
+    // Rollback if failed
+    result.fold(
+      (failure) => state = previousState,
+      (_) => null,
+    );
+  }
 }
+
