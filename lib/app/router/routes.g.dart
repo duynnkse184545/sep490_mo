@@ -264,6 +264,7 @@ RouteBase get $fanHubDetailRoute => GoRouteData.$route(
       path: 'moderation',
       factory: $ModerationRoute._fromState,
     ),
+    GoRouteData.$route(path: 'settings', factory: $HubSettingsRoute._fromState),
     GoRouteData.$route(
       path: 'join-questions-settings',
       factory: $JoinQuestionsManagementRoute._fromState,
@@ -373,6 +374,44 @@ mixin $ModerationRoute on GoRouteData {
   @override
   String get location => GoRouteData.$location(
     '/explore/${Uri.encodeComponent(_self.subdomain)}/moderation',
+    queryParams: {
+      'fan-hub-id': _self.fanHubId.toString(),
+      if (_self.initialTab != 0) 'initial-tab': _self.initialTab.toString(),
+    },
+  );
+
+  @override
+  void go(BuildContext context) => context.go(location);
+
+  @override
+  Future<T?> push<T>(BuildContext context) => context.push<T>(location);
+
+  @override
+  void pushReplacement(BuildContext context) =>
+      context.pushReplacement(location);
+
+  @override
+  void replace(BuildContext context) => context.replace(location);
+}
+
+mixin $HubSettingsRoute on GoRouteData {
+  static HubSettingsRoute _fromState(GoRouterState state) => HubSettingsRoute(
+    subdomain: state.pathParameters['subdomain']!,
+    fanHubId: int.parse(state.uri.queryParameters['fan-hub-id']!),
+    initialTab:
+        _$convertMapValue(
+          'initial-tab',
+          state.uri.queryParameters,
+          int.parse,
+        ) ??
+        0,
+  );
+
+  HubSettingsRoute get _self => this as HubSettingsRoute;
+
+  @override
+  String get location => GoRouteData.$location(
+    '/explore/${Uri.encodeComponent(_self.subdomain)}/settings',
     queryParams: {
       'fan-hub-id': _self.fanHubId.toString(),
       if (_self.initialTab != 0) 'initial-tab': _self.initialTab.toString(),

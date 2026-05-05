@@ -1,7 +1,6 @@
 import 'package:fpdart/fpdart.dart';
 import 'package:sep490_mo/core/error/error_handler.dart';
 import 'package:sep490_mo/core/error/failures.dart';
-import 'package:sep490_mo/core/models/api_response_wrapper.dart';
 import 'package:sep490_mo/core/utils/type_defs.dart';
 import 'package:sep490_mo/features/notification/data/datasources/local/notification_local_datasource.dart';
 import 'package:sep490_mo/features/notification/data/datasources/remote/notification_async_remote_datasource.dart';
@@ -102,18 +101,12 @@ class NotificationRepositoryImpl implements NotificationRepository {
   }
 
   @override
-  StreamEither<List<Notification>> listenToRemoteNotifications() {
-    return _streamDataSource.getNotifications().asyncMap<Either<Failure, List<Notification>>>((response) async {
-      return await switch (response) {
-        ApiResponseSuccess(:final data) => () async {
-            await ErrorHandler.executeOrNull(() => _localDataSource.cacheNotifications(data));
-            return Right<Failure, List<Notification>>(data);
-          }(),
-        ApiResponseFailure(:final message, :final error) =>
-          Left<Failure, List<Notification>>(ServerFailure(message, error)),
-      };
+  StreamEither<Notification> listenToRemoteNotifications() {
+    return _streamDataSource.getNotification().asyncMap<Either<Failure, Notification>>((notification) async {
+      await ErrorHandler.executeOrNull(() => _localDataSource.cacheNotifications([notification]));
+      return Right<Failure, Notification>(notification);
     }).handleError((error) {
-      return Left<Failure, List<Notification>>(ErrorHandler.handle(error));
+      return Left<Failure, Notification>(ErrorHandler.handle(error));
     });
   }
 

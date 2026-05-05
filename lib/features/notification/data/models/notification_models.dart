@@ -8,8 +8,6 @@ enum NotificationType {
   postLike,
   @JsonValue('POST_COMMENT')
   postComment,
-  @JsonValue('HUB_INVITE')
-  hubInvite,
   @JsonValue('MEMBER_REPORT')
   memberReport,
   @JsonValue('POST_REPORT')

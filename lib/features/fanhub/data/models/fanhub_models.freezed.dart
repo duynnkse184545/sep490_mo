@@ -336,42 +336,42 @@ as int,
 
 
 /// @nodoc
-mixin _$FanHubMember {
+mixin _$FanHubStrike {
 
- int get memberId; int get hubId; int get userId; String? get roleInHub; String get status; int get fanHubScore; DateTime? get joinedAt; String? get title;
-/// Create a copy of FanHubMember
+ String get reason; DateTime get createdAt;
+/// Create a copy of FanHubStrike
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
 @pragma('vm:prefer-inline')
-$FanHubMemberCopyWith<FanHubMember> get copyWith => _$FanHubMemberCopyWithImpl<FanHubMember>(this as FanHubMember, _$identity);
+$FanHubStrikeCopyWith<FanHubStrike> get copyWith => _$FanHubStrikeCopyWithImpl<FanHubStrike>(this as FanHubStrike, _$identity);
 
-  /// Serializes this FanHubMember to a JSON map.
+  /// Serializes this FanHubStrike to a JSON map.
   Map<String, dynamic> toJson();
 
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is FanHubMember&&(identical(other.memberId, memberId) || other.memberId == memberId)&&(identical(other.hubId, hubId) || other.hubId == hubId)&&(identical(other.userId, userId) || other.userId == userId)&&(identical(other.roleInHub, roleInHub) || other.roleInHub == roleInHub)&&(identical(other.status, status) || other.status == status)&&(identical(other.fanHubScore, fanHubScore) || other.fanHubScore == fanHubScore)&&(identical(other.joinedAt, joinedAt) || other.joinedAt == joinedAt)&&(identical(other.title, title) || other.title == title));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is FanHubStrike&&(identical(other.reason, reason) || other.reason == reason)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,memberId,hubId,userId,roleInHub,status,fanHubScore,joinedAt,title);
+int get hashCode => Object.hash(runtimeType,reason,createdAt);
 
 @override
 String toString() {
-  return 'FanHubMember(memberId: $memberId, hubId: $hubId, userId: $userId, roleInHub: $roleInHub, status: $status, fanHubScore: $fanHubScore, joinedAt: $joinedAt, title: $title)';
+  return 'FanHubStrike(reason: $reason, createdAt: $createdAt)';
 }
 
 
 }
 
 /// @nodoc
-abstract mixin class $FanHubMemberCopyWith<$Res>  {
-  factory $FanHubMemberCopyWith(FanHubMember value, $Res Function(FanHubMember) _then) = _$FanHubMemberCopyWithImpl;
+abstract mixin class $FanHubStrikeCopyWith<$Res>  {
+  factory $FanHubStrikeCopyWith(FanHubStrike value, $Res Function(FanHubStrike) _then) = _$FanHubStrikeCopyWithImpl;
 @useResult
 $Res call({
- int memberId, int hubId, int userId, String? roleInHub, String status, int fanHubScore, DateTime? joinedAt, String? title
+ String reason, DateTime createdAt
 });
 
 
@@ -379,34 +379,28 @@ $Res call({
 
 }
 /// @nodoc
-class _$FanHubMemberCopyWithImpl<$Res>
-    implements $FanHubMemberCopyWith<$Res> {
-  _$FanHubMemberCopyWithImpl(this._self, this._then);
+class _$FanHubStrikeCopyWithImpl<$Res>
+    implements $FanHubStrikeCopyWith<$Res> {
+  _$FanHubStrikeCopyWithImpl(this._self, this._then);
 
-  final FanHubMember _self;
-  final $Res Function(FanHubMember) _then;
+  final FanHubStrike _self;
+  final $Res Function(FanHubStrike) _then;
 
-/// Create a copy of FanHubMember
+/// Create a copy of FanHubStrike
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? memberId = null,Object? hubId = null,Object? userId = null,Object? roleInHub = freezed,Object? status = null,Object? fanHubScore = null,Object? joinedAt = freezed,Object? title = freezed,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? reason = null,Object? createdAt = null,}) {
   return _then(_self.copyWith(
-memberId: null == memberId ? _self.memberId : memberId // ignore: cast_nullable_to_non_nullable
-as int,hubId: null == hubId ? _self.hubId : hubId // ignore: cast_nullable_to_non_nullable
-as int,userId: null == userId ? _self.userId : userId // ignore: cast_nullable_to_non_nullable
-as int,roleInHub: freezed == roleInHub ? _self.roleInHub : roleInHub // ignore: cast_nullable_to_non_nullable
-as String?,status: null == status ? _self.status : status // ignore: cast_nullable_to_non_nullable
-as String,fanHubScore: null == fanHubScore ? _self.fanHubScore : fanHubScore // ignore: cast_nullable_to_non_nullable
-as int,joinedAt: freezed == joinedAt ? _self.joinedAt : joinedAt // ignore: cast_nullable_to_non_nullable
-as DateTime?,title: freezed == title ? _self.title : title // ignore: cast_nullable_to_non_nullable
-as String?,
+reason: null == reason ? _self.reason : reason // ignore: cast_nullable_to_non_nullable
+as String,createdAt: null == createdAt ? _self.createdAt : createdAt // ignore: cast_nullable_to_non_nullable
+as DateTime,
   ));
 }
 
 }
 
 
-/// Adds pattern-matching-related methods to [FanHubMember].
-extension FanHubMemberPatterns on FanHubMember {
+/// Adds pattern-matching-related methods to [FanHubStrike].
+extension FanHubStrikePatterns on FanHubStrike {
 /// A variant of `map` that fallback to returning `orElse`.
 ///
 /// It is equivalent to doing:
@@ -419,10 +413,10 @@ extension FanHubMemberPatterns on FanHubMember {
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeMap<TResult extends Object?>(TResult Function( _FanHubMember value)?  $default,{required TResult orElse(),}){
+@optionalTypeArgs TResult maybeMap<TResult extends Object?>(TResult Function( _FanHubStrike value)?  $default,{required TResult orElse(),}){
 final _that = this;
 switch (_that) {
-case _FanHubMember() when $default != null:
+case _FanHubStrike() when $default != null:
 return $default(_that);case _:
   return orElse();
 
@@ -441,10 +435,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult map<TResult extends Object?>(TResult Function( _FanHubMember value)  $default,){
+@optionalTypeArgs TResult map<TResult extends Object?>(TResult Function( _FanHubStrike value)  $default,){
 final _that = this;
 switch (_that) {
-case _FanHubMember():
+case _FanHubStrike():
 return $default(_that);case _:
   throw StateError('Unexpected subclass');
 
@@ -462,10 +456,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>(TResult? Function( _FanHubMember value)?  $default,){
+@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>(TResult? Function( _FanHubStrike value)?  $default,){
 final _that = this;
 switch (_that) {
-case _FanHubMember() when $default != null:
+case _FanHubStrike() when $default != null:
 return $default(_that);case _:
   return null;
 
@@ -483,10 +477,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( int memberId,  int hubId,  int userId,  String? roleInHub,  String status,  int fanHubScore,  DateTime? joinedAt,  String? title)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String reason,  DateTime createdAt)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
-case _FanHubMember() when $default != null:
-return $default(_that.memberId,_that.hubId,_that.userId,_that.roleInHub,_that.status,_that.fanHubScore,_that.joinedAt,_that.title);case _:
+case _FanHubStrike() when $default != null:
+return $default(_that.reason,_that.createdAt);case _:
   return orElse();
 
 }
@@ -504,10 +498,10 @@ return $default(_that.memberId,_that.hubId,_that.userId,_that.roleInHub,_that.st
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( int memberId,  int hubId,  int userId,  String? roleInHub,  String status,  int fanHubScore,  DateTime? joinedAt,  String? title)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String reason,  DateTime createdAt)  $default,) {final _that = this;
 switch (_that) {
-case _FanHubMember():
-return $default(_that.memberId,_that.hubId,_that.userId,_that.roleInHub,_that.status,_that.fanHubScore,_that.joinedAt,_that.title);case _:
+case _FanHubStrike():
+return $default(_that.reason,_that.createdAt);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -524,10 +518,10 @@ return $default(_that.memberId,_that.hubId,_that.userId,_that.roleInHub,_that.st
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( int memberId,  int hubId,  int userId,  String? roleInHub,  String status,  int fanHubScore,  DateTime? joinedAt,  String? title)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String reason,  DateTime createdAt)?  $default,) {final _that = this;
 switch (_that) {
-case _FanHubMember() when $default != null:
-return $default(_that.memberId,_that.hubId,_that.userId,_that.roleInHub,_that.status,_that.fanHubScore,_that.joinedAt,_that.title);case _:
+case _FanHubStrike() when $default != null:
+return $default(_that.reason,_that.createdAt);case _:
   return null;
 
 }
@@ -538,53 +532,47 @@ return $default(_that.memberId,_that.hubId,_that.userId,_that.roleInHub,_that.st
 /// @nodoc
 @JsonSerializable()
 
-class _FanHubMember implements FanHubMember {
-  const _FanHubMember({required this.memberId, required this.hubId, required this.userId, this.roleInHub, required this.status, required this.fanHubScore, this.joinedAt, this.title});
-  factory _FanHubMember.fromJson(Map<String, dynamic> json) => _$FanHubMemberFromJson(json);
+class _FanHubStrike implements FanHubStrike {
+  const _FanHubStrike({required this.reason, required this.createdAt});
+  factory _FanHubStrike.fromJson(Map<String, dynamic> json) => _$FanHubStrikeFromJson(json);
 
-@override final  int memberId;
-@override final  int hubId;
-@override final  int userId;
-@override final  String? roleInHub;
-@override final  String status;
-@override final  int fanHubScore;
-@override final  DateTime? joinedAt;
-@override final  String? title;
+@override final  String reason;
+@override final  DateTime createdAt;
 
-/// Create a copy of FanHubMember
+/// Create a copy of FanHubStrike
 /// with the given fields replaced by the non-null parameter values.
 @override @JsonKey(includeFromJson: false, includeToJson: false)
 @pragma('vm:prefer-inline')
-_$FanHubMemberCopyWith<_FanHubMember> get copyWith => __$FanHubMemberCopyWithImpl<_FanHubMember>(this, _$identity);
+_$FanHubStrikeCopyWith<_FanHubStrike> get copyWith => __$FanHubStrikeCopyWithImpl<_FanHubStrike>(this, _$identity);
 
 @override
 Map<String, dynamic> toJson() {
-  return _$FanHubMemberToJson(this, );
+  return _$FanHubStrikeToJson(this, );
 }
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _FanHubMember&&(identical(other.memberId, memberId) || other.memberId == memberId)&&(identical(other.hubId, hubId) || other.hubId == hubId)&&(identical(other.userId, userId) || other.userId == userId)&&(identical(other.roleInHub, roleInHub) || other.roleInHub == roleInHub)&&(identical(other.status, status) || other.status == status)&&(identical(other.fanHubScore, fanHubScore) || other.fanHubScore == fanHubScore)&&(identical(other.joinedAt, joinedAt) || other.joinedAt == joinedAt)&&(identical(other.title, title) || other.title == title));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _FanHubStrike&&(identical(other.reason, reason) || other.reason == reason)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,memberId,hubId,userId,roleInHub,status,fanHubScore,joinedAt,title);
+int get hashCode => Object.hash(runtimeType,reason,createdAt);
 
 @override
 String toString() {
-  return 'FanHubMember(memberId: $memberId, hubId: $hubId, userId: $userId, roleInHub: $roleInHub, status: $status, fanHubScore: $fanHubScore, joinedAt: $joinedAt, title: $title)';
+  return 'FanHubStrike(reason: $reason, createdAt: $createdAt)';
 }
 
 
 }
 
 /// @nodoc
-abstract mixin class _$FanHubMemberCopyWith<$Res> implements $FanHubMemberCopyWith<$Res> {
-  factory _$FanHubMemberCopyWith(_FanHubMember value, $Res Function(_FanHubMember) _then) = __$FanHubMemberCopyWithImpl;
+abstract mixin class _$FanHubStrikeCopyWith<$Res> implements $FanHubStrikeCopyWith<$Res> {
+  factory _$FanHubStrikeCopyWith(_FanHubStrike value, $Res Function(_FanHubStrike) _then) = __$FanHubStrikeCopyWithImpl;
 @override @useResult
 $Res call({
- int memberId, int hubId, int userId, String? roleInHub, String status, int fanHubScore, DateTime? joinedAt, String? title
+ String reason, DateTime createdAt
 });
 
 
@@ -592,26 +580,309 @@ $Res call({
 
 }
 /// @nodoc
-class __$FanHubMemberCopyWithImpl<$Res>
-    implements _$FanHubMemberCopyWith<$Res> {
-  __$FanHubMemberCopyWithImpl(this._self, this._then);
+class __$FanHubStrikeCopyWithImpl<$Res>
+    implements _$FanHubStrikeCopyWith<$Res> {
+  __$FanHubStrikeCopyWithImpl(this._self, this._then);
 
-  final _FanHubMember _self;
-  final $Res Function(_FanHubMember) _then;
+  final _FanHubStrike _self;
+  final $Res Function(_FanHubStrike) _then;
 
-/// Create a copy of FanHubMember
+/// Create a copy of FanHubStrike
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? memberId = null,Object? hubId = null,Object? userId = null,Object? roleInHub = freezed,Object? status = null,Object? fanHubScore = null,Object? joinedAt = freezed,Object? title = freezed,}) {
-  return _then(_FanHubMember(
-memberId: null == memberId ? _self.memberId : memberId // ignore: cast_nullable_to_non_nullable
-as int,hubId: null == hubId ? _self.hubId : hubId // ignore: cast_nullable_to_non_nullable
-as int,userId: null == userId ? _self.userId : userId // ignore: cast_nullable_to_non_nullable
-as int,roleInHub: freezed == roleInHub ? _self.roleInHub : roleInHub // ignore: cast_nullable_to_non_nullable
-as String?,status: null == status ? _self.status : status // ignore: cast_nullable_to_non_nullable
-as String,fanHubScore: null == fanHubScore ? _self.fanHubScore : fanHubScore // ignore: cast_nullable_to_non_nullable
-as int,joinedAt: freezed == joinedAt ? _self.joinedAt : joinedAt // ignore: cast_nullable_to_non_nullable
-as DateTime?,title: freezed == title ? _self.title : title // ignore: cast_nullable_to_non_nullable
-as String?,
+@override @pragma('vm:prefer-inline') $Res call({Object? reason = null,Object? createdAt = null,}) {
+  return _then(_FanHubStrike(
+reason: null == reason ? _self.reason : reason // ignore: cast_nullable_to_non_nullable
+as String,createdAt: null == createdAt ? _self.createdAt : createdAt // ignore: cast_nullable_to_non_nullable
+as DateTime,
+  ));
+}
+
+
+}
+
+
+/// @nodoc
+mixin _$FanHubAnalytics {
+
+ int get totalPosts; int get totalJoinedMembers; int get totalStrikes; List<Member> get topMembers; List<FanHubStrike>? get strikes;
+/// Create a copy of FanHubAnalytics
+/// with the given fields replaced by the non-null parameter values.
+@JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+$FanHubAnalyticsCopyWith<FanHubAnalytics> get copyWith => _$FanHubAnalyticsCopyWithImpl<FanHubAnalytics>(this as FanHubAnalytics, _$identity);
+
+  /// Serializes this FanHubAnalytics to a JSON map.
+  Map<String, dynamic> toJson();
+
+
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is FanHubAnalytics&&(identical(other.totalPosts, totalPosts) || other.totalPosts == totalPosts)&&(identical(other.totalJoinedMembers, totalJoinedMembers) || other.totalJoinedMembers == totalJoinedMembers)&&(identical(other.totalStrikes, totalStrikes) || other.totalStrikes == totalStrikes)&&const DeepCollectionEquality().equals(other.topMembers, topMembers)&&const DeepCollectionEquality().equals(other.strikes, strikes));
+}
+
+@JsonKey(includeFromJson: false, includeToJson: false)
+@override
+int get hashCode => Object.hash(runtimeType,totalPosts,totalJoinedMembers,totalStrikes,const DeepCollectionEquality().hash(topMembers),const DeepCollectionEquality().hash(strikes));
+
+@override
+String toString() {
+  return 'FanHubAnalytics(totalPosts: $totalPosts, totalJoinedMembers: $totalJoinedMembers, totalStrikes: $totalStrikes, topMembers: $topMembers, strikes: $strikes)';
+}
+
+
+}
+
+/// @nodoc
+abstract mixin class $FanHubAnalyticsCopyWith<$Res>  {
+  factory $FanHubAnalyticsCopyWith(FanHubAnalytics value, $Res Function(FanHubAnalytics) _then) = _$FanHubAnalyticsCopyWithImpl;
+@useResult
+$Res call({
+ int totalPosts, int totalJoinedMembers, int totalStrikes, List<Member> topMembers, List<FanHubStrike>? strikes
+});
+
+
+
+
+}
+/// @nodoc
+class _$FanHubAnalyticsCopyWithImpl<$Res>
+    implements $FanHubAnalyticsCopyWith<$Res> {
+  _$FanHubAnalyticsCopyWithImpl(this._self, this._then);
+
+  final FanHubAnalytics _self;
+  final $Res Function(FanHubAnalytics) _then;
+
+/// Create a copy of FanHubAnalytics
+/// with the given fields replaced by the non-null parameter values.
+@pragma('vm:prefer-inline') @override $Res call({Object? totalPosts = null,Object? totalJoinedMembers = null,Object? totalStrikes = null,Object? topMembers = null,Object? strikes = freezed,}) {
+  return _then(_self.copyWith(
+totalPosts: null == totalPosts ? _self.totalPosts : totalPosts // ignore: cast_nullable_to_non_nullable
+as int,totalJoinedMembers: null == totalJoinedMembers ? _self.totalJoinedMembers : totalJoinedMembers // ignore: cast_nullable_to_non_nullable
+as int,totalStrikes: null == totalStrikes ? _self.totalStrikes : totalStrikes // ignore: cast_nullable_to_non_nullable
+as int,topMembers: null == topMembers ? _self.topMembers : topMembers // ignore: cast_nullable_to_non_nullable
+as List<Member>,strikes: freezed == strikes ? _self.strikes : strikes // ignore: cast_nullable_to_non_nullable
+as List<FanHubStrike>?,
+  ));
+}
+
+}
+
+
+/// Adds pattern-matching-related methods to [FanHubAnalytics].
+extension FanHubAnalyticsPatterns on FanHubAnalytics {
+/// A variant of `map` that fallback to returning `orElse`.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case _:
+///     return orElse();
+/// }
+/// ```
+
+@optionalTypeArgs TResult maybeMap<TResult extends Object?>(TResult Function( _FanHubAnalytics value)?  $default,{required TResult orElse(),}){
+final _that = this;
+switch (_that) {
+case _FanHubAnalytics() when $default != null:
+return $default(_that);case _:
+  return orElse();
+
+}
+}
+/// A `switch`-like method, using callbacks.
+///
+/// Callbacks receives the raw object, upcasted.
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case final Subclass2 value:
+///     return ...;
+/// }
+/// ```
+
+@optionalTypeArgs TResult map<TResult extends Object?>(TResult Function( _FanHubAnalytics value)  $default,){
+final _that = this;
+switch (_that) {
+case _FanHubAnalytics():
+return $default(_that);case _:
+  throw StateError('Unexpected subclass');
+
+}
+}
+/// A variant of `map` that fallback to returning `null`.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case _:
+///     return null;
+/// }
+/// ```
+
+@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>(TResult? Function( _FanHubAnalytics value)?  $default,){
+final _that = this;
+switch (_that) {
+case _FanHubAnalytics() when $default != null:
+return $default(_that);case _:
+  return null;
+
+}
+}
+/// A variant of `when` that fallback to an `orElse` callback.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case _:
+///     return orElse();
+/// }
+/// ```
+
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( int totalPosts,  int totalJoinedMembers,  int totalStrikes,  List<Member> topMembers,  List<FanHubStrike>? strikes)?  $default,{required TResult orElse(),}) {final _that = this;
+switch (_that) {
+case _FanHubAnalytics() when $default != null:
+return $default(_that.totalPosts,_that.totalJoinedMembers,_that.totalStrikes,_that.topMembers,_that.strikes);case _:
+  return orElse();
+
+}
+}
+/// A `switch`-like method, using callbacks.
+///
+/// As opposed to `map`, this offers destructuring.
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case Subclass2(:final field2):
+///     return ...;
+/// }
+/// ```
+
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( int totalPosts,  int totalJoinedMembers,  int totalStrikes,  List<Member> topMembers,  List<FanHubStrike>? strikes)  $default,) {final _that = this;
+switch (_that) {
+case _FanHubAnalytics():
+return $default(_that.totalPosts,_that.totalJoinedMembers,_that.totalStrikes,_that.topMembers,_that.strikes);case _:
+  throw StateError('Unexpected subclass');
+
+}
+}
+/// A variant of `when` that fallback to returning `null`
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case _:
+///     return null;
+/// }
+/// ```
+
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( int totalPosts,  int totalJoinedMembers,  int totalStrikes,  List<Member> topMembers,  List<FanHubStrike>? strikes)?  $default,) {final _that = this;
+switch (_that) {
+case _FanHubAnalytics() when $default != null:
+return $default(_that.totalPosts,_that.totalJoinedMembers,_that.totalStrikes,_that.topMembers,_that.strikes);case _:
+  return null;
+
+}
+}
+
+}
+
+/// @nodoc
+@JsonSerializable()
+
+class _FanHubAnalytics implements FanHubAnalytics {
+  const _FanHubAnalytics({required this.totalPosts, required this.totalJoinedMembers, required this.totalStrikes, required final  List<Member> topMembers, required final  List<FanHubStrike>? strikes}): _topMembers = topMembers,_strikes = strikes;
+  factory _FanHubAnalytics.fromJson(Map<String, dynamic> json) => _$FanHubAnalyticsFromJson(json);
+
+@override final  int totalPosts;
+@override final  int totalJoinedMembers;
+@override final  int totalStrikes;
+ final  List<Member> _topMembers;
+@override List<Member> get topMembers {
+  if (_topMembers is EqualUnmodifiableListView) return _topMembers;
+  // ignore: implicit_dynamic_type
+  return EqualUnmodifiableListView(_topMembers);
+}
+
+ final  List<FanHubStrike>? _strikes;
+@override List<FanHubStrike>? get strikes {
+  final value = _strikes;
+  if (value == null) return null;
+  if (_strikes is EqualUnmodifiableListView) return _strikes;
+  // ignore: implicit_dynamic_type
+  return EqualUnmodifiableListView(value);
+}
+
+
+/// Create a copy of FanHubAnalytics
+/// with the given fields replaced by the non-null parameter values.
+@override @JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+_$FanHubAnalyticsCopyWith<_FanHubAnalytics> get copyWith => __$FanHubAnalyticsCopyWithImpl<_FanHubAnalytics>(this, _$identity);
+
+@override
+Map<String, dynamic> toJson() {
+  return _$FanHubAnalyticsToJson(this, );
+}
+
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _FanHubAnalytics&&(identical(other.totalPosts, totalPosts) || other.totalPosts == totalPosts)&&(identical(other.totalJoinedMembers, totalJoinedMembers) || other.totalJoinedMembers == totalJoinedMembers)&&(identical(other.totalStrikes, totalStrikes) || other.totalStrikes == totalStrikes)&&const DeepCollectionEquality().equals(other._topMembers, _topMembers)&&const DeepCollectionEquality().equals(other._strikes, _strikes));
+}
+
+@JsonKey(includeFromJson: false, includeToJson: false)
+@override
+int get hashCode => Object.hash(runtimeType,totalPosts,totalJoinedMembers,totalStrikes,const DeepCollectionEquality().hash(_topMembers),const DeepCollectionEquality().hash(_strikes));
+
+@override
+String toString() {
+  return 'FanHubAnalytics(totalPosts: $totalPosts, totalJoinedMembers: $totalJoinedMembers, totalStrikes: $totalStrikes, topMembers: $topMembers, strikes: $strikes)';
+}
+
+
+}
+
+/// @nodoc
+abstract mixin class _$FanHubAnalyticsCopyWith<$Res> implements $FanHubAnalyticsCopyWith<$Res> {
+  factory _$FanHubAnalyticsCopyWith(_FanHubAnalytics value, $Res Function(_FanHubAnalytics) _then) = __$FanHubAnalyticsCopyWithImpl;
+@override @useResult
+$Res call({
+ int totalPosts, int totalJoinedMembers, int totalStrikes, List<Member> topMembers, List<FanHubStrike>? strikes
+});
+
+
+
+
+}
+/// @nodoc
+class __$FanHubAnalyticsCopyWithImpl<$Res>
+    implements _$FanHubAnalyticsCopyWith<$Res> {
+  __$FanHubAnalyticsCopyWithImpl(this._self, this._then);
+
+  final _FanHubAnalytics _self;
+  final $Res Function(_FanHubAnalytics) _then;
+
+/// Create a copy of FanHubAnalytics
+/// with the given fields replaced by the non-null parameter values.
+@override @pragma('vm:prefer-inline') $Res call({Object? totalPosts = null,Object? totalJoinedMembers = null,Object? totalStrikes = null,Object? topMembers = null,Object? strikes = freezed,}) {
+  return _then(_FanHubAnalytics(
+totalPosts: null == totalPosts ? _self.totalPosts : totalPosts // ignore: cast_nullable_to_non_nullable
+as int,totalJoinedMembers: null == totalJoinedMembers ? _self.totalJoinedMembers : totalJoinedMembers // ignore: cast_nullable_to_non_nullable
+as int,totalStrikes: null == totalStrikes ? _self.totalStrikes : totalStrikes // ignore: cast_nullable_to_non_nullable
+as int,topMembers: null == topMembers ? _self._topMembers : topMembers // ignore: cast_nullable_to_non_nullable
+as List<Member>,strikes: freezed == strikes ? _self._strikes : strikes // ignore: cast_nullable_to_non_nullable
+as List<FanHubStrike>?,
   ));
 }
 

@@ -1,4 +1,5 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:sep490_mo/features/member/data/models/member_models.dart';
 
 part 'fanhub_models.freezed.dart';
 
@@ -30,20 +31,28 @@ abstract class FanHub with _$FanHub {
 }
 
 @freezed
-abstract class FanHubMember with _$FanHubMember {
-  const factory FanHubMember({
-    required int memberId,
-    required int hubId,
-    required int userId,
-    String? roleInHub,
-    required String status,
-    required int fanHubScore,
-    DateTime? joinedAt,
-    String? title,
-  }) = _FanHubMember;
+abstract class FanHubStrike with _$FanHubStrike {
+  const factory FanHubStrike({
+    required String reason,
+    required DateTime createdAt,
+  }) = _FanHubStrike;
 
-  factory FanHubMember.fromJson(Map<String, dynamic> json) =>
-      _$FanHubMemberFromJson(json);
+  factory FanHubStrike.fromJson(Map<String, dynamic> json) =>
+      _$FanHubStrikeFromJson(json);
+}
+
+@freezed
+abstract class FanHubAnalytics with _$FanHubAnalytics {
+  const factory FanHubAnalytics({
+    required int totalPosts,
+    required int totalJoinedMembers,
+    required int totalStrikes,
+    required List<Member> topMembers,
+    required List<FanHubStrike>? strikes,
+  }) = _FanHubAnalytics;
+
+  factory FanHubAnalytics.fromJson(Map<String, dynamic> json) =>
+      _$FanHubAnalyticsFromJson(json);
 }
 
 @freezed

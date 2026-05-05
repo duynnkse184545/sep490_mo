@@ -9,13 +9,72 @@ import 'package:sep490_mo/features/member/presentation/states/join_with_question
 
 class JoinQuestionsManagementScreen extends HookConsumerWidget {
   final int fanHubId;
+  final bool showAppBar;
 
-  const JoinQuestionsManagementScreen({super.key, required this.fanHubId});
+  const JoinQuestionsManagementScreen({
+    super.key,
+    required this.fanHubId,
+    this.showAppBar = true,
+  });
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final stateAsync = ref.watch(joinQuestionsManagementControllerProvider(fanHubId: fanHubId));
     final controller = ref.read(joinQuestionsManagementControllerProvider(fanHubId: fanHubId).notifier);
+
+    final content = stateAsync.when(
+      loading: () => const Loader(),
+      error: (error, stack) => ErrorBanner(
+        message: error.toString(),
+        onRetry: controller.refresh,
+      ),
+      data: (state) => state.when(
+        ready: (questions) => RefreshIndicator(
+          onRefresh: controller.refresh,
+          child: ListView.builder(
+            padding: const EdgeInsets.all(16),
+            itemCount: questions.length,
+            itemBuilder: (context, index) {
+              final question = questions[index];
+              return _QuestionTile(
+                question: question,
+                onEdit: () => _showAddEditDialog(context, controller, question: question),
+                onDelete: () => _showDeleteConfirm(context, controller, question),
+              );
+            },
+          ),
+        ),
+        empty: () => Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              const Icon(Icons.quiz_outlined, size: 64, color: Colors.grey),
+              const SizedBox(height: 16),
+              const Text(
+                'No join questions yet.',
+                style: TextStyle(fontSize: 16, color: Colors.grey),
+              ),
+              const SizedBox(height: 24),
+              ElevatedButton.icon(
+                onPressed: () => _showAddEditDialog(context, controller),
+                icon: const Icon(Icons.add),
+                label: const Text('Add First Question'),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+
+    if (!showAppBar) {
+      return Scaffold(
+        body: content,
+        floatingActionButton: FloatingActionButton(
+          onPressed: () => _showAddEditDialog(context, controller),
+          child: const Icon(Icons.add),
+        ),
+      );
+    }
 
     return Scaffold(
       appBar: AppBar(
@@ -28,49 +87,7 @@ class JoinQuestionsManagementScreen extends HookConsumerWidget {
           ),
         ],
       ),
-      body: stateAsync.when(
-        loading: () => const Loader(),
-        error: (error, stack) => ErrorBanner(
-          message: error.toString(),
-          onRetry: controller.refresh,
-        ),
-        data: (state) => state.when(
-          ready: (questions) => RefreshIndicator(
-            onRefresh: controller.refresh,
-            child: ListView.builder(
-              padding: const EdgeInsets.all(16),
-              itemCount: questions.length,
-              itemBuilder: (context, index) {
-                final question = questions[index];
-                return _QuestionTile(
-                  question: question,
-                  onEdit: () => _showAddEditDialog(context, controller, question: question),
-                  onDelete: () => _showDeleteConfirm(context, controller, question),
-                );
-              },
-            ),
-          ),
-          empty: () => Center(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                const Icon(Icons.quiz_outlined, size: 64, color: Colors.grey),
-                const SizedBox(height: 16),
-                const Text(
-                  'No join questions yet.',
-                  style: TextStyle(fontSize: 16, color: Colors.grey),
-                ),
-                const SizedBox(height: 24),
-                ElevatedButton.icon(
-                  onPressed: () => _showAddEditDialog(context, controller),
-                  icon: const Icon(Icons.add),
-                  label: const Text('Add First Question'),
-                ),
-              ],
-            ),
-          ),
-        ),
-      ),
+      body: content,
     );
   }
 

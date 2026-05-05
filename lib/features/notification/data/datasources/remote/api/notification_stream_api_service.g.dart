@@ -20,12 +20,12 @@ class _NotificationStreamApiService implements NotificationStreamApiService {
   final ParseErrorLogger? errorLogger;
 
   @override
-  Stream<ApiResponse<List<Notification>>> getNotifications() async* {
+  Stream<ApiResponse<Notification>> getNotification() async* {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
     const Map<String, dynamic>? _data = null;
-    final _options = _setStreamType<ApiResponse<List<Notification>>>(
+    final _options = _setStreamType<ApiResponse<Notification>>(
       Options(method: 'GET', headers: _headers, extra: _extra)
           .compose(
             _dio.options,
@@ -36,17 +36,11 @@ class _NotificationStreamApiService implements NotificationStreamApiService {
           .copyWith(baseUrl: _combineBaseUrls(_dio.options.baseUrl, baseUrl)),
     );
     final _result = await _dio.fetch<Map<String, dynamic>>(_options);
-    late ApiResponse<List<Notification>> _value;
+    late ApiResponse<Notification> _value;
     try {
-      _value = ApiResponse<List<Notification>>.fromJson(
+      _value = ApiResponse<Notification>.fromJson(
         _result.data!,
-        (json) => json is List<dynamic>
-            ? json
-                  .map<Notification>(
-                    (i) => Notification.fromJson(i as Map<String, dynamic>),
-                  )
-                  .toList()
-            : List.empty(),
+        (json) => Notification.fromJson(json as Map<String, dynamic>),
       );
     } on Object catch (e, s) {
       errorLogger?.logError(e, s, _options, response: _result);

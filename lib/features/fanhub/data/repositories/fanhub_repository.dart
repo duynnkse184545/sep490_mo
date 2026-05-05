@@ -25,7 +25,10 @@ abstract class FanHubRepository {
 
   TaskResult<FanHub?> getMyHubsAsOwner();
 
+  TaskResult<FanHubAnalytics> getFanHubAnalytics(int fanHubId);
+
   TaskResult<List<FanHub>> searchHubs({
+
     required String keyword,
     int pageNo = 0,
     int pageSize = 20,

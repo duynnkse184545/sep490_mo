@@ -102,7 +102,7 @@ class HubSpeedDial extends HookConsumerWidget {
           ).push(context);
           break;
         case _DialAction.settings:
-          JoinQuestionsManagementRoute(
+          HubSettingsRoute(
             subdomain: subdomain,
             fanHubId: fanHubId,
           ).push(context);

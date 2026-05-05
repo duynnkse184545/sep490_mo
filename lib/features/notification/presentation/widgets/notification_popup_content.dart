@@ -214,7 +214,6 @@ class _NotificationItem extends StatelessWidget {
     return switch (type) {
       NotificationType.postLike => Icons.favorite_border,
       NotificationType.postComment => Icons.comment_outlined,
-      NotificationType.hubInvite => Icons.mail_outline,
       NotificationType.memberReport => Icons.report_problem_outlined,
       NotificationType.postReport => Icons.flag_outlined,
       NotificationType.postApproved => Icons.verified_outlined,
@@ -230,7 +229,6 @@ class _NotificationItem extends StatelessWidget {
     return switch (type) {
       NotificationType.postLike => Colors.red,
       NotificationType.postComment => Colors.blue,
-      NotificationType.hubInvite => Colors.green,
       NotificationType.memberReport => Colors.orange,
       NotificationType.postReport => Colors.orange,
       NotificationType.postApproved => Colors.teal,

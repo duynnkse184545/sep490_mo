@@ -39,6 +39,9 @@ abstract class FanHubApiService {
   @GET('/fan-hub/my-hub-as-owner')
   Future<ApiResponse<FanHub>> getMyHubsAsOwner();
 
+  @GET('/fan-hub/analytics/{fanHubId}')
+  Future<ApiResponse<FanHubAnalytics>> getFanHubAnalytics(@Path('fanHubId') int fanHubId);
+
   @GET('/fan-hub/search')
   Future<ApiResponse<List<FanHub>>> searchHubs(
     @Query('keyword') String keyword,

@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart' hide Notification;
+import 'package:json_annotation/json_annotation.dart';
 import 'package:sep490_mo/core/models/api_response_wrapper.dart';
 import 'package:sep490_mo/features/notification/data/datasources/remote/api/notification_stream_api_service.dart';
 import 'package:sep490_mo/features/notification/data/datasources/remote/notification_stream_remote_datasource.dart';
@@ -14,18 +15,17 @@ class NotificationStreamRemoteDataSourceImpl implements NotificationStreamRemote
       : _apiService = apiService;
 
   @override
-  Stream<ApiResponse<List<Notification>>> getNotifications() {
-    try {
-      return _apiService.getNotifications().handleError((error) {
-        debugPrint('Error in notification stream: $error');
-        // Handle Dio or other stream errors here
-        throw error;
-      });
-    } catch (e, stack) {
-      debugPrint('NotificationStreamRemoteDataSourceImpl.getNotifications error: $e');
-      debugPrint('Stack: $stack');
-      rethrow;
-    }
+  Stream<Notification> getNotification() {
+    return _apiService.getNotification()
+        .map((event) => switch (event) {
+      ApiResponseSuccess(:final data) => data,
+      ApiResponseFailure(:final message, :final error) =>
+      throw Exception('Notification stream error: $message, $error'),
+    })
+        .handleError(
+          (e) => debugPrint('Skipping handshake/unparseable event: $e'),
+      test: (e) => e is CheckedFromJsonException || e is TypeError || e is FormatException,
+    );
   }
 
   @override

@@ -45,7 +45,6 @@ Map<String, dynamic> _$NotificationToJson(_Notification instance) =>
 const _$NotificationTypeEnumMap = {
   NotificationType.postLike: 'POST_LIKE',
   NotificationType.postComment: 'POST_COMMENT',
-  NotificationType.hubInvite: 'HUB_INVITE',
   NotificationType.memberReport: 'MEMBER_REPORT',
   NotificationType.postReport: 'POST_REPORT',
   NotificationType.postApproved: 'POST_APPROVED',

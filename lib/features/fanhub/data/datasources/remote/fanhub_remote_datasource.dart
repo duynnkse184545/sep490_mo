@@ -24,6 +24,8 @@ abstract class FanHubRemoteDataSource {
 
   Future<FanHub?> getMyHubsAsOwner();
 
+  Future<FanHubAnalytics> getFanHubAnalytics(int fanHubId);
+
   Future<List<FanHub>> searchHubs({
     required String keyword,
     required int pageNo,

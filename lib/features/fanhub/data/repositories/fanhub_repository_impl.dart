@@ -72,6 +72,13 @@ class FanHubRepositoryImpl implements FanHubRepository {
   }
 
   @override
+  TaskResult<FanHubAnalytics> getFanHubAnalytics(int fanHubId) {
+    return ErrorHandler.execute(() async {
+      return await _remoteDataSource.getFanHubAnalytics(fanHubId);
+    });
+  }
+
+  @override
   TaskResult<List<FanHub>> searchHubs({
     required String keyword,
     int pageNo = 0,

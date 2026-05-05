@@ -214,6 +214,36 @@ class _FanHubApiService implements FanHubApiService {
   }
 
   @override
+  Future<ApiResponse<FanHubAnalytics>> getFanHubAnalytics(int fanHubId) async {
+    final _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{};
+    const Map<String, dynamic>? _data = null;
+    final _options = _setStreamType<ApiResponse<FanHubAnalytics>>(
+      Options(method: 'GET', headers: _headers, extra: _extra)
+          .compose(
+            _dio.options,
+            '/fan-hub/analytics/${fanHubId}',
+            queryParameters: queryParameters,
+            data: _data,
+          )
+          .copyWith(baseUrl: _combineBaseUrls(_dio.options.baseUrl, baseUrl)),
+    );
+    final _result = await _dio.fetch<Map<String, dynamic>>(_options);
+    late ApiResponse<FanHubAnalytics> _value;
+    try {
+      _value = ApiResponse<FanHubAnalytics>.fromJson(
+        _result.data!,
+        (json) => FanHubAnalytics.fromJson(json as Map<String, dynamic>),
+      );
+    } on Object catch (e, s) {
+      errorLogger?.logError(e, s, _options, response: _result);
+      rethrow;
+    }
+    return _value;
+  }
+
+  @override
   Future<ApiResponse<List<FanHub>>> searchHubs(
     String keyword,
     int pageNo,

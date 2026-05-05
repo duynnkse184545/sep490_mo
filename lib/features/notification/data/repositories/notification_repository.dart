@@ -22,7 +22,7 @@ abstract class NotificationRepository {
   StreamEither<List<Notification>> watchNotifications({int limit = 50, int offset = 0});
 
   /// Live stream from remote that updates local cache
-  StreamEither<List<Notification>> listenToRemoteNotifications();
+  StreamEither<Notification> listenToRemoteNotifications();
 
   TaskResult<StreamStatus> getStreamStatus();
 }

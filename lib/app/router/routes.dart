@@ -15,6 +15,7 @@ import 'package:sep490_mo/features/post/presentation/screens/create_post_screen.
 import 'package:sep490_mo/features/post/presentation/screens/bookmark_screen.dart';
 import 'package:sep490_mo/features/post/presentation/screens/feed_screen.dart';
 import 'package:sep490_mo/app/screen/moderation_home_screen.dart';
+import 'package:sep490_mo/app/screen/hub_settings_home_screen.dart';
 import 'package:sep490_mo/features/post/presentation/widgets/hub_feed_widget.dart';
 import 'package:sep490_mo/features/store/presentation/screens/store_home_screen.dart';
 import 'package:sep490_mo/features/payment/presentation/screens/payment_screen.dart';
@@ -144,6 +145,7 @@ class ExploreRoute extends GoRouteData with $ExploreRoute {
     TypedGoRoute<CreatePostRoute>(path: 'create'),
     TypedGoRoute<MemberListRoute>(path: 'members'),
     TypedGoRoute<ModerationRoute>(path: 'moderation'),
+    TypedGoRoute<HubSettingsRoute>(path: 'settings'),
     TypedGoRoute<JoinQuestionsManagementRoute>(path: 'join-questions-settings'),
   ],
 )
@@ -231,6 +233,26 @@ class VtuberApplicationRoute extends GoRouteData with $VtuberApplicationRoute {
   @override
   Widget build(BuildContext context, GoRouterState state) =>
       const VtuberApplicationScreen();
+}
+
+class HubSettingsRoute extends GoRouteData with $HubSettingsRoute {
+  const HubSettingsRoute({
+    required this.subdomain,
+    required this.fanHubId,
+    this.initialTab = 0,
+  });
+
+  final String subdomain;
+  final int fanHubId;
+  final int initialTab;
+
+  @override
+  Widget build(BuildContext context, GoRouterState state) =>
+      HubSettingsHomeScreen(
+        subdomain: subdomain,
+        fanHubId: fanHubId,
+        initialTab: initialTab,
+      );
 }
 
 class JoinQuestionsManagementRoute extends GoRouteData with $JoinQuestionsManagementRoute {

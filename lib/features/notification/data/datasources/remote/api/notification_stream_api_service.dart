@@ -10,7 +10,7 @@ abstract class NotificationStreamApiService {
   factory NotificationStreamApiService(Dio dio) = _NotificationStreamApiService;
 
   @GET('/notifications/stream')
-  Stream<ApiResponse<List<Notification>>> getNotifications();
+  Stream<ApiResponse<Notification>> getNotification();
 
   @GET('/notifications/status')
   Future<ApiResponse<StreamStatus>> getStreamStatus();

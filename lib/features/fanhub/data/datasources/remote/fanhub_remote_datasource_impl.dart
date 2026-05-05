@@ -145,6 +145,24 @@ class FanHubRemoteDataSourceImpl implements FanHubRemoteDataSource {
   }
 
   @override
+  Future<FanHubAnalytics> getFanHubAnalytics(int fanHubId) async {
+    try {
+      final response = await _apiService.getFanHubAnalytics(fanHubId);
+      return switch (response) {
+        ApiResponseSuccess(:final data) => data,
+        ApiResponseFailure(:final message, :final error) =>
+          throw ServerException(message, error),
+      };
+    } on DioException catch (e) {
+      throw DioExceptionMapper.mapToException(e, 'Failed to get analytics');
+    } catch (e, stack) {
+      debugPrint('FanHubRemoteDataSourceImpl.getFanHubAnalytics error: $e');
+      debugPrint('Stack: $stack');
+      rethrow;
+    }
+  }
+
+  @override
   Future<List<FanHub>> searchHubs({
     required String keyword,
     required int pageNo,

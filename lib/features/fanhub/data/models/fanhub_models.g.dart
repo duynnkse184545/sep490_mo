@@ -50,30 +50,38 @@ Map<String, dynamic> _$FanHubToJson(_FanHub instance) => <String, dynamic>{
   'memberCount': instance.memberCount,
 };
 
-_FanHubMember _$FanHubMemberFromJson(Map<String, dynamic> json) =>
-    _FanHubMember(
-      memberId: (json['memberId'] as num).toInt(),
-      hubId: (json['hubId'] as num).toInt(),
-      userId: (json['userId'] as num).toInt(),
-      roleInHub: json['roleInHub'] as String?,
-      status: json['status'] as String,
-      fanHubScore: (json['fanHubScore'] as num).toInt(),
-      joinedAt: json['joinedAt'] == null
-          ? null
-          : DateTime.parse(json['joinedAt'] as String),
-      title: json['title'] as String?,
+_FanHubStrike _$FanHubStrikeFromJson(Map<String, dynamic> json) =>
+    _FanHubStrike(
+      reason: json['reason'] as String,
+      createdAt: DateTime.parse(json['createdAt'] as String),
     );
 
-Map<String, dynamic> _$FanHubMemberToJson(_FanHubMember instance) =>
+Map<String, dynamic> _$FanHubStrikeToJson(_FanHubStrike instance) =>
     <String, dynamic>{
-      'memberId': instance.memberId,
-      'hubId': instance.hubId,
-      'userId': instance.userId,
-      'roleInHub': instance.roleInHub,
-      'status': instance.status,
-      'fanHubScore': instance.fanHubScore,
-      'joinedAt': instance.joinedAt?.toIso8601String(),
-      'title': instance.title,
+      'reason': instance.reason,
+      'createdAt': instance.createdAt.toIso8601String(),
+    };
+
+_FanHubAnalytics _$FanHubAnalyticsFromJson(Map<String, dynamic> json) =>
+    _FanHubAnalytics(
+      totalPosts: (json['totalPosts'] as num).toInt(),
+      totalJoinedMembers: (json['totalJoinedMembers'] as num).toInt(),
+      totalStrikes: (json['totalStrikes'] as num).toInt(),
+      topMembers: (json['topMembers'] as List<dynamic>)
+          .map((e) => Member.fromJson(e as Map<String, dynamic>))
+          .toList(),
+      strikes: (json['strikes'] as List<dynamic>?)
+          ?.map((e) => FanHubStrike.fromJson(e as Map<String, dynamic>))
+          .toList(),
+    );
+
+Map<String, dynamic> _$FanHubAnalyticsToJson(_FanHubAnalytics instance) =>
+    <String, dynamic>{
+      'totalPosts': instance.totalPosts,
+      'totalJoinedMembers': instance.totalJoinedMembers,
+      'totalStrikes': instance.totalStrikes,
+      'topMembers': instance.topMembers,
+      'strikes': instance.strikes,
     };
 
 _FanHubCategory _$FanHubCategoryFromJson(Map<String, dynamic> json) =>
