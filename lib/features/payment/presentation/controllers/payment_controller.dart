@@ -46,8 +46,8 @@ class PaymentController extends _$PaymentController {
       paidPackageName: package.packageName,
       paidPackageDescription: package.description,
       price: package.price,
-      returnUrl: 'sep490mo://payment/return',
-      cancelUrl: 'sep490mo://payment/cancel',
+      returnUrl: 'sep490mo://app/payment/return',
+      cancelUrl: 'sep490mo://app/payment/cancel',
     );
     
     final result = await ref.read(paymentRepositoryProvider).createPayment(request).run();

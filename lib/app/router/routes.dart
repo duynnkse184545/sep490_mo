@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:go_router/go_router.dart';
 import 'package:sep490_mo/app/widget/hub_speed_dial.dart';
 import 'package:sep490_mo/app/widget/bottom_tab_nav.dart';
@@ -274,27 +273,61 @@ class PaymentRoute extends GoRouteData with $PaymentRoute {
 
 @TypedGoRoute<PaymentReturnRoute>(path: '/payment/return')
 class PaymentReturnRoute extends GoRouteData with $PaymentReturnRoute {
+  final String? code;
+  final String? id;
+  final String? cancel;
   final String? status;
-  @JsonKey(name: 'vnp_TxnRef')
-  final int? vnpTxnRef;
+  final int? orderCode;
 
-  const PaymentReturnRoute({this.status, this.vnpTxnRef});
+  const PaymentReturnRoute({
+    this.code,
+    this.id,
+    this.cancel,
+    this.status,
+    this.orderCode,
+  });
+
+  static PaymentReturnRoute fromState(GoRouterState state) {
+    final params = state.uri.queryParameters;
+    return PaymentReturnRoute(
+      code: params['code'],
+      id: params['id'],
+      cancel: params['cancel'],
+      status: params['status'],
+      orderCode: int.tryParse(params['orderCode'] ?? ''),
+    );
+  }
 
   @override
   Widget build(BuildContext context, GoRouterState state) {
-    return PaymentResultScreen(status: 'success', paymentId: vnpTxnRef);
+    return PaymentResultScreen(
+      status: status ?? 'success',
+      paymentId: orderCode,
+    );
   }
 }
 
 @TypedGoRoute<PaymentCancelRoute>(path: '/payment/cancel')
 class PaymentCancelRoute extends GoRouteData with $PaymentCancelRoute {
-  @JsonKey(name: 'vnp_TxnRef')
-  final int? vnpTxnRef;
+  final String? code;
+  final String? id;
+  final String? cancel;
+  final String? status;
+  final int? orderCode;
 
-  const PaymentCancelRoute({this.vnpTxnRef});
+  const PaymentCancelRoute({
+    this.code,
+    this.id,
+    this.cancel,
+    this.status,
+    this.orderCode,
+  });
 
   @override
   Widget build(BuildContext context, GoRouterState state) {
-    return PaymentResultScreen(status: 'cancel', paymentId: vnpTxnRef);
+    return PaymentResultScreen(
+      status: status ?? 'cancel',
+      paymentId: orderCode,
+    );
   }
 }

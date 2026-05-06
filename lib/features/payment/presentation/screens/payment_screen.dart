@@ -17,8 +17,13 @@ class PaymentScreen extends HookConsumerWidget {
     final controller = ref.read(paymentControllerProvider.notifier);
 
     return Scaffold(
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       appBar: AppBar(
-        title: const Text('Points Packages'),
+        title: const Text('POINTS PACKAGES', style: TextStyle(fontWeight: FontWeight.bold, letterSpacing: 1.5)),
+        centerTitle: true,
+        backgroundColor: Colors.white,
+        foregroundColor: Colors.black,
+        elevation: 0,
       ),
       body: paymentAsync.when(
         loading: () => const Loader(),
@@ -30,6 +35,7 @@ class PaymentScreen extends HookConsumerWidget {
           ready: (packages) => RefreshIndicator(
             onRefresh: controller.refresh,
             child: ListView.builder(
+              padding: const EdgeInsets.all(16),
               itemCount: packages.length,
               itemBuilder: (context, index) {
                 return PackageCard(
@@ -40,7 +46,7 @@ class PaymentScreen extends HookConsumerWidget {
             ),
           ),
           empty: () => const EmptyState(
-            message: "No coin packages available.",
+            message: "No points packages available.",
             icon: Icons.monetization_on_outlined,
           ),
         ),

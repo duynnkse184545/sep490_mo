@@ -83,14 +83,12 @@ class _PaymentApiService implements PaymentApiService {
   }
 
   @override
-  Future<ApiResponse<String>> createPayment(
-    CreatePaymentRequest request,
-  ) async {
+  Future<String> createPayment(CreatePaymentRequest request) async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
     final _data = request;
-    final _options = _setStreamType<ApiResponse<String>>(
+    final _options = _setStreamType<String>(
       Options(method: 'POST', headers: _headers, extra: _extra)
           .compose(
             _dio.options,
@@ -100,13 +98,10 @@ class _PaymentApiService implements PaymentApiService {
           )
           .copyWith(baseUrl: _combineBaseUrls(_dio.options.baseUrl, baseUrl)),
     );
-    final _result = await _dio.fetch<Map<String, dynamic>>(_options);
-    late ApiResponse<String> _value;
+    final _result = await _dio.fetch<String>(_options);
+    late String _value;
     try {
-      _value = ApiResponse<String>.fromJson(
-        _result.data!,
-        (json) => json as String,
-      );
+      _value = _result.data!;
     } on Object catch (e, s) {
       errorLogger?.logError(e, s, _options, response: _result);
       rethrow;

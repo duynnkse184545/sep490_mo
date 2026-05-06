@@ -46,12 +46,7 @@ class PaymentRemoteDataSourceImpl implements PaymentRemoteDataSource {
   @override
   Future<String> createPayment(CreatePaymentRequest request) async {
     try {
-      final response = await _apiService.createPayment(request);
-      return switch (response) {
-        ApiResponseSuccess(:final data) => data,
-        ApiResponseFailure(:final message, :final error) =>
-          throw ServerException(message, error),
-      };
+      return await _apiService.createPayment(request);
     } on DioException catch (e) {
       throw DioExceptionMapper.mapToException(e, 'Failed to create payment');
     } catch (e, stack) {

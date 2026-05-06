@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:intl/intl.dart';
+import 'package:sep490_mo/app/app_notifier.dart';
+import 'package:sep490_mo/app/app_state.dart';
 import 'package:sep490_mo/core/theme/app_colors.dart';
 import 'package:sep490_mo/core/widgets/loader.dart';
 import 'package:sep490_mo/core/widgets/retro_text_field.dart';
@@ -31,7 +33,9 @@ class VtuberApplicationScreen extends HookConsumerWidget {
       next.maybeWhen(
         success: () {
           ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(content: Text('Application submitted successfully!')),
+            const SnackBar(
+              content: Text('Application submitted successfully!'),
+            ),
           );
           controller.fetchMyApplication();
           viewMode.value = _ViewMode.my;
@@ -65,7 +69,13 @@ class VtuberApplicationScreen extends HookConsumerWidget {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Text('Error: $message', style: const TextStyle(color: Colors.red, fontWeight: FontWeight.bold)),
+                    Text(
+                      'Error: $message',
+                      style: const TextStyle(
+                        color: Colors.red,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
                     const SizedBox(height: 16),
                     _buildRetroButton(
                       label: 'RETRY',
@@ -83,7 +93,9 @@ class VtuberApplicationScreen extends HookConsumerWidget {
               success: () => const SizedBox.shrink(),
               loaded: (apps) {
                 if (viewMode.value == _ViewMode.send) {
-                  return _SendApplicationView(onSubmit: controller.registerVtuber);
+                  return _SendApplicationView(
+                    onSubmit: controller.registerVtuber,
+                  );
                 }
                 return _MyApplicationView(
                   applications: apps,
@@ -92,9 +104,16 @@ class VtuberApplicationScreen extends HookConsumerWidget {
               },
               orElse: () {
                 if (viewMode.value == _ViewMode.send) {
-                  return _SendApplicationView(onSubmit: controller.registerVtuber);
+                  return _SendApplicationView(
+                    onSubmit: controller.registerVtuber,
+                  );
                 }
-                return const Center(child: Text('No applications found.', style: TextStyle(fontWeight: FontWeight.bold)));
+                return const Center(
+                  child: Text(
+                    'No applications found.',
+                    style: TextStyle(fontWeight: FontWeight.bold),
+                  ),
+                );
               },
             ),
           ),
@@ -103,10 +122,17 @@ class VtuberApplicationScreen extends HookConsumerWidget {
     );
   }
 
-  Widget _buildViewModeSelector(BuildContext context, ValueNotifier<_ViewMode> viewMode) {
+  Widget _buildViewModeSelector(
+    BuildContext context,
+    ValueNotifier<_ViewMode> viewMode,
+  ) {
     final modes = [
       {'mode': _ViewMode.send, 'label': 'Apply', 'icon': Icons.send_outlined},
-      {'mode': _ViewMode.my, 'label': 'History', 'icon': Icons.history_outlined},
+      {
+        'mode': _ViewMode.my,
+        'label': 'History',
+        'icon': Icons.history_outlined,
+      },
     ];
 
     return Row(
@@ -120,7 +146,9 @@ class VtuberApplicationScreen extends HookConsumerWidget {
               child: Container(
                 padding: const EdgeInsets.symmetric(vertical: 10),
                 decoration: BoxDecoration(
-                  color: isSelected ? Theme.of(context).colorScheme.primary : const Color(0xFFF5F5F5),
+                  color: isSelected
+                      ? Theme.of(context).colorScheme.primary
+                      : const Color(0xFFF5F5F5),
                   borderRadius: BorderRadius.circular(30),
                   border: Border.all(
                     color: isSelected ? AppColors.border : Colors.black12,
@@ -133,13 +161,17 @@ class VtuberApplicationScreen extends HookConsumerWidget {
                     Icon(
                       item['icon'] as IconData,
                       size: 18,
-                      color: isSelected ? Colors.white : const Color(0xFF666666),
+                      color: isSelected
+                          ? Colors.white
+                          : const Color(0xFF666666),
                     ),
                     const SizedBox(width: 8),
                     Text(
                       item['label'] as String,
                       style: TextStyle(
-                        color: isSelected ? Colors.white : const Color(0xFF666666),
+                        color: isSelected
+                            ? Colors.white
+                            : const Color(0xFF666666),
                         fontSize: 13,
                         fontWeight: FontWeight.bold,
                       ),
@@ -154,7 +186,10 @@ class VtuberApplicationScreen extends HookConsumerWidget {
     );
   }
 
-  Widget _buildRetroButton({required String label, required VoidCallback onTap}) {
+  Widget _buildRetroButton({
+    required String label,
+    required VoidCallback onTap,
+  }) {
     return InkWell(
       onTap: onTap,
       child: Container(
@@ -169,23 +204,28 @@ class VtuberApplicationScreen extends HookConsumerWidget {
         ),
         child: Text(
           label,
-          style: const TextStyle(fontWeight: FontWeight.w900, color: Color(0xFF323232)),
+          style: const TextStyle(
+            fontWeight: FontWeight.w900,
+            color: Color(0xFF323232),
+          ),
         ),
       ),
     );
   }
 }
 
-class _SendApplicationView extends HookWidget {
+class _SendApplicationView extends HookConsumerWidget {
   final Function(VtuberRegisterRequest) onSubmit;
 
   const _SendApplicationView({required this.onSubmit});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final channelNameController = useTextEditingController();
     final channelLinkController = useTextEditingController();
+    final channelIdController = useTextEditingController();
     final formKey = useMemoized(() => GlobalKey<FormState>());
+    final userId = ref.watch(appProvider).whenOrNull(ready: (user) => user.userId) ?? 0;
 
     return SingleChildScrollView(
       padding: const EdgeInsets.all(20),
@@ -206,30 +246,51 @@ class _SendApplicationView extends HookWidget {
             children: [
               const Text(
                 'Apply to become a VTuber',
-                style: TextStyle(fontWeight: FontWeight.w900, fontSize: 18, color: Color(0xFF323232)),
+                style: TextStyle(
+                  fontWeight: FontWeight.w900,
+                  fontSize: 18,
+                  color: Color(0xFF323232),
+                ),
               ),
               const SizedBox(height: 8),
               const Text(
                 'Please provide your channel details for verification.',
-                style: TextStyle(color: Colors.grey, fontSize: 13, fontWeight: FontWeight.w500),
+                style: TextStyle(
+                  color: Colors.grey,
+                  fontSize: 13,
+                  fontWeight: FontWeight.w500,
+                ),
               ),
               const Divider(height: 32),
-              
+
               _buildLabel('CHANNEL NAME'),
               RetroTextField(
                 hintText: 'e.g. Gawr Gura Ch.',
                 controller: channelNameController,
               ),
               const SizedBox(height: 20),
-              
+
               _buildLabel('CHANNEL LINK'),
               RetroTextField(
                 hintText: 'https://youtube.com/@...',
                 controller: channelLinkController,
               ),
+              const SizedBox(height: 20),
+              _buildLabel('CHANNEL ID'),
+              RetroTextField(
+                hintText: 'e.g. UC_x5XG10V2P...',
+                controller: channelIdController,
+              ),
               const SizedBox(height: 32),
-              
-              _buildSubmitButton(context, formKey, channelNameController, channelLinkController),
+
+              _buildSubmitButton(
+                context,
+                formKey,
+                channelNameController,
+                channelLinkController,
+                channelIdController,
+                userId,
+              ),
             ],
           ),
         ),
@@ -242,19 +303,35 @@ class _SendApplicationView extends HookWidget {
       padding: const EdgeInsets.only(bottom: 8),
       child: Text(
         label,
-        style: const TextStyle(fontWeight: FontWeight.w900, fontSize: 11, letterSpacing: 1.2, color: Colors.grey),
+        style: const TextStyle(
+          fontWeight: FontWeight.w900,
+          fontSize: 11,
+          letterSpacing: 1.2,
+          color: Colors.grey,
+        ),
       ),
     );
   }
 
-  Widget _buildSubmitButton(BuildContext context, GlobalKey<FormState> formKey, TextEditingController name, TextEditingController link) {
+  Widget _buildSubmitButton(
+    BuildContext context,
+    GlobalKey<FormState> formKey,
+    TextEditingController name,
+    TextEditingController link,
+    TextEditingController id,
+    int userId,
+  ) {
     return InkWell(
       onTap: () {
         if (formKey.currentState!.validate()) {
-          onSubmit(VtuberRegisterRequest(
-            channelName: name.text.trim(),
-            channelLink: link.text.trim(),
-          ));
+          onSubmit(
+            VtuberRegisterRequest(
+              userId: userId,
+              channelName: name.text.trim(),
+              channelLink: link.text.trim(),
+              channelId: id.text.trim(),
+            ),
+          );
         }
       },
       child: Container(
@@ -270,7 +347,11 @@ class _SendApplicationView extends HookWidget {
         child: const Text(
           'SUBMIT APPLICATION',
           textAlign: TextAlign.center,
-          style: TextStyle(color: Colors.white, fontWeight: FontWeight.w900, letterSpacing: 1),
+          style: TextStyle(
+            color: Colors.white,
+            fontWeight: FontWeight.w900,
+            letterSpacing: 1,
+          ),
         ),
       ),
     );
@@ -296,7 +377,10 @@ class _MyApplicationView extends StatelessWidget {
           child: Center(
             child: Padding(
               padding: EdgeInsets.only(top: 100),
-              child: Text('No applications found.', style: TextStyle(fontWeight: FontWeight.bold)),
+              child: Text(
+                'No applications found.',
+                style: TextStyle(fontWeight: FontWeight.bold),
+              ),
             ),
           ),
         ),
@@ -310,9 +394,8 @@ class _MyApplicationView extends StatelessWidget {
         padding: const EdgeInsets.all(16),
         itemCount: applications.length,
         separatorBuilder: (_, _) => const SizedBox(height: 12),
-        itemBuilder: (context, index) => _VtuberApplicationTile(
-          application: applications[index],
-        ),
+        itemBuilder: (context, index) =>
+            _VtuberApplicationTile(application: applications[index]),
       ),
     );
   }
@@ -349,7 +432,11 @@ class _VtuberApplicationTile extends StatelessWidget {
             children: [
               Text(
                 'APP #${application.id}',
-                style: const TextStyle(fontWeight: FontWeight.w900, fontSize: 13, letterSpacing: 1),
+                style: const TextStyle(
+                  fontWeight: FontWeight.w900,
+                  fontSize: 13,
+                  letterSpacing: 1,
+                ),
               ),
               _buildStatusBadge(application.status, statusColor),
             ],
@@ -359,11 +446,19 @@ class _VtuberApplicationTile extends StatelessWidget {
           const SizedBox(height: 12),
           _buildInfo('CHANNEL LINK', application.channelLink),
           const SizedBox(height: 12),
-          _buildInfo('APPLIED ON', DateFormat('MMM dd, yyyy').format(application.createdAt)),
-          
-          if (application.status == VtuberApplicationStatus.rejected && application.reason != null) ...[
+          _buildInfo(
+            'APPLIED ON',
+            DateFormat('MMM dd, yyyy').format(application.createdAt),
+          ),
+
+          if (application.status == VtuberApplicationStatus.rejected &&
+              application.reason != null) ...[
             const SizedBox(height: 12),
-            _buildInfo('REJECTION REASON', application.reason!, color: Colors.red),
+            _buildInfo(
+              'REJECTION REASON',
+              application.reason!,
+              color: Colors.red,
+            ),
           ],
         ],
       ),
@@ -380,7 +475,11 @@ class _VtuberApplicationTile extends StatelessWidget {
       ),
       child: Text(
         status.name.toUpperCase(),
-        style: TextStyle(color: color, fontWeight: FontWeight.w900, fontSize: 10),
+        style: TextStyle(
+          color: color,
+          fontWeight: FontWeight.w900,
+          fontSize: 10,
+        ),
       ),
     );
   }
@@ -389,9 +488,24 @@ class _VtuberApplicationTile extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(label, style: const TextStyle(color: Colors.grey, fontSize: 10, fontWeight: FontWeight.bold, letterSpacing: 1)),
+        Text(
+          label,
+          style: const TextStyle(
+            color: Colors.grey,
+            fontSize: 10,
+            fontWeight: FontWeight.bold,
+            letterSpacing: 1,
+          ),
+        ),
         const SizedBox(height: 4),
-        Text(value, style: TextStyle(fontWeight: FontWeight.w900, fontSize: 13, color: color ?? const Color(0xFF323232))),
+        Text(
+          value,
+          style: TextStyle(
+            fontWeight: FontWeight.w900,
+            fontSize: 13,
+            color: color ?? const Color(0xFF323232),
+          ),
+        ),
       ],
     );
   }

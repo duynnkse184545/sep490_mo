@@ -16,5 +16,5 @@ abstract class PaymentApiService {
   Future<CancelPaymentResponse> cancelPayment(@Path('id') int id);
 
   @POST('/payment/create-payment-link')
-  Future<ApiResponse<String>> createPayment(@Body() CreatePaymentRequest request);
+  Future<String> createPayment(@Body() CreatePaymentRequest request);
 }

@@ -35,8 +35,10 @@ abstract class VtuberApplication with _$VtuberApplication {
 @freezed
 abstract class VtuberRegisterRequest with _$VtuberRegisterRequest {
   const factory VtuberRegisterRequest({
+    required int userId,
     required String channelName,
     required String channelLink,
+    required String channelId,
   }) = _VtuberRegisterRequest;
 
   factory VtuberRegisterRequest.fromJson(Map<String, dynamic> json) =>

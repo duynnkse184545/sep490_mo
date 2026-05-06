@@ -504,9 +504,12 @@ RouteBase get $paymentReturnRoute => GoRouteData.$route(
 mixin $PaymentReturnRoute on GoRouteData {
   static PaymentReturnRoute _fromState(GoRouterState state) =>
       PaymentReturnRoute(
+        code: state.uri.queryParameters['code'],
+        id: state.uri.queryParameters['id'],
+        cancel: state.uri.queryParameters['cancel'],
         status: state.uri.queryParameters['status'],
-        vnpTxnRef: _$convertMapValue(
-          'vnp-txn-ref',
+        orderCode: _$convertMapValue(
+          'order-code',
           state.uri.queryParameters,
           int.tryParse,
         ),
@@ -518,8 +521,11 @@ mixin $PaymentReturnRoute on GoRouteData {
   String get location => GoRouteData.$location(
     '/payment/return',
     queryParams: {
+      if (_self.code != null) 'code': _self.code,
+      if (_self.id != null) 'id': _self.id,
+      if (_self.cancel != null) 'cancel': _self.cancel,
       if (_self.status != null) 'status': _self.status,
-      if (_self.vnpTxnRef != null) 'vnp-txn-ref': _self.vnpTxnRef!.toString(),
+      if (_self.orderCode != null) 'order-code': _self.orderCode!.toString(),
     },
   );
 
@@ -545,8 +551,12 @@ RouteBase get $paymentCancelRoute => GoRouteData.$route(
 mixin $PaymentCancelRoute on GoRouteData {
   static PaymentCancelRoute _fromState(GoRouterState state) =>
       PaymentCancelRoute(
-        vnpTxnRef: _$convertMapValue(
-          'vnp-txn-ref',
+        code: state.uri.queryParameters['code'],
+        id: state.uri.queryParameters['id'],
+        cancel: state.uri.queryParameters['cancel'],
+        status: state.uri.queryParameters['status'],
+        orderCode: _$convertMapValue(
+          'order-code',
           state.uri.queryParameters,
           int.tryParse,
         ),
@@ -558,7 +568,11 @@ mixin $PaymentCancelRoute on GoRouteData {
   String get location => GoRouteData.$location(
     '/payment/cancel',
     queryParams: {
-      if (_self.vnpTxnRef != null) 'vnp-txn-ref': _self.vnpTxnRef!.toString(),
+      if (_self.code != null) 'code': _self.code,
+      if (_self.id != null) 'id': _self.id,
+      if (_self.cancel != null) 'cancel': _self.cancel,
+      if (_self.status != null) 'status': _self.status,
+      if (_self.orderCode != null) 'order-code': _self.orderCode!.toString(),
     },
   );
 

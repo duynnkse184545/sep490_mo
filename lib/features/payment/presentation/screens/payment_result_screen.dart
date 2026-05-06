@@ -31,24 +31,42 @@ class PaymentResultScreen extends HookConsumerWidget {
     }, [isSuccess, paymentId]);
 
     return Scaffold(
-      appBar: AppBar(title: const Text('Payment Status')),
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+      appBar: AppBar(
+        title: const Text('PAYMENT STATUS', style: TextStyle(fontWeight: FontWeight.bold, letterSpacing: 1.5)),
+        centerTitle: true,
+        backgroundColor: Colors.white,
+        foregroundColor: Colors.black,
+        elevation: 0,
+      ),
       body: Center(
-        child: Padding(
-          padding: const EdgeInsets.all(24.0),
+        child: Container(
+          margin: const EdgeInsets.all(24),
+          padding: const EdgeInsets.all(24),
+          decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(12),
+            border: Border.all(color: AppColors.border, width: 2),
+            boxShadow: const [
+              BoxShadow(color: AppColors.border, offset: Offset(8, 8)),
+            ],
+          ),
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
+            mainAxisSize: MainAxisSize.min,
             children: [
               Icon(
                 isSuccess ? Icons.check_circle : Icons.error,
                 color: isSuccess ? AppColors.success : Colors.red,
-                size: 100,
+                size: 80,
               ),
               const SizedBox(height: 24),
               Text(
-                isSuccess ? 'Payment Successful!' : 'Payment Canceled or Failed.',
+                isSuccess ? 'PAYMENT SUCCESSFUL!' : 'PAYMENT CANCELED OR FAILED.',
                 style: const TextStyle(
-                  fontSize: 24,
-                  fontWeight: FontWeight.bold,
+                  fontSize: 20,
+                  fontWeight: FontWeight.w900,
+                  color: Color(0xFF323232),
+                  letterSpacing: 1,
                 ),
                 textAlign: TextAlign.center,
               ),
@@ -57,15 +75,29 @@ class PaymentResultScreen extends HookConsumerWidget {
                 isSuccess
                     ? 'Your account has been credited with the purchased package.'
                     : 'The transaction was not completed. You have not been charged.',
-                style: const TextStyle(fontSize: 16, color: Colors.grey),
+                style: const TextStyle(fontSize: 14, color: Colors.grey, height: 1.5),
                 textAlign: TextAlign.center,
               ),
               const SizedBox(height: 32),
-              ElevatedButton(
-                onPressed: () {
+              InkWell(
+                onTap: () {
                   context.go('/home');
                 },
-                child: const Text('Return to Home'),
+                child: Container(
+                  padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+                  decoration: BoxDecoration(
+                    color: Theme.of(context).colorScheme.primary,
+                    border: Border.all(color: AppColors.border, width: 2),
+                    borderRadius: BorderRadius.circular(8),
+                    boxShadow: const [
+                      BoxShadow(color: AppColors.border, offset: Offset(4, 4)),
+                    ],
+                  ),
+                  child: const Text(
+                    'RETURN TO HOME',
+                    style: TextStyle(color: Colors.white, fontWeight: FontWeight.w900, letterSpacing: 1),
+                  ),
+                ),
               ),
             ],
           ),
@@ -74,4 +106,3 @@ class PaymentResultScreen extends HookConsumerWidget {
     );
   }
 }
-

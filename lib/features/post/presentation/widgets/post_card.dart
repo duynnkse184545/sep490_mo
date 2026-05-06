@@ -5,34 +5,48 @@ import 'package:intl/intl.dart';
 import 'package:sep490_mo/core/theme/app_colors.dart';
 import 'package:sep490_mo/core/widgets/app_video_player.dart';
 import 'package:sep490_mo/features/post/data/models/post_models.dart';
+import 'package:sep490_mo/features/post/presentation/controllers/bookmark_controller.dart';
 import 'package:sep490_mo/features/post/presentation/controllers/feed_controller.dart';
 import 'package:sep490_mo/features/post/presentation/controllers/post_ai_controller.dart';
+import 'package:sep490_mo/features/post/presentation/states/bookmark_state.dart';
 import 'package:sep490_mo/features/post/presentation/states/post_ai_state.dart';
 import 'package:sep490_mo/features/post/presentation/widgets/post_comments_widget.dart';
 
 class PostCard extends HookConsumerWidget {
   final Post post;
-  final Future<bool> Function(bool)? onBookmarkToggle;
+  final Future<void> Function()? onBookmarkTap;
 
-  const PostCard({super.key, required this.post, this.onBookmarkToggle});
+  const PostCard({
+    super.key, 
+    required this.post,
+    this.onBookmarkTap,
+  });
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final colorScheme = Theme.of(context).colorScheme;
-    final feedController = ref.read(feedControllerProvider.notifier);
 
-    // Local state for instant feedback (Optimistic UI)
+    // Source of truth for bookmark status
+    final bookmarkedPosts = ref.watch(bookmarkControllerProvider);
+    final isBookmarked = bookmarkedPosts.maybeWhen(
+      data: (state) => state.maybeWhen(
+        ready: (posts) => posts.any((p) => p.postId == post.postId),
+        loadingMore: (posts) => posts.any((p) => p.postId == post.postId),
+        orElse: () => false,
+      ),
+      orElse: () => false,
+    );
+
+    // Local state for instant like feedback
     final isLiked = useState(post.isLikedByCurrentUser);
     final likeCount = useState(post.likeCount);
-    final isBookmarked = useState(post.isBookmarkedByCurrentUser);
 
-    // Sync with external state changes (e.g. when feed is refreshed or synced)
+    // Sync local state with post object
     useEffect(() {
       isLiked.value = post.isLikedByCurrentUser;
       likeCount.value = post.likeCount;
-      isBookmarked.value = post.isBookmarkedByCurrentUser;
       return null;
-    }, [post.isLikedByCurrentUser, post.likeCount, post.isBookmarkedByCurrentUser]);
+    }, [post.isLikedByCurrentUser, post.likeCount]);
 
     return Container(
       margin: const EdgeInsets.symmetric(vertical: 4),
@@ -48,6 +62,7 @@ class PostCard extends HookConsumerWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           // Author row
+          // ... (rest of the card is the same)
           Row(
             children: [
               CircleAvatar(
@@ -167,7 +182,6 @@ class PostCard extends HookConsumerWidget {
             children: [
               Row(
                 children: [
-                  // Like Button
                   _buildRetroLikeButton(
                     isLiked: isLiked.value,
                     likeCount: likeCount.value,
@@ -175,20 +189,18 @@ class PostCard extends HookConsumerWidget {
                       if (isLiked.value) {
                         isLiked.value = false;
                         likeCount.value--;
-                        feedController.unlike(post.postId);
+                        ref.read(feedControllerProvider.notifier).unlike(post.postId);
                       } else {
                         isLiked.value = true;
                         likeCount.value++;
-                        feedController.like(post.postId);
+                        ref.read(feedControllerProvider.notifier).like(post.postId);
                       }
                     },
                   ),
                   const SizedBox(width: 8),
-                  // Comment Button
                   _buildRetroCountButton(
                     icon: Icons.chat_bubble_outline,
-                    count: 0,
-                    // Should be replaced with post.commentCount if available
+                    count: 0, // Replace with post.commentCount
                     onPressed: () => _showComments(context),
                   ),
                 ],
@@ -196,28 +208,17 @@ class PostCard extends HookConsumerWidget {
               Row(
                 children: [
                   _buildRetroActionButton(
-                    icon: isBookmarked.value ? Icons.bookmark : Icons.bookmark_border,
-                    onPressed: () async {
-                      bool newBookmarkState = !isBookmarked.value;
-                      
-                      if (onBookmarkToggle != null) {
-                        newBookmarkState = await onBookmarkToggle!(newBookmarkState);
-                        isBookmarked.value = newBookmarkState;
-                      } else {
-                        if (isBookmarked.value) {
-                          isBookmarked.value = false;
-                          feedController.unbookmark(post.postId);
-                        } else {
-                          isBookmarked.value = true;
-                          feedController.bookmark(post.postId);
-                        }
-                      }
+                    icon: isBookmarked ? Icons.bookmark : Icons.bookmark_border,
+                    onPressed: () {
+                      onBookmarkTap != null
+                          ? onBookmarkTap!()
+                          : _defaultBookmarkAction(ref, isBookmarked);
                     },
                   ),
                   const SizedBox(width: 8),
                   _buildRetroActionButton(
                     icon: Icons.share_outlined,
-                    onPressed: () => feedController.share(post.postId),
+                    onPressed: () => ref.read(feedControllerProvider.notifier).share(post.postId),
                   ),
                 ],
               ),
@@ -228,6 +229,14 @@ class PostCard extends HookConsumerWidget {
     );
   }
 
+  void _defaultBookmarkAction(WidgetRef ref, bool isCurrentlyBookmarked) {
+    if (isCurrentlyBookmarked) {
+      ref.read(feedControllerProvider.notifier).unbookmark(post.postId);
+    } else {
+      ref.read(feedControllerProvider.notifier).bookmark(post.postId);
+    }
+  }
+  
   Widget _buildRetroCountButton({
     required IconData icon,
     required int count,
@@ -669,4 +678,3 @@ class _AIDialog extends ConsumerWidget {
     );
   }
 }
-

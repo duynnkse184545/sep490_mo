@@ -308,7 +308,7 @@ as DateTime?,
 /// @nodoc
 mixin _$VtuberRegisterRequest {
 
- String get channelName; String get channelLink;
+ int get userId; String get channelName; String get channelLink; String get channelId;
 /// Create a copy of VtuberRegisterRequest
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -321,16 +321,16 @@ $VtuberRegisterRequestCopyWith<VtuberRegisterRequest> get copyWith => _$VtuberRe
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is VtuberRegisterRequest&&(identical(other.channelName, channelName) || other.channelName == channelName)&&(identical(other.channelLink, channelLink) || other.channelLink == channelLink));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is VtuberRegisterRequest&&(identical(other.userId, userId) || other.userId == userId)&&(identical(other.channelName, channelName) || other.channelName == channelName)&&(identical(other.channelLink, channelLink) || other.channelLink == channelLink)&&(identical(other.channelId, channelId) || other.channelId == channelId));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,channelName,channelLink);
+int get hashCode => Object.hash(runtimeType,userId,channelName,channelLink,channelId);
 
 @override
 String toString() {
-  return 'VtuberRegisterRequest(channelName: $channelName, channelLink: $channelLink)';
+  return 'VtuberRegisterRequest(userId: $userId, channelName: $channelName, channelLink: $channelLink, channelId: $channelId)';
 }
 
 
@@ -341,7 +341,7 @@ abstract mixin class $VtuberRegisterRequestCopyWith<$Res>  {
   factory $VtuberRegisterRequestCopyWith(VtuberRegisterRequest value, $Res Function(VtuberRegisterRequest) _then) = _$VtuberRegisterRequestCopyWithImpl;
 @useResult
 $Res call({
- String channelName, String channelLink
+ int userId, String channelName, String channelLink, String channelId
 });
 
 
@@ -358,10 +358,12 @@ class _$VtuberRegisterRequestCopyWithImpl<$Res>
 
 /// Create a copy of VtuberRegisterRequest
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? channelName = null,Object? channelLink = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? userId = null,Object? channelName = null,Object? channelLink = null,Object? channelId = null,}) {
   return _then(_self.copyWith(
-channelName: null == channelName ? _self.channelName : channelName // ignore: cast_nullable_to_non_nullable
+userId: null == userId ? _self.userId : userId // ignore: cast_nullable_to_non_nullable
+as int,channelName: null == channelName ? _self.channelName : channelName // ignore: cast_nullable_to_non_nullable
 as String,channelLink: null == channelLink ? _self.channelLink : channelLink // ignore: cast_nullable_to_non_nullable
+as String,channelId: null == channelId ? _self.channelId : channelId // ignore: cast_nullable_to_non_nullable
 as String,
   ));
 }
@@ -447,10 +449,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String channelName,  String channelLink)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( int userId,  String channelName,  String channelLink,  String channelId)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _VtuberRegisterRequest() when $default != null:
-return $default(_that.channelName,_that.channelLink);case _:
+return $default(_that.userId,_that.channelName,_that.channelLink,_that.channelId);case _:
   return orElse();
 
 }
@@ -468,10 +470,10 @@ return $default(_that.channelName,_that.channelLink);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String channelName,  String channelLink)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( int userId,  String channelName,  String channelLink,  String channelId)  $default,) {final _that = this;
 switch (_that) {
 case _VtuberRegisterRequest():
-return $default(_that.channelName,_that.channelLink);case _:
+return $default(_that.userId,_that.channelName,_that.channelLink,_that.channelId);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -488,10 +490,10 @@ return $default(_that.channelName,_that.channelLink);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String channelName,  String channelLink)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( int userId,  String channelName,  String channelLink,  String channelId)?  $default,) {final _that = this;
 switch (_that) {
 case _VtuberRegisterRequest() when $default != null:
-return $default(_that.channelName,_that.channelLink);case _:
+return $default(_that.userId,_that.channelName,_that.channelLink,_that.channelId);case _:
   return null;
 
 }
@@ -503,11 +505,13 @@ return $default(_that.channelName,_that.channelLink);case _:
 @JsonSerializable()
 
 class _VtuberRegisterRequest implements VtuberRegisterRequest {
-  const _VtuberRegisterRequest({required this.channelName, required this.channelLink});
+  const _VtuberRegisterRequest({required this.userId, required this.channelName, required this.channelLink, required this.channelId});
   factory _VtuberRegisterRequest.fromJson(Map<String, dynamic> json) => _$VtuberRegisterRequestFromJson(json);
 
+@override final  int userId;
 @override final  String channelName;
 @override final  String channelLink;
+@override final  String channelId;
 
 /// Create a copy of VtuberRegisterRequest
 /// with the given fields replaced by the non-null parameter values.
@@ -522,16 +526,16 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _VtuberRegisterRequest&&(identical(other.channelName, channelName) || other.channelName == channelName)&&(identical(other.channelLink, channelLink) || other.channelLink == channelLink));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _VtuberRegisterRequest&&(identical(other.userId, userId) || other.userId == userId)&&(identical(other.channelName, channelName) || other.channelName == channelName)&&(identical(other.channelLink, channelLink) || other.channelLink == channelLink)&&(identical(other.channelId, channelId) || other.channelId == channelId));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,channelName,channelLink);
+int get hashCode => Object.hash(runtimeType,userId,channelName,channelLink,channelId);
 
 @override
 String toString() {
-  return 'VtuberRegisterRequest(channelName: $channelName, channelLink: $channelLink)';
+  return 'VtuberRegisterRequest(userId: $userId, channelName: $channelName, channelLink: $channelLink, channelId: $channelId)';
 }
 
 
@@ -542,7 +546,7 @@ abstract mixin class _$VtuberRegisterRequestCopyWith<$Res> implements $VtuberReg
   factory _$VtuberRegisterRequestCopyWith(_VtuberRegisterRequest value, $Res Function(_VtuberRegisterRequest) _then) = __$VtuberRegisterRequestCopyWithImpl;
 @override @useResult
 $Res call({
- String channelName, String channelLink
+ int userId, String channelName, String channelLink, String channelId
 });
 
 
@@ -559,10 +563,12 @@ class __$VtuberRegisterRequestCopyWithImpl<$Res>
 
 /// Create a copy of VtuberRegisterRequest
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? channelName = null,Object? channelLink = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? userId = null,Object? channelName = null,Object? channelLink = null,Object? channelId = null,}) {
   return _then(_VtuberRegisterRequest(
-channelName: null == channelName ? _self.channelName : channelName // ignore: cast_nullable_to_non_nullable
+userId: null == userId ? _self.userId : userId // ignore: cast_nullable_to_non_nullable
+as int,channelName: null == channelName ? _self.channelName : channelName // ignore: cast_nullable_to_non_nullable
 as String,channelLink: null == channelLink ? _self.channelLink : channelLink // ignore: cast_nullable_to_non_nullable
+as String,channelId: null == channelId ? _self.channelId : channelId // ignore: cast_nullable_to_non_nullable
 as String,
   ));
 }

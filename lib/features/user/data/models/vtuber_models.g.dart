@@ -47,13 +47,17 @@ const _$VtuberApplicationStatusEnumMap = {
 _VtuberRegisterRequest _$VtuberRegisterRequestFromJson(
   Map<String, dynamic> json,
 ) => _VtuberRegisterRequest(
+  userId: (json['userId'] as num).toInt(),
   channelName: json['channelName'] as String,
   channelLink: json['channelLink'] as String,
+  channelId: json['channelId'] as String,
 );
 
 Map<String, dynamic> _$VtuberRegisterRequestToJson(
   _VtuberRegisterRequest instance,
 ) => <String, dynamic>{
+  'userId': instance.userId,
   'channelName': instance.channelName,
   'channelLink': instance.channelLink,
+  'channelId': instance.channelId,
 };
