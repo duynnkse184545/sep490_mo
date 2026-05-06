@@ -13,6 +13,7 @@ import 'package:sep490_mo/features/member/presentation/widgets/join_hub_button.d
 import 'package:sep490_mo/features/post/presentation/screens/create_post_screen.dart';
 import 'package:sep490_mo/features/post/presentation/screens/bookmark_screen.dart';
 import 'package:sep490_mo/features/post/presentation/screens/feed_screen.dart';
+import 'package:sep490_mo/features/post/presentation/screens/news_screen.dart';
 import 'package:sep490_mo/app/screen/moderation_home_screen.dart';
 import 'package:sep490_mo/app/screen/hub_settings_home_screen.dart';
 import 'package:sep490_mo/features/post/presentation/widgets/hub_feed_widget.dart';
@@ -71,6 +72,9 @@ class CreateFanHubRoute extends GoRouteData with $CreateFanHubRoute {
     TypedStatefulShellBranch<HomeBranch>(
       routes: [TypedGoRoute<HomeRoute>(path: '/home')],
     ),
+    TypedStatefulShellBranch<NewsBranch>(
+      routes: [TypedGoRoute<NewsRoute>(path: '/news')],
+    ),
     TypedStatefulShellBranch<ExploreBranch>(
       routes: [TypedGoRoute<ExploreRoute>(path: '/explore')],
     ),
@@ -98,6 +102,10 @@ class HomeBranch extends StatefulShellBranchData {
   const HomeBranch();
 }
 
+class NewsBranch extends StatefulShellBranchData {
+  const NewsBranch();
+}
+
 class ExploreBranch extends StatefulShellBranchData {
   const ExploreBranch();
 }
@@ -118,6 +126,14 @@ class HomeRoute extends GoRouteData with $HomeRoute {
 
   @override
   Widget build(BuildContext context, GoRouterState state) => const FeedScreen();
+}
+
+class NewsRoute extends GoRouteData with $NewsRoute {
+  const NewsRoute();
+
+  @override
+  Widget build(BuildContext context, GoRouterState state) =>
+      const NewsScreen();
 }
 
 // ─── Explore Routes ─────────────────────────────────────────────────────────

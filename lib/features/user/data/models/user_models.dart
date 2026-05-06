@@ -33,6 +33,8 @@ abstract class User with _$User {
     required int totalReceivedGifts,
     List<Badge>? displayBadges,
     List<Badge>? allBadges,
+    List<JoinedFanHub>? fanHubsJoined,
+    Oshi? oshi,
   }) = _User;
 
   factory User.fromJson(Map<String, dynamic> json) => _$UserFromJson(json);
@@ -109,4 +111,31 @@ abstract class DailyMission with _$DailyMission {
 
   factory DailyMission.fromJson(Map<String, dynamic> json) =>
       _$DailyMissionFromJson(json);
+}
+
+@freezed
+abstract class Oshi with _$Oshi{
+  const factory Oshi({
+    required int userId,
+    required String username,
+    required String email,
+    String? displayName,
+    String? avatarUrl,
+    String? frameUrl,
+  }) = _Oshi;
+
+  factory Oshi.fromJson(Map<String, dynamic> json) => _$OshiFromJson(json);
+}
+
+@freezed
+abstract class JoinedFanHub with _$JoinedFanHub{
+  const factory JoinedFanHub({
+    required int fanHubId,
+    required String hubName,
+    required String subdomain,
+  String? themeColor,
+     String? avatarUrl,
+  }) = _JoinedFanHub;
+
+  factory JoinedFanHub.fromJson(Map<String, dynamic> json) => _$JoinedFanHubFromJson(json);
 }

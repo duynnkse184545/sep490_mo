@@ -96,7 +96,6 @@ abstract class Post with _$Post {
     DateTime? updatedAt,
     @Default(0) int likeCount,
     @Default(false) bool isLikedByCurrentUser,
-    @Default(false) bool isBookmarkedByCurrentUser,
   }) = _Post;
 
   factory Post.fromJson(Map<String, dynamic> json) =>

@@ -30,6 +30,12 @@ _User _$UserFromJson(Map<String, dynamic> json) => _User(
   allBadges: (json['allBadges'] as List<dynamic>?)
       ?.map((e) => Badge.fromJson(e as Map<String, dynamic>))
       .toList(),
+  fanHubsJoined: (json['fanHubsJoined'] as List<dynamic>?)
+      ?.map((e) => JoinedFanHub.fromJson(e as Map<String, dynamic>))
+      .toList(),
+  oshi: json['oshi'] == null
+      ? null
+      : Oshi.fromJson(json['oshi'] as Map<String, dynamic>),
 );
 
 Map<String, dynamic> _$UserToJson(_User instance) => <String, dynamic>{
@@ -52,6 +58,8 @@ Map<String, dynamic> _$UserToJson(_User instance) => <String, dynamic>{
   'totalReceivedGifts': instance.totalReceivedGifts,
   'displayBadges': instance.displayBadges,
   'allBadges': instance.allBadges,
+  'fanHubsJoined': instance.fanHubsJoined,
+  'oshi': instance.oshi,
 };
 
 const _$UserRoleEnumMap = {UserRole.user: 'USER', UserRole.vtuber: 'VTUBER'};
@@ -152,4 +160,40 @@ Map<String, dynamic> _$DailyMissionToJson(_DailyMission instance) =>
       'likeAmount': instance.likeAmount,
       'bonus10': instance.bonus10,
       'bonus20': instance.bonus20,
+    };
+
+_Oshi _$OshiFromJson(Map<String, dynamic> json) => _Oshi(
+  userId: (json['userId'] as num).toInt(),
+  username: json['username'] as String,
+  email: json['email'] as String,
+  displayName: json['displayName'] as String?,
+  avatarUrl: json['avatarUrl'] as String?,
+  frameUrl: json['frameUrl'] as String?,
+);
+
+Map<String, dynamic> _$OshiToJson(_Oshi instance) => <String, dynamic>{
+  'userId': instance.userId,
+  'username': instance.username,
+  'email': instance.email,
+  'displayName': instance.displayName,
+  'avatarUrl': instance.avatarUrl,
+  'frameUrl': instance.frameUrl,
+};
+
+_JoinedFanHub _$JoinedFanHubFromJson(Map<String, dynamic> json) =>
+    _JoinedFanHub(
+      fanHubId: (json['fanHubId'] as num).toInt(),
+      hubName: json['hubName'] as String,
+      subdomain: json['subdomain'] as String,
+      themeColor: json['themeColor'] as String?,
+      avatarUrl: json['avatarUrl'] as String?,
+    );
+
+Map<String, dynamic> _$JoinedFanHubToJson(_JoinedFanHub instance) =>
+    <String, dynamic>{
+      'fanHubId': instance.fanHubId,
+      'hubName': instance.hubName,
+      'subdomain': instance.subdomain,
+      'themeColor': instance.themeColor,
+      'avatarUrl': instance.avatarUrl,
     };

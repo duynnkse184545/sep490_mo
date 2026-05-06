@@ -5,6 +5,8 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:sep490_mo/core/theme/app_colors.dart';
 import 'package:sep490_mo/core/widgets/retro_text_field.dart';
+import 'package:sep490_mo/features/member/data/models/member_models.dart';
+import 'package:sep490_mo/features/member/presentation/controllers/member_checking_controller.dart';
 import 'package:sep490_mo/features/post/data/models/post_models.dart';
 import 'package:sep490_mo/features/post/presentation/controllers/create_post_controller.dart';
 import 'package:sep490_mo/features/post/presentation/states/create_post_state.dart';
@@ -21,6 +23,11 @@ class CreatePostScreen extends HookConsumerWidget {
     final contentController = useTextEditingController();
     final titleController = useTextEditingController();
     final hashtagsController = useTextEditingController();
+
+    // Member check for VTuber role
+    final memberAsync = ref.watch(memberCheckingControllerProvider(fanHubId: fanHubId));
+    final memberRole = memberAsync.whenOrNull(data: (m) => m.roleInHub);
+    final isVtuber = memberRole == MemberRole.vtuber;
 
     // Poll state
     final pollOptions = useState<List<String>>(['', '']);
@@ -181,31 +188,31 @@ class CreatePostScreen extends HookConsumerWidget {
                   ),
                   const Divider(height: 32),
 
-                  // Toggles
-                  /*
-                  Row(
-                    children: [
-                      Expanded(
-                        child: _buildRetroToggle(
-                          context: context,
-                          label: "Announcement",
-                          value: isAnnouncement.value,
-                          onChanged: (val) => isAnnouncement.value = val,
+                  // VTuber exclusive toggles
+                  if (isVtuber) ...[
+                    Row(
+                      children: [
+                        Expanded(
+                          child: _buildRetroToggle(
+                            context: context,
+                            label: "Announcement",
+                            value: isAnnouncement.value,
+                            onChanged: (val) => isAnnouncement.value = val,
+                          ),
                         ),
-                      ),
-                      const SizedBox(width: 12),
-                      Expanded(
-                        child: _buildRetroToggle(
-                          context: context,
-                          label: "Schedule",
-                          value: isSchedule.value,
-                          onChanged: (val) => isSchedule.value = val,
+                        const SizedBox(width: 12),
+                        Expanded(
+                          child: _buildRetroToggle(
+                            context: context,
+                            label: "Schedule",
+                            value: isSchedule.value,
+                            onChanged: (val) => isSchedule.value = val,
+                          ),
                         ),
-                      ),
-                    ],
-                  ),
-                  const SizedBox(height: 24),
-                  */
+                      ],
+                    ),
+                    const SizedBox(height: 24),
+                  ],
 
                   // Post Type Selector
                   _buildLabel(context, "Post Type"),
@@ -345,35 +352,35 @@ class CreatePostScreen extends HookConsumerWidget {
     );
   }
 
-  // Widget _buildRetroToggle({
-  //   required BuildContext context,
-  //   required String label,
-  //   required bool value,
-  //   required Function(bool) onChanged,
-  // }) {
-  //   return InkWell(
-  //     onTap: () => onChanged(!value),
-  //     child: Row(
-  //       children: [
-  //         SizedBox(
-  //           width: 24,
-  //           height: 24,
-  //           child: Checkbox(
-  //             value: value,
-  //             onChanged: (v) => onChanged(v ?? false),
-  //             activeColor: AppColors.primary,
-  //             side: const BorderSide(color: AppColors.border, width: 2),
-  //           ),
-  //         ),
-  //         const SizedBox(width: 8),
-  //         Text(
-  //           label,
-  //           style: const TextStyle(fontSize: 13, fontWeight: FontWeight.w600),
-  //         ),
-  //       ],
-  //     ),
-  //   );
-  // }
+  Widget _buildRetroToggle({
+    required BuildContext context,
+    required String label,
+    required bool value,
+    required Function(bool) onChanged,
+  }) {
+    return InkWell(
+      onTap: () => onChanged(!value),
+      child: Row(
+        children: [
+          SizedBox(
+            width: 24,
+            height: 24,
+            child: Checkbox(
+              value: value,
+              onChanged: (v) => onChanged(v ?? false),
+              activeColor: AppColors.primary,
+              side: const BorderSide(color: AppColors.border, width: 2),
+            ),
+          ),
+          const SizedBox(width: 8),
+          Text(
+            label,
+            style: const TextStyle(fontSize: 13, fontWeight: FontWeight.bold, color: Color(0xFF323232)),
+          ),
+        ],
+      ),
+    );
+  }
 
   Widget _buildPostTypeSelector(ValueNotifier<PostType> selectedType) {
     final types = [

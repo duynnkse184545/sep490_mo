@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:sep490_mo/features/post/data/models/post_models.dart';
 import 'package:sep490_mo/features/post/presentation/widgets/post_card.dart';
 import 'package:sep490_mo/features/post/presentation/widgets/feed_empty_widget.dart';
 import 'package:sep490_mo/features/post/presentation/states/feed_state.dart';
@@ -8,14 +9,14 @@ class FeedListWidget extends HookWidget {
   final FeedState feedState;
   final VoidCallback onLoadMore;
   final VoidCallback onRefresh;
-  final bool isScrollable; // ← new
+  final bool isScrollable;
 
   const FeedListWidget({
     super.key,
     required this.feedState,
     required this.onLoadMore,
     required this.onRefresh,
-    this.isScrollable = true, // ← default true, FeedScreen works as before
+    this.isScrollable = true,
   });
 
   @override
@@ -24,7 +25,7 @@ class FeedListWidget extends HookWidget {
     final colorScheme = Theme.of(context).colorScheme;
 
     useEffect(() {
-      if (!isScrollable) return null; // ← skip scroll listener if not scrollable
+      if (!isScrollable) return null;
 
       void onScroll() {
         if (!scrollController.hasClients) return;
@@ -43,44 +44,62 @@ class FeedListWidget extends HookWidget {
         : const NeverScrollableScrollPhysics();
 
     return feedState.when(
-      ready: (posts) => ListView.separated(
-        controller: isScrollable ? scrollController : null,
-        shrinkWrap: !isScrollable,
-        physics: physics,
-        padding: const EdgeInsets.all(8),
-        itemCount: posts.length,
-        separatorBuilder: (_, __) => const SizedBox(height: 8),
-        itemBuilder: (context, index) => PostCard(post: posts[index]),
-      ),
-      loadingMore: (posts) => ListView.separated(
-        controller: isScrollable ? scrollController : null,
-        shrinkWrap: !isScrollable,
-        physics: physics,
-        padding: const EdgeInsets.all(8),
-        itemCount: posts.length + 1,
-        separatorBuilder: (_, __) => const SizedBox(height: 8),
-        itemBuilder: (context, index) {
-          if (index == posts.length) {
-            return Center(
-              child: Padding(
-                padding: const EdgeInsets.all(16),
-                child: CircularProgressIndicator(color: colorScheme.primary),
-              ),
-            );
-          }
-          return PostCard(post: posts[index]);
-        },
-      ),
-      refreshing: (posts) => ListView.separated(
-        controller: isScrollable ? scrollController : null,
-        shrinkWrap: !isScrollable,
-        physics: physics,
-        padding: const EdgeInsets.all(8),
-        itemCount: posts.length,
-        separatorBuilder: (_, __) => const SizedBox(height: 8),
-        itemBuilder: (context, index) => PostCard(post: posts[index]),
-      ),
+      ready: (posts) {
+        final filteredPosts = _filterPosts(posts);
+        if (filteredPosts.isEmpty) return const FeedEmptyWidget();
+
+        return ListView.separated(
+          controller: isScrollable ? scrollController : null,
+          shrinkWrap: !isScrollable,
+          physics: physics,
+          padding: const EdgeInsets.all(8),
+          itemCount: filteredPosts.length,
+          separatorBuilder: (_, _) => const SizedBox(height: 8),
+          itemBuilder: (context, index) => PostCard(post: filteredPosts[index]),
+        );
+      },
+      loadingMore: (posts) {
+        final filteredPosts = _filterPosts(posts);
+        return ListView.separated(
+          controller: isScrollable ? scrollController : null,
+          shrinkWrap: !isScrollable,
+          physics: physics,
+          padding: const EdgeInsets.all(8),
+          itemCount: filteredPosts.length + 1,
+          separatorBuilder: (_, _) => const SizedBox(height: 8),
+          itemBuilder: (context, index) {
+            if (index == filteredPosts.length) {
+              return Center(
+                child: Padding(
+                  padding: const EdgeInsets.all(16),
+                  child: CircularProgressIndicator(color: colorScheme.primary),
+                ),
+              );
+            }
+            return PostCard(post: filteredPosts[index]);
+          },
+        );
+      },
+      refreshing: (posts) {
+        final filteredPosts = _filterPosts(posts);
+        return ListView.separated(
+          controller: isScrollable ? scrollController : null,
+          shrinkWrap: !isScrollable,
+          physics: physics,
+          padding: const EdgeInsets.all(8),
+          itemCount: filteredPosts.length,
+          separatorBuilder: (_, _) => const SizedBox(height: 8),
+          itemBuilder: (context, index) => PostCard(post: filteredPosts[index]),
+        );
+      },
       empty: () => const FeedEmptyWidget(),
     );
+  }
+
+  List<Post> _filterPosts(List<Post> posts) {
+    return posts.where((p) => 
+      p.postType != PostType.announcement && 
+      p.postType != PostType.eventSchedule
+    ).toList();
   }
 }

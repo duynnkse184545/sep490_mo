@@ -42,6 +42,14 @@ class UserDao extends DatabaseAccessor<AppDatabase> with _$UserDaoMixin {
               .map((e) => Badge.fromJson(e as Map<String, dynamic>))
               .toList()
           : null,
+      fanHubsJoined: entity.joinedFanHubs != null
+          ? (jsonDecode(entity.joinedFanHubs!) as List)
+              .map((e) => JoinedFanHub.fromJson(e as Map<String, dynamic>))
+              .toList()
+          : null,
+      oshi: entity.oshi != null
+          ? Oshi.fromJson(jsonDecode(entity.oshi!) as Map<String, dynamic>)
+          : null,
     );
   }
 
@@ -71,6 +79,10 @@ class UserDao extends DatabaseAccessor<AppDatabase> with _$UserDaoMixin {
             user.displayBadges != null ? jsonEncode(user.displayBadges) : null),
         allBadges:
             Value(user.allBadges != null ? jsonEncode(user.allBadges) : null),
+        joinedFanHubs: Value(user.fanHubsJoined != null
+            ? jsonEncode(user.fanHubsJoined)
+            : null),
+        oshi: Value(user.oshi != null ? jsonEncode(user.oshi) : null),
         cachedAt: Value(DateTime.now()),
       ),
     );

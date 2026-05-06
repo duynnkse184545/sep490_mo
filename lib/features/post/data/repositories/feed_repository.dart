@@ -15,4 +15,11 @@ abstract class FeedRepository {
     String? postHashtags,
     String? authorUsername,
   });
+
+  TaskResult<List<Post>> getFanHubAnnouncementsEvents({
+    required int fanHubId,
+    int pageNo = 0,
+    int pageSize = 20,
+    String sortBy = 'createdAt',
+  });
 }

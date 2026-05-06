@@ -48,6 +48,7 @@ const _$NotificationTypeEnumMap = {
   NotificationType.memberReport: 'MEMBER_REPORT',
   NotificationType.postReport: 'POST_REPORT',
   NotificationType.postApproved: 'POST_APPROVED',
+  NotificationType.postRejected: 'POST_REJECTED',
   NotificationType.memberBanned: 'MEMBER_BANNED',
   NotificationType.reportPostResolved: 'REPORT_POST_RESOLVED',
   NotificationType.vtuberApplicationApproved: 'VTUBER_APPLICATION_APPROVED',

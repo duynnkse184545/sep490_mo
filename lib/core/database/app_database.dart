@@ -32,6 +32,8 @@ class CurrentUserTbl extends Table {
   IntColumn get totalReceivedGifts => integer()();
   TextColumn get displayBadges => text().nullable()();
   TextColumn get allBadges => text().nullable()();
+  TextColumn get joinedFanHubs => text().nullable()();
+  TextColumn get oshi => text().nullable()();
   DateTimeColumn get cachedAt => dateTime().withDefault(currentDateAndTime)();
 
   @override
@@ -75,7 +77,7 @@ class AppDatabase extends _$AppDatabase {
   AppDatabase() : super(_openConnection());
 
   @override
-  int get schemaVersion => 3;
+  int get schemaVersion => 4;
 
   @override
   MigrationStrategy get migration {
@@ -90,6 +92,11 @@ class AppDatabase extends _$AppDatabase {
         if (from < 3) {
           // We added NotificationTbl in version 3
           await m.createTable(notificationTbl);
+        }
+        if (from < 4) {
+          // Added joinedFanHubs and oshi to CurrentUserTbl
+          await m.addColumn(currentUserTbl, currentUserTbl.joinedFanHubs);
+          await m.addColumn(currentUserTbl, currentUserTbl.oshi);
         }
       },
     );

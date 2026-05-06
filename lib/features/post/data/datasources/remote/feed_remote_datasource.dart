@@ -11,4 +11,11 @@ abstract class FeedRemoteDatasource {
     String? postHashtags,
     String? authorUsername,
   );
+
+  Future<List<Post>> getFanHubAnnouncementsEvents(
+    int fanHubId,
+    int pageNo,
+    int pageSize,
+    String sortBy,
+  );
 }

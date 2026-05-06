@@ -11,6 +11,8 @@ import 'package:sep490_mo/features/store/presentation/controllers/banner_control
 import 'package:sep490_mo/features/store/presentation/states/banner_state.dart';
 import 'package:sep490_mo/features/store/presentation/states/shop_state.dart';
 import 'package:sep490_mo/features/store/presentation/widgets/insufficient_points_modal.dart';
+import 'package:sep490_mo/features/store/presentation/widgets/purchase_modal.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class StoreHomeScreen extends HookConsumerWidget {
   const StoreHomeScreen({super.key});
@@ -38,12 +40,59 @@ class StoreHomeScreen extends HookConsumerWidget {
             ],
           ),
         ),
-        body: const TabBarView(
+        body: Column(
           children: [
-            _ShopView(),
-            _GachaView(),
+            _buildStickyPoints(ref),
+            const Expanded(
+              child: TabBarView(
+                children: [
+                  _ShopView(),
+                  _GachaView(),
+                ],
+              ),
+            ),
           ],
         ),
+      ),
+    );
+  }
+
+  Widget _buildStickyPoints(WidgetRef ref) {
+    final appState = ref.watch(appProvider);
+    final points = appState.maybeWhen(ready: (user) => user.points, orElse: () => 0);
+
+    return Container(
+      width: double.infinity,
+      padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 20),
+      decoration: const BoxDecoration(
+        color: Colors.white,
+        border: Border(bottom: BorderSide(color: Colors.black12)),
+      ),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.end,
+        children: [
+          Container(
+            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 6),
+            decoration: BoxDecoration(
+              color: const Color(0xFFF5F5F5),
+              borderRadius: BorderRadius.circular(24),
+              border: Border.all(color: AppColors.border, width: 1.5),
+            ),
+            child: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                const Icon(Icons.monetization_on, color: Colors.amber, size: 20),
+                const SizedBox(width: 8),
+                Text(
+                  "$points",
+                  style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w900, color: Color(0xFF323232)),
+                ),
+                const SizedBox(width: 4),
+                const Text("PTS", style: TextStyle(fontSize: 10, fontWeight: FontWeight.bold, color: Colors.grey)),
+              ],
+            ),
+          ),
+        ],
       ),
     );
   }
@@ -64,73 +113,140 @@ class _ShopView extends ConsumerWidget {
         onRetry: controller.refresh,
       ),
       data: (shopState) => shopState.when(
-        ready: (items) => RefreshIndicator(
-          onRefresh: controller.refresh,
-          child: ListView.builder(
-            padding: const EdgeInsets.all(16),
-            itemCount: items.length,
-            itemBuilder: (context, index) {
-              final item = items[index];
-              return Container(
-                margin: const EdgeInsets.only(bottom: 16, left: 4, right: 8),
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(12),
-                  border: Border.all(color: AppColors.border, width: 2),
-                  boxShadow: const [
-                    BoxShadow(color: AppColors.border, offset: Offset(6, 6)),
-                  ],
-                ),
-                child: ListTile(
-                  contentPadding: const EdgeInsets.all(16),
-                  title: Text(item.itemName, style: const TextStyle(fontWeight: FontWeight.w900, color: Color(0xFF323232))),
-                  subtitle: Padding(
-                    padding: const EdgeInsets.only(top: 4),
-                    child: Text(item.description ?? item.category, style: const TextStyle(fontSize: 12, color: Colors.grey, fontWeight: FontWeight.bold)),
-                  ),
-                  trailing: _buildPurchaseButton(context, ref, controller, item),
-                ),
-              );
-            },
+        ready: (items) {
+          if (items.isEmpty) return const Center(child: Text('Empty Store'));
+
+          return RefreshIndicator(
+            onRefresh: controller.refresh,
+            child: GridView.builder(
+              padding: const EdgeInsets.all(16),
+              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 2,
+                childAspectRatio: 0.75,
+                crossAxisSpacing: 16,
+                mainAxisSpacing: 16,
+              ),
+              itemCount: items.length,
+              itemBuilder: (context, index) {
+                return _buildShopCard(context, ref, controller, items[index]);
+              },
+            ),
+          );
+        },
+        empty: () => const Center(
+          child: Text(
+            'No items available in the shop.',
+            style: TextStyle(fontWeight: FontWeight.bold),
           ),
         ),
-        empty: () => const Center(child: Text('No items available in the shop.', style: TextStyle(fontWeight: FontWeight.bold))),
       ),
     );
   }
 
-  Widget _buildPurchaseButton(BuildContext context, WidgetRef ref, dynamic controller, ShopItem item) {
-    return InkWell(
-      onTap: () async {
-        final appState = ref.read(appProvider);
-        final userPoints = appState.maybeWhen(ready: (user) => user.points, orElse: () => 0);
-        
-        if (userPoints < item.price) {
-          showDialog(context: context, builder: (_) => const InsufficientPointsModal());
-          return;
-        }
-
-        final success = await controller.purchaseItem(item.itemId);
-        if (context.mounted) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text(success ? 'Purchase successful!' : 'Purchase failed')),
-          );
-        }
-      },
+  // Remove _buildCategorySection helper if no longer used
+  
+  Widget _buildShopCard(BuildContext context, WidgetRef ref, dynamic controller, ShopItem item) {
+    return GestureDetector(
+      onTap: () => _showPurchaseDialog(context, ref, controller, item),
       child: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
         decoration: BoxDecoration(
-          color: Theme.of(context).colorScheme.primary,
-          border: Border.all(color: AppColors.border, width: 1.5),
-          borderRadius: BorderRadius.circular(8),
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(12),
+          border: Border.all(color: AppColors.border, width: 2),
           boxShadow: const [
-            BoxShadow(color: AppColors.border, offset: Offset(3, 3)),
+            BoxShadow(color: AppColors.border, offset: Offset(4, 4)),
           ],
         ),
-        child: Text(
-          '${item.price} PTS',
-          style: const TextStyle(color: Colors.white, fontWeight: FontWeight.w900, fontSize: 12),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Expanded(
+              child: Stack(
+                children: [
+                  Container(
+                    width: double.infinity,
+                    decoration: const BoxDecoration(
+                      color: Color(0xFFF5F5F5),
+                      borderRadius: BorderRadius.vertical(top: Radius.circular(10)),
+                    ),
+                    child: item.imageUrl != null 
+                      ? Image.network(item.imageUrl!, fit: BoxFit.cover)
+                      : const Icon(Icons.inventory_2_outlined, size: 48, color: Colors.grey),
+                  ),
+                  Positioned(
+                    top: 8,
+                    left: 8,
+                    child: Container(
+                      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                      decoration: BoxDecoration(
+                        color: Colors.black.withValues(alpha: 0.7),
+                        borderRadius: BorderRadius.circular(20),
+                      ),
+                      child: Text(
+                        item.category.toUpperCase(),
+                        style: const TextStyle(color: Colors.white, fontSize: 8, fontWeight: FontWeight.bold),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(10.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    item.itemName,
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: const TextStyle(fontWeight: FontWeight.w900, fontSize: 13, color: Color(0xFF323232)),
+                  ),
+                  const SizedBox(height: 4),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Row(
+                        children: [
+                          const Icon(Icons.monetization_on, size: 14, color: Colors.amber),
+                          const SizedBox(width: 4),
+                          Text(
+                            "${item.price}",
+                            style: const TextStyle(fontWeight: FontWeight.w900, fontSize: 14, color: AppColors.primary),
+                          ),
+                        ],
+                      ),
+                      const Icon(Icons.add_shopping_cart, size: 16, color: Colors.grey),
+                    ],
+                  ),
+                ],
+              ),
+            ),
+          ],
         ),
+      ),
+    );
+  }
+
+  void _showPurchaseDialog(BuildContext context, WidgetRef ref, dynamic controller, ShopItem item) {
+    final appState = ref.read(appProvider);
+    final userPoints = appState.maybeWhen(ready: (user) => user.points, orElse: () => 0);
+
+    showDialog(
+      context: context,
+      builder: (context) => PurchaseModal(
+        item: item,
+        userPoints: userPoints,
+        onConfirm: () async {
+          Navigator.pop(context);
+          final success = await controller.purchaseItem(item.itemId);
+          if (context.mounted) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(content: Text(success ? 'Purchase successful!' : 'Purchase failed')),
+            );
+          }
+        },
+        onCancel: () => Navigator.pop(context),
       ),
     );
   }
@@ -156,59 +272,67 @@ class _GachaView extends ConsumerWidget {
           child: SingleChildScrollView(
             physics: const AlwaysScrollableScrollPhysics(),
             padding: const EdgeInsets.all(20),
-            child: Container(
-              padding: const EdgeInsets.all(24),
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(16),
-                border: Border.all(color: AppColors.border, width: 2),
-                boxShadow: const [
-                  BoxShadow(color: AppColors.border, offset: Offset(8, 8)),
-                ],
-              ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  Stack(
-                    children: [
-                      ClipRRect(
-                        borderRadius: BorderRadius.circular(8),
-                        child: banner.bannerImgUrl != null
-                            ? Image.network(banner.bannerImgUrl!, fit: BoxFit.cover, width: double.infinity, height: 200)
-                            : Container(
-                                color: Theme.of(context).colorScheme.primaryContainer,
-                                width: double.infinity,
-                                height: 200,
-                                child: const Icon(Icons.image, size: 64),
-                              ),
-                      ),
-                      Positioned(
-                        top: 8,
-                        right: 8,
-                        child: CircleAvatar(
-                          backgroundColor: Colors.black.withValues(alpha: 0.7),
-                          child: IconButton(
-                            icon: const Icon(Icons.info_outline, color: Colors.white),
-                            onPressed: () => _showItemsDialog(context, items),
-                          ),
-                        ),
-                      ),
+            child: Column(
+              children: [
+                Container(
+                  padding: const EdgeInsets.all(24),
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(16),
+                    border: Border.all(color: AppColors.border, width: 2),
+                    boxShadow: const [
+                      BoxShadow(color: AppColors.border, offset: Offset(8, 8)),
                     ],
                   ),
-                  const SizedBox(height: 20),
-                  Text(
-                    banner.name,
-                    style: const TextStyle(fontSize: 22, fontWeight: FontWeight.w900, color: Color(0xFF323232)),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      Stack(
+                        children: [
+                          ClipRRect(
+                            borderRadius: BorderRadius.circular(8),
+                            child: banner.bannerImgUrl != null
+                                ? Image.network(banner.bannerImgUrl!, fit: BoxFit.cover, width: double.infinity, height: 200)
+                                : Container(
+                                    color: Theme.of(context).colorScheme.primaryContainer,
+                                    width: double.infinity,
+                                    height: 200,
+                                    child: const Icon(Icons.image, size: 64),
+                                  ),
+                          ),
+                          Positioned(
+                            top: 8,
+                            right: 8,
+                            child: CircleAvatar(
+                              backgroundColor: Colors.black.withValues(alpha: 0.7),
+                              child: IconButton(
+                                icon: const Icon(Icons.info_outline, color: Colors.white),
+                                onPressed: () => _showItemsDialog(context, items),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                      const SizedBox(height: 20),
+                      Text(
+                        banner.name.toUpperCase(),
+                        style: GoogleFonts.jersey20(
+                          fontSize: 42,
+                          height: 1.1,
+                          color: AppColors.primary,
+                        ),
+                      ),
+                      const SizedBox(height: 12),
+                      Text(
+                        banner.description ?? 'Try your luck!',
+                        style: const TextStyle(color: Color(0xFF555555), height: 1.4, fontWeight: FontWeight.bold),
+                      ),
+                      const SizedBox(height: 32),
+                      _buildGachaButton(context, ref, controller, banner),
+                    ],
                   ),
-                  const SizedBox(height: 8),
-                  Text(
-                    banner.description ?? 'Try your luck!',
-                    style: const TextStyle(color: Color(0xFF666666), height: 1.4, fontWeight: FontWeight.w500),
-                  ),
-                  const SizedBox(height: 32),
-                  _buildGachaButton(context, ref, controller, banner),
-                ],
-              ),
+                ),
+              ],
             ),
           ),
         ),
@@ -290,7 +414,7 @@ class _GachaView extends ConsumerWidget {
           ),
         ),
         actions: [
-          TextButton(onPressed: () => Navigator.pop(context), child: const Text('CLOSE', style: TextStyle(fontWeight: FontWeight.bold))),
+          TextButton(onPressed: () => Navigator.pop(context), child: const Text('CLOSE', style: TextStyle(fontWeight: FontWeight.bold, color: Colors.grey))),
         ],
       ),
     );

@@ -15,7 +15,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$User {
 
- int get userId; String get username; String get email; String? get displayName; String? get avatarUrl; String? get frameUrl; String get bio; UserRole get role; int get points; int get paidPoints; String? get translateLanguage; DateTime get createdAt; DateTime get updatedAt; bool get isActive; int get totalBadges; int get totalFanHubs; int get totalReceivedGifts; List<Badge>? get displayBadges; List<Badge>? get allBadges;
+ int get userId; String get username; String get email; String? get displayName; String? get avatarUrl; String? get frameUrl; String get bio; UserRole get role; int get points; int get paidPoints; String? get translateLanguage; DateTime get createdAt; DateTime get updatedAt; bool get isActive; int get totalBadges; int get totalFanHubs; int get totalReceivedGifts; List<Badge>? get displayBadges; List<Badge>? get allBadges; List<JoinedFanHub>? get fanHubsJoined; Oshi? get oshi;
 /// Create a copy of User
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -28,16 +28,16 @@ $UserCopyWith<User> get copyWith => _$UserCopyWithImpl<User>(this as User, _$ide
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is User&&(identical(other.userId, userId) || other.userId == userId)&&(identical(other.username, username) || other.username == username)&&(identical(other.email, email) || other.email == email)&&(identical(other.displayName, displayName) || other.displayName == displayName)&&(identical(other.avatarUrl, avatarUrl) || other.avatarUrl == avatarUrl)&&(identical(other.frameUrl, frameUrl) || other.frameUrl == frameUrl)&&(identical(other.bio, bio) || other.bio == bio)&&(identical(other.role, role) || other.role == role)&&(identical(other.points, points) || other.points == points)&&(identical(other.paidPoints, paidPoints) || other.paidPoints == paidPoints)&&(identical(other.translateLanguage, translateLanguage) || other.translateLanguage == translateLanguage)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt)&&(identical(other.updatedAt, updatedAt) || other.updatedAt == updatedAt)&&(identical(other.isActive, isActive) || other.isActive == isActive)&&(identical(other.totalBadges, totalBadges) || other.totalBadges == totalBadges)&&(identical(other.totalFanHubs, totalFanHubs) || other.totalFanHubs == totalFanHubs)&&(identical(other.totalReceivedGifts, totalReceivedGifts) || other.totalReceivedGifts == totalReceivedGifts)&&const DeepCollectionEquality().equals(other.displayBadges, displayBadges)&&const DeepCollectionEquality().equals(other.allBadges, allBadges));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is User&&(identical(other.userId, userId) || other.userId == userId)&&(identical(other.username, username) || other.username == username)&&(identical(other.email, email) || other.email == email)&&(identical(other.displayName, displayName) || other.displayName == displayName)&&(identical(other.avatarUrl, avatarUrl) || other.avatarUrl == avatarUrl)&&(identical(other.frameUrl, frameUrl) || other.frameUrl == frameUrl)&&(identical(other.bio, bio) || other.bio == bio)&&(identical(other.role, role) || other.role == role)&&(identical(other.points, points) || other.points == points)&&(identical(other.paidPoints, paidPoints) || other.paidPoints == paidPoints)&&(identical(other.translateLanguage, translateLanguage) || other.translateLanguage == translateLanguage)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt)&&(identical(other.updatedAt, updatedAt) || other.updatedAt == updatedAt)&&(identical(other.isActive, isActive) || other.isActive == isActive)&&(identical(other.totalBadges, totalBadges) || other.totalBadges == totalBadges)&&(identical(other.totalFanHubs, totalFanHubs) || other.totalFanHubs == totalFanHubs)&&(identical(other.totalReceivedGifts, totalReceivedGifts) || other.totalReceivedGifts == totalReceivedGifts)&&const DeepCollectionEquality().equals(other.displayBadges, displayBadges)&&const DeepCollectionEquality().equals(other.allBadges, allBadges)&&const DeepCollectionEquality().equals(other.fanHubsJoined, fanHubsJoined)&&(identical(other.oshi, oshi) || other.oshi == oshi));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hashAll([runtimeType,userId,username,email,displayName,avatarUrl,frameUrl,bio,role,points,paidPoints,translateLanguage,createdAt,updatedAt,isActive,totalBadges,totalFanHubs,totalReceivedGifts,const DeepCollectionEquality().hash(displayBadges),const DeepCollectionEquality().hash(allBadges)]);
+int get hashCode => Object.hashAll([runtimeType,userId,username,email,displayName,avatarUrl,frameUrl,bio,role,points,paidPoints,translateLanguage,createdAt,updatedAt,isActive,totalBadges,totalFanHubs,totalReceivedGifts,const DeepCollectionEquality().hash(displayBadges),const DeepCollectionEquality().hash(allBadges),const DeepCollectionEquality().hash(fanHubsJoined),oshi]);
 
 @override
 String toString() {
-  return 'User(userId: $userId, username: $username, email: $email, displayName: $displayName, avatarUrl: $avatarUrl, frameUrl: $frameUrl, bio: $bio, role: $role, points: $points, paidPoints: $paidPoints, translateLanguage: $translateLanguage, createdAt: $createdAt, updatedAt: $updatedAt, isActive: $isActive, totalBadges: $totalBadges, totalFanHubs: $totalFanHubs, totalReceivedGifts: $totalReceivedGifts, displayBadges: $displayBadges, allBadges: $allBadges)';
+  return 'User(userId: $userId, username: $username, email: $email, displayName: $displayName, avatarUrl: $avatarUrl, frameUrl: $frameUrl, bio: $bio, role: $role, points: $points, paidPoints: $paidPoints, translateLanguage: $translateLanguage, createdAt: $createdAt, updatedAt: $updatedAt, isActive: $isActive, totalBadges: $totalBadges, totalFanHubs: $totalFanHubs, totalReceivedGifts: $totalReceivedGifts, displayBadges: $displayBadges, allBadges: $allBadges, fanHubsJoined: $fanHubsJoined, oshi: $oshi)';
 }
 
 
@@ -48,11 +48,11 @@ abstract mixin class $UserCopyWith<$Res>  {
   factory $UserCopyWith(User value, $Res Function(User) _then) = _$UserCopyWithImpl;
 @useResult
 $Res call({
- int userId, String username, String email, String? displayName, String? avatarUrl, String? frameUrl, String bio, UserRole role, int points, int paidPoints, String? translateLanguage, DateTime createdAt, DateTime updatedAt, bool isActive, int totalBadges, int totalFanHubs, int totalReceivedGifts, List<Badge>? displayBadges, List<Badge>? allBadges
+ int userId, String username, String email, String? displayName, String? avatarUrl, String? frameUrl, String bio, UserRole role, int points, int paidPoints, String? translateLanguage, DateTime createdAt, DateTime updatedAt, bool isActive, int totalBadges, int totalFanHubs, int totalReceivedGifts, List<Badge>? displayBadges, List<Badge>? allBadges, List<JoinedFanHub>? fanHubsJoined, Oshi? oshi
 });
 
 
-
+$OshiCopyWith<$Res>? get oshi;
 
 }
 /// @nodoc
@@ -65,7 +65,7 @@ class _$UserCopyWithImpl<$Res>
 
 /// Create a copy of User
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? userId = null,Object? username = null,Object? email = null,Object? displayName = freezed,Object? avatarUrl = freezed,Object? frameUrl = freezed,Object? bio = null,Object? role = null,Object? points = null,Object? paidPoints = null,Object? translateLanguage = freezed,Object? createdAt = null,Object? updatedAt = null,Object? isActive = null,Object? totalBadges = null,Object? totalFanHubs = null,Object? totalReceivedGifts = null,Object? displayBadges = freezed,Object? allBadges = freezed,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? userId = null,Object? username = null,Object? email = null,Object? displayName = freezed,Object? avatarUrl = freezed,Object? frameUrl = freezed,Object? bio = null,Object? role = null,Object? points = null,Object? paidPoints = null,Object? translateLanguage = freezed,Object? createdAt = null,Object? updatedAt = null,Object? isActive = null,Object? totalBadges = null,Object? totalFanHubs = null,Object? totalReceivedGifts = null,Object? displayBadges = freezed,Object? allBadges = freezed,Object? fanHubsJoined = freezed,Object? oshi = freezed,}) {
   return _then(_self.copyWith(
 userId: null == userId ? _self.userId : userId // ignore: cast_nullable_to_non_nullable
 as int,username: null == username ? _self.username : username // ignore: cast_nullable_to_non_nullable
@@ -86,10 +86,24 @@ as int,totalFanHubs: null == totalFanHubs ? _self.totalFanHubs : totalFanHubs //
 as int,totalReceivedGifts: null == totalReceivedGifts ? _self.totalReceivedGifts : totalReceivedGifts // ignore: cast_nullable_to_non_nullable
 as int,displayBadges: freezed == displayBadges ? _self.displayBadges : displayBadges // ignore: cast_nullable_to_non_nullable
 as List<Badge>?,allBadges: freezed == allBadges ? _self.allBadges : allBadges // ignore: cast_nullable_to_non_nullable
-as List<Badge>?,
+as List<Badge>?,fanHubsJoined: freezed == fanHubsJoined ? _self.fanHubsJoined : fanHubsJoined // ignore: cast_nullable_to_non_nullable
+as List<JoinedFanHub>?,oshi: freezed == oshi ? _self.oshi : oshi // ignore: cast_nullable_to_non_nullable
+as Oshi?,
   ));
 }
+/// Create a copy of User
+/// with the given fields replaced by the non-null parameter values.
+@override
+@pragma('vm:prefer-inline')
+$OshiCopyWith<$Res>? get oshi {
+    if (_self.oshi == null) {
+    return null;
+  }
 
+  return $OshiCopyWith<$Res>(_self.oshi!, (value) {
+    return _then(_self.copyWith(oshi: value));
+  });
+}
 }
 
 
@@ -171,10 +185,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( int userId,  String username,  String email,  String? displayName,  String? avatarUrl,  String? frameUrl,  String bio,  UserRole role,  int points,  int paidPoints,  String? translateLanguage,  DateTime createdAt,  DateTime updatedAt,  bool isActive,  int totalBadges,  int totalFanHubs,  int totalReceivedGifts,  List<Badge>? displayBadges,  List<Badge>? allBadges)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( int userId,  String username,  String email,  String? displayName,  String? avatarUrl,  String? frameUrl,  String bio,  UserRole role,  int points,  int paidPoints,  String? translateLanguage,  DateTime createdAt,  DateTime updatedAt,  bool isActive,  int totalBadges,  int totalFanHubs,  int totalReceivedGifts,  List<Badge>? displayBadges,  List<Badge>? allBadges,  List<JoinedFanHub>? fanHubsJoined,  Oshi? oshi)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _User() when $default != null:
-return $default(_that.userId,_that.username,_that.email,_that.displayName,_that.avatarUrl,_that.frameUrl,_that.bio,_that.role,_that.points,_that.paidPoints,_that.translateLanguage,_that.createdAt,_that.updatedAt,_that.isActive,_that.totalBadges,_that.totalFanHubs,_that.totalReceivedGifts,_that.displayBadges,_that.allBadges);case _:
+return $default(_that.userId,_that.username,_that.email,_that.displayName,_that.avatarUrl,_that.frameUrl,_that.bio,_that.role,_that.points,_that.paidPoints,_that.translateLanguage,_that.createdAt,_that.updatedAt,_that.isActive,_that.totalBadges,_that.totalFanHubs,_that.totalReceivedGifts,_that.displayBadges,_that.allBadges,_that.fanHubsJoined,_that.oshi);case _:
   return orElse();
 
 }
@@ -192,10 +206,10 @@ return $default(_that.userId,_that.username,_that.email,_that.displayName,_that.
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( int userId,  String username,  String email,  String? displayName,  String? avatarUrl,  String? frameUrl,  String bio,  UserRole role,  int points,  int paidPoints,  String? translateLanguage,  DateTime createdAt,  DateTime updatedAt,  bool isActive,  int totalBadges,  int totalFanHubs,  int totalReceivedGifts,  List<Badge>? displayBadges,  List<Badge>? allBadges)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( int userId,  String username,  String email,  String? displayName,  String? avatarUrl,  String? frameUrl,  String bio,  UserRole role,  int points,  int paidPoints,  String? translateLanguage,  DateTime createdAt,  DateTime updatedAt,  bool isActive,  int totalBadges,  int totalFanHubs,  int totalReceivedGifts,  List<Badge>? displayBadges,  List<Badge>? allBadges,  List<JoinedFanHub>? fanHubsJoined,  Oshi? oshi)  $default,) {final _that = this;
 switch (_that) {
 case _User():
-return $default(_that.userId,_that.username,_that.email,_that.displayName,_that.avatarUrl,_that.frameUrl,_that.bio,_that.role,_that.points,_that.paidPoints,_that.translateLanguage,_that.createdAt,_that.updatedAt,_that.isActive,_that.totalBadges,_that.totalFanHubs,_that.totalReceivedGifts,_that.displayBadges,_that.allBadges);case _:
+return $default(_that.userId,_that.username,_that.email,_that.displayName,_that.avatarUrl,_that.frameUrl,_that.bio,_that.role,_that.points,_that.paidPoints,_that.translateLanguage,_that.createdAt,_that.updatedAt,_that.isActive,_that.totalBadges,_that.totalFanHubs,_that.totalReceivedGifts,_that.displayBadges,_that.allBadges,_that.fanHubsJoined,_that.oshi);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -212,10 +226,10 @@ return $default(_that.userId,_that.username,_that.email,_that.displayName,_that.
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( int userId,  String username,  String email,  String? displayName,  String? avatarUrl,  String? frameUrl,  String bio,  UserRole role,  int points,  int paidPoints,  String? translateLanguage,  DateTime createdAt,  DateTime updatedAt,  bool isActive,  int totalBadges,  int totalFanHubs,  int totalReceivedGifts,  List<Badge>? displayBadges,  List<Badge>? allBadges)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( int userId,  String username,  String email,  String? displayName,  String? avatarUrl,  String? frameUrl,  String bio,  UserRole role,  int points,  int paidPoints,  String? translateLanguage,  DateTime createdAt,  DateTime updatedAt,  bool isActive,  int totalBadges,  int totalFanHubs,  int totalReceivedGifts,  List<Badge>? displayBadges,  List<Badge>? allBadges,  List<JoinedFanHub>? fanHubsJoined,  Oshi? oshi)?  $default,) {final _that = this;
 switch (_that) {
 case _User() when $default != null:
-return $default(_that.userId,_that.username,_that.email,_that.displayName,_that.avatarUrl,_that.frameUrl,_that.bio,_that.role,_that.points,_that.paidPoints,_that.translateLanguage,_that.createdAt,_that.updatedAt,_that.isActive,_that.totalBadges,_that.totalFanHubs,_that.totalReceivedGifts,_that.displayBadges,_that.allBadges);case _:
+return $default(_that.userId,_that.username,_that.email,_that.displayName,_that.avatarUrl,_that.frameUrl,_that.bio,_that.role,_that.points,_that.paidPoints,_that.translateLanguage,_that.createdAt,_that.updatedAt,_that.isActive,_that.totalBadges,_that.totalFanHubs,_that.totalReceivedGifts,_that.displayBadges,_that.allBadges,_that.fanHubsJoined,_that.oshi);case _:
   return null;
 
 }
@@ -227,7 +241,7 @@ return $default(_that.userId,_that.username,_that.email,_that.displayName,_that.
 @JsonSerializable()
 
 class _User implements User {
-  const _User({required this.userId, required this.username, required this.email, this.displayName, this.avatarUrl, this.frameUrl, required this.bio, required this.role, required this.points, required this.paidPoints, this.translateLanguage, required this.createdAt, required this.updatedAt, required this.isActive, required this.totalBadges, required this.totalFanHubs, required this.totalReceivedGifts, final  List<Badge>? displayBadges, final  List<Badge>? allBadges}): _displayBadges = displayBadges,_allBadges = allBadges;
+  const _User({required this.userId, required this.username, required this.email, this.displayName, this.avatarUrl, this.frameUrl, required this.bio, required this.role, required this.points, required this.paidPoints, this.translateLanguage, required this.createdAt, required this.updatedAt, required this.isActive, required this.totalBadges, required this.totalFanHubs, required this.totalReceivedGifts, final  List<Badge>? displayBadges, final  List<Badge>? allBadges, final  List<JoinedFanHub>? fanHubsJoined, this.oshi}): _displayBadges = displayBadges,_allBadges = allBadges,_fanHubsJoined = fanHubsJoined;
   factory _User.fromJson(Map<String, dynamic> json) => _$UserFromJson(json);
 
 @override final  int userId;
@@ -265,6 +279,16 @@ class _User implements User {
   return EqualUnmodifiableListView(value);
 }
 
+ final  List<JoinedFanHub>? _fanHubsJoined;
+@override List<JoinedFanHub>? get fanHubsJoined {
+  final value = _fanHubsJoined;
+  if (value == null) return null;
+  if (_fanHubsJoined is EqualUnmodifiableListView) return _fanHubsJoined;
+  // ignore: implicit_dynamic_type
+  return EqualUnmodifiableListView(value);
+}
+
+@override final  Oshi? oshi;
 
 /// Create a copy of User
 /// with the given fields replaced by the non-null parameter values.
@@ -279,16 +303,16 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _User&&(identical(other.userId, userId) || other.userId == userId)&&(identical(other.username, username) || other.username == username)&&(identical(other.email, email) || other.email == email)&&(identical(other.displayName, displayName) || other.displayName == displayName)&&(identical(other.avatarUrl, avatarUrl) || other.avatarUrl == avatarUrl)&&(identical(other.frameUrl, frameUrl) || other.frameUrl == frameUrl)&&(identical(other.bio, bio) || other.bio == bio)&&(identical(other.role, role) || other.role == role)&&(identical(other.points, points) || other.points == points)&&(identical(other.paidPoints, paidPoints) || other.paidPoints == paidPoints)&&(identical(other.translateLanguage, translateLanguage) || other.translateLanguage == translateLanguage)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt)&&(identical(other.updatedAt, updatedAt) || other.updatedAt == updatedAt)&&(identical(other.isActive, isActive) || other.isActive == isActive)&&(identical(other.totalBadges, totalBadges) || other.totalBadges == totalBadges)&&(identical(other.totalFanHubs, totalFanHubs) || other.totalFanHubs == totalFanHubs)&&(identical(other.totalReceivedGifts, totalReceivedGifts) || other.totalReceivedGifts == totalReceivedGifts)&&const DeepCollectionEquality().equals(other._displayBadges, _displayBadges)&&const DeepCollectionEquality().equals(other._allBadges, _allBadges));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _User&&(identical(other.userId, userId) || other.userId == userId)&&(identical(other.username, username) || other.username == username)&&(identical(other.email, email) || other.email == email)&&(identical(other.displayName, displayName) || other.displayName == displayName)&&(identical(other.avatarUrl, avatarUrl) || other.avatarUrl == avatarUrl)&&(identical(other.frameUrl, frameUrl) || other.frameUrl == frameUrl)&&(identical(other.bio, bio) || other.bio == bio)&&(identical(other.role, role) || other.role == role)&&(identical(other.points, points) || other.points == points)&&(identical(other.paidPoints, paidPoints) || other.paidPoints == paidPoints)&&(identical(other.translateLanguage, translateLanguage) || other.translateLanguage == translateLanguage)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt)&&(identical(other.updatedAt, updatedAt) || other.updatedAt == updatedAt)&&(identical(other.isActive, isActive) || other.isActive == isActive)&&(identical(other.totalBadges, totalBadges) || other.totalBadges == totalBadges)&&(identical(other.totalFanHubs, totalFanHubs) || other.totalFanHubs == totalFanHubs)&&(identical(other.totalReceivedGifts, totalReceivedGifts) || other.totalReceivedGifts == totalReceivedGifts)&&const DeepCollectionEquality().equals(other._displayBadges, _displayBadges)&&const DeepCollectionEquality().equals(other._allBadges, _allBadges)&&const DeepCollectionEquality().equals(other._fanHubsJoined, _fanHubsJoined)&&(identical(other.oshi, oshi) || other.oshi == oshi));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hashAll([runtimeType,userId,username,email,displayName,avatarUrl,frameUrl,bio,role,points,paidPoints,translateLanguage,createdAt,updatedAt,isActive,totalBadges,totalFanHubs,totalReceivedGifts,const DeepCollectionEquality().hash(_displayBadges),const DeepCollectionEquality().hash(_allBadges)]);
+int get hashCode => Object.hashAll([runtimeType,userId,username,email,displayName,avatarUrl,frameUrl,bio,role,points,paidPoints,translateLanguage,createdAt,updatedAt,isActive,totalBadges,totalFanHubs,totalReceivedGifts,const DeepCollectionEquality().hash(_displayBadges),const DeepCollectionEquality().hash(_allBadges),const DeepCollectionEquality().hash(_fanHubsJoined),oshi]);
 
 @override
 String toString() {
-  return 'User(userId: $userId, username: $username, email: $email, displayName: $displayName, avatarUrl: $avatarUrl, frameUrl: $frameUrl, bio: $bio, role: $role, points: $points, paidPoints: $paidPoints, translateLanguage: $translateLanguage, createdAt: $createdAt, updatedAt: $updatedAt, isActive: $isActive, totalBadges: $totalBadges, totalFanHubs: $totalFanHubs, totalReceivedGifts: $totalReceivedGifts, displayBadges: $displayBadges, allBadges: $allBadges)';
+  return 'User(userId: $userId, username: $username, email: $email, displayName: $displayName, avatarUrl: $avatarUrl, frameUrl: $frameUrl, bio: $bio, role: $role, points: $points, paidPoints: $paidPoints, translateLanguage: $translateLanguage, createdAt: $createdAt, updatedAt: $updatedAt, isActive: $isActive, totalBadges: $totalBadges, totalFanHubs: $totalFanHubs, totalReceivedGifts: $totalReceivedGifts, displayBadges: $displayBadges, allBadges: $allBadges, fanHubsJoined: $fanHubsJoined, oshi: $oshi)';
 }
 
 
@@ -299,11 +323,11 @@ abstract mixin class _$UserCopyWith<$Res> implements $UserCopyWith<$Res> {
   factory _$UserCopyWith(_User value, $Res Function(_User) _then) = __$UserCopyWithImpl;
 @override @useResult
 $Res call({
- int userId, String username, String email, String? displayName, String? avatarUrl, String? frameUrl, String bio, UserRole role, int points, int paidPoints, String? translateLanguage, DateTime createdAt, DateTime updatedAt, bool isActive, int totalBadges, int totalFanHubs, int totalReceivedGifts, List<Badge>? displayBadges, List<Badge>? allBadges
+ int userId, String username, String email, String? displayName, String? avatarUrl, String? frameUrl, String bio, UserRole role, int points, int paidPoints, String? translateLanguage, DateTime createdAt, DateTime updatedAt, bool isActive, int totalBadges, int totalFanHubs, int totalReceivedGifts, List<Badge>? displayBadges, List<Badge>? allBadges, List<JoinedFanHub>? fanHubsJoined, Oshi? oshi
 });
 
 
-
+@override $OshiCopyWith<$Res>? get oshi;
 
 }
 /// @nodoc
@@ -316,7 +340,7 @@ class __$UserCopyWithImpl<$Res>
 
 /// Create a copy of User
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? userId = null,Object? username = null,Object? email = null,Object? displayName = freezed,Object? avatarUrl = freezed,Object? frameUrl = freezed,Object? bio = null,Object? role = null,Object? points = null,Object? paidPoints = null,Object? translateLanguage = freezed,Object? createdAt = null,Object? updatedAt = null,Object? isActive = null,Object? totalBadges = null,Object? totalFanHubs = null,Object? totalReceivedGifts = null,Object? displayBadges = freezed,Object? allBadges = freezed,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? userId = null,Object? username = null,Object? email = null,Object? displayName = freezed,Object? avatarUrl = freezed,Object? frameUrl = freezed,Object? bio = null,Object? role = null,Object? points = null,Object? paidPoints = null,Object? translateLanguage = freezed,Object? createdAt = null,Object? updatedAt = null,Object? isActive = null,Object? totalBadges = null,Object? totalFanHubs = null,Object? totalReceivedGifts = null,Object? displayBadges = freezed,Object? allBadges = freezed,Object? fanHubsJoined = freezed,Object? oshi = freezed,}) {
   return _then(_User(
 userId: null == userId ? _self.userId : userId // ignore: cast_nullable_to_non_nullable
 as int,username: null == username ? _self.username : username // ignore: cast_nullable_to_non_nullable
@@ -337,11 +361,25 @@ as int,totalFanHubs: null == totalFanHubs ? _self.totalFanHubs : totalFanHubs //
 as int,totalReceivedGifts: null == totalReceivedGifts ? _self.totalReceivedGifts : totalReceivedGifts // ignore: cast_nullable_to_non_nullable
 as int,displayBadges: freezed == displayBadges ? _self._displayBadges : displayBadges // ignore: cast_nullable_to_non_nullable
 as List<Badge>?,allBadges: freezed == allBadges ? _self._allBadges : allBadges // ignore: cast_nullable_to_non_nullable
-as List<Badge>?,
+as List<Badge>?,fanHubsJoined: freezed == fanHubsJoined ? _self._fanHubsJoined : fanHubsJoined // ignore: cast_nullable_to_non_nullable
+as List<JoinedFanHub>?,oshi: freezed == oshi ? _self.oshi : oshi // ignore: cast_nullable_to_non_nullable
+as Oshi?,
   ));
 }
 
+/// Create a copy of User
+/// with the given fields replaced by the non-null parameter values.
+@override
+@pragma('vm:prefer-inline')
+$OshiCopyWith<$Res>? get oshi {
+    if (_self.oshi == null) {
+    return null;
+  }
 
+  return $OshiCopyWith<$Res>(_self.oshi!, (value) {
+    return _then(_self.copyWith(oshi: value));
+  });
+}
 }
 
 
@@ -1725,6 +1763,559 @@ likeAmount: null == likeAmount ? _self.likeAmount : likeAmount // ignore: cast_n
 as int,bonus10: null == bonus10 ? _self.bonus10 : bonus10 // ignore: cast_nullable_to_non_nullable
 as bool,bonus20: null == bonus20 ? _self.bonus20 : bonus20 // ignore: cast_nullable_to_non_nullable
 as bool,
+  ));
+}
+
+
+}
+
+
+/// @nodoc
+mixin _$Oshi {
+
+ int get userId; String get username; String get email; String? get displayName; String? get avatarUrl; String? get frameUrl;
+/// Create a copy of Oshi
+/// with the given fields replaced by the non-null parameter values.
+@JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+$OshiCopyWith<Oshi> get copyWith => _$OshiCopyWithImpl<Oshi>(this as Oshi, _$identity);
+
+  /// Serializes this Oshi to a JSON map.
+  Map<String, dynamic> toJson();
+
+
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is Oshi&&(identical(other.userId, userId) || other.userId == userId)&&(identical(other.username, username) || other.username == username)&&(identical(other.email, email) || other.email == email)&&(identical(other.displayName, displayName) || other.displayName == displayName)&&(identical(other.avatarUrl, avatarUrl) || other.avatarUrl == avatarUrl)&&(identical(other.frameUrl, frameUrl) || other.frameUrl == frameUrl));
+}
+
+@JsonKey(includeFromJson: false, includeToJson: false)
+@override
+int get hashCode => Object.hash(runtimeType,userId,username,email,displayName,avatarUrl,frameUrl);
+
+@override
+String toString() {
+  return 'Oshi(userId: $userId, username: $username, email: $email, displayName: $displayName, avatarUrl: $avatarUrl, frameUrl: $frameUrl)';
+}
+
+
+}
+
+/// @nodoc
+abstract mixin class $OshiCopyWith<$Res>  {
+  factory $OshiCopyWith(Oshi value, $Res Function(Oshi) _then) = _$OshiCopyWithImpl;
+@useResult
+$Res call({
+ int userId, String username, String email, String? displayName, String? avatarUrl, String? frameUrl
+});
+
+
+
+
+}
+/// @nodoc
+class _$OshiCopyWithImpl<$Res>
+    implements $OshiCopyWith<$Res> {
+  _$OshiCopyWithImpl(this._self, this._then);
+
+  final Oshi _self;
+  final $Res Function(Oshi) _then;
+
+/// Create a copy of Oshi
+/// with the given fields replaced by the non-null parameter values.
+@pragma('vm:prefer-inline') @override $Res call({Object? userId = null,Object? username = null,Object? email = null,Object? displayName = freezed,Object? avatarUrl = freezed,Object? frameUrl = freezed,}) {
+  return _then(_self.copyWith(
+userId: null == userId ? _self.userId : userId // ignore: cast_nullable_to_non_nullable
+as int,username: null == username ? _self.username : username // ignore: cast_nullable_to_non_nullable
+as String,email: null == email ? _self.email : email // ignore: cast_nullable_to_non_nullable
+as String,displayName: freezed == displayName ? _self.displayName : displayName // ignore: cast_nullable_to_non_nullable
+as String?,avatarUrl: freezed == avatarUrl ? _self.avatarUrl : avatarUrl // ignore: cast_nullable_to_non_nullable
+as String?,frameUrl: freezed == frameUrl ? _self.frameUrl : frameUrl // ignore: cast_nullable_to_non_nullable
+as String?,
+  ));
+}
+
+}
+
+
+/// Adds pattern-matching-related methods to [Oshi].
+extension OshiPatterns on Oshi {
+/// A variant of `map` that fallback to returning `orElse`.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case _:
+///     return orElse();
+/// }
+/// ```
+
+@optionalTypeArgs TResult maybeMap<TResult extends Object?>(TResult Function( _Oshi value)?  $default,{required TResult orElse(),}){
+final _that = this;
+switch (_that) {
+case _Oshi() when $default != null:
+return $default(_that);case _:
+  return orElse();
+
+}
+}
+/// A `switch`-like method, using callbacks.
+///
+/// Callbacks receives the raw object, upcasted.
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case final Subclass2 value:
+///     return ...;
+/// }
+/// ```
+
+@optionalTypeArgs TResult map<TResult extends Object?>(TResult Function( _Oshi value)  $default,){
+final _that = this;
+switch (_that) {
+case _Oshi():
+return $default(_that);case _:
+  throw StateError('Unexpected subclass');
+
+}
+}
+/// A variant of `map` that fallback to returning `null`.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case _:
+///     return null;
+/// }
+/// ```
+
+@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>(TResult? Function( _Oshi value)?  $default,){
+final _that = this;
+switch (_that) {
+case _Oshi() when $default != null:
+return $default(_that);case _:
+  return null;
+
+}
+}
+/// A variant of `when` that fallback to an `orElse` callback.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case _:
+///     return orElse();
+/// }
+/// ```
+
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( int userId,  String username,  String email,  String? displayName,  String? avatarUrl,  String? frameUrl)?  $default,{required TResult orElse(),}) {final _that = this;
+switch (_that) {
+case _Oshi() when $default != null:
+return $default(_that.userId,_that.username,_that.email,_that.displayName,_that.avatarUrl,_that.frameUrl);case _:
+  return orElse();
+
+}
+}
+/// A `switch`-like method, using callbacks.
+///
+/// As opposed to `map`, this offers destructuring.
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case Subclass2(:final field2):
+///     return ...;
+/// }
+/// ```
+
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( int userId,  String username,  String email,  String? displayName,  String? avatarUrl,  String? frameUrl)  $default,) {final _that = this;
+switch (_that) {
+case _Oshi():
+return $default(_that.userId,_that.username,_that.email,_that.displayName,_that.avatarUrl,_that.frameUrl);case _:
+  throw StateError('Unexpected subclass');
+
+}
+}
+/// A variant of `when` that fallback to returning `null`
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case _:
+///     return null;
+/// }
+/// ```
+
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( int userId,  String username,  String email,  String? displayName,  String? avatarUrl,  String? frameUrl)?  $default,) {final _that = this;
+switch (_that) {
+case _Oshi() when $default != null:
+return $default(_that.userId,_that.username,_that.email,_that.displayName,_that.avatarUrl,_that.frameUrl);case _:
+  return null;
+
+}
+}
+
+}
+
+/// @nodoc
+@JsonSerializable()
+
+class _Oshi implements Oshi {
+  const _Oshi({required this.userId, required this.username, required this.email, this.displayName, this.avatarUrl, this.frameUrl});
+  factory _Oshi.fromJson(Map<String, dynamic> json) => _$OshiFromJson(json);
+
+@override final  int userId;
+@override final  String username;
+@override final  String email;
+@override final  String? displayName;
+@override final  String? avatarUrl;
+@override final  String? frameUrl;
+
+/// Create a copy of Oshi
+/// with the given fields replaced by the non-null parameter values.
+@override @JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+_$OshiCopyWith<_Oshi> get copyWith => __$OshiCopyWithImpl<_Oshi>(this, _$identity);
+
+@override
+Map<String, dynamic> toJson() {
+  return _$OshiToJson(this, );
+}
+
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _Oshi&&(identical(other.userId, userId) || other.userId == userId)&&(identical(other.username, username) || other.username == username)&&(identical(other.email, email) || other.email == email)&&(identical(other.displayName, displayName) || other.displayName == displayName)&&(identical(other.avatarUrl, avatarUrl) || other.avatarUrl == avatarUrl)&&(identical(other.frameUrl, frameUrl) || other.frameUrl == frameUrl));
+}
+
+@JsonKey(includeFromJson: false, includeToJson: false)
+@override
+int get hashCode => Object.hash(runtimeType,userId,username,email,displayName,avatarUrl,frameUrl);
+
+@override
+String toString() {
+  return 'Oshi(userId: $userId, username: $username, email: $email, displayName: $displayName, avatarUrl: $avatarUrl, frameUrl: $frameUrl)';
+}
+
+
+}
+
+/// @nodoc
+abstract mixin class _$OshiCopyWith<$Res> implements $OshiCopyWith<$Res> {
+  factory _$OshiCopyWith(_Oshi value, $Res Function(_Oshi) _then) = __$OshiCopyWithImpl;
+@override @useResult
+$Res call({
+ int userId, String username, String email, String? displayName, String? avatarUrl, String? frameUrl
+});
+
+
+
+
+}
+/// @nodoc
+class __$OshiCopyWithImpl<$Res>
+    implements _$OshiCopyWith<$Res> {
+  __$OshiCopyWithImpl(this._self, this._then);
+
+  final _Oshi _self;
+  final $Res Function(_Oshi) _then;
+
+/// Create a copy of Oshi
+/// with the given fields replaced by the non-null parameter values.
+@override @pragma('vm:prefer-inline') $Res call({Object? userId = null,Object? username = null,Object? email = null,Object? displayName = freezed,Object? avatarUrl = freezed,Object? frameUrl = freezed,}) {
+  return _then(_Oshi(
+userId: null == userId ? _self.userId : userId // ignore: cast_nullable_to_non_nullable
+as int,username: null == username ? _self.username : username // ignore: cast_nullable_to_non_nullable
+as String,email: null == email ? _self.email : email // ignore: cast_nullable_to_non_nullable
+as String,displayName: freezed == displayName ? _self.displayName : displayName // ignore: cast_nullable_to_non_nullable
+as String?,avatarUrl: freezed == avatarUrl ? _self.avatarUrl : avatarUrl // ignore: cast_nullable_to_non_nullable
+as String?,frameUrl: freezed == frameUrl ? _self.frameUrl : frameUrl // ignore: cast_nullable_to_non_nullable
+as String?,
+  ));
+}
+
+
+}
+
+
+/// @nodoc
+mixin _$JoinedFanHub {
+
+ int get fanHubId; String get hubName; String get subdomain; String? get themeColor; String? get avatarUrl;
+/// Create a copy of JoinedFanHub
+/// with the given fields replaced by the non-null parameter values.
+@JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+$JoinedFanHubCopyWith<JoinedFanHub> get copyWith => _$JoinedFanHubCopyWithImpl<JoinedFanHub>(this as JoinedFanHub, _$identity);
+
+  /// Serializes this JoinedFanHub to a JSON map.
+  Map<String, dynamic> toJson();
+
+
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is JoinedFanHub&&(identical(other.fanHubId, fanHubId) || other.fanHubId == fanHubId)&&(identical(other.hubName, hubName) || other.hubName == hubName)&&(identical(other.subdomain, subdomain) || other.subdomain == subdomain)&&(identical(other.themeColor, themeColor) || other.themeColor == themeColor)&&(identical(other.avatarUrl, avatarUrl) || other.avatarUrl == avatarUrl));
+}
+
+@JsonKey(includeFromJson: false, includeToJson: false)
+@override
+int get hashCode => Object.hash(runtimeType,fanHubId,hubName,subdomain,themeColor,avatarUrl);
+
+@override
+String toString() {
+  return 'JoinedFanHub(fanHubId: $fanHubId, hubName: $hubName, subdomain: $subdomain, themeColor: $themeColor, avatarUrl: $avatarUrl)';
+}
+
+
+}
+
+/// @nodoc
+abstract mixin class $JoinedFanHubCopyWith<$Res>  {
+  factory $JoinedFanHubCopyWith(JoinedFanHub value, $Res Function(JoinedFanHub) _then) = _$JoinedFanHubCopyWithImpl;
+@useResult
+$Res call({
+ int fanHubId, String hubName, String subdomain, String? themeColor, String? avatarUrl
+});
+
+
+
+
+}
+/// @nodoc
+class _$JoinedFanHubCopyWithImpl<$Res>
+    implements $JoinedFanHubCopyWith<$Res> {
+  _$JoinedFanHubCopyWithImpl(this._self, this._then);
+
+  final JoinedFanHub _self;
+  final $Res Function(JoinedFanHub) _then;
+
+/// Create a copy of JoinedFanHub
+/// with the given fields replaced by the non-null parameter values.
+@pragma('vm:prefer-inline') @override $Res call({Object? fanHubId = null,Object? hubName = null,Object? subdomain = null,Object? themeColor = freezed,Object? avatarUrl = freezed,}) {
+  return _then(_self.copyWith(
+fanHubId: null == fanHubId ? _self.fanHubId : fanHubId // ignore: cast_nullable_to_non_nullable
+as int,hubName: null == hubName ? _self.hubName : hubName // ignore: cast_nullable_to_non_nullable
+as String,subdomain: null == subdomain ? _self.subdomain : subdomain // ignore: cast_nullable_to_non_nullable
+as String,themeColor: freezed == themeColor ? _self.themeColor : themeColor // ignore: cast_nullable_to_non_nullable
+as String?,avatarUrl: freezed == avatarUrl ? _self.avatarUrl : avatarUrl // ignore: cast_nullable_to_non_nullable
+as String?,
+  ));
+}
+
+}
+
+
+/// Adds pattern-matching-related methods to [JoinedFanHub].
+extension JoinedFanHubPatterns on JoinedFanHub {
+/// A variant of `map` that fallback to returning `orElse`.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case _:
+///     return orElse();
+/// }
+/// ```
+
+@optionalTypeArgs TResult maybeMap<TResult extends Object?>(TResult Function( _JoinedFanHub value)?  $default,{required TResult orElse(),}){
+final _that = this;
+switch (_that) {
+case _JoinedFanHub() when $default != null:
+return $default(_that);case _:
+  return orElse();
+
+}
+}
+/// A `switch`-like method, using callbacks.
+///
+/// Callbacks receives the raw object, upcasted.
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case final Subclass2 value:
+///     return ...;
+/// }
+/// ```
+
+@optionalTypeArgs TResult map<TResult extends Object?>(TResult Function( _JoinedFanHub value)  $default,){
+final _that = this;
+switch (_that) {
+case _JoinedFanHub():
+return $default(_that);case _:
+  throw StateError('Unexpected subclass');
+
+}
+}
+/// A variant of `map` that fallback to returning `null`.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case _:
+///     return null;
+/// }
+/// ```
+
+@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>(TResult? Function( _JoinedFanHub value)?  $default,){
+final _that = this;
+switch (_that) {
+case _JoinedFanHub() when $default != null:
+return $default(_that);case _:
+  return null;
+
+}
+}
+/// A variant of `when` that fallback to an `orElse` callback.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case _:
+///     return orElse();
+/// }
+/// ```
+
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( int fanHubId,  String hubName,  String subdomain,  String? themeColor,  String? avatarUrl)?  $default,{required TResult orElse(),}) {final _that = this;
+switch (_that) {
+case _JoinedFanHub() when $default != null:
+return $default(_that.fanHubId,_that.hubName,_that.subdomain,_that.themeColor,_that.avatarUrl);case _:
+  return orElse();
+
+}
+}
+/// A `switch`-like method, using callbacks.
+///
+/// As opposed to `map`, this offers destructuring.
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case Subclass2(:final field2):
+///     return ...;
+/// }
+/// ```
+
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( int fanHubId,  String hubName,  String subdomain,  String? themeColor,  String? avatarUrl)  $default,) {final _that = this;
+switch (_that) {
+case _JoinedFanHub():
+return $default(_that.fanHubId,_that.hubName,_that.subdomain,_that.themeColor,_that.avatarUrl);case _:
+  throw StateError('Unexpected subclass');
+
+}
+}
+/// A variant of `when` that fallback to returning `null`
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case _:
+///     return null;
+/// }
+/// ```
+
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( int fanHubId,  String hubName,  String subdomain,  String? themeColor,  String? avatarUrl)?  $default,) {final _that = this;
+switch (_that) {
+case _JoinedFanHub() when $default != null:
+return $default(_that.fanHubId,_that.hubName,_that.subdomain,_that.themeColor,_that.avatarUrl);case _:
+  return null;
+
+}
+}
+
+}
+
+/// @nodoc
+@JsonSerializable()
+
+class _JoinedFanHub implements JoinedFanHub {
+  const _JoinedFanHub({required this.fanHubId, required this.hubName, required this.subdomain, this.themeColor, this.avatarUrl});
+  factory _JoinedFanHub.fromJson(Map<String, dynamic> json) => _$JoinedFanHubFromJson(json);
+
+@override final  int fanHubId;
+@override final  String hubName;
+@override final  String subdomain;
+@override final  String? themeColor;
+@override final  String? avatarUrl;
+
+/// Create a copy of JoinedFanHub
+/// with the given fields replaced by the non-null parameter values.
+@override @JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+_$JoinedFanHubCopyWith<_JoinedFanHub> get copyWith => __$JoinedFanHubCopyWithImpl<_JoinedFanHub>(this, _$identity);
+
+@override
+Map<String, dynamic> toJson() {
+  return _$JoinedFanHubToJson(this, );
+}
+
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _JoinedFanHub&&(identical(other.fanHubId, fanHubId) || other.fanHubId == fanHubId)&&(identical(other.hubName, hubName) || other.hubName == hubName)&&(identical(other.subdomain, subdomain) || other.subdomain == subdomain)&&(identical(other.themeColor, themeColor) || other.themeColor == themeColor)&&(identical(other.avatarUrl, avatarUrl) || other.avatarUrl == avatarUrl));
+}
+
+@JsonKey(includeFromJson: false, includeToJson: false)
+@override
+int get hashCode => Object.hash(runtimeType,fanHubId,hubName,subdomain,themeColor,avatarUrl);
+
+@override
+String toString() {
+  return 'JoinedFanHub(fanHubId: $fanHubId, hubName: $hubName, subdomain: $subdomain, themeColor: $themeColor, avatarUrl: $avatarUrl)';
+}
+
+
+}
+
+/// @nodoc
+abstract mixin class _$JoinedFanHubCopyWith<$Res> implements $JoinedFanHubCopyWith<$Res> {
+  factory _$JoinedFanHubCopyWith(_JoinedFanHub value, $Res Function(_JoinedFanHub) _then) = __$JoinedFanHubCopyWithImpl;
+@override @useResult
+$Res call({
+ int fanHubId, String hubName, String subdomain, String? themeColor, String? avatarUrl
+});
+
+
+
+
+}
+/// @nodoc
+class __$JoinedFanHubCopyWithImpl<$Res>
+    implements _$JoinedFanHubCopyWith<$Res> {
+  __$JoinedFanHubCopyWithImpl(this._self, this._then);
+
+  final _JoinedFanHub _self;
+  final $Res Function(_JoinedFanHub) _then;
+
+/// Create a copy of JoinedFanHub
+/// with the given fields replaced by the non-null parameter values.
+@override @pragma('vm:prefer-inline') $Res call({Object? fanHubId = null,Object? hubName = null,Object? subdomain = null,Object? themeColor = freezed,Object? avatarUrl = freezed,}) {
+  return _then(_JoinedFanHub(
+fanHubId: null == fanHubId ? _self.fanHubId : fanHubId // ignore: cast_nullable_to_non_nullable
+as int,hubName: null == hubName ? _self.hubName : hubName // ignore: cast_nullable_to_non_nullable
+as String,subdomain: null == subdomain ? _self.subdomain : subdomain // ignore: cast_nullable_to_non_nullable
+as String,themeColor: freezed == themeColor ? _self.themeColor : themeColor // ignore: cast_nullable_to_non_nullable
+as String?,avatarUrl: freezed == avatarUrl ? _self.avatarUrl : avatarUrl // ignore: cast_nullable_to_non_nullable
+as String?,
   ));
 }
 

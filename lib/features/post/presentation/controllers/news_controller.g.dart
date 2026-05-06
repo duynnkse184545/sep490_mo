@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'feed_controller.dart';
+part of 'news_controller.dart';
 
 // **************************************************************************
 // RiverpodGenerator
@@ -9,43 +9,43 @@ part of 'feed_controller.dart';
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint, type=warning
 
-@ProviderFor(FeedController)
-final feedControllerProvider = FeedControllerProvider._();
+@ProviderFor(NewsController)
+final newsControllerProvider = NewsControllerProvider._();
 
-final class FeedControllerProvider
-    extends $StreamNotifierProvider<FeedController, FeedState> {
-  FeedControllerProvider._()
+final class NewsControllerProvider
+    extends $AsyncNotifierProvider<NewsController, NewsState> {
+  NewsControllerProvider._()
     : super(
         from: null,
         argument: null,
         retry: null,
-        name: r'feedControllerProvider',
+        name: r'newsControllerProvider',
         isAutoDispose: true,
         dependencies: null,
         $allTransitiveDependencies: null,
       );
 
   @override
-  String debugGetCreateSourceHash() => _$feedControllerHash();
+  String debugGetCreateSourceHash() => _$newsControllerHash();
 
   @$internal
   @override
-  FeedController create() => FeedController();
+  NewsController create() => NewsController();
 }
 
-String _$feedControllerHash() => r'f27ad43d2cc5a65907063d45fe788ddde62ebe03';
+String _$newsControllerHash() => r'05d6453df0b85336e78b0d7c6135f13b424f2d8c';
 
-abstract class _$FeedController extends $StreamNotifier<FeedState> {
-  Stream<FeedState> build();
+abstract class _$NewsController extends $AsyncNotifier<NewsState> {
+  FutureOr<NewsState> build();
   @$mustCallSuper
   @override
   void runBuild() {
-    final ref = this.ref as $Ref<AsyncValue<FeedState>, FeedState>;
+    final ref = this.ref as $Ref<AsyncValue<NewsState>, NewsState>;
     final element =
         ref.element
             as $ClassProviderElement<
-              AnyNotifier<AsyncValue<FeedState>, FeedState>,
-              AsyncValue<FeedState>,
+              AnyNotifier<AsyncValue<NewsState>, NewsState>,
+              AsyncValue<NewsState>,
               Object?,
               Object?
             >;

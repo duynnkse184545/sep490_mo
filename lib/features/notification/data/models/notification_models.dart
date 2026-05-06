@@ -14,6 +14,8 @@ enum NotificationType {
   postReport,
   @JsonValue('POST_APPROVED')
   postApproved,
+  @JsonValue('POST_REJECTED')
+  postRejected,
   @JsonValue('MEMBER_BANNED')
   memberBanned,
   @JsonValue('REPORT_POST_RESOLVED')

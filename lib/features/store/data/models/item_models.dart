@@ -13,9 +13,11 @@ enum GachaType{
 @freezed
 abstract class ShopItem with _$ShopItem {
   const factory ShopItem({
+    required int shopItemId,
     required int itemId,
     required String itemName,
     String? description,
+    String? imageUrl,
     required String category,
     required int price,
   }) = _ShopItem;

@@ -15,16 +15,20 @@ class BookmarkController extends _$BookmarkController {
 
   @override
   Future<BookmarkState> build() async {
+    _resetPagination();
     await _fetchNextPage();
     return state.value ?? const BookmarkState.empty();
   }
 
   Future<void> refresh() async {
+    ref.invalidateSelf();
+  }
+
+  void _resetPagination() {
     _currentPage = 0;
     _hasMore = true;
     _isFetchingMore = false;
     _posts.clear();
-    ref.invalidateSelf();
   }
 
   Future<void> loadMore() async {

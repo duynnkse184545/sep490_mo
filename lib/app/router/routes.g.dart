@@ -125,6 +125,11 @@ RouteBase get $mainShellRoute => StatefulShellRouteData.$route(
     ),
     StatefulShellBranchData.$branch(
       routes: [
+        GoRouteData.$route(path: '/news', factory: $NewsRoute._fromState),
+      ],
+    ),
+    StatefulShellBranchData.$branch(
+      routes: [
         GoRouteData.$route(path: '/explore', factory: $ExploreRoute._fromState),
       ],
     ),
@@ -149,6 +154,26 @@ mixin $HomeRoute on GoRouteData {
 
   @override
   String get location => GoRouteData.$location('/home');
+
+  @override
+  void go(BuildContext context) => context.go(location);
+
+  @override
+  Future<T?> push<T>(BuildContext context) => context.push<T>(location);
+
+  @override
+  void pushReplacement(BuildContext context) =>
+      context.pushReplacement(location);
+
+  @override
+  void replace(BuildContext context) => context.replace(location);
+}
+
+mixin $NewsRoute on GoRouteData {
+  static NewsRoute _fromState(GoRouterState state) => const NewsRoute();
+
+  @override
+  String get location => GoRouteData.$location('/news');
 
   @override
   void go(BuildContext context) => context.go(location);

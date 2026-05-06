@@ -116,4 +116,21 @@ class FeedRepositoryImpl implements FeedRepository {
       return posts;
     });
   }
+
+  @override
+  TaskResult<List<Post>> getFanHubAnnouncementsEvents({
+    required int fanHubId,
+    int pageNo = 0,
+    int pageSize = 20,
+    String sortBy = 'createdAt',
+  }) {
+    return ErrorHandler.execute(() async {
+      return await _remoteDataSource.getFanHubAnnouncementsEvents(
+        fanHubId,
+        pageNo,
+        pageSize,
+        sortBy,
+      );
+    });
+  }
 }

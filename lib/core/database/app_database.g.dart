@@ -221,6 +221,26 @@ class $CurrentUserTblTable extends CurrentUserTbl
     type: DriftSqlType.string,
     requiredDuringInsert: false,
   );
+  static const VerificationMeta _joinedFanHubsMeta = const VerificationMeta(
+    'joinedFanHubs',
+  );
+  @override
+  late final GeneratedColumn<String> joinedFanHubs = GeneratedColumn<String>(
+    'joined_fan_hubs',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _oshiMeta = const VerificationMeta('oshi');
+  @override
+  late final GeneratedColumn<String> oshi = GeneratedColumn<String>(
+    'oshi',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
   static const VerificationMeta _cachedAtMeta = const VerificationMeta(
     'cachedAt',
   );
@@ -255,6 +275,8 @@ class $CurrentUserTblTable extends CurrentUserTbl
     totalReceivedGifts,
     displayBadges,
     allBadges,
+    joinedFanHubs,
+    oshi,
     cachedAt,
   ];
   @override
@@ -430,6 +452,21 @@ class $CurrentUserTblTable extends CurrentUserTbl
         allBadges.isAcceptableOrUnknown(data['all_badges']!, _allBadgesMeta),
       );
     }
+    if (data.containsKey('joined_fan_hubs')) {
+      context.handle(
+        _joinedFanHubsMeta,
+        joinedFanHubs.isAcceptableOrUnknown(
+          data['joined_fan_hubs']!,
+          _joinedFanHubsMeta,
+        ),
+      );
+    }
+    if (data.containsKey('oshi')) {
+      context.handle(
+        _oshiMeta,
+        oshi.isAcceptableOrUnknown(data['oshi']!, _oshiMeta),
+      );
+    }
     if (data.containsKey('cached_at')) {
       context.handle(
         _cachedAtMeta,
@@ -525,6 +562,14 @@ class $CurrentUserTblTable extends CurrentUserTbl
         DriftSqlType.string,
         data['${effectivePrefix}all_badges'],
       ),
+      joinedFanHubs: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}joined_fan_hubs'],
+      ),
+      oshi: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}oshi'],
+      ),
       cachedAt: attachedDatabase.typeMapping.read(
         DriftSqlType.dateTime,
         data['${effectivePrefix}cached_at'],
@@ -560,6 +605,8 @@ class CurrentUserEntity extends DataClass
   final int totalReceivedGifts;
   final String? displayBadges;
   final String? allBadges;
+  final String? joinedFanHubs;
+  final String? oshi;
   final DateTime cachedAt;
   const CurrentUserEntity({
     required this.id,
@@ -582,6 +629,8 @@ class CurrentUserEntity extends DataClass
     required this.totalReceivedGifts,
     this.displayBadges,
     this.allBadges,
+    this.joinedFanHubs,
+    this.oshi,
     required this.cachedAt,
   });
   @override
@@ -618,6 +667,12 @@ class CurrentUserEntity extends DataClass
     }
     if (!nullToAbsent || allBadges != null) {
       map['all_badges'] = Variable<String>(allBadges);
+    }
+    if (!nullToAbsent || joinedFanHubs != null) {
+      map['joined_fan_hubs'] = Variable<String>(joinedFanHubs);
+    }
+    if (!nullToAbsent || oshi != null) {
+      map['oshi'] = Variable<String>(oshi);
     }
     map['cached_at'] = Variable<DateTime>(cachedAt);
     return map;
@@ -657,6 +712,10 @@ class CurrentUserEntity extends DataClass
       allBadges: allBadges == null && nullToAbsent
           ? const Value.absent()
           : Value(allBadges),
+      joinedFanHubs: joinedFanHubs == null && nullToAbsent
+          ? const Value.absent()
+          : Value(joinedFanHubs),
+      oshi: oshi == null && nullToAbsent ? const Value.absent() : Value(oshi),
       cachedAt: Value(cachedAt),
     );
   }
@@ -689,6 +748,8 @@ class CurrentUserEntity extends DataClass
       totalReceivedGifts: serializer.fromJson<int>(json['totalReceivedGifts']),
       displayBadges: serializer.fromJson<String?>(json['displayBadges']),
       allBadges: serializer.fromJson<String?>(json['allBadges']),
+      joinedFanHubs: serializer.fromJson<String?>(json['joinedFanHubs']),
+      oshi: serializer.fromJson<String?>(json['oshi']),
       cachedAt: serializer.fromJson<DateTime>(json['cachedAt']),
     );
   }
@@ -716,6 +777,8 @@ class CurrentUserEntity extends DataClass
       'totalReceivedGifts': serializer.toJson<int>(totalReceivedGifts),
       'displayBadges': serializer.toJson<String?>(displayBadges),
       'allBadges': serializer.toJson<String?>(allBadges),
+      'joinedFanHubs': serializer.toJson<String?>(joinedFanHubs),
+      'oshi': serializer.toJson<String?>(oshi),
       'cachedAt': serializer.toJson<DateTime>(cachedAt),
     };
   }
@@ -741,6 +804,8 @@ class CurrentUserEntity extends DataClass
     int? totalReceivedGifts,
     Value<String?> displayBadges = const Value.absent(),
     Value<String?> allBadges = const Value.absent(),
+    Value<String?> joinedFanHubs = const Value.absent(),
+    Value<String?> oshi = const Value.absent(),
     DateTime? cachedAt,
   }) => CurrentUserEntity(
     id: id ?? this.id,
@@ -767,6 +832,10 @@ class CurrentUserEntity extends DataClass
         ? displayBadges.value
         : this.displayBadges,
     allBadges: allBadges.present ? allBadges.value : this.allBadges,
+    joinedFanHubs: joinedFanHubs.present
+        ? joinedFanHubs.value
+        : this.joinedFanHubs,
+    oshi: oshi.present ? oshi.value : this.oshi,
     cachedAt: cachedAt ?? this.cachedAt,
   );
   CurrentUserEntity copyWithCompanion(CurrentUserTblCompanion data) {
@@ -805,6 +874,10 @@ class CurrentUserEntity extends DataClass
           ? data.displayBadges.value
           : this.displayBadges,
       allBadges: data.allBadges.present ? data.allBadges.value : this.allBadges,
+      joinedFanHubs: data.joinedFanHubs.present
+          ? data.joinedFanHubs.value
+          : this.joinedFanHubs,
+      oshi: data.oshi.present ? data.oshi.value : this.oshi,
       cachedAt: data.cachedAt.present ? data.cachedAt.value : this.cachedAt,
     );
   }
@@ -832,6 +905,8 @@ class CurrentUserEntity extends DataClass
           ..write('totalReceivedGifts: $totalReceivedGifts, ')
           ..write('displayBadges: $displayBadges, ')
           ..write('allBadges: $allBadges, ')
+          ..write('joinedFanHubs: $joinedFanHubs, ')
+          ..write('oshi: $oshi, ')
           ..write('cachedAt: $cachedAt')
           ..write(')'))
         .toString();
@@ -859,6 +934,8 @@ class CurrentUserEntity extends DataClass
     totalReceivedGifts,
     displayBadges,
     allBadges,
+    joinedFanHubs,
+    oshi,
     cachedAt,
   ]);
   @override
@@ -885,6 +962,8 @@ class CurrentUserEntity extends DataClass
           other.totalReceivedGifts == this.totalReceivedGifts &&
           other.displayBadges == this.displayBadges &&
           other.allBadges == this.allBadges &&
+          other.joinedFanHubs == this.joinedFanHubs &&
+          other.oshi == this.oshi &&
           other.cachedAt == this.cachedAt);
 }
 
@@ -909,6 +988,8 @@ class CurrentUserTblCompanion extends UpdateCompanion<CurrentUserEntity> {
   final Value<int> totalReceivedGifts;
   final Value<String?> displayBadges;
   final Value<String?> allBadges;
+  final Value<String?> joinedFanHubs;
+  final Value<String?> oshi;
   final Value<DateTime> cachedAt;
   const CurrentUserTblCompanion({
     this.id = const Value.absent(),
@@ -931,6 +1012,8 @@ class CurrentUserTblCompanion extends UpdateCompanion<CurrentUserEntity> {
     this.totalReceivedGifts = const Value.absent(),
     this.displayBadges = const Value.absent(),
     this.allBadges = const Value.absent(),
+    this.joinedFanHubs = const Value.absent(),
+    this.oshi = const Value.absent(),
     this.cachedAt = const Value.absent(),
   });
   CurrentUserTblCompanion.insert({
@@ -954,6 +1037,8 @@ class CurrentUserTblCompanion extends UpdateCompanion<CurrentUserEntity> {
     required int totalReceivedGifts,
     this.displayBadges = const Value.absent(),
     this.allBadges = const Value.absent(),
+    this.joinedFanHubs = const Value.absent(),
+    this.oshi = const Value.absent(),
     this.cachedAt = const Value.absent(),
   }) : userId = Value(userId),
        username = Value(username),
@@ -989,6 +1074,8 @@ class CurrentUserTblCompanion extends UpdateCompanion<CurrentUserEntity> {
     Expression<int>? totalReceivedGifts,
     Expression<String>? displayBadges,
     Expression<String>? allBadges,
+    Expression<String>? joinedFanHubs,
+    Expression<String>? oshi,
     Expression<DateTime>? cachedAt,
   }) {
     return RawValuesInsertable({
@@ -1013,6 +1100,8 @@ class CurrentUserTblCompanion extends UpdateCompanion<CurrentUserEntity> {
         'total_received_gifts': totalReceivedGifts,
       if (displayBadges != null) 'display_badges': displayBadges,
       if (allBadges != null) 'all_badges': allBadges,
+      if (joinedFanHubs != null) 'joined_fan_hubs': joinedFanHubs,
+      if (oshi != null) 'oshi': oshi,
       if (cachedAt != null) 'cached_at': cachedAt,
     });
   }
@@ -1038,6 +1127,8 @@ class CurrentUserTblCompanion extends UpdateCompanion<CurrentUserEntity> {
     Value<int>? totalReceivedGifts,
     Value<String?>? displayBadges,
     Value<String?>? allBadges,
+    Value<String?>? joinedFanHubs,
+    Value<String?>? oshi,
     Value<DateTime>? cachedAt,
   }) {
     return CurrentUserTblCompanion(
@@ -1061,6 +1152,8 @@ class CurrentUserTblCompanion extends UpdateCompanion<CurrentUserEntity> {
       totalReceivedGifts: totalReceivedGifts ?? this.totalReceivedGifts,
       displayBadges: displayBadges ?? this.displayBadges,
       allBadges: allBadges ?? this.allBadges,
+      joinedFanHubs: joinedFanHubs ?? this.joinedFanHubs,
+      oshi: oshi ?? this.oshi,
       cachedAt: cachedAt ?? this.cachedAt,
     );
   }
@@ -1128,6 +1221,12 @@ class CurrentUserTblCompanion extends UpdateCompanion<CurrentUserEntity> {
     if (allBadges.present) {
       map['all_badges'] = Variable<String>(allBadges.value);
     }
+    if (joinedFanHubs.present) {
+      map['joined_fan_hubs'] = Variable<String>(joinedFanHubs.value);
+    }
+    if (oshi.present) {
+      map['oshi'] = Variable<String>(oshi.value);
+    }
     if (cachedAt.present) {
       map['cached_at'] = Variable<DateTime>(cachedAt.value);
     }
@@ -1157,6 +1256,8 @@ class CurrentUserTblCompanion extends UpdateCompanion<CurrentUserEntity> {
           ..write('totalReceivedGifts: $totalReceivedGifts, ')
           ..write('displayBadges: $displayBadges, ')
           ..write('allBadges: $allBadges, ')
+          ..write('joinedFanHubs: $joinedFanHubs, ')
+          ..write('oshi: $oshi, ')
           ..write('cachedAt: $cachedAt')
           ..write(')'))
         .toString();
@@ -1914,6 +2015,8 @@ typedef $$CurrentUserTblTableCreateCompanionBuilder =
       required int totalReceivedGifts,
       Value<String?> displayBadges,
       Value<String?> allBadges,
+      Value<String?> joinedFanHubs,
+      Value<String?> oshi,
       Value<DateTime> cachedAt,
     });
 typedef $$CurrentUserTblTableUpdateCompanionBuilder =
@@ -1938,6 +2041,8 @@ typedef $$CurrentUserTblTableUpdateCompanionBuilder =
       Value<int> totalReceivedGifts,
       Value<String?> displayBadges,
       Value<String?> allBadges,
+      Value<String?> joinedFanHubs,
+      Value<String?> oshi,
       Value<DateTime> cachedAt,
     });
 
@@ -2047,6 +2152,16 @@ class $$CurrentUserTblTableFilterComposer
 
   ColumnFilters<String> get allBadges => $composableBuilder(
     column: $table.allBadges,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get joinedFanHubs => $composableBuilder(
+    column: $table.joinedFanHubs,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get oshi => $composableBuilder(
+    column: $table.oshi,
     builder: (column) => ColumnFilters(column),
   );
 
@@ -2165,6 +2280,16 @@ class $$CurrentUserTblTableOrderingComposer
     builder: (column) => ColumnOrderings(column),
   );
 
+  ColumnOrderings<String> get joinedFanHubs => $composableBuilder(
+    column: $table.joinedFanHubs,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get oshi => $composableBuilder(
+    column: $table.oshi,
+    builder: (column) => ColumnOrderings(column),
+  );
+
   ColumnOrderings<DateTime> get cachedAt => $composableBuilder(
     column: $table.cachedAt,
     builder: (column) => ColumnOrderings(column),
@@ -2254,6 +2379,14 @@ class $$CurrentUserTblTableAnnotationComposer
   GeneratedColumn<String> get allBadges =>
       $composableBuilder(column: $table.allBadges, builder: (column) => column);
 
+  GeneratedColumn<String> get joinedFanHubs => $composableBuilder(
+    column: $table.joinedFanHubs,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get oshi =>
+      $composableBuilder(column: $table.oshi, builder: (column) => column);
+
   GeneratedColumn<DateTime> get cachedAt =>
       $composableBuilder(column: $table.cachedAt, builder: (column) => column);
 }
@@ -2315,6 +2448,8 @@ class $$CurrentUserTblTableTableManager
                 Value<int> totalReceivedGifts = const Value.absent(),
                 Value<String?> displayBadges = const Value.absent(),
                 Value<String?> allBadges = const Value.absent(),
+                Value<String?> joinedFanHubs = const Value.absent(),
+                Value<String?> oshi = const Value.absent(),
                 Value<DateTime> cachedAt = const Value.absent(),
               }) => CurrentUserTblCompanion(
                 id: id,
@@ -2337,6 +2472,8 @@ class $$CurrentUserTblTableTableManager
                 totalReceivedGifts: totalReceivedGifts,
                 displayBadges: displayBadges,
                 allBadges: allBadges,
+                joinedFanHubs: joinedFanHubs,
+                oshi: oshi,
                 cachedAt: cachedAt,
               ),
           createCompanionCallback:
@@ -2361,6 +2498,8 @@ class $$CurrentUserTblTableTableManager
                 required int totalReceivedGifts,
                 Value<String?> displayBadges = const Value.absent(),
                 Value<String?> allBadges = const Value.absent(),
+                Value<String?> joinedFanHubs = const Value.absent(),
+                Value<String?> oshi = const Value.absent(),
                 Value<DateTime> cachedAt = const Value.absent(),
               }) => CurrentUserTblCompanion.insert(
                 id: id,
@@ -2383,6 +2522,8 @@ class $$CurrentUserTblTableTableManager
                 totalReceivedGifts: totalReceivedGifts,
                 displayBadges: displayBadges,
                 allBadges: allBadges,
+                joinedFanHubs: joinedFanHubs,
+                oshi: oshi,
                 cachedAt: cachedAt,
               ),
           withReferenceMapper: (p0) => p0

@@ -5,6 +5,8 @@ import 'package:sep490_mo/features/post/data/providers/feed_providers.dart';
 import 'package:sep490_mo/features/post/data/providers/post_providers.dart';
 import 'package:sep490_mo/features/post/presentation/states/feed_state.dart';
 
+import 'bookmark_controller.dart';
+
 part 'feed_controller.g.dart';
 
 @riverpod
@@ -142,46 +144,24 @@ class FeedController extends _$FeedController {
   }
 
   Future<void> bookmark(int postId) async {
-    final previousState = state;
-
-    state = state.whenData((feedState) => feedState.maybeMap(
-          ready: (ready) => ready.copyWith(
-            posts: ready.posts
-                .map((p) => p.postId == postId
-                    ? p.copyWith(isBookmarkedByCurrentUser: true)
-                    : p)
-                .toList(),
-          ),
-          orElse: () => feedState,
-        ));
-
     final result = await ref.read(postRepositoryProvider).bookmark(postId).run();
 
     result.fold(
-      (failure) => state = previousState,
-      (_) => null,
+      (failure) => null, // Optionally handle error state
+      (_) {
+        ref.invalidate(bookmarkControllerProvider);
+      },
     );
   }
 
   Future<void> unbookmark(int postId) async {
-    final previousState = state;
-
-    state = state.whenData((feedState) => feedState.maybeMap(
-          ready: (ready) => ready.copyWith(
-            posts: ready.posts
-                .map((p) => p.postId == postId
-                    ? p.copyWith(isBookmarkedByCurrentUser: false)
-                    : p)
-                .toList(),
-          ),
-          orElse: () => feedState,
-        ));
-
     final result = await ref.read(postRepositoryProvider).unbookmark(postId).run();
 
     result.fold(
-      (failure) => state = previousState,
-      (_) => null,
+      (failure) => null, // Optionally handle error state
+      (_) {
+        ref.invalidate(bookmarkControllerProvider);
+      },
     );
   }
 

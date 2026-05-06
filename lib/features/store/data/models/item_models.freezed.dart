@@ -15,7 +15,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$ShopItem {
 
- int get itemId; String get itemName; String? get description; String get category; int get price;
+ int get shopItemId; int get itemId; String get itemName; String? get description; String? get imageUrl; String get category; int get price;
 /// Create a copy of ShopItem
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -28,16 +28,16 @@ $ShopItemCopyWith<ShopItem> get copyWith => _$ShopItemCopyWithImpl<ShopItem>(thi
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is ShopItem&&(identical(other.itemId, itemId) || other.itemId == itemId)&&(identical(other.itemName, itemName) || other.itemName == itemName)&&(identical(other.description, description) || other.description == description)&&(identical(other.category, category) || other.category == category)&&(identical(other.price, price) || other.price == price));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is ShopItem&&(identical(other.shopItemId, shopItemId) || other.shopItemId == shopItemId)&&(identical(other.itemId, itemId) || other.itemId == itemId)&&(identical(other.itemName, itemName) || other.itemName == itemName)&&(identical(other.description, description) || other.description == description)&&(identical(other.imageUrl, imageUrl) || other.imageUrl == imageUrl)&&(identical(other.category, category) || other.category == category)&&(identical(other.price, price) || other.price == price));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,itemId,itemName,description,category,price);
+int get hashCode => Object.hash(runtimeType,shopItemId,itemId,itemName,description,imageUrl,category,price);
 
 @override
 String toString() {
-  return 'ShopItem(itemId: $itemId, itemName: $itemName, description: $description, category: $category, price: $price)';
+  return 'ShopItem(shopItemId: $shopItemId, itemId: $itemId, itemName: $itemName, description: $description, imageUrl: $imageUrl, category: $category, price: $price)';
 }
 
 
@@ -48,7 +48,7 @@ abstract mixin class $ShopItemCopyWith<$Res>  {
   factory $ShopItemCopyWith(ShopItem value, $Res Function(ShopItem) _then) = _$ShopItemCopyWithImpl;
 @useResult
 $Res call({
- int itemId, String itemName, String? description, String category, int price
+ int shopItemId, int itemId, String itemName, String? description, String? imageUrl, String category, int price
 });
 
 
@@ -65,11 +65,13 @@ class _$ShopItemCopyWithImpl<$Res>
 
 /// Create a copy of ShopItem
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? itemId = null,Object? itemName = null,Object? description = freezed,Object? category = null,Object? price = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? shopItemId = null,Object? itemId = null,Object? itemName = null,Object? description = freezed,Object? imageUrl = freezed,Object? category = null,Object? price = null,}) {
   return _then(_self.copyWith(
-itemId: null == itemId ? _self.itemId : itemId // ignore: cast_nullable_to_non_nullable
+shopItemId: null == shopItemId ? _self.shopItemId : shopItemId // ignore: cast_nullable_to_non_nullable
+as int,itemId: null == itemId ? _self.itemId : itemId // ignore: cast_nullable_to_non_nullable
 as int,itemName: null == itemName ? _self.itemName : itemName // ignore: cast_nullable_to_non_nullable
 as String,description: freezed == description ? _self.description : description // ignore: cast_nullable_to_non_nullable
+as String?,imageUrl: freezed == imageUrl ? _self.imageUrl : imageUrl // ignore: cast_nullable_to_non_nullable
 as String?,category: null == category ? _self.category : category // ignore: cast_nullable_to_non_nullable
 as String,price: null == price ? _self.price : price // ignore: cast_nullable_to_non_nullable
 as int,
@@ -157,10 +159,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( int itemId,  String itemName,  String? description,  String category,  int price)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( int shopItemId,  int itemId,  String itemName,  String? description,  String? imageUrl,  String category,  int price)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _ShopItem() when $default != null:
-return $default(_that.itemId,_that.itemName,_that.description,_that.category,_that.price);case _:
+return $default(_that.shopItemId,_that.itemId,_that.itemName,_that.description,_that.imageUrl,_that.category,_that.price);case _:
   return orElse();
 
 }
@@ -178,10 +180,10 @@ return $default(_that.itemId,_that.itemName,_that.description,_that.category,_th
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( int itemId,  String itemName,  String? description,  String category,  int price)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( int shopItemId,  int itemId,  String itemName,  String? description,  String? imageUrl,  String category,  int price)  $default,) {final _that = this;
 switch (_that) {
 case _ShopItem():
-return $default(_that.itemId,_that.itemName,_that.description,_that.category,_that.price);case _:
+return $default(_that.shopItemId,_that.itemId,_that.itemName,_that.description,_that.imageUrl,_that.category,_that.price);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -198,10 +200,10 @@ return $default(_that.itemId,_that.itemName,_that.description,_that.category,_th
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( int itemId,  String itemName,  String? description,  String category,  int price)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( int shopItemId,  int itemId,  String itemName,  String? description,  String? imageUrl,  String category,  int price)?  $default,) {final _that = this;
 switch (_that) {
 case _ShopItem() when $default != null:
-return $default(_that.itemId,_that.itemName,_that.description,_that.category,_that.price);case _:
+return $default(_that.shopItemId,_that.itemId,_that.itemName,_that.description,_that.imageUrl,_that.category,_that.price);case _:
   return null;
 
 }
@@ -213,12 +215,14 @@ return $default(_that.itemId,_that.itemName,_that.description,_that.category,_th
 @JsonSerializable()
 
 class _ShopItem implements ShopItem {
-  const _ShopItem({required this.itemId, required this.itemName, this.description, required this.category, required this.price});
+  const _ShopItem({required this.shopItemId, required this.itemId, required this.itemName, this.description, this.imageUrl, required this.category, required this.price});
   factory _ShopItem.fromJson(Map<String, dynamic> json) => _$ShopItemFromJson(json);
 
+@override final  int shopItemId;
 @override final  int itemId;
 @override final  String itemName;
 @override final  String? description;
+@override final  String? imageUrl;
 @override final  String category;
 @override final  int price;
 
@@ -235,16 +239,16 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _ShopItem&&(identical(other.itemId, itemId) || other.itemId == itemId)&&(identical(other.itemName, itemName) || other.itemName == itemName)&&(identical(other.description, description) || other.description == description)&&(identical(other.category, category) || other.category == category)&&(identical(other.price, price) || other.price == price));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _ShopItem&&(identical(other.shopItemId, shopItemId) || other.shopItemId == shopItemId)&&(identical(other.itemId, itemId) || other.itemId == itemId)&&(identical(other.itemName, itemName) || other.itemName == itemName)&&(identical(other.description, description) || other.description == description)&&(identical(other.imageUrl, imageUrl) || other.imageUrl == imageUrl)&&(identical(other.category, category) || other.category == category)&&(identical(other.price, price) || other.price == price));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,itemId,itemName,description,category,price);
+int get hashCode => Object.hash(runtimeType,shopItemId,itemId,itemName,description,imageUrl,category,price);
 
 @override
 String toString() {
-  return 'ShopItem(itemId: $itemId, itemName: $itemName, description: $description, category: $category, price: $price)';
+  return 'ShopItem(shopItemId: $shopItemId, itemId: $itemId, itemName: $itemName, description: $description, imageUrl: $imageUrl, category: $category, price: $price)';
 }
 
 
@@ -255,7 +259,7 @@ abstract mixin class _$ShopItemCopyWith<$Res> implements $ShopItemCopyWith<$Res>
   factory _$ShopItemCopyWith(_ShopItem value, $Res Function(_ShopItem) _then) = __$ShopItemCopyWithImpl;
 @override @useResult
 $Res call({
- int itemId, String itemName, String? description, String category, int price
+ int shopItemId, int itemId, String itemName, String? description, String? imageUrl, String category, int price
 });
 
 
@@ -272,11 +276,13 @@ class __$ShopItemCopyWithImpl<$Res>
 
 /// Create a copy of ShopItem
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? itemId = null,Object? itemName = null,Object? description = freezed,Object? category = null,Object? price = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? shopItemId = null,Object? itemId = null,Object? itemName = null,Object? description = freezed,Object? imageUrl = freezed,Object? category = null,Object? price = null,}) {
   return _then(_ShopItem(
-itemId: null == itemId ? _self.itemId : itemId // ignore: cast_nullable_to_non_nullable
+shopItemId: null == shopItemId ? _self.shopItemId : shopItemId // ignore: cast_nullable_to_non_nullable
+as int,itemId: null == itemId ? _self.itemId : itemId // ignore: cast_nullable_to_non_nullable
 as int,itemName: null == itemName ? _self.itemName : itemName // ignore: cast_nullable_to_non_nullable
 as String,description: freezed == description ? _self.description : description // ignore: cast_nullable_to_non_nullable
+as String?,imageUrl: freezed == imageUrl ? _self.imageUrl : imageUrl // ignore: cast_nullable_to_non_nullable
 as String?,category: null == category ? _self.category : category // ignore: cast_nullable_to_non_nullable
 as String,price: null == price ? _self.price : price // ignore: cast_nullable_to_non_nullable
 as int,

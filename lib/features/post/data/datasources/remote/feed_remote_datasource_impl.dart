@@ -64,4 +64,33 @@ class FeedRemoteDatasourceImpl implements FeedRemoteDatasource {
       rethrow;
     }
   }
+
+  @override
+  Future<List<Post>> getFanHubAnnouncementsEvents(
+    int fanHubId,
+    int pageNo,
+    int pageSize,
+    String sortBy,
+  ) async {
+    try {
+      final response = await _feedApi.getFanHubAnnouncementsEvents(
+        fanHubId,
+        pageNo,
+        pageSize,
+        sortBy,
+      );
+      debugPrint('FeedRemoteDatasourceImpl.getFanHubAnnouncementsEvents: $response');
+      return switch (response) {
+        ApiResponseSuccess(:final data) => data,
+        ApiResponseFailure(:final message, :final error) =>
+          throw ServerException(message, error),
+      };
+    } on DioException catch (e) {
+      throw DioExceptionMapper.mapToException(e, 'Failed to get announcements');
+    } catch (e, stack) {
+      debugPrint('Other error: $e');
+      debugPrint('Stack: $stack');
+      rethrow;
+    }
+  }
 }

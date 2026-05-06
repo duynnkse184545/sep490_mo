@@ -553,7 +553,7 @@ as String?,
 /// @nodoc
 mixin _$Post {
 
- int get postId; int get fanHubId; String get fanHubName; String get fanHubSubdomain; int get authorId; String get authorUsername; String get authorDisplayName; String? get authorAvatarUrl; PostType get postType; String? get title; String get content; PostStatus get status; bool get isPinned; List<String> get mediaUrls; List<String> get hashtags; List<VoteOption>? get voteOptions; Map<String, int>? get voteCounts; int? get totalVotes; int? get userVotedOptionId; DateTime get createdAt; DateTime? get updatedAt; int get likeCount; bool get isLikedByCurrentUser; bool get isBookmarkedByCurrentUser;
+ int get postId; int get fanHubId; String get fanHubName; String get fanHubSubdomain; int get authorId; String get authorUsername; String get authorDisplayName; String? get authorAvatarUrl; PostType get postType; String? get title; String get content; PostStatus get status; bool get isPinned; List<String> get mediaUrls; List<String> get hashtags; List<VoteOption>? get voteOptions; Map<String, int>? get voteCounts; int? get totalVotes; int? get userVotedOptionId; DateTime get createdAt; DateTime? get updatedAt; int get likeCount; bool get isLikedByCurrentUser;
 /// Create a copy of Post
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -566,16 +566,16 @@ $PostCopyWith<Post> get copyWith => _$PostCopyWithImpl<Post>(this as Post, _$ide
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is Post&&(identical(other.postId, postId) || other.postId == postId)&&(identical(other.fanHubId, fanHubId) || other.fanHubId == fanHubId)&&(identical(other.fanHubName, fanHubName) || other.fanHubName == fanHubName)&&(identical(other.fanHubSubdomain, fanHubSubdomain) || other.fanHubSubdomain == fanHubSubdomain)&&(identical(other.authorId, authorId) || other.authorId == authorId)&&(identical(other.authorUsername, authorUsername) || other.authorUsername == authorUsername)&&(identical(other.authorDisplayName, authorDisplayName) || other.authorDisplayName == authorDisplayName)&&(identical(other.authorAvatarUrl, authorAvatarUrl) || other.authorAvatarUrl == authorAvatarUrl)&&(identical(other.postType, postType) || other.postType == postType)&&(identical(other.title, title) || other.title == title)&&(identical(other.content, content) || other.content == content)&&(identical(other.status, status) || other.status == status)&&(identical(other.isPinned, isPinned) || other.isPinned == isPinned)&&const DeepCollectionEquality().equals(other.mediaUrls, mediaUrls)&&const DeepCollectionEquality().equals(other.hashtags, hashtags)&&const DeepCollectionEquality().equals(other.voteOptions, voteOptions)&&const DeepCollectionEquality().equals(other.voteCounts, voteCounts)&&(identical(other.totalVotes, totalVotes) || other.totalVotes == totalVotes)&&(identical(other.userVotedOptionId, userVotedOptionId) || other.userVotedOptionId == userVotedOptionId)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt)&&(identical(other.updatedAt, updatedAt) || other.updatedAt == updatedAt)&&(identical(other.likeCount, likeCount) || other.likeCount == likeCount)&&(identical(other.isLikedByCurrentUser, isLikedByCurrentUser) || other.isLikedByCurrentUser == isLikedByCurrentUser)&&(identical(other.isBookmarkedByCurrentUser, isBookmarkedByCurrentUser) || other.isBookmarkedByCurrentUser == isBookmarkedByCurrentUser));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is Post&&(identical(other.postId, postId) || other.postId == postId)&&(identical(other.fanHubId, fanHubId) || other.fanHubId == fanHubId)&&(identical(other.fanHubName, fanHubName) || other.fanHubName == fanHubName)&&(identical(other.fanHubSubdomain, fanHubSubdomain) || other.fanHubSubdomain == fanHubSubdomain)&&(identical(other.authorId, authorId) || other.authorId == authorId)&&(identical(other.authorUsername, authorUsername) || other.authorUsername == authorUsername)&&(identical(other.authorDisplayName, authorDisplayName) || other.authorDisplayName == authorDisplayName)&&(identical(other.authorAvatarUrl, authorAvatarUrl) || other.authorAvatarUrl == authorAvatarUrl)&&(identical(other.postType, postType) || other.postType == postType)&&(identical(other.title, title) || other.title == title)&&(identical(other.content, content) || other.content == content)&&(identical(other.status, status) || other.status == status)&&(identical(other.isPinned, isPinned) || other.isPinned == isPinned)&&const DeepCollectionEquality().equals(other.mediaUrls, mediaUrls)&&const DeepCollectionEquality().equals(other.hashtags, hashtags)&&const DeepCollectionEquality().equals(other.voteOptions, voteOptions)&&const DeepCollectionEquality().equals(other.voteCounts, voteCounts)&&(identical(other.totalVotes, totalVotes) || other.totalVotes == totalVotes)&&(identical(other.userVotedOptionId, userVotedOptionId) || other.userVotedOptionId == userVotedOptionId)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt)&&(identical(other.updatedAt, updatedAt) || other.updatedAt == updatedAt)&&(identical(other.likeCount, likeCount) || other.likeCount == likeCount)&&(identical(other.isLikedByCurrentUser, isLikedByCurrentUser) || other.isLikedByCurrentUser == isLikedByCurrentUser));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hashAll([runtimeType,postId,fanHubId,fanHubName,fanHubSubdomain,authorId,authorUsername,authorDisplayName,authorAvatarUrl,postType,title,content,status,isPinned,const DeepCollectionEquality().hash(mediaUrls),const DeepCollectionEquality().hash(hashtags),const DeepCollectionEquality().hash(voteOptions),const DeepCollectionEquality().hash(voteCounts),totalVotes,userVotedOptionId,createdAt,updatedAt,likeCount,isLikedByCurrentUser,isBookmarkedByCurrentUser]);
+int get hashCode => Object.hashAll([runtimeType,postId,fanHubId,fanHubName,fanHubSubdomain,authorId,authorUsername,authorDisplayName,authorAvatarUrl,postType,title,content,status,isPinned,const DeepCollectionEquality().hash(mediaUrls),const DeepCollectionEquality().hash(hashtags),const DeepCollectionEquality().hash(voteOptions),const DeepCollectionEquality().hash(voteCounts),totalVotes,userVotedOptionId,createdAt,updatedAt,likeCount,isLikedByCurrentUser]);
 
 @override
 String toString() {
-  return 'Post(postId: $postId, fanHubId: $fanHubId, fanHubName: $fanHubName, fanHubSubdomain: $fanHubSubdomain, authorId: $authorId, authorUsername: $authorUsername, authorDisplayName: $authorDisplayName, authorAvatarUrl: $authorAvatarUrl, postType: $postType, title: $title, content: $content, status: $status, isPinned: $isPinned, mediaUrls: $mediaUrls, hashtags: $hashtags, voteOptions: $voteOptions, voteCounts: $voteCounts, totalVotes: $totalVotes, userVotedOptionId: $userVotedOptionId, createdAt: $createdAt, updatedAt: $updatedAt, likeCount: $likeCount, isLikedByCurrentUser: $isLikedByCurrentUser, isBookmarkedByCurrentUser: $isBookmarkedByCurrentUser)';
+  return 'Post(postId: $postId, fanHubId: $fanHubId, fanHubName: $fanHubName, fanHubSubdomain: $fanHubSubdomain, authorId: $authorId, authorUsername: $authorUsername, authorDisplayName: $authorDisplayName, authorAvatarUrl: $authorAvatarUrl, postType: $postType, title: $title, content: $content, status: $status, isPinned: $isPinned, mediaUrls: $mediaUrls, hashtags: $hashtags, voteOptions: $voteOptions, voteCounts: $voteCounts, totalVotes: $totalVotes, userVotedOptionId: $userVotedOptionId, createdAt: $createdAt, updatedAt: $updatedAt, likeCount: $likeCount, isLikedByCurrentUser: $isLikedByCurrentUser)';
 }
 
 
@@ -586,7 +586,7 @@ abstract mixin class $PostCopyWith<$Res>  {
   factory $PostCopyWith(Post value, $Res Function(Post) _then) = _$PostCopyWithImpl;
 @useResult
 $Res call({
- int postId, int fanHubId, String fanHubName, String fanHubSubdomain, int authorId, String authorUsername, String authorDisplayName, String? authorAvatarUrl, PostType postType, String? title, String content, PostStatus status, bool isPinned, List<String> mediaUrls, List<String> hashtags, List<VoteOption>? voteOptions, Map<String, int>? voteCounts, int? totalVotes, int? userVotedOptionId, DateTime createdAt, DateTime? updatedAt, int likeCount, bool isLikedByCurrentUser, bool isBookmarkedByCurrentUser
+ int postId, int fanHubId, String fanHubName, String fanHubSubdomain, int authorId, String authorUsername, String authorDisplayName, String? authorAvatarUrl, PostType postType, String? title, String content, PostStatus status, bool isPinned, List<String> mediaUrls, List<String> hashtags, List<VoteOption>? voteOptions, Map<String, int>? voteCounts, int? totalVotes, int? userVotedOptionId, DateTime createdAt, DateTime? updatedAt, int likeCount, bool isLikedByCurrentUser
 });
 
 
@@ -603,7 +603,7 @@ class _$PostCopyWithImpl<$Res>
 
 /// Create a copy of Post
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? postId = null,Object? fanHubId = null,Object? fanHubName = null,Object? fanHubSubdomain = null,Object? authorId = null,Object? authorUsername = null,Object? authorDisplayName = null,Object? authorAvatarUrl = freezed,Object? postType = null,Object? title = freezed,Object? content = null,Object? status = null,Object? isPinned = null,Object? mediaUrls = null,Object? hashtags = null,Object? voteOptions = freezed,Object? voteCounts = freezed,Object? totalVotes = freezed,Object? userVotedOptionId = freezed,Object? createdAt = null,Object? updatedAt = freezed,Object? likeCount = null,Object? isLikedByCurrentUser = null,Object? isBookmarkedByCurrentUser = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? postId = null,Object? fanHubId = null,Object? fanHubName = null,Object? fanHubSubdomain = null,Object? authorId = null,Object? authorUsername = null,Object? authorDisplayName = null,Object? authorAvatarUrl = freezed,Object? postType = null,Object? title = freezed,Object? content = null,Object? status = null,Object? isPinned = null,Object? mediaUrls = null,Object? hashtags = null,Object? voteOptions = freezed,Object? voteCounts = freezed,Object? totalVotes = freezed,Object? userVotedOptionId = freezed,Object? createdAt = null,Object? updatedAt = freezed,Object? likeCount = null,Object? isLikedByCurrentUser = null,}) {
   return _then(_self.copyWith(
 postId: null == postId ? _self.postId : postId // ignore: cast_nullable_to_non_nullable
 as int,fanHubId: null == fanHubId ? _self.fanHubId : fanHubId // ignore: cast_nullable_to_non_nullable
@@ -628,7 +628,6 @@ as int?,createdAt: null == createdAt ? _self.createdAt : createdAt // ignore: ca
 as DateTime,updatedAt: freezed == updatedAt ? _self.updatedAt : updatedAt // ignore: cast_nullable_to_non_nullable
 as DateTime?,likeCount: null == likeCount ? _self.likeCount : likeCount // ignore: cast_nullable_to_non_nullable
 as int,isLikedByCurrentUser: null == isLikedByCurrentUser ? _self.isLikedByCurrentUser : isLikedByCurrentUser // ignore: cast_nullable_to_non_nullable
-as bool,isBookmarkedByCurrentUser: null == isBookmarkedByCurrentUser ? _self.isBookmarkedByCurrentUser : isBookmarkedByCurrentUser // ignore: cast_nullable_to_non_nullable
 as bool,
   ));
 }
@@ -714,10 +713,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( int postId,  int fanHubId,  String fanHubName,  String fanHubSubdomain,  int authorId,  String authorUsername,  String authorDisplayName,  String? authorAvatarUrl,  PostType postType,  String? title,  String content,  PostStatus status,  bool isPinned,  List<String> mediaUrls,  List<String> hashtags,  List<VoteOption>? voteOptions,  Map<String, int>? voteCounts,  int? totalVotes,  int? userVotedOptionId,  DateTime createdAt,  DateTime? updatedAt,  int likeCount,  bool isLikedByCurrentUser,  bool isBookmarkedByCurrentUser)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( int postId,  int fanHubId,  String fanHubName,  String fanHubSubdomain,  int authorId,  String authorUsername,  String authorDisplayName,  String? authorAvatarUrl,  PostType postType,  String? title,  String content,  PostStatus status,  bool isPinned,  List<String> mediaUrls,  List<String> hashtags,  List<VoteOption>? voteOptions,  Map<String, int>? voteCounts,  int? totalVotes,  int? userVotedOptionId,  DateTime createdAt,  DateTime? updatedAt,  int likeCount,  bool isLikedByCurrentUser)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _Post() when $default != null:
-return $default(_that.postId,_that.fanHubId,_that.fanHubName,_that.fanHubSubdomain,_that.authorId,_that.authorUsername,_that.authorDisplayName,_that.authorAvatarUrl,_that.postType,_that.title,_that.content,_that.status,_that.isPinned,_that.mediaUrls,_that.hashtags,_that.voteOptions,_that.voteCounts,_that.totalVotes,_that.userVotedOptionId,_that.createdAt,_that.updatedAt,_that.likeCount,_that.isLikedByCurrentUser,_that.isBookmarkedByCurrentUser);case _:
+return $default(_that.postId,_that.fanHubId,_that.fanHubName,_that.fanHubSubdomain,_that.authorId,_that.authorUsername,_that.authorDisplayName,_that.authorAvatarUrl,_that.postType,_that.title,_that.content,_that.status,_that.isPinned,_that.mediaUrls,_that.hashtags,_that.voteOptions,_that.voteCounts,_that.totalVotes,_that.userVotedOptionId,_that.createdAt,_that.updatedAt,_that.likeCount,_that.isLikedByCurrentUser);case _:
   return orElse();
 
 }
@@ -735,10 +734,10 @@ return $default(_that.postId,_that.fanHubId,_that.fanHubName,_that.fanHubSubdoma
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( int postId,  int fanHubId,  String fanHubName,  String fanHubSubdomain,  int authorId,  String authorUsername,  String authorDisplayName,  String? authorAvatarUrl,  PostType postType,  String? title,  String content,  PostStatus status,  bool isPinned,  List<String> mediaUrls,  List<String> hashtags,  List<VoteOption>? voteOptions,  Map<String, int>? voteCounts,  int? totalVotes,  int? userVotedOptionId,  DateTime createdAt,  DateTime? updatedAt,  int likeCount,  bool isLikedByCurrentUser,  bool isBookmarkedByCurrentUser)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( int postId,  int fanHubId,  String fanHubName,  String fanHubSubdomain,  int authorId,  String authorUsername,  String authorDisplayName,  String? authorAvatarUrl,  PostType postType,  String? title,  String content,  PostStatus status,  bool isPinned,  List<String> mediaUrls,  List<String> hashtags,  List<VoteOption>? voteOptions,  Map<String, int>? voteCounts,  int? totalVotes,  int? userVotedOptionId,  DateTime createdAt,  DateTime? updatedAt,  int likeCount,  bool isLikedByCurrentUser)  $default,) {final _that = this;
 switch (_that) {
 case _Post():
-return $default(_that.postId,_that.fanHubId,_that.fanHubName,_that.fanHubSubdomain,_that.authorId,_that.authorUsername,_that.authorDisplayName,_that.authorAvatarUrl,_that.postType,_that.title,_that.content,_that.status,_that.isPinned,_that.mediaUrls,_that.hashtags,_that.voteOptions,_that.voteCounts,_that.totalVotes,_that.userVotedOptionId,_that.createdAt,_that.updatedAt,_that.likeCount,_that.isLikedByCurrentUser,_that.isBookmarkedByCurrentUser);case _:
+return $default(_that.postId,_that.fanHubId,_that.fanHubName,_that.fanHubSubdomain,_that.authorId,_that.authorUsername,_that.authorDisplayName,_that.authorAvatarUrl,_that.postType,_that.title,_that.content,_that.status,_that.isPinned,_that.mediaUrls,_that.hashtags,_that.voteOptions,_that.voteCounts,_that.totalVotes,_that.userVotedOptionId,_that.createdAt,_that.updatedAt,_that.likeCount,_that.isLikedByCurrentUser);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -755,10 +754,10 @@ return $default(_that.postId,_that.fanHubId,_that.fanHubName,_that.fanHubSubdoma
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( int postId,  int fanHubId,  String fanHubName,  String fanHubSubdomain,  int authorId,  String authorUsername,  String authorDisplayName,  String? authorAvatarUrl,  PostType postType,  String? title,  String content,  PostStatus status,  bool isPinned,  List<String> mediaUrls,  List<String> hashtags,  List<VoteOption>? voteOptions,  Map<String, int>? voteCounts,  int? totalVotes,  int? userVotedOptionId,  DateTime createdAt,  DateTime? updatedAt,  int likeCount,  bool isLikedByCurrentUser,  bool isBookmarkedByCurrentUser)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( int postId,  int fanHubId,  String fanHubName,  String fanHubSubdomain,  int authorId,  String authorUsername,  String authorDisplayName,  String? authorAvatarUrl,  PostType postType,  String? title,  String content,  PostStatus status,  bool isPinned,  List<String> mediaUrls,  List<String> hashtags,  List<VoteOption>? voteOptions,  Map<String, int>? voteCounts,  int? totalVotes,  int? userVotedOptionId,  DateTime createdAt,  DateTime? updatedAt,  int likeCount,  bool isLikedByCurrentUser)?  $default,) {final _that = this;
 switch (_that) {
 case _Post() when $default != null:
-return $default(_that.postId,_that.fanHubId,_that.fanHubName,_that.fanHubSubdomain,_that.authorId,_that.authorUsername,_that.authorDisplayName,_that.authorAvatarUrl,_that.postType,_that.title,_that.content,_that.status,_that.isPinned,_that.mediaUrls,_that.hashtags,_that.voteOptions,_that.voteCounts,_that.totalVotes,_that.userVotedOptionId,_that.createdAt,_that.updatedAt,_that.likeCount,_that.isLikedByCurrentUser,_that.isBookmarkedByCurrentUser);case _:
+return $default(_that.postId,_that.fanHubId,_that.fanHubName,_that.fanHubSubdomain,_that.authorId,_that.authorUsername,_that.authorDisplayName,_that.authorAvatarUrl,_that.postType,_that.title,_that.content,_that.status,_that.isPinned,_that.mediaUrls,_that.hashtags,_that.voteOptions,_that.voteCounts,_that.totalVotes,_that.userVotedOptionId,_that.createdAt,_that.updatedAt,_that.likeCount,_that.isLikedByCurrentUser);case _:
   return null;
 
 }
@@ -770,7 +769,7 @@ return $default(_that.postId,_that.fanHubId,_that.fanHubName,_that.fanHubSubdoma
 @JsonSerializable()
 
 class _Post implements Post {
-  const _Post({required this.postId, required this.fanHubId, required this.fanHubName, required this.fanHubSubdomain, required this.authorId, required this.authorUsername, required this.authorDisplayName, this.authorAvatarUrl, required this.postType, this.title, required this.content, required this.status, this.isPinned = false, final  List<String> mediaUrls = const [], final  List<String> hashtags = const [], final  List<VoteOption>? voteOptions, final  Map<String, int>? voteCounts, this.totalVotes, this.userVotedOptionId, required this.createdAt, this.updatedAt, this.likeCount = 0, this.isLikedByCurrentUser = false, this.isBookmarkedByCurrentUser = false}): _mediaUrls = mediaUrls,_hashtags = hashtags,_voteOptions = voteOptions,_voteCounts = voteCounts;
+  const _Post({required this.postId, required this.fanHubId, required this.fanHubName, required this.fanHubSubdomain, required this.authorId, required this.authorUsername, required this.authorDisplayName, this.authorAvatarUrl, required this.postType, this.title, required this.content, required this.status, this.isPinned = false, final  List<String> mediaUrls = const [], final  List<String> hashtags = const [], final  List<VoteOption>? voteOptions, final  Map<String, int>? voteCounts, this.totalVotes, this.userVotedOptionId, required this.createdAt, this.updatedAt, this.likeCount = 0, this.isLikedByCurrentUser = false}): _mediaUrls = mediaUrls,_hashtags = hashtags,_voteOptions = voteOptions,_voteCounts = voteCounts;
   factory _Post.fromJson(Map<String, dynamic> json) => _$PostFromJson(json);
 
 @override final  int postId;
@@ -824,7 +823,6 @@ class _Post implements Post {
 @override final  DateTime? updatedAt;
 @override@JsonKey() final  int likeCount;
 @override@JsonKey() final  bool isLikedByCurrentUser;
-@override@JsonKey() final  bool isBookmarkedByCurrentUser;
 
 /// Create a copy of Post
 /// with the given fields replaced by the non-null parameter values.
@@ -839,16 +837,16 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _Post&&(identical(other.postId, postId) || other.postId == postId)&&(identical(other.fanHubId, fanHubId) || other.fanHubId == fanHubId)&&(identical(other.fanHubName, fanHubName) || other.fanHubName == fanHubName)&&(identical(other.fanHubSubdomain, fanHubSubdomain) || other.fanHubSubdomain == fanHubSubdomain)&&(identical(other.authorId, authorId) || other.authorId == authorId)&&(identical(other.authorUsername, authorUsername) || other.authorUsername == authorUsername)&&(identical(other.authorDisplayName, authorDisplayName) || other.authorDisplayName == authorDisplayName)&&(identical(other.authorAvatarUrl, authorAvatarUrl) || other.authorAvatarUrl == authorAvatarUrl)&&(identical(other.postType, postType) || other.postType == postType)&&(identical(other.title, title) || other.title == title)&&(identical(other.content, content) || other.content == content)&&(identical(other.status, status) || other.status == status)&&(identical(other.isPinned, isPinned) || other.isPinned == isPinned)&&const DeepCollectionEquality().equals(other._mediaUrls, _mediaUrls)&&const DeepCollectionEquality().equals(other._hashtags, _hashtags)&&const DeepCollectionEquality().equals(other._voteOptions, _voteOptions)&&const DeepCollectionEquality().equals(other._voteCounts, _voteCounts)&&(identical(other.totalVotes, totalVotes) || other.totalVotes == totalVotes)&&(identical(other.userVotedOptionId, userVotedOptionId) || other.userVotedOptionId == userVotedOptionId)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt)&&(identical(other.updatedAt, updatedAt) || other.updatedAt == updatedAt)&&(identical(other.likeCount, likeCount) || other.likeCount == likeCount)&&(identical(other.isLikedByCurrentUser, isLikedByCurrentUser) || other.isLikedByCurrentUser == isLikedByCurrentUser)&&(identical(other.isBookmarkedByCurrentUser, isBookmarkedByCurrentUser) || other.isBookmarkedByCurrentUser == isBookmarkedByCurrentUser));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _Post&&(identical(other.postId, postId) || other.postId == postId)&&(identical(other.fanHubId, fanHubId) || other.fanHubId == fanHubId)&&(identical(other.fanHubName, fanHubName) || other.fanHubName == fanHubName)&&(identical(other.fanHubSubdomain, fanHubSubdomain) || other.fanHubSubdomain == fanHubSubdomain)&&(identical(other.authorId, authorId) || other.authorId == authorId)&&(identical(other.authorUsername, authorUsername) || other.authorUsername == authorUsername)&&(identical(other.authorDisplayName, authorDisplayName) || other.authorDisplayName == authorDisplayName)&&(identical(other.authorAvatarUrl, authorAvatarUrl) || other.authorAvatarUrl == authorAvatarUrl)&&(identical(other.postType, postType) || other.postType == postType)&&(identical(other.title, title) || other.title == title)&&(identical(other.content, content) || other.content == content)&&(identical(other.status, status) || other.status == status)&&(identical(other.isPinned, isPinned) || other.isPinned == isPinned)&&const DeepCollectionEquality().equals(other._mediaUrls, _mediaUrls)&&const DeepCollectionEquality().equals(other._hashtags, _hashtags)&&const DeepCollectionEquality().equals(other._voteOptions, _voteOptions)&&const DeepCollectionEquality().equals(other._voteCounts, _voteCounts)&&(identical(other.totalVotes, totalVotes) || other.totalVotes == totalVotes)&&(identical(other.userVotedOptionId, userVotedOptionId) || other.userVotedOptionId == userVotedOptionId)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt)&&(identical(other.updatedAt, updatedAt) || other.updatedAt == updatedAt)&&(identical(other.likeCount, likeCount) || other.likeCount == likeCount)&&(identical(other.isLikedByCurrentUser, isLikedByCurrentUser) || other.isLikedByCurrentUser == isLikedByCurrentUser));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hashAll([runtimeType,postId,fanHubId,fanHubName,fanHubSubdomain,authorId,authorUsername,authorDisplayName,authorAvatarUrl,postType,title,content,status,isPinned,const DeepCollectionEquality().hash(_mediaUrls),const DeepCollectionEquality().hash(_hashtags),const DeepCollectionEquality().hash(_voteOptions),const DeepCollectionEquality().hash(_voteCounts),totalVotes,userVotedOptionId,createdAt,updatedAt,likeCount,isLikedByCurrentUser,isBookmarkedByCurrentUser]);
+int get hashCode => Object.hashAll([runtimeType,postId,fanHubId,fanHubName,fanHubSubdomain,authorId,authorUsername,authorDisplayName,authorAvatarUrl,postType,title,content,status,isPinned,const DeepCollectionEquality().hash(_mediaUrls),const DeepCollectionEquality().hash(_hashtags),const DeepCollectionEquality().hash(_voteOptions),const DeepCollectionEquality().hash(_voteCounts),totalVotes,userVotedOptionId,createdAt,updatedAt,likeCount,isLikedByCurrentUser]);
 
 @override
 String toString() {
-  return 'Post(postId: $postId, fanHubId: $fanHubId, fanHubName: $fanHubName, fanHubSubdomain: $fanHubSubdomain, authorId: $authorId, authorUsername: $authorUsername, authorDisplayName: $authorDisplayName, authorAvatarUrl: $authorAvatarUrl, postType: $postType, title: $title, content: $content, status: $status, isPinned: $isPinned, mediaUrls: $mediaUrls, hashtags: $hashtags, voteOptions: $voteOptions, voteCounts: $voteCounts, totalVotes: $totalVotes, userVotedOptionId: $userVotedOptionId, createdAt: $createdAt, updatedAt: $updatedAt, likeCount: $likeCount, isLikedByCurrentUser: $isLikedByCurrentUser, isBookmarkedByCurrentUser: $isBookmarkedByCurrentUser)';
+  return 'Post(postId: $postId, fanHubId: $fanHubId, fanHubName: $fanHubName, fanHubSubdomain: $fanHubSubdomain, authorId: $authorId, authorUsername: $authorUsername, authorDisplayName: $authorDisplayName, authorAvatarUrl: $authorAvatarUrl, postType: $postType, title: $title, content: $content, status: $status, isPinned: $isPinned, mediaUrls: $mediaUrls, hashtags: $hashtags, voteOptions: $voteOptions, voteCounts: $voteCounts, totalVotes: $totalVotes, userVotedOptionId: $userVotedOptionId, createdAt: $createdAt, updatedAt: $updatedAt, likeCount: $likeCount, isLikedByCurrentUser: $isLikedByCurrentUser)';
 }
 
 
@@ -859,7 +857,7 @@ abstract mixin class _$PostCopyWith<$Res> implements $PostCopyWith<$Res> {
   factory _$PostCopyWith(_Post value, $Res Function(_Post) _then) = __$PostCopyWithImpl;
 @override @useResult
 $Res call({
- int postId, int fanHubId, String fanHubName, String fanHubSubdomain, int authorId, String authorUsername, String authorDisplayName, String? authorAvatarUrl, PostType postType, String? title, String content, PostStatus status, bool isPinned, List<String> mediaUrls, List<String> hashtags, List<VoteOption>? voteOptions, Map<String, int>? voteCounts, int? totalVotes, int? userVotedOptionId, DateTime createdAt, DateTime? updatedAt, int likeCount, bool isLikedByCurrentUser, bool isBookmarkedByCurrentUser
+ int postId, int fanHubId, String fanHubName, String fanHubSubdomain, int authorId, String authorUsername, String authorDisplayName, String? authorAvatarUrl, PostType postType, String? title, String content, PostStatus status, bool isPinned, List<String> mediaUrls, List<String> hashtags, List<VoteOption>? voteOptions, Map<String, int>? voteCounts, int? totalVotes, int? userVotedOptionId, DateTime createdAt, DateTime? updatedAt, int likeCount, bool isLikedByCurrentUser
 });
 
 
@@ -876,7 +874,7 @@ class __$PostCopyWithImpl<$Res>
 
 /// Create a copy of Post
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? postId = null,Object? fanHubId = null,Object? fanHubName = null,Object? fanHubSubdomain = null,Object? authorId = null,Object? authorUsername = null,Object? authorDisplayName = null,Object? authorAvatarUrl = freezed,Object? postType = null,Object? title = freezed,Object? content = null,Object? status = null,Object? isPinned = null,Object? mediaUrls = null,Object? hashtags = null,Object? voteOptions = freezed,Object? voteCounts = freezed,Object? totalVotes = freezed,Object? userVotedOptionId = freezed,Object? createdAt = null,Object? updatedAt = freezed,Object? likeCount = null,Object? isLikedByCurrentUser = null,Object? isBookmarkedByCurrentUser = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? postId = null,Object? fanHubId = null,Object? fanHubName = null,Object? fanHubSubdomain = null,Object? authorId = null,Object? authorUsername = null,Object? authorDisplayName = null,Object? authorAvatarUrl = freezed,Object? postType = null,Object? title = freezed,Object? content = null,Object? status = null,Object? isPinned = null,Object? mediaUrls = null,Object? hashtags = null,Object? voteOptions = freezed,Object? voteCounts = freezed,Object? totalVotes = freezed,Object? userVotedOptionId = freezed,Object? createdAt = null,Object? updatedAt = freezed,Object? likeCount = null,Object? isLikedByCurrentUser = null,}) {
   return _then(_Post(
 postId: null == postId ? _self.postId : postId // ignore: cast_nullable_to_non_nullable
 as int,fanHubId: null == fanHubId ? _self.fanHubId : fanHubId // ignore: cast_nullable_to_non_nullable
@@ -901,7 +899,6 @@ as int?,createdAt: null == createdAt ? _self.createdAt : createdAt // ignore: ca
 as DateTime,updatedAt: freezed == updatedAt ? _self.updatedAt : updatedAt // ignore: cast_nullable_to_non_nullable
 as DateTime?,likeCount: null == likeCount ? _self.likeCount : likeCount // ignore: cast_nullable_to_non_nullable
 as int,isLikedByCurrentUser: null == isLikedByCurrentUser ? _self.isLikedByCurrentUser : isLikedByCurrentUser // ignore: cast_nullable_to_non_nullable
-as bool,isBookmarkedByCurrentUser: null == isBookmarkedByCurrentUser ? _self.isBookmarkedByCurrentUser : isBookmarkedByCurrentUser // ignore: cast_nullable_to_non_nullable
 as bool,
   ));
 }

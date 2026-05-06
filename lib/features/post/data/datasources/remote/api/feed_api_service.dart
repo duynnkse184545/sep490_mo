@@ -25,6 +25,14 @@ abstract class FeedApiService {
     @Query('postHashtags') String? postHashtags,
     @Query('authorUsername') String? authorUsername,
   );
+
+  @GET('/posts/fan-hub/{fanHubId}/announcements-events')
+  Future<ApiResponse<List<Post>>> getFanHubAnnouncementsEvents(
+    @Path('fanHubId') int fanHubId,
+    @Query('pageNo') int pageNo,
+    @Query('pageSize') int pageSize,
+    @Query('sortBy') String sortBy,
+  );
 }
 
 // FeedRepository
@@ -48,4 +56,3 @@ abstract class FeedApiService {
 // - /posts/summarize
 // - /posts/user
 //
-
