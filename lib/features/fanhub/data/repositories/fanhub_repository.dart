@@ -9,10 +9,10 @@ abstract class FanHubRepository {
     bool includePrivate = false,
   });
 
-  TaskResult<List<FanHub>> getFanHubsByCategory({
+  TaskResult<List<FanHub>> getTopFanHubs({
     required int pageNo,
     required int pageSize,
-    required String category,
+    String? category,
   });
 
   TaskResult<FanHub> getFanHubBySubdomain(String subdomain);

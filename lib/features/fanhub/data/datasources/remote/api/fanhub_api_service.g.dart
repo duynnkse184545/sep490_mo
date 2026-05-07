@@ -66,10 +66,10 @@ class _FanHubApiService implements FanHubApiService {
   }
 
   @override
-  Future<ApiResponse<List<FanHub>>> getFanHubsByCategory(
+  Future<ApiResponse<List<FanHub>>> getTopFanHubs(
     int pageNo,
     int pageSize,
-    String category,
+    String? category,
   ) async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{
@@ -77,6 +77,7 @@ class _FanHubApiService implements FanHubApiService {
       r'pageSize': pageSize,
       r'category': category,
     };
+    queryParameters.removeWhere((k, v) => v == null);
     final _headers = <String, dynamic>{};
     const Map<String, dynamic>? _data = null;
     final _options = _setStreamType<ApiResponse<List<FanHub>>>(

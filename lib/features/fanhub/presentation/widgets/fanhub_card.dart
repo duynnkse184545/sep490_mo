@@ -39,9 +39,9 @@ class FanHubCard extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // Banner/Header area
+            // Banner/Header area with Highlights
             Container(
-              height: 100,
+              height: 140,
               width: double.infinity,
               decoration: BoxDecoration(
                 color: themeColor.withValues(alpha: 0.3),
@@ -49,16 +49,38 @@ class FanHubCard extends StatelessWidget {
                   topLeft: Radius.circular(10),
                   topRight: Radius.circular(10),
                 ),
-                image: fanHub.bannerUrl != null
+                image: (fanHub.highlightImgUrls.isNotEmpty)
                     ? DecorationImage(
-                        image: NetworkImage(fanHub.bannerUrl!),
+                        image: NetworkImage(fanHub.highlightImgUrls.first),
                         fit: BoxFit.cover,
                       )
-                    : null,
+                    : (fanHub.bannerUrl != null
+                        ? DecorationImage(
+                            image: NetworkImage(fanHub.bannerUrl!),
+                            fit: BoxFit.cover,
+                          )
+                        : null),
               ),
               child: Stack(
                 clipBehavior: Clip.none,
                 children: [
+                  // Featured Badge
+                  Positioned(
+                    top: 12,
+                    left: 12,
+                    child: Container(
+                      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                      decoration: BoxDecoration(
+                        color: const Color(0xFFF75F00),
+                        borderRadius: BorderRadius.circular(4),
+                        border: Border.all(color: AppColors.border, width: 1),
+                      ),
+                      child: const Text(
+                        "TOP HUB",
+                        style: TextStyle(color: Colors.white, fontSize: 10, fontWeight: FontWeight.w900),
+                      ),
+                    ),
+                  ),
                   // Avatar
                   Positioned(
                     left: 16,

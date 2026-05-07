@@ -7,17 +7,23 @@ enum FanHubTab { discover, myHubs }
 
 @freezed
 sealed class FanHubState with _$FanHubState {
-  const factory FanHubState.ready(
-    List<FanHub> fanHubs,
-    FanHubTab activeTab,
-  ) = _Ready;
-  const factory FanHubState.refreshing(
-    List<FanHub> fanHubs,
-    FanHubTab activeTab,
-  ) = _Refreshing;
-  const factory FanHubState.loadingMore(
-    List<FanHub> fanHubs,
-    FanHubTab activeTab,
-  ) = _LoadingMore;
+  const factory FanHubState.ready({
+    required List<FanHub> fanHubs,
+    @Default([]) List<FanHub> topHubs,
+    required FanHubTab activeTab,
+  }) = _Ready;
+  
+  const factory FanHubState.refreshing({
+    required List<FanHub> fanHubs,
+    @Default([]) List<FanHub> topHubs,
+    required FanHubTab activeTab,
+  }) = _Refreshing;
+  
+  const factory FanHubState.loadingMore({
+    required List<FanHub> fanHubs,
+    @Default([]) List<FanHub> topHubs,
+    required FanHubTab activeTab,
+  }) = _LoadingMore;
+  
   const factory FanHubState.empty(FanHubTab activeTab) = _Empty;
 }

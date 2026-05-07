@@ -3,7 +3,6 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:sep490_mo/app/app_notifier.dart';
 import 'package:sep490_mo/app/app_state.dart';
-import 'package:sep490_mo/app/router/routes.dart';
 import 'package:sep490_mo/core/theme/app_colors.dart';
 import 'package:sep490_mo/core/widgets/empty_state.dart';
 import 'package:sep490_mo/core/widgets/error_retry_widget.dart';
@@ -13,7 +12,9 @@ import 'package:sep490_mo/features/fanhub/presentation/controllers/fanhub_list_c
 import 'package:sep490_mo/features/fanhub/presentation/controllers/fanhub_owner_controller.dart';
 import 'package:sep490_mo/features/fanhub/presentation/states/fanhub_state.dart';
 import 'package:sep490_mo/features/fanhub/presentation/widgets/fanhub_card.dart';
+import 'package:sep490_mo/features/fanhub/presentation/widgets/fanhub_minimal_card.dart';
 import 'package:sep490_mo/features/user/data/models/user_models.dart';
+import 'package:sep490_mo/app/router/routes.dart';
 
 class FanHubListScreen extends HookConsumerWidget {
   const FanHubListScreen({super.key});
@@ -42,7 +43,7 @@ class FanHubListScreen extends HookConsumerWidget {
 
       scrollController.addListener(onScroll);
       return () => scrollController.removeListener(onScroll);
-    }, [scrollController, activeTab.value]); // Depend on activeTab to re-hook listener
+    }, [scrollController, activeTab.value]);
 
     return Scaffold(
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
@@ -91,44 +92,15 @@ class FanHubListScreen extends HookConsumerWidget {
             Expanded(
               child: fanHubAsync.when(
                 data: (fanHubState) => fanHubState.when(
-                  ready: (fanHubs, _) => RefreshIndicator(
+                  ready: (fanHubs, topHubs, _) => RefreshIndicator(
                     onRefresh: controller.refresh,
-                    child: ListView.separated(
-                      controller: scrollController,
-                      padding: const EdgeInsets.only(top: 8, bottom: 16),
-                      itemCount: fanHubs.length + 1,
-                      separatorBuilder: (_, _) => const SizedBox(height: 8),
-                      itemBuilder: (context, index) {
-                        if (index == fanHubs.length) {
-                          return const SizedBox.shrink();
-                        }
-                        return FanHubCard(fanHub: fanHubs[index]);
-                      },
-                    ),
+                    child: _buildList(fanHubs, topHubs, scrollController, false, activeTab.value),
                   ),
-                  loadingMore: (fanHubs, _) => ListView.separated(
-                    controller: scrollController,
-                    padding: const EdgeInsets.only(top: 8, bottom: 16),
-                    itemCount: fanHubs.length + 1,
-                    separatorBuilder: (_, _) => const SizedBox(height: 8),
-                    itemBuilder: (context, index) {
-                      if (index == fanHubs.length) {
-                        return const Padding(
-                          padding: EdgeInsets.all(16),
-                          child: Center(child: CircularProgressIndicator()),
-                        );
-                      }
-                      return FanHubCard(fanHub: fanHubs[index]);
-                    },
+                  loadingMore: (fanHubs, topHubs, _) => RefreshIndicator(
+                    onRefresh: controller.refresh,
+                    child: _buildList(fanHubs, topHubs, scrollController, true, activeTab.value),
                   ),
-                  refreshing: (fanHubs, _) => ListView.separated(
-                    controller: scrollController,
-                    padding: const EdgeInsets.only(top: 8, bottom: 16),
-                    itemCount: fanHubs.length,
-                    separatorBuilder: (_, _) => const SizedBox(height: 8),
-                    itemBuilder: (context, index) =>
-                        FanHubCard(fanHub: fanHubs[index]),
-                  ),
+                  refreshing: (fanHubs, topHubs, _) => _buildList(fanHubs, topHubs, scrollController, false, activeTab.value),
                   empty: (_) => EmptyState(
                     message: activeTab.value == FanHubTab.myHubs
                         ? 'You have not joined any Fan Hubs yet'
@@ -146,6 +118,61 @@ class FanHubListScreen extends HookConsumerWidget {
           ],
         ),
       ),
+    );
+  }
+
+  Widget _buildList(
+    List<FanHub> fanHubs, 
+    List<FanHub> topHubs,
+    ScrollController controller, 
+    bool isLoadingMore, 
+    FanHubTab tab,
+  ) {
+    if (fanHubs.isEmpty && topHubs.isEmpty) return const SizedBox.shrink();
+    
+    final isDiscover = tab == FanHubTab.discover && topHubs.isNotEmpty;
+
+    return ListView.builder(
+      controller: controller,
+      padding: const EdgeInsets.only(bottom: 24),
+      itemCount: (isDiscover ? topHubs.length : 0) + (isDiscover ? 1 : 0) + fanHubs.length + (isLoadingMore ? 1 : 0),
+      itemBuilder: (context, index) {
+        // 1. Featured Section
+        if (isDiscover && index < topHubs.length) {
+          return FanHubCard(fanHub: topHubs[index]);
+        }
+        
+        // 2. Header
+        if (isDiscover && index == topHubs.length) {
+           return const Padding(
+             padding: EdgeInsets.fromLTRB(20, 20, 20, 16),
+             child: Column(
+               crossAxisAlignment: CrossAxisAlignment.start,
+               children: [
+                 Text(
+                   "ALL HUBS",
+                   style: TextStyle(fontSize: 16, fontWeight: FontWeight.w900, color: Color(0xFFC75050), letterSpacing: 1),
+                 ),
+                 SizedBox(height: 8),
+                 Divider(height: 1, color: Colors.black12),
+               ],
+             ),
+           );
+        }
+
+        // 3. Regular Hubs
+        final listIndex = isDiscover ? index - topHubs.length - 1 : index;
+        if (listIndex < 0) return const SizedBox.shrink();
+        
+        if (listIndex >= fanHubs.length) {
+          return const Center(child: Padding(padding: EdgeInsets.all(16), child: CircularProgressIndicator()));
+        }
+
+        return Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 16),
+          child: FanHubMinimalCard(fanHub: fanHubs[listIndex]),
+        );
+      },
     );
   }
 

@@ -46,13 +46,13 @@ class FanHubRemoteDataSourceImpl implements FanHubRemoteDataSource {
   }
 
   @override
-  Future<List<FanHub>> getFanHubsByCategory({
+  Future<List<FanHub>> getTopFanHubs({
     required int pageNo,
     required int pageSize,
-    required String category,
+    String? category,
   }) async {
     try {
-      final response = await _apiService.getFanHubsByCategory(
+      final response = await _apiService.getTopFanHubs(
         pageNo,
         pageSize,
         category,
@@ -68,7 +68,7 @@ class FanHubRemoteDataSourceImpl implements FanHubRemoteDataSource {
         'Failed to fetch FanHubs by category',
       );
     } catch (e, stack) {
-      debugPrint('FanHubRemoteDataSourceImpl.getFanHubsByCategory error: $e');
+      debugPrint('FanHubRemoteDataSourceImpl.getTopFanHubs error: $e');
       debugPrint('Stack: $stack');
       rethrow;
     }
@@ -130,7 +130,7 @@ class FanHubRemoteDataSourceImpl implements FanHubRemoteDataSource {
           throw ServerException(message, error),
       };
     } on DioException catch (e) {
-      if (e.response?.statusCode == 403) {
+      if (e.response?.statusCode == 403 || e.response?.statusCode == 401) {
         return null;
       }
       throw DioExceptionMapper.mapToException(

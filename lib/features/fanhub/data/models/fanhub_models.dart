@@ -6,7 +6,7 @@ part 'fanhub_models.freezed.dart';
 part 'fanhub_models.g.dart';
 
 @freezed
-abstract class FanHub with _$FanHub {
+abstract class  FanHub with _$FanHub {
   const factory FanHub({
     required int fanHubId,
     required String subdomain,

@@ -156,12 +156,12 @@ return empty(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function( List<FanHub> fanHubs,  FanHubTab activeTab)?  ready,TResult Function( List<FanHub> fanHubs,  FanHubTab activeTab)?  refreshing,TResult Function( List<FanHub> fanHubs,  FanHubTab activeTab)?  loadingMore,TResult Function( FanHubTab activeTab)?  empty,required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function( List<FanHub> fanHubs,  List<FanHub> topHubs,  FanHubTab activeTab)?  ready,TResult Function( List<FanHub> fanHubs,  List<FanHub> topHubs,  FanHubTab activeTab)?  refreshing,TResult Function( List<FanHub> fanHubs,  List<FanHub> topHubs,  FanHubTab activeTab)?  loadingMore,TResult Function( FanHubTab activeTab)?  empty,required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _Ready() when ready != null:
-return ready(_that.fanHubs,_that.activeTab);case _Refreshing() when refreshing != null:
-return refreshing(_that.fanHubs,_that.activeTab);case _LoadingMore() when loadingMore != null:
-return loadingMore(_that.fanHubs,_that.activeTab);case _Empty() when empty != null:
+return ready(_that.fanHubs,_that.topHubs,_that.activeTab);case _Refreshing() when refreshing != null:
+return refreshing(_that.fanHubs,_that.topHubs,_that.activeTab);case _LoadingMore() when loadingMore != null:
+return loadingMore(_that.fanHubs,_that.topHubs,_that.activeTab);case _Empty() when empty != null:
 return empty(_that.activeTab);case _:
   return orElse();
 
@@ -180,12 +180,12 @@ return empty(_that.activeTab);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function( List<FanHub> fanHubs,  FanHubTab activeTab)  ready,required TResult Function( List<FanHub> fanHubs,  FanHubTab activeTab)  refreshing,required TResult Function( List<FanHub> fanHubs,  FanHubTab activeTab)  loadingMore,required TResult Function( FanHubTab activeTab)  empty,}) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function( List<FanHub> fanHubs,  List<FanHub> topHubs,  FanHubTab activeTab)  ready,required TResult Function( List<FanHub> fanHubs,  List<FanHub> topHubs,  FanHubTab activeTab)  refreshing,required TResult Function( List<FanHub> fanHubs,  List<FanHub> topHubs,  FanHubTab activeTab)  loadingMore,required TResult Function( FanHubTab activeTab)  empty,}) {final _that = this;
 switch (_that) {
 case _Ready():
-return ready(_that.fanHubs,_that.activeTab);case _Refreshing():
-return refreshing(_that.fanHubs,_that.activeTab);case _LoadingMore():
-return loadingMore(_that.fanHubs,_that.activeTab);case _Empty():
+return ready(_that.fanHubs,_that.topHubs,_that.activeTab);case _Refreshing():
+return refreshing(_that.fanHubs,_that.topHubs,_that.activeTab);case _LoadingMore():
+return loadingMore(_that.fanHubs,_that.topHubs,_that.activeTab);case _Empty():
 return empty(_that.activeTab);}
 }
 /// A variant of `when` that fallback to returning `null`
@@ -200,12 +200,12 @@ return empty(_that.activeTab);}
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function( List<FanHub> fanHubs,  FanHubTab activeTab)?  ready,TResult? Function( List<FanHub> fanHubs,  FanHubTab activeTab)?  refreshing,TResult? Function( List<FanHub> fanHubs,  FanHubTab activeTab)?  loadingMore,TResult? Function( FanHubTab activeTab)?  empty,}) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function( List<FanHub> fanHubs,  List<FanHub> topHubs,  FanHubTab activeTab)?  ready,TResult? Function( List<FanHub> fanHubs,  List<FanHub> topHubs,  FanHubTab activeTab)?  refreshing,TResult? Function( List<FanHub> fanHubs,  List<FanHub> topHubs,  FanHubTab activeTab)?  loadingMore,TResult? Function( FanHubTab activeTab)?  empty,}) {final _that = this;
 switch (_that) {
 case _Ready() when ready != null:
-return ready(_that.fanHubs,_that.activeTab);case _Refreshing() when refreshing != null:
-return refreshing(_that.fanHubs,_that.activeTab);case _LoadingMore() when loadingMore != null:
-return loadingMore(_that.fanHubs,_that.activeTab);case _Empty() when empty != null:
+return ready(_that.fanHubs,_that.topHubs,_that.activeTab);case _Refreshing() when refreshing != null:
+return refreshing(_that.fanHubs,_that.topHubs,_that.activeTab);case _LoadingMore() when loadingMore != null:
+return loadingMore(_that.fanHubs,_that.topHubs,_that.activeTab);case _Empty() when empty != null:
 return empty(_that.activeTab);case _:
   return null;
 
@@ -218,7 +218,7 @@ return empty(_that.activeTab);case _:
 
 
 class _Ready implements FanHubState {
-  const _Ready(final  List<FanHub> fanHubs, this.activeTab): _fanHubs = fanHubs;
+  const _Ready({required final  List<FanHub> fanHubs, final  List<FanHub> topHubs = const [], required this.activeTab}): _fanHubs = fanHubs,_topHubs = topHubs;
   
 
  final  List<FanHub> _fanHubs;
@@ -226,6 +226,13 @@ class _Ready implements FanHubState {
   if (_fanHubs is EqualUnmodifiableListView) return _fanHubs;
   // ignore: implicit_dynamic_type
   return EqualUnmodifiableListView(_fanHubs);
+}
+
+ final  List<FanHub> _topHubs;
+@JsonKey() List<FanHub> get topHubs {
+  if (_topHubs is EqualUnmodifiableListView) return _topHubs;
+  // ignore: implicit_dynamic_type
+  return EqualUnmodifiableListView(_topHubs);
 }
 
 @override final  FanHubTab activeTab;
@@ -240,16 +247,16 @@ _$ReadyCopyWith<_Ready> get copyWith => __$ReadyCopyWithImpl<_Ready>(this, _$ide
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _Ready&&const DeepCollectionEquality().equals(other._fanHubs, _fanHubs)&&(identical(other.activeTab, activeTab) || other.activeTab == activeTab));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _Ready&&const DeepCollectionEquality().equals(other._fanHubs, _fanHubs)&&const DeepCollectionEquality().equals(other._topHubs, _topHubs)&&(identical(other.activeTab, activeTab) || other.activeTab == activeTab));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,const DeepCollectionEquality().hash(_fanHubs),activeTab);
+int get hashCode => Object.hash(runtimeType,const DeepCollectionEquality().hash(_fanHubs),const DeepCollectionEquality().hash(_topHubs),activeTab);
 
 @override
 String toString() {
-  return 'FanHubState.ready(fanHubs: $fanHubs, activeTab: $activeTab)';
+  return 'FanHubState.ready(fanHubs: $fanHubs, topHubs: $topHubs, activeTab: $activeTab)';
 }
 
 
@@ -260,7 +267,7 @@ abstract mixin class _$ReadyCopyWith<$Res> implements $FanHubStateCopyWith<$Res>
   factory _$ReadyCopyWith(_Ready value, $Res Function(_Ready) _then) = __$ReadyCopyWithImpl;
 @override @useResult
 $Res call({
- List<FanHub> fanHubs, FanHubTab activeTab
+ List<FanHub> fanHubs, List<FanHub> topHubs, FanHubTab activeTab
 });
 
 
@@ -277,10 +284,11 @@ class __$ReadyCopyWithImpl<$Res>
 
 /// Create a copy of FanHubState
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? fanHubs = null,Object? activeTab = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? fanHubs = null,Object? topHubs = null,Object? activeTab = null,}) {
   return _then(_Ready(
-null == fanHubs ? _self._fanHubs : fanHubs // ignore: cast_nullable_to_non_nullable
-as List<FanHub>,null == activeTab ? _self.activeTab : activeTab // ignore: cast_nullable_to_non_nullable
+fanHubs: null == fanHubs ? _self._fanHubs : fanHubs // ignore: cast_nullable_to_non_nullable
+as List<FanHub>,topHubs: null == topHubs ? _self._topHubs : topHubs // ignore: cast_nullable_to_non_nullable
+as List<FanHub>,activeTab: null == activeTab ? _self.activeTab : activeTab // ignore: cast_nullable_to_non_nullable
 as FanHubTab,
   ));
 }
@@ -292,7 +300,7 @@ as FanHubTab,
 
 
 class _Refreshing implements FanHubState {
-  const _Refreshing(final  List<FanHub> fanHubs, this.activeTab): _fanHubs = fanHubs;
+  const _Refreshing({required final  List<FanHub> fanHubs, final  List<FanHub> topHubs = const [], required this.activeTab}): _fanHubs = fanHubs,_topHubs = topHubs;
   
 
  final  List<FanHub> _fanHubs;
@@ -300,6 +308,13 @@ class _Refreshing implements FanHubState {
   if (_fanHubs is EqualUnmodifiableListView) return _fanHubs;
   // ignore: implicit_dynamic_type
   return EqualUnmodifiableListView(_fanHubs);
+}
+
+ final  List<FanHub> _topHubs;
+@JsonKey() List<FanHub> get topHubs {
+  if (_topHubs is EqualUnmodifiableListView) return _topHubs;
+  // ignore: implicit_dynamic_type
+  return EqualUnmodifiableListView(_topHubs);
 }
 
 @override final  FanHubTab activeTab;
@@ -314,16 +329,16 @@ _$RefreshingCopyWith<_Refreshing> get copyWith => __$RefreshingCopyWithImpl<_Ref
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _Refreshing&&const DeepCollectionEquality().equals(other._fanHubs, _fanHubs)&&(identical(other.activeTab, activeTab) || other.activeTab == activeTab));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _Refreshing&&const DeepCollectionEquality().equals(other._fanHubs, _fanHubs)&&const DeepCollectionEquality().equals(other._topHubs, _topHubs)&&(identical(other.activeTab, activeTab) || other.activeTab == activeTab));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,const DeepCollectionEquality().hash(_fanHubs),activeTab);
+int get hashCode => Object.hash(runtimeType,const DeepCollectionEquality().hash(_fanHubs),const DeepCollectionEquality().hash(_topHubs),activeTab);
 
 @override
 String toString() {
-  return 'FanHubState.refreshing(fanHubs: $fanHubs, activeTab: $activeTab)';
+  return 'FanHubState.refreshing(fanHubs: $fanHubs, topHubs: $topHubs, activeTab: $activeTab)';
 }
 
 
@@ -334,7 +349,7 @@ abstract mixin class _$RefreshingCopyWith<$Res> implements $FanHubStateCopyWith<
   factory _$RefreshingCopyWith(_Refreshing value, $Res Function(_Refreshing) _then) = __$RefreshingCopyWithImpl;
 @override @useResult
 $Res call({
- List<FanHub> fanHubs, FanHubTab activeTab
+ List<FanHub> fanHubs, List<FanHub> topHubs, FanHubTab activeTab
 });
 
 
@@ -351,10 +366,11 @@ class __$RefreshingCopyWithImpl<$Res>
 
 /// Create a copy of FanHubState
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? fanHubs = null,Object? activeTab = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? fanHubs = null,Object? topHubs = null,Object? activeTab = null,}) {
   return _then(_Refreshing(
-null == fanHubs ? _self._fanHubs : fanHubs // ignore: cast_nullable_to_non_nullable
-as List<FanHub>,null == activeTab ? _self.activeTab : activeTab // ignore: cast_nullable_to_non_nullable
+fanHubs: null == fanHubs ? _self._fanHubs : fanHubs // ignore: cast_nullable_to_non_nullable
+as List<FanHub>,topHubs: null == topHubs ? _self._topHubs : topHubs // ignore: cast_nullable_to_non_nullable
+as List<FanHub>,activeTab: null == activeTab ? _self.activeTab : activeTab // ignore: cast_nullable_to_non_nullable
 as FanHubTab,
   ));
 }
@@ -366,7 +382,7 @@ as FanHubTab,
 
 
 class _LoadingMore implements FanHubState {
-  const _LoadingMore(final  List<FanHub> fanHubs, this.activeTab): _fanHubs = fanHubs;
+  const _LoadingMore({required final  List<FanHub> fanHubs, final  List<FanHub> topHubs = const [], required this.activeTab}): _fanHubs = fanHubs,_topHubs = topHubs;
   
 
  final  List<FanHub> _fanHubs;
@@ -374,6 +390,13 @@ class _LoadingMore implements FanHubState {
   if (_fanHubs is EqualUnmodifiableListView) return _fanHubs;
   // ignore: implicit_dynamic_type
   return EqualUnmodifiableListView(_fanHubs);
+}
+
+ final  List<FanHub> _topHubs;
+@JsonKey() List<FanHub> get topHubs {
+  if (_topHubs is EqualUnmodifiableListView) return _topHubs;
+  // ignore: implicit_dynamic_type
+  return EqualUnmodifiableListView(_topHubs);
 }
 
 @override final  FanHubTab activeTab;
@@ -388,16 +411,16 @@ _$LoadingMoreCopyWith<_LoadingMore> get copyWith => __$LoadingMoreCopyWithImpl<_
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _LoadingMore&&const DeepCollectionEquality().equals(other._fanHubs, _fanHubs)&&(identical(other.activeTab, activeTab) || other.activeTab == activeTab));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _LoadingMore&&const DeepCollectionEquality().equals(other._fanHubs, _fanHubs)&&const DeepCollectionEquality().equals(other._topHubs, _topHubs)&&(identical(other.activeTab, activeTab) || other.activeTab == activeTab));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,const DeepCollectionEquality().hash(_fanHubs),activeTab);
+int get hashCode => Object.hash(runtimeType,const DeepCollectionEquality().hash(_fanHubs),const DeepCollectionEquality().hash(_topHubs),activeTab);
 
 @override
 String toString() {
-  return 'FanHubState.loadingMore(fanHubs: $fanHubs, activeTab: $activeTab)';
+  return 'FanHubState.loadingMore(fanHubs: $fanHubs, topHubs: $topHubs, activeTab: $activeTab)';
 }
 
 
@@ -408,7 +431,7 @@ abstract mixin class _$LoadingMoreCopyWith<$Res> implements $FanHubStateCopyWith
   factory _$LoadingMoreCopyWith(_LoadingMore value, $Res Function(_LoadingMore) _then) = __$LoadingMoreCopyWithImpl;
 @override @useResult
 $Res call({
- List<FanHub> fanHubs, FanHubTab activeTab
+ List<FanHub> fanHubs, List<FanHub> topHubs, FanHubTab activeTab
 });
 
 
@@ -425,10 +448,11 @@ class __$LoadingMoreCopyWithImpl<$Res>
 
 /// Create a copy of FanHubState
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? fanHubs = null,Object? activeTab = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? fanHubs = null,Object? topHubs = null,Object? activeTab = null,}) {
   return _then(_LoadingMore(
-null == fanHubs ? _self._fanHubs : fanHubs // ignore: cast_nullable_to_non_nullable
-as List<FanHub>,null == activeTab ? _self.activeTab : activeTab // ignore: cast_nullable_to_non_nullable
+fanHubs: null == fanHubs ? _self._fanHubs : fanHubs // ignore: cast_nullable_to_non_nullable
+as List<FanHub>,topHubs: null == topHubs ? _self._topHubs : topHubs // ignore: cast_nullable_to_non_nullable
+as List<FanHub>,activeTab: null == activeTab ? _self.activeTab : activeTab // ignore: cast_nullable_to_non_nullable
 as FanHubTab,
   ));
 }

@@ -18,10 +18,10 @@ abstract class FanHubApiService {
   );
 
   @GET('/fan-hub/top')
-  Future<ApiResponse<List<FanHub>>> getFanHubsByCategory(
+  Future<ApiResponse<List<FanHub>>> getTopFanHubs(
     @Query('pageNo') int pageNo,
     @Query('pageSize') int pageSize,
-    @Query('category') String category,
+    @Query('category') String? category,
   );
 
   @GET('/fan-hub/subdomain/{subdomain}')

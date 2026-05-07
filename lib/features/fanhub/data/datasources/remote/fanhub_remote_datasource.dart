@@ -8,10 +8,10 @@ abstract class FanHubRemoteDataSource {
     required bool includePrivate,
   });
 
-  Future<List<FanHub>> getFanHubsByCategory({
+  Future<List<FanHub>> getTopFanHubs({
     required int pageNo,
     required int pageSize,
-    required String category,
+    String? category,
   });
 
   Future<FanHub> getFanHubBySubdomain(String subdomain);

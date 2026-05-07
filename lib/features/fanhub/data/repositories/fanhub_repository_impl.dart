@@ -28,13 +28,13 @@ class FanHubRepositoryImpl implements FanHubRepository {
   }
 
   @override
-  TaskResult<List<FanHub>> getFanHubsByCategory({
+  TaskResult<List<FanHub>> getTopFanHubs({
     required int pageNo,
     required int pageSize,
-    required String category,
+    String? category,
   }) {
     return ErrorHandler.execute(() async {
-      return await _remoteDataSource.getFanHubsByCategory(
+      return await _remoteDataSource.getTopFanHubs(
         pageNo: pageNo,
         pageSize: pageSize,
         category: category,
